@@ -1,0 +1,93 @@
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+#map {
+    height: 100%;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.custom-map-control-button {
+    background-color: #fff;
+    border: 0;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+    margin: 10px;
+    padding: 0 0.5em;
+    font: 400 18px Roboto, Arial, sans-serif;
+    overflow: hidden;
+    height: 40px;
+    cursor: pointer;
+}
+
+.custom-map-control-button:hover {
+    background: #ebebeb;
+}
+
+#container {
+    height: 100%;
+    display: flex;
+	background-color: #ABBAEA;
+}
+
+#sidebar {
+	background-color: #D3D3D3;
+    flex-basis: 15rem;
+    flex-grow: 1;
+    padding: 1rem;
+    max-width: 30rem;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+#map {
+    flex-basis: 0;
+    flex-grow: 4;
+    height: 100%;
+}
+
+#sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin: 0 0 5px 0;
+  flex-grow: 0;
+}
+
+ul {
+	
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: scroll;
+  flex-grow: 1;
+}
+
+li {
+  background-color: #ABBAEA;
+  padding: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+li:nth-child(odd) {
+  background-color: #D3D3D3;
+}
+
+input {
+	position:relative;
+	margin-top: 20px;
+}
+
