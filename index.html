@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 <html>
-
-<head >
-    <title>Geolocation</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-	
-    <link rel="stylesheet" type="text/css" href="./style.css" />
-    <script src="./index.js"></script>
-
-</head>
- <body >
- 		<style>
-
-</style>
-<div id="container">
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta charset="utf-8" />
+    <title>Don't Trip</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+   
+	<div id="container">
         <div id="map"></div>
         <div id="sidebar">
             <p>Total Distance: <span id="total"></span></p>
@@ -27,10 +22,7 @@
       </div>
 	  
 </div>
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPQgLLIUPBC6TWQi0c9qnf-1O6S5RksBA&callback=initMap&libraries=places&v=weekly" async></script>
-
-<script src="https://cdn.jsdelivr.net/gh/denissellu/routeboxer@master/src/RouteBoxer.js" type="text/javascript"></script>
-</body>
-
+    <script src="bundle.js" ></script>
+  </body>
 </html>
+
