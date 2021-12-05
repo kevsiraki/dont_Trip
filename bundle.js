@@ -91,6 +91,7 @@
 							color: "#263c3f"
 						}],
 					},
+					
 					{
 						featureType: "poi.park",
 						elementType: "labels.text.fill",
@@ -236,10 +237,10 @@
 									clearMarkers();
 									document.getElementById("places").innerHTML = "";
 									document.getElementById("panel").innerHTML = "";
-									for (var i = 0; i < rectangles.length; i++) {
-										rectangles[i].setMap(null);
+									for (var i = 0; i < waypoints.length; i++) {
+										waypoints[i].setMap(null);
 									}
-									waypoints.setMap(null);
+									//waypoints[i].setMap(null);
 								});
 
 							});
@@ -266,10 +267,7 @@
 									getNextPage();
 								}
 							};
-							//array of rects to remove;
-							var rectangles = [];
-							var circles = [];
-							var waypoints = [];
+							var waypoints = new Array();
 							//Function to covert destination string to Latitude and Longitude
 							var address = document.getElementById("myInput").value;
 							geocoder.geocode({
@@ -283,7 +281,6 @@
 										origin: latlng,
 										destination: latlng2,
 										travelMode: "DRIVING",
-
 									};
 									directionsService.route(request, function(result, status) {
 										if (status == "OK") {
@@ -389,8 +386,6 @@
 				});
 		}
 
-
-
 		function computeTotalDistance(result) {
 			let total = 0;
 			const myroute = result.routes[0];
@@ -406,22 +401,31 @@
 		}
 
 		var markers = [];
+		const iconExists = ["bar","food","park","place_of_worship", "point_of_interest","restaurant", "store"];
 		function addPlaces(places, map) {
+		
 			var placesList = document.getElementById("places");
 			var i = 0;
 			for (const place of places) {
 				if (place.geometry && place.geometry.location) {
-					const image = {
+					var image = {
 						url: place.icon,
 						size: new google.maps.Size(71, 71),
 						origin: new google.maps.Point(0, 0),
 						anchor: new google.maps.Point(17, 34),
 						scaledSize: new google.maps.Size(25, 25),
 					};
+					if(iconExists.includes(place.types[1],0)) {
+						image.url = "icons/" + place.types[1] + ".png";
+						
+					}
+					else if(place.types[1].includes("store")|| place.types[1].includes("grocery")) {
+							image.url = "icons/store.png";	
+					}
 					var marker = new google.maps.Marker({
 						map,
 						icon: image,
-						title: place.name,
+						title: place.types[1],
 						position: place.geometry.location,
 					});
 					markers.push(marker);
@@ -435,6 +439,7 @@
 				i++;
 			}
 		}
+		
 		// Sets the map on all markers in the array.
 		function setMapOnAll(map) {
 			for (var i = 0; i < markers.length; i++) {
@@ -485,7 +490,7 @@
 
 		var script = document.createElement("script");
 		script.src =
-			"API_KEY_LINK";
+			"!!!API URL HERE!!!";
 		script.defer = true;
 		window.initMap = function() {
 			initMap();
