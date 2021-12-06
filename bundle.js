@@ -525,7 +525,7 @@
 
 		var script = document.createElement("script"); //append the API key to the DOM
 		script.src =
-			"https://maps.googleapis.com/maps/api/js?key=AIzaSyAPQgLLIUPBC6TWQi0c9qnf-1O6S5RksBA&callback=initMap&libraries=places";
+			"API URL HERE";
 		script.defer = true;
 		window.initMap = function() {
 			initMap();
