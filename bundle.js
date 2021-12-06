@@ -1,4 +1,4 @@
-(function() {
+(function() { //requiring some browserify JSON functions
 	function r(e, n, t) {
 		function o(i, f) {
 			if (!n[i]) {
@@ -30,18 +30,16 @@
 		"./map": 2
 	}],
 	2: [function(require, module, exports) {
-		const polyline = require("google-polyline");
+		const polyline = require("google-polyline"); //some required globals
 		let waypoints = [];
 		let map;
 		let service;
 		const locationButton = document.createElement("button");
 		const clearCurrent = document.createElement("button");
 
-		function initMap() {
-
+		function initMap() { //set up the map/styles, initial route from geolocation to endpoint, places along the route, and initial directions.
 			var directionsService = new window.google.maps.DirectionsService();
 			var directionsRenderer = new window.google.maps.DirectionsRenderer();
-
 			var i = 0;
 			map = new google.maps.Map(document.getElementById("map"), {
 				center: {
@@ -54,125 +52,107 @@
 						stylers: [{
 							color: "#242f3e"
 						}]
-					},
-					{
+					}, {
 						"featureType": "poi",
 						"stylers": [{
 							"visibility": "off"
 						}]
-					},
-					{
+					}, {
 						elementType: "labels.text.stroke",
 						stylers: [{
 							color: "#242f3e"
 						}]
-					},
-					{
+					}, {
 						elementType: "labels.text.fill",
 						stylers: [{
 							color: "#746855"
 						}]
-					},
-					{
+					}, {
 						featureType: "administrative.locality",
 						elementType: "labels.text.fill",
 						stylers: [{
 							color: "#d59563"
 						}],
-					},
-					{
+					}, {
 						featureType: "poi",
 						elementType: "labels.text.fill",
 						stylers: [{
 							color: "#d59563"
 						}],
-					},
-					{
+					}, {
 						featureType: "poi.park",
 						elementType: "geometry",
 						stylers: [{
 							color: "#263c3f"
 						}],
 					},
-
 					{
 						featureType: "poi.park",
 						elementType: "labels.text.fill",
 						stylers: [{
 							color: "#6b9a76"
 						}],
-					},
-					{
+					}, {
 						featureType: "road",
 						elementType: "geometry",
 						stylers: [{
 							color: "#38414e"
 						}],
-					},
-					{
+					}, {
 						featureType: "road",
 						elementType: "geometry.stroke",
 						stylers: [{
 							color: "#212a37"
 						}],
-					},
-					{
+					}, {
 						featureType: "road",
 						elementType: "labels.text.fill",
 						stylers: [{
 							color: "#9ca5b3"
 						}],
-					},
-					{
+					}, {
 						featureType: "road.highway",
 						elementType: "geometry",
 						stylers: [{
 							color: "#746855"
 						}],
-					},
-					{
+					}, {
 						featureType: "road.highway",
 						elementType: "geometry.stroke",
 						stylers: [{
 							color: "#1f2835"
 						}],
-					},
-					{
+					}, {
 						featureType: "road.highway",
 						elementType: "labels.text.fill",
 						stylers: [{
 							color: "#f3d19c"
 						}],
-					},
-					{
+					}, {
 						featureType: "transit",
 						elementType: "geometry",
 						stylers: [{
 							color: "#2f3948"
 						}],
-					},
-					{
+					}, {
 						featureType: "transit.station",
 						elementType: "labels.text.fill",
 						stylers: [{
 							color: "#d59563"
 						}],
-					},
-					{
+					}, {
 						featureType: "water",
 						elementType: "geometry",
 						stylers: [{
 							color: "#17263c"
 						}],
-					},
-					{
+					}, {
 						featureType: "water",
 						elementType: "labels.text.fill",
 						stylers: [{
 							color: "#515c6d"
 						}],
-					},
-					{
+					}, {
 						featureType: "water",
 						elementType: "labels.text.stroke",
 						stylers: [{
@@ -184,12 +164,12 @@
 
 			infoWindow = new google.maps.InfoWindow();
 
-			locationButton.textContent = "Go";
+			locationButton.textContent = "Go"; //buttons and inputs 
 			locationButton.classList.add("custom-map-control-button");
 			map.controls[google.maps.ControlPosition.TOP_RIGHT].push(locationButton);
 
 			clearCurrent.type = "submit";
-			clearCurrent.textContent = "Clear Plans Panel";
+			clearCurrent.textContent = "Change of Plans!";
 			clearCurrent.id = "clearCurrent";
 			map.controls[google.maps.ControlPosition.RIGHT].push(clearCurrent);
 
@@ -226,7 +206,7 @@
 								lat: position.coords.latitude,
 								lng: position.coords.longitude,
 							};
-							const directionsService = new google.maps.DirectionsService();
+							const directionsService = new google.maps.DirectionsService(); //init directions services here.
 							var service = new google.maps.places.PlacesService(map);
 							const directionsRenderer = new google.maps.DirectionsRenderer({
 								draggable: true,
@@ -245,7 +225,6 @@
 									document.getElementById("places").innerHTML = "";
 									document.getElementById("panel").innerHTML = "";
 								});
-
 							});
 							const geocoder = new google.maps.Geocoder();
 							const latlng = {
@@ -277,7 +256,7 @@
 								'address': address
 							}, function(results, status) {
 
-								if (status == google.maps.GeocoderStatus.OK) {
+								if (status == google.maps.GeocoderStatus.OK) { //use geocoder to convert dest to latlng object.
 									var latlng2 = results[0].geometry.location;
 									var request = {
 										origin: latlng,
@@ -298,7 +277,7 @@
 											fillColor: "#FF0000",
 											fillOpacity: 0.35,
 										});
-										PolygonBound.setMap(map);
+										PolygonBound.setMap(map); //splitting a polygon into points, calling nearbySearch on each point
 										service = new google.maps.places.PlacesService(map);
 										for (let j = 0; j < waypoints.length; j += 40) {
 											service.nearbySearch({
@@ -323,14 +302,14 @@
 												},
 												callback);
 
-											function callback(results, status) {
+											function callback(results, status) { //unused for now, callback function after request complete.
 												if (status == google.maps.places.PlacesServiceStatus.OK) {
 													for (var i = 0; i < results.length; i++) {
 														if (google.maps.geometry.poly.containsLocation(results[i].geometry.location, PolygonBound) == true) {
 															new google.maps.Marker({
 																position: results[i].geometry.location,
 																map,
-																title: "Hello World!"
+																title: "Test" 
 															});
 
 														}
@@ -349,7 +328,7 @@
 		}
 
 
-		function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+		function handleLocationError(browserHasGeolocation, infoWindow, pos) { //geolocation fetching error handler
 			infoWindow.setPosition(pos);
 			infoWindow.setContent(
 				browserHasGeolocation ?
@@ -359,18 +338,16 @@
 			infoWindow.open(map);
 		}
 
-		function displayRoute(origin, destination, service, display) {
+		function displayRoute(origin, destination, service, display) { //function to display a route origin->dest
 			service
 				.route({
 					origin: origin,
 					destination: destination,
 					waypoints: [{
-							location: origin
-						},
-						{
-							location: destination
-						},
-					],
+						location: origin
+					}, {
+						location: destination
+					}, ],
 					travelMode: google.maps.TravelMode.DRIVING,
 					avoidTolls: true,
 				})
@@ -386,7 +363,7 @@
 				});
 		}
 
-		function computeTotalDistance(result) {
+		function computeTotalDistance(result) { //computes the distance from an origin->dest (along the set route)
 			let total = 0;
 			const myroute = result.routes[0];
 			if (!myroute) {
@@ -397,16 +374,14 @@
 			}
 			total = total / 1000;
 			tot = total;
-			document.getElementById("total").innerHTML = (total * 0.621371).toFixed(1) + " Miles";
+			document.getElementById("total").innerHTML = (total * 0.621371).toFixed(1) + " Miles"; //convert km to miles 
 		}
 
-		var markers = [];
-		const iconExists = ["bar", "food", "park", "place_of_worship", "point_of_interest", "restaurant", "store"];
+		var markers = []; //for nuking markers on a new mapload
+		const iconExists = ["bar", "food", "park", "place_of_worship", "point_of_interest", "restaurant", "store"]; //mimicking google's json to display custom icons
 
-		function addPlaces(places, map, pos, latlng2) {
-
+		function addPlaces(places, map, pos, latlng2) { //shows places fetched from nearby search on map/li element
 			var placesList = document.getElementById("places");
-			var i = 0;
 			for (const place of places) {
 				if (place.geometry && place.geometry.location) {
 					var image = {
@@ -432,14 +407,8 @@
 					const li = document.createElement("li");
 					li.textContent = place.name;
 					placesList.appendChild(li);
-
-					li.addEventListener("click", () => {
-						map.setCenter(place.geometry.location);
-					});
-
-
-					marker.addListener("click", () => {
-
+					marker.addListener("click", () => { //add marker to waypoint along route onClick, can be cleared!
+						document.getElementById("panel").innerHTML = "";
 						const directionsService = new google.maps.DirectionsService();
 						var service = new google.maps.places.PlacesService(map);
 						const directionsRenderer = new google.maps.DirectionsRenderer({
@@ -447,21 +416,17 @@
 							map,
 							panel: document.getElementById("panel"),
 						});
-
 						directionsRenderer.addListener("directions_changed", () => {
-							const directions = directionsRenderer.getDirections();
+							var directions = directionsRenderer.getDirections();
 							if (directions) {
 								computeTotalDistance(directions);
 								total = tot;
 							}
-
 							locationButton.addEventListener("click", () => {
 								directionsRenderer.setMap(null);
 								clearMarkers();
 								document.getElementById("places").innerHTML = "";
 								document.getElementById("panel").innerHTML = "";
-
-
 							});
 							clearCurrent.addEventListener("click", () => {
 								directionsRenderer.setMap(null);
@@ -478,20 +443,22 @@
 									}
 								});
 							});
-
 						});
-
 						displayRoute(
 							pos,
-							place.geometry.location,
-
+							latlng2,
 							directionsService,
 							directionsRenderer
 						);
-
+						var waypoint = new Array();
+						waypoint.push({
+							location: place.geometry.location,
+							stopover: true,
+						});;
 						var request = {
 							origin: pos,
-							destination: place.geometry.location,
+							destination: latlng2,
+							waypoints: waypoint,
 							travelMode: "DRIVING",
 						};
 						directionsService.route(request, function(result, status) {
@@ -500,70 +467,11 @@
 							}
 						});
 					});
-
-
 					li.addEventListener("click", () => {
-						const directionsService = new google.maps.DirectionsService();
-						var service = new google.maps.places.PlacesService(map);
-						const directionsRenderer = new google.maps.DirectionsRenderer({
-							draggable: true,
-							map,
-							panel: document.getElementById("panel"),
-						});
-
-						directionsRenderer.addListener("directions_changed", () => {
-							const directions = directionsRenderer.getDirections();
-							if (directions) {
-								computeTotalDistance(directions);
-								total = tot;
-							}
-
-							locationButton.addEventListener("click", () => {
-								directionsRenderer.setMap(null);
-								clearMarkers();
-								document.getElementById("places").innerHTML = "";
-								document.getElementById("panel").innerHTML = "";
-
-
-							});
-
-							clearCurrent.addEventListener("click", () => {
-								directionsRenderer.setMap(null);
-
-								document.getElementById("panel").innerHTML = "";
-								var request = {
-									origin: pos,
-									destination: latlng2,
-									travelMode: "DRIVING",
-								};
-								directionsService.route(request, function(result, status) {
-									if (status == "OK") {
-										directionsRenderer.setDirections(result);
-									}
-								}); 
-							});
-						});
-
-						displayRoute(
-							pos,
-							place.geometry.location,
-							directionsService,
-							directionsRenderer
-						);
-						var request = {
-							origin: pos,
-							destination: place.geometry.location,
-							travelMode: "DRIVING",
-						};
-						directionsService.route(request, function(result, status) {
-							if (status == "OK") {
-								directionsRenderer.setDirections(result);
-							}
-						});
+						map.setCenter(place.geometry.location);
+						map.setZoom(20);
 					});
-
 				}
-				i++;
 			}
 		}
 
@@ -579,7 +487,7 @@
 			setMapOnAll(null);
 		}
 
-		function PolygonPoints() {
+		function PolygonPoints() { //split a polygon into points
 			let polypoints = waypoints
 			let PolyLength = polypoints.length;
 			let UpperBound = [];
@@ -600,7 +508,7 @@
 			return FullPoly;
 		}
 
-		function PolygonArray(latitude) {
+		function PolygonArray(latitude) { //return an array of smaller polygons from low->upper latitude
 			const R = 6378137;
 			const pi = 3.14;
 			//distance in meters
@@ -615,9 +523,9 @@
 			return [lat_upper, lat_lower];
 		}
 
-		var script = document.createElement("script");
+		var script = document.createElement("script"); //append the API key to the DOM
 		script.src =
-			"API URL HERE";
+			"https://maps.googleapis.com/maps/api/js?key=AIzaSyAPQgLLIUPBC6TWQi0c9qnf-1O6S5RksBA&callback=initMap&libraries=places";
 		script.defer = true;
 		window.initMap = function() {
 			initMap();
@@ -627,10 +535,10 @@
 	}, {
 		"google-polyline": 5
 	}],
-	3: [function(require, module, exports) {
+	3: [function(require, module, exports) { //requiring some more browserify JSON functions
 		var PRECISION = 1e5
 
-		function decode(value) {
+		function decode(value) { //decode a polyline into an array of points
 			var points = []
 			var lat = 0
 			var lon = 0
@@ -680,7 +588,7 @@
 			CHARMAP[i] = String.fromCharCode(i)
 		}
 
-		function encode(points) {
+		function encode(points) { //encode points into a string
 			// px, py, x and y store rounded exponentiated versions of the values
 			// they represent to compute the actual desired differences. This helps
 			// with finer than 5 decimals floating point numbers.
@@ -729,14 +637,12 @@
 			return str
 		}
 		module.exports = encode
-
 	}, {}],
 	5: [function(require, module, exports) {
 		module.exports = {
 			encode: require('./encode'),
 			decode: require('./decode'),
 		}
-
 	}, {
 		"./decode": 3,
 		"./encode": 4
