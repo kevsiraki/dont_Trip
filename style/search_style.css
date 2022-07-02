@@ -176,23 +176,6 @@ li {
 ul li:nth-of-type(even) {
 	background-color: #eee;
 }
-
-/*
-ul li:hover  {
-	box-shadow: inset -1em 0 #8b9dc3;
-	-webkit-transition: box-shadow 0.5s;
-	transition: box-shadow 0.5s;
-	font-family: 'Comfortaa';
-}
-
-ul li:nth-of-type(even):hover {
-	box-shadow: inset -1em 0 #aaa;
-	-webkit-transition: box-shadow 0.5s;
-	transition: box-shadow 0.5s;
-	font-family: 'Comfortaa';
-}
-*/ 
-
 input {
 	position: relative;
 	margin-top: 5px;

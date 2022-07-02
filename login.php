@@ -11,12 +11,11 @@
 		<meta name="google-site-verification" content="oHK1-h8_kK5NiZbuI_qVhcujbIbJaFEH6neEfM20GgI" />
 		<meta name="description" content="An itinerary planner utilizing the Google Maps API to give you customized places along a route!">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<script src="js/login.js"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<link rel="stylesheet" href="style/login_style.css">
 		<link href="icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="icons/icon.png">
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<script src="js/lightMode.js"></script>
 	</head>
 	<body>
 		<div class="wrapper" >

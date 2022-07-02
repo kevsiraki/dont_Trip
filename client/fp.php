@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="../style/fp_style.css">
 		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
-		<script src="../js/fp.js"></script>
+		<script src="../js/lightMode.js"></script>
 		<title>Reset Request</title>
 	</head>
 	<body>

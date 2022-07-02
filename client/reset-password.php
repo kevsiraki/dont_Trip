@@ -10,7 +10,7 @@
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<link rel="stylesheet" href="../style/resetpass_style.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
-		<script src="../js/forgot-password.js"></script>
+		<script src="../js/lightMode.js"></script>
 		<title>Password Reset</title>
 	</head>
 	<body>

@@ -7,10 +7,10 @@
 		<link href="../style/search_style.css" rel="stylesheet">
 		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
-		<script src="../js/city.js"></script>	
 		<link href="../style/navbar.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="../js/nav.js"></script>
+		<script src="../js/subPageLightMode.js"></script>	
 		<title>Popular in <?php echo $state ?></title>
 	</head>
 	<body>

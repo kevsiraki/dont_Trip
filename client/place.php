@@ -7,7 +7,7 @@
 		<title><?php echo $_GET['name'] ?></title>
 		<link href="../icons/dt.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-		<script src="../js/login.js"></script>
+		<script src="../js/lightMode.js"></script>
 		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<style>

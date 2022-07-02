@@ -95,7 +95,6 @@
             locationButton.textContent = "Go";
             locationButton.id = "go";
             locationButton.className = "btn-primary";
-            //locationButton.onclick=function() {playSound()};
             var $_GET = {};
             if (document.location.toString().indexOf('?') !== -1) {
                 var query = document.location
@@ -725,7 +724,7 @@
                     alert("Please enter a desination you can drive to.");
                 });
         }
-	*/
+		*/
 
         function computeTotalDistance(result) { //computes the distance from an origin->dest (along the set route)
             const myroute = result.routes[0];

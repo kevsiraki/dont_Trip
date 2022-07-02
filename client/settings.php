@@ -7,10 +7,8 @@ ini_set("allow_url_fopen", 1);
 	<head>
 		<meta charset="utf-8">
 		<title>Account Settings</title>
-		<link href="../icons/dt.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<link rel="stylesheet" href="../style/settings_style.css">	
-		<script src="../js/settings.js"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<meta content="initial-scale=1.0, user-scalable=no" name="viewport">
 		<link href="../style/search_style.css" rel="stylesheet">
@@ -19,7 +17,7 @@ ini_set("allow_url_fopen", 1);
 		<link href="../style/navbar.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="../js/nav.js"></script>
-		<title>Account Settings</title>
+		<script src="../js/lightMode.js"></script>
 	</head>	
 	<div class="topnav">
 			<a href="javascript:void(0);" class="active" onclick="myFunction()">
@@ -35,7 +33,11 @@ ini_set("allow_url_fopen", 1);
 		<br>
 		<div class="center" >
 			<div class="wrapper" >
-				<h5><?php echo $_SESSION['username']; ?></h5><br><br>
+				<img src="https://mpng.subpng.com/20180802/icj/kisspng-user-profile-default-computer-icons-network-video-the-foot-problems-of-the-disinall-foot-care-founde-5b6346121ec769.0929994515332326581261.jpg" width="30" height="30" style="opacity: 0.5; float: left;">
+				<h5 style="float:left; padding:5px;"><?php echo $_SESSION['username']; ?></h5>
+				<br>
+				<br>
+				<br>
 				<form  method="post"  >
 					<?php if (isset($basics)): ?>
 						<input type="checkbox"  name="2fa" value="Yes" ><b>&nbsp;&nbsp;&nbsp;</b></input>
@@ -64,11 +66,11 @@ ini_set("allow_url_fopen", 1);
 									<label>2FA has been Enabled. <br> Remember this Google Authenticator Code:</label>
 									<?php 
 										$g = new \Google\Authenticator\GoogleAuthenticator();
-										$secret = str_shuffle('XVQ2UIGO75XRUKJ2');
+										$secret = str_shuffle($salt);
 										echo (htmlspecialchars($secret));
 										mysqli_query($link,"UPDATE users SET tfaen=1 WHERE username = '".$basics["username"]."';");
 										mysqli_query($link,"UPDATE users SET tfa='".$secret ."' WHERE username = '".$basics["username"]."';");   
-										$url =  \Google\Authenticator\GoogleQrUrl::generate(urlencode($basics["username"]), urlencode($secret),urlencode("DT"));
+										$url =  \Google\Authenticator\GoogleQrUrl::generate(urlencode($basics["username"]), urlencode($secret),urlencode("Don't Trip"));
 									?>	
 								</b> 
 								<br>
@@ -88,14 +90,17 @@ ini_set("allow_url_fopen", 1);
 					<input type="submit" name="formSubmit" value="Clear Search History?" class="btn btn-secondary btn-sm" />
 				</form>
 				<br>
-				<br><br>
+				<br>
+				<br>
 				<p>
 					&nbsp;<a href="../backend/logout.php" class="btn btn-secondary btn-sm" value="Submit" >Sign Out</a>
-					<br><br>
+					<br>
+					<br>
 					<?php if (isset($basics)): ?>
 						&nbsp;<a href="../client/reset-password.php" class="btn btn-secondary btn-sm">Reset Password</a>
 					<?php endif; ?>
-					<br><br>
+					<br>
+					<br>
 				</p>
 			</div>
 		</div>

@@ -10,7 +10,7 @@
 		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<link rel="stylesheet" href="../style/register_style.css">
-		<script src="../js/register.js"></script>
+		<script src="../js/lightMode.js"></script>
 		<title>Sign-Up</title>
 	</head>
 	<body>
