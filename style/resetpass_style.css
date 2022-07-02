@@ -97,7 +97,7 @@ body,html {
 	-moz-transition: all .2s ease-in-out;
 	transition: all .2s ease-in-out;
 }
-meter{
+meter {
 	width: 90%;
 	height: 12px;
 	margin-left:0%;

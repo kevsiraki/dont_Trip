@@ -8,16 +8,15 @@ ini_set("allow_url_fopen", 1);
 		<meta charset="utf-8">
 		<title>Account Settings</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-		<link rel="stylesheet" href="../style/settings_style.css">	
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<meta content="initial-scale=1.0, user-scalable=no" name="viewport">
-		<link href="../style/search_style.css" rel="stylesheet">
 		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<link href="../style/navbar.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="../js/nav.js"></script>
 		<script src="../js/lightMode.js"></script>
+		<link rel="stylesheet" href="../style/settings_style.css">	
 	</head>	
 	<div class="topnav">
 			<a href="javascript:void(0);" class="active" onclick="myFunction()">
