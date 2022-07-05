@@ -3,23 +3,23 @@
         function o(i, f) {
             if (!n[i]) {
                 if (!e[i]) {
-                    var c = "function" == typeof require && require;
+                    let c = "function" == typeof require && require;
                     if (!f && c) return c(i, !0);
                     if (u) return u(i, !0);
-                    var a = new Error("Cannot find module '" + i + "'");
+                    let a = new Error("Cannot find module '" + i + "'");
                     throw a.code = "MODULE_NOT_FOUND", a
                 }
-                var p = n[i] = {
+                let p = n[i] = {
                     exports: {}
                 };
                 e[i][0].call(p.exports, function(r) {
-                    var n = e[i][1][r];
+                    let n = e[i][1][r];
                     return o(n || r)
                 }, p, p.exports, r, e, n, t)
             }
             return n[i].exports
         }
-        for (var u = "function" == typeof require && require, i = 0; i < t.length; i++) o(t[i]);
+        for (let u = "function" == typeof require && require, i = 0; i < t.length; i++) o(t[i]);
         return o
     }
     return r
@@ -31,20 +31,20 @@
     }],
     2: [function(require, module, exports) {
         const polyline = require("google-polyline"); //some required globals
-        var iconExists = ["bar", "food", "park", "place_of_worship", "point_of_interest", "restaurant", "store"]; //mimicking google's json to display custom icons
-        var markers = [];
-        var placesList = document.getElementById("places");
-        var waypoints = [];
-        var placeListND = [];
+        //let iconExists = ["bar", "food", "park", "place_of_worship", "point_of_interest", "restaurant", "store"]; //mimicking google's json to display custom icons
+        let markers = [];
+        let placesList = document.getElementById("places");
+        let waypoints = [];
+        let placeListND = [];
         let locationButton = document.createElement("button");
         let service;
         let total = 0;
         let map;
-        var map_options;
+        let map_options;
         const d = new Date();
-        var waypoint = new Array();
-        var addedWaypoint = new Array();
-        var offset = 40;
+        let waypoint = new Array();
+        let addedWaypoint = new Array();
+        let offset = 40;
 
         function initMap() { //set up the map/styles, initial route from geolocation to endpoint, places along the route, and initial directions.
             map = new google.maps.Map(document.getElementById("map"));
@@ -54,7 +54,7 @@
             });
             map.setZoom(6);
             if (d.getHours() >= 6 && d.getHours() <= 18) {
-                iconExists = [];
+                //iconExists = [];
                 document.getElementById("sidebar").style.backgroundColor = "#FFFFED";
                 document.getElementsByName("rust")[0].style.backgroundColor = "#FFFFED";
                 document.getElementById("dragbar").style.backgroundColor = "#FFFFED";
@@ -95,9 +95,9 @@
             locationButton.textContent = "Go";
             locationButton.id = "go";
             locationButton.className = "btn-primary";
-            var $_GET = {};
+            let $_GET = {};
             if (document.location.toString().indexOf('?') !== -1) {
-                var query = document.location
+                let query = document.location
                     .toString()
                     // get the query string
                     .replace(/^.*?\?/, '')
@@ -105,8 +105,8 @@
                     .replace(/#.*$/, '')
                     .split('&');
 
-                for (var i = 0, l = query.length; i < l; i++) {
-                    var aux = decodeURIComponent(query[i]).split('=');
+                for (let i = 0, l = query.length; i < l; i++) {
+                    let aux = decodeURIComponent(query[i]).split('=');
                     $_GET[aux[0]] = aux[1];
                 }
                 //get the 'index' query parameter
@@ -134,17 +134,17 @@
                 sortListByDistance();
             });
             locationButton.addEventListener("click", () => {
-                var xmlhttp = new XMLHttpRequest();
+                let xmlhttp = new XMLHttpRequest();
                 xmlhttp.open("GET", "https://donttrip.technologists.cloud/donttrip/client/dt.php?go=yes&destination=" + document.getElementById("myInput").value + "&keyword=" + document.getElementById("keywordIn").value, true);
                 xmlhttp.send();
                 if (document.getElementById("myInput").value == null || document.getElementById("myInput").value == "") {
                     alert("Please Choose a Destination.");
                 } else if (navigator.geolocation) { // Try HTML5 geolocation.
-                    var xxx = document.getElementsByName("rust");
+                    let xxx = document.getElementsByName("rust");
                     if (xxx[0].style.display === "none") {
                         xxx[0].style.display = "block";
                     }
-                    var x = document.getElementById("clear");
+                    let x = document.getElementById("clear");
                     if (x.style.display === "none") {
                         x.style.display = "block";
                     }
@@ -171,6 +171,7 @@
                                 locationButton.addEventListener("click", () => {
                                     directionsRenderer.setMap(null);
                                     clear();
+									addedWaypoint= [];
                                 });
 
                             });
@@ -189,14 +190,14 @@
                                     getNextPage();
                                 }
                             };
-                            var waypoints = [];
-                            var address = document.getElementById("myInput").value;
+                            let waypoints = [];
+                            let address = document.getElementById("myInput").value;
                             geocoder.geocode({ //get address
                                 'address': address
                             }, function(results, status) {
                                 if (status == google.maps.GeocoderStatus.OK) { //use geocoder to convert dest to latlng object.
-                                    var latlng2 = results[0].geometry.location;
-                                    var request = {
+                                    let latlng2 = results[0].geometry.location;
+                                    let request = {
                                         origin: latlng,
                                         destination: latlng2,
                                         travelMode: "DRIVING",
@@ -278,7 +279,7 @@
         }
 
         function playSound() {
-            var sound = document.getElementById("audio");
+            let sound = document.getElementById("audio");
             sound.play();
         }
 
@@ -287,9 +288,9 @@
             dest.type = "text";
             dest.id = "myInput";
             dest.placeholder = "Destination";
-            var $_GET = {};
+            let $_GET = {};
             if (document.location.toString().indexOf('?') !== -1) {
-                var query = document.location
+                let query = document.location
                     .toString()
                     // get the query string
                     .replace(/^.*?\?/, '')
@@ -297,8 +298,8 @@
                     .replace(/#.*$/, '')
                     .split('&');
 
-                for (var i = 0, l = query.length; i < l; i++) {
-                    var aux = decodeURIComponent(query[i]).split('=');
+                for (let i = 0, l = query.length; i < l; i++) {
+                    let aux = decodeURIComponent(query[i]).split('=');
                     $_GET[aux[0]] = aux[1];
                 }
                 //get the 'index' query parameter
@@ -311,7 +312,7 @@
                 $(".pac-container").remove();
             });
             dest.addEventListener("keydown", function(event) {
-                var KeyID = event.keyCode;
+                let KeyID = event.keyCode;
                 new google.maps.places.Autocomplete(dest);
                 if (event.keyCode == 8 && event.repeat) {
                     dest.value = " ";
@@ -337,10 +338,10 @@
         function autocomplete(inp, arr) {
             /*the autocomplete function takes two arguments,
             the text field element and an array of possible autocompleted values:*/
-            var currentFocus;
+            let currentFocus;
             /*execute a function when someone writes in the text field:*/
             inp.addEventListener("input", function(e) {
-                var a, b, i, val = this.value;
+                let a, b, i, val = this.value;
                 /*close any already open lists of autocompleted values*/
                 closeAllLists();
                 if (!val) {
@@ -378,17 +379,17 @@
             });
             /*execute a function presses a key on the keyboard:*/
             inp.addEventListener("keydown", function(e) {
-                var x = document.getElementById(this.id + "autocomplete-list");
+                let x = document.getElementById(this.id + "autocomplete-list");
                 if (x) x = x.getElementsByTagName("div");
                 if (e.keyCode == 40) {
                     /*If the arrow DOWN key is pressed,
-                    increase the currentFocus variable:*/
+                    increase the currentFocus letiable:*/
                     currentFocus++;
                     /*and and make the current item more visible:*/
                     addActive(x);
                 } else if (e.keyCode == 38) { //up
                     /*If the arrow UP key is pressed,
-                    decrease the currentFocus variable:*/
+                    decrease the currentFocus letiable:*/
                     currentFocus--;
                     /*and and make the current item more visible:*/
                     addActive(x);
@@ -415,7 +416,7 @@
 
             function removeActive(x) {
                 /*a function to remove the "active" class from all autocomplete items:*/
-                for (var i = 0; i < x.length; i++) {
+                for (let i = 0; i < x.length; i++) {
                     x[i].classList.remove("autocomplete-active");
                 }
             }
@@ -423,8 +424,8 @@
             function closeAllLists(elmnt) {
                 /*close all autocomplete lists in the document,
                 except the one passed as an argument:*/
-                var x = document.getElementsByClassName("autocomplete-items");
-                for (var i = 0; i < x.length; i++) {
+                let x = document.getElementsByClassName("autocomplete-items");
+                for (let i = 0; i < x.length; i++) {
                     if (elmnt != x[i] && elmnt != inp) {
                         x[i].parentNode.removeChild(x[i]);
                     }
@@ -441,14 +442,14 @@
         }
 
         function sortListByDistance() {
-            var list, switching, b, shouldSwitch;
-            var regex = /[+]?\d+(\.\d+)?/g;
+            let list, switching, b, shouldSwitch;
+            let regex = /[+]?\d+(\.\d+)?/g;
             list = document.getElementById("places");
             switching = true;
             while (switching) {
                 switching = false;
                 b = list.getElementsByTagName("LI");
-                console.log(b.length - 1);
+                //console.log(b.length - 1);
                 for (var i = 0; i < (b.length - 1); i++) {
                     shouldSwitch = false;
                     let umm = b[i].innerHTML.toString();
@@ -474,7 +475,7 @@
         }
 
         function sortListAlphabetically() {
-            var list, i, switching, b, shouldSwitch;
+            let list, i, switching, b, shouldSwitch;
             list = document.getElementById("places");
             switching = true;
             while (switching) {
@@ -496,7 +497,7 @@
 
         function addPlaces(places, map, pos, latlng2) { //shows places fetched from nearby search on map/li element
             const infowindow = new google.maps.InfoWindow();
-            var photoElement;
+            let photoElement;
             const infowindowContent = document.getElementById("infowindow-content");
             infowindow.setContent(infowindowContent);
             const service2 = new google.maps.places.PlacesService(map);
@@ -506,19 +507,19 @@
             }
             for (const place of places) { //sadly, O(n^3) time complexity loop
                 if (place.geometry && place.geometry.location) {
-                    var image = {
+                    let image = {
                         url: place.icon,
                         size: new google.maps.Size(71, 71),
                         origin: new google.maps.Point(0, 0),
                         anchor: new google.maps.Point(17, 34),
                         scaledSize: new google.maps.Size(25, 25),
                     };
-                    if (iconExists.includes(place.types[1], 0) && !(d.getHours() >= 6 && d.getHours() <= 18)) {
+                    //if (iconExists.includes(place.types[1], 0) && !(d.getHours() >= 6 && d.getHours() <= 18)) {
                         //image.url = "../icons/" + place.types[1] + ".png"; //uncomment this line and below line for custom icons! modify "d" checks for day-mode icon switching.
-                    } else if ((place.types[1].includes("store") || place.types[1].includes("grocery")) && !(d.getHours() >= 6 && d.getHours() <= 18)) {
+                    //} else if ((place.types[1].includes("store") || place.types[1].includes("grocery")) && !(d.getHours() >= 6 && d.getHours() <= 18)) {
                         //image.url = "../icons/store.png";
-                    }
-                    var marker = new google.maps.Marker({
+                    //}
+                    let marker = new google.maps.Marker({
                         map,
                         icon: image,
                         title: place.name,
@@ -527,12 +528,12 @@
                     markers.push(marker);
                     const li = document.createElement("li");
                     if (getOccurrence(placeListND, place.place_id) == 1) { //kill duplicates	
-                        var br = document.createElement("br");
-                        var s = document.createElement("SUB");
-                        var distanceFromYou = (distanceTwoPoints(pos, place.geometry.location) * 0.621371).toFixed(1);
+                        let br = document.createElement("br");
+                        let s = document.createElement("SUB");
+                        let distanceFromYou = (distanceTwoPoints(pos, place.geometry.location) * 0.621371).toFixed(1);
                         li.textContent = place.name;
-                        var t = document.createTextNode(" " + distanceFromYou + " miles away");
-                        var x = document.createElement("SUB");
+                        let t = document.createTextNode(" " + distanceFromYou + " miles away");
+                        let x = document.createElement("SUB");
                         x.appendChild(t);
                         li.appendChild(br);
                         li.appendChild(x);
@@ -550,7 +551,7 @@
                                     placeId: place.place_id,
                                     location: results[0].geometry.location,
                                 });
-                                var request = {
+                                let request = {
                                     placeId: place.place_id,
                                     fields: ['name', 'rating', 'formatted_phone_number', 'geometry', "website", "opening_hours"]
                                 };
@@ -561,7 +562,7 @@
                                 const nameElement = document.createElement("p");
                                 nameElement.textContent = place.name;
                                 content.appendChild(nameElement);
-                                var photos = place?.photos;
+                                let photos = place?.photos;
                                 if (photos) {
                                     photoElement = document.createElement("img");
                                     photoElement.src = photos[0]?.getUrl({
@@ -583,7 +584,6 @@
                                 const b1 = document.createElement("br");
                                 const b2 = document.createElement("br");
                                 service.getDetails(request, callback);
-
                                 function callback(place, status) {
                                     if (status == google.maps.places.PlacesServiceStatus.OK) {
                                         placePhoneNumber.textContent = place.formatted_phone_number;
@@ -640,12 +640,14 @@
                                     content.appendChild(b1);
                                     content.appendChild(b2);
                                 }
-
                                 content.appendChild(openInMaps);
                                 dir2.addEventListener("click", () => { //add marker to waypoint along route onClick, can be cleared!
-                                    content.removeChild(dir2);
-                                    content.removeChild(b1);
-                                    content.removeChild(b2);
+                                    addedWaypoint.push(place.place_id);
+									if(addedWaypoint.includes(place.place_id)) {
+										content.removeChild(dir2);
+										content.removeChild(b1);
+										content.removeChild(b2);
+									}
                                     document.getElementById("panel").innerHTML = "";
                                     const directionsService = new google.maps.DirectionsService();
                                     const directionsRenderer = new google.maps.DirectionsRenderer({
@@ -654,7 +656,7 @@
                                         panel: document.getElementById("panel"),
                                     });
                                     directionsRenderer.addListener("directions_changed", () => {
-                                        var directions = directionsRenderer.getDirections();
+                                        let directions = directionsRenderer.getDirections();
                                         if (directions) {
                                             computeTotalDistance(directions);
                                             total = tot;
@@ -668,10 +670,9 @@
                                         location: place.geometry.location,
                                         stopover: true,
                                     });
-                                    addedWaypoint.push(place.place_id);
-                                    console.log(addedWaypoint);
-                                    console.log(waypoint);
-                                    var request = {
+                                    //console.log(addedWaypoint);
+                                    //console.log(waypoint);
+                                    let request = {
                                         origin: pos,
                                         destination: latlng2,
                                         waypoints: waypoint,
@@ -740,13 +741,13 @@
         }
 
         function getOccurrence(arr, val) { //how many times val occurs in array
-            var count = 0;
+            let count = 0;
             arr.forEach((v) => (v === val && count++));
             return count;
         }
 
         function setMapOnAll(map) { // Sets the map on all markers in the array.
-            for (var i = 0; i < markers.length; i++) {
+            for (let i = 0; i < markers.length; i++) {
                 markers[i].setMap(map);
             }
         }
@@ -790,7 +791,7 @@
             return [lat_upper, lat_lower];
         }
 
-        var script = document.createElement("script"); //append the API key to the DOM
+        let script = document.createElement("script"); //append the API key to the DOM
         script.src =
             document.getElementById('api_key').value;
         script.defer = true;
@@ -803,13 +804,13 @@
         "google-polyline": 5
     }],
     3: [function(require, module, exports) { //minified functions
-        var PRECISION = 1e5
+        let PRECISION = 1e5
 
         function decode(value) { //decode a polyline into an array of points
-            var points = []
-            var lat = 0
-            var lon = 0
-            var values = decode.integers(value, function(x, y) {
+            let points = []
+            let lat = 0
+            let lon = 0
+            let values = decode.integers(value, function(x, y) {
                 lat += x
                 lon += y
                 points.push([lat / PRECISION, lon / PRECISION])
@@ -822,13 +823,13 @@
         }
 
         decode.integers = function(value, callback) {
-            var values = 0
-            var x = 0
-            var y = 0
-            var byte = 0
-            var current = 0
-            var bits = 0
-            for (var i = 0; i < value.length; i++) {
+            let values = 0
+            let x = 0
+            let y = 0
+            let byte = 0
+            let current = 0
+            let bits = 0
+            for (let i = 0; i < value.length; i++) {
                 byte = value.charCodeAt(i) - 63
                 current = current | ((byte & 0x1F) << bits)
                 bits = bits + 5
@@ -848,10 +849,10 @@
         module.exports = decode
     }, {}],
     4: [function(require, module, exports) {
-        var PRECISION = 1e5
-        var CHARCODE_OFFSET = 63
-        var CHARMAP = {}
-        for (var i = 0x20; i < 0x7F; i++) {
+        let PRECISION = 1e5
+        let CHARCODE_OFFSET = 63
+        let CHARMAP = {}
+        for (let i = 0x20; i < 0x7F; i++) {
             CHARMAP[i] = String.fromCharCode(i)
         }
 
@@ -859,11 +860,11 @@
             // px, py, x and y store rounded exponentiated versions of the values
             // they represent to compute the actual desired differences. This helps
             // with finer than 5 decimals floating point numbers.
-            var px = 0,
+            let px = 0,
                 py = 0
             return reduce(points, function(str, lat, lon) {
-                var x = Math.round(lat * 1e5)
-                var y = Math.round(lon * 1e5)
+                let x = Math.round(lat * 1e5)
+                let y = Math.round(lon * 1e5)
                 str += chars(sign((x - px))) +
                     chars(sign((y - py)))
                 px = x
@@ -873,11 +874,11 @@
         }
 
         function reduce(points, callback) {
-            var point = null
-            var lat = 0
-            var lon = 0
-            var str = ''
-            for (var i = 0; i < points.length; i++) {
+            let point = null
+            let lat = 0
+            let lon = 0
+            let str = ''
+            for (let i = 0; i < points.length; i++) {
                 point = points[i]
                 lat = point.lat || point.x || point[0]
                 lon = point.lng || point.y || point[1]
@@ -895,7 +896,7 @@
         }
 
         function chars(value) {
-            var str = ''
+            let str = ''
             while (value >= 0x20) {
                 str += CHARMAP[charCode(value)]
                 value = value >> 5
