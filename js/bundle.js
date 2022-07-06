@@ -120,7 +120,6 @@
                     keywordIn.value = " ";
                 }
             });
-
             keyword.appendChild(locationButton);
             locationButton.setAttribute("style", "margin-left: 5px;");
             map.controls[google.maps.ControlPosition.LEFT].push(keyword);
@@ -161,7 +160,6 @@
                                 map,
                                 panel: document.getElementById("panel"),
                             });
-
                             directionsRenderer.addListener("directions_changed", () => {
                                 const directions = directionsRenderer.getDirections();
                                 if (directions) {
@@ -171,16 +169,14 @@
                                 locationButton.addEventListener("click", () => {
                                     directionsRenderer.setMap(null);
                                     clear();
-									addedWaypoint= [];
+                                    addedWaypoint = [];
                                 });
-
                             });
                             const geocoder = new google.maps.Geocoder();
                             const latlng = {
                                 lat: parseFloat(pos.lat),
                                 lng: parseFloat(pos.lng)
                             };
-
                             map.setCenter(pos);
                             let getNextPage;
                             const moreButton = document.getElementById("more");
@@ -207,7 +203,6 @@
                                         if (status == "OK") {
                                             directionsRenderer.setDirections(result);
                                             waypoints = polyline.decode(result.routes[0].overview_polyline);
-
                                             directionsRenderer.setMap(map);
                                             const PolygonCoords = PolygonPoints();
                                             const PolygonBound = new google.maps.Polygon({
@@ -217,14 +212,12 @@
                                                 strokeWeight: 2,
                                                 fillColor: "#FF0000",
                                                 fillOpacity: 0.35,
-
                                             });
                                             PolygonBound.setMap(map); //splitting a polygon into points, calling nearbySearch on each point
                                             service = new google.maps.places.PlacesService(map);
                                             if ((total * 0.621371).toFixed(1) > 350) {
                                                 playSound();
                                                 offset = 25;
-
                                             } else {
                                                 offset = 40;
                                             }
@@ -514,9 +507,9 @@
                         scaledSize: new google.maps.Size(25, 25),
                     };
                     //if (iconExists.includes(place.types[1], 0) && !(d.getHours() >= 6 && d.getHours() <= 18)) {
-                        //image.url = "../icons/" + place.types[1] + ".png"; //uncomment this line and below line for custom icons! modify "d" checks for day-mode icon switching.
+                    //image.url = "../icons/" + place.types[1] + ".png"; //uncomment this line and below line for custom icons! modify "d" checks for day-mode icon switching.
                     //} else if ((place.types[1].includes("store") || place.types[1].includes("grocery")) && !(d.getHours() >= 6 && d.getHours() <= 18)) {
-                        //image.url = "../icons/store.png";
+                    //image.url = "../icons/store.png";
                     //}
                     let marker = new google.maps.Marker({
                         map,
@@ -582,6 +575,7 @@
                                 const b1 = document.createElement("br");
                                 const b2 = document.createElement("br");
                                 service.getDetails(request, callback);
+
                                 function callback(place, status) {
                                     if (status == google.maps.places.PlacesServiceStatus.OK) {
                                         placePhoneNumber.textContent = place.formatted_phone_number;
@@ -639,11 +633,11 @@
                                 content.appendChild(openInMaps);
                                 dir2.addEventListener("click", () => { //add marker to waypoint along route onClick, can be cleared!
                                     addedWaypoint.push(place.place_id);
-									if(addedWaypoint.includes(place.place_id)) {
-										content.removeChild(dir2);
-										content.removeChild(b1);
-										content.removeChild(b2);
-									}
+                                    if (addedWaypoint.includes(place.place_id)) {
+                                        content.removeChild(dir2);
+                                        content.removeChild(b1);
+                                        content.removeChild(b2);
+                                    }
                                     document.getElementById("panel").innerHTML = "";
                                     const directionsService = new google.maps.DirectionsService();
                                     const directionsRenderer = new google.maps.DirectionsRenderer({
@@ -666,8 +660,6 @@
                                         location: place.geometry.location,
                                         stopover: true,
                                     });
-                                    //console.log(addedWaypoint);
-                                    //console.log(waypoint);
                                     let request = {
                                         origin: pos,
                                         destination: latlng2,
