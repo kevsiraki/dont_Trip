@@ -1,10 +1,11 @@
 <?php
 require_once "config.php";
+require_once "geolocation.php";
 require_once 'vendor/autoload.php';
-include_once 'vendor/sonata-project/google-authenticator/src/FixedBitNotation.php';
-include_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticatorInterface.php';
-include_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator.php';
-include_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
+require_once 'vendor/sonata-project/google-authenticator/src/FixedBitNotation.php';
+require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticatorInterface.php';
+require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator.php';
+require_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
 session_start();
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: ../login.php");
@@ -15,12 +16,6 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 $salt = $_ENV['2fa_salt'];
-
-//geolocation api
-$ip = $_SERVER['REMOTE_ADDR'];
-$details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
-$city = $details->city;
-$stateFull = $details->region;
 $sql3 = "SELECT * FROM users WHERE username = '" . $_SESSION['username'] . "' ";
 $result3 = mysqli_query($link, $sql3);
 $basics = mysqli_fetch_assoc($result3);

@@ -14,7 +14,7 @@ if ($_GET['key'] && $_GET['token']) {
             $msg = "You have already verified your account with us.";
         }
     } else {
-        $msg = "This email has been not registered with us.";
+        $msg = "This email has not been registered with us.";
     }
 } else {
     $msg = "UNKNOWN ERROR.";

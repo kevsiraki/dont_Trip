@@ -1,14 +1,11 @@
 <?php
 require_once "config.php";
+require_once "geolocation.php";
 session_start();
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: ../login.php");
     exit;
 }
-$ip = $_SERVER['REMOTE_ADDR'];
-$details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
-$city = $details->city;
-$stateFull = $details->region;
 $result = mysqli_query($link, "SELECT DISTINCT destination FROM searches WHERE username in (SELECT username FROM searches WHERE username = '" . $_SESSION['username'] . "')");
 $result2 = mysqli_query($link, "SELECT DISTINCT keyword FROM searches WHERE username IN (SELECT username FROM searches WHERE username = '" . $_SESSION['username'] . "')");
 if(isset($_GET['toDelete'])) 

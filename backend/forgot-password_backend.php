@@ -3,10 +3,10 @@
 // Include config file
 error_reporting(0);
 require_once "config.php";
-include_once 'vendor/sonata-project/google-authenticator/src/FixedBitNotation.php';
-include_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticatorInterface.php';
-include_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator.php';
-include_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
+require_once 'vendor/sonata-project/google-authenticator/src/FixedBitNotation.php';
+require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticatorInterface.php';
+require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator.php';
+require_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
 // Define variables and initialize with empty values
 $username = $email = $new_password = $confirm_password = $ans = $code = $tfa_err = "";
 $new_password_err = $confirm_password_err = $email_err = $username_err = $ans_err = "";

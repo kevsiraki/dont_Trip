@@ -15,8 +15,11 @@
 	<body>
 		<?php if($expired == 1): ?>
 			<div class="wrapper">
-				<h2>Expired Link.</h2>
-				<a class=" btn btn-secondary " href="../login.php">GO BACK TO LOGIN</a>
+				<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
+				<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
+				<br>
+				<div class = "info-bar">Expired/Invalid Link.</div>
+				<a class="center btn btn-info" href="../login.php">Back To Login</a>
 			</div>    
 		<?php endif; ?>
 		<?php if($expired == 0): ?>

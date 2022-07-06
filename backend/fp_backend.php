@@ -46,9 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $key = $key . $addKey;
     if (empty($email_err)) {
         $link2 = "<a href='https://donttrip.technologists.cloud/donttrip/client/forgot-password.php?key=" . $_POST["email"] . "&token=" . $key . "'>Reset Password</a>";
-        require "phpmail/src/Exception.php";
-        require "phpmail/src/PHPMailer.php";
-        require "phpmail/src/SMTP.php";
+        require_once "phpmail/src/Exception.php";
+        require_once "phpmail/src/PHPMailer.php";
+        require_once "phpmail/src/SMTP.php";
         $mail = new PHPMailer(true);
         try {
             $mail->CharSet = "utf-8";

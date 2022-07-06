@@ -149,9 +149,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($row == 1) {
             //sends email
             $link2 = "<a href='https://donttrip.technologists.cloud/donttrip/client/verify-email.php?key=" . $_POST["email"] . "&token=" . $token . "'>Verify</a>";
-            require "phpmail/src/Exception.php";
-            require "phpmail/src/PHPMailer.php";
-            require "phpmail/src/SMTP.php";
+            require_once "phpmail/src/Exception.php";
+            require_once "phpmail/src/PHPMailer.php";
+            require_once "phpmail/src/SMTP.php";
             $mail = new PHPMailer(true);
             try {
                 $mail->CharSet = "utf-8";
@@ -182,7 +182,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } else if (date('H') >= 18) {
                     $greeting = "Good evening";
                 }
-                $mail->Body = " " . $greeting . " . Click On This Link to Verify Email: " . $link2 . ". (Note: If this isn't you, ignore this email).";
+                $mail->Body = $greeting . ".  Click On This Link to Verify Your Email: " . $link2 . ".";
             }
             catch(phpmailerException $e) {
                 echo $e->errorMessage();
@@ -190,7 +190,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             catch(Exception $e) {
                 mysqli_query($link, "DELETE FROM users WHERE username = '".$username."';");
                 header("location: ../client/register.php"); //Boring error messages from anything else!
-                
             }
             if ($mail->Send()) {
                 header("location: ../login.php");
@@ -199,8 +198,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         } else {
             mysqli_query($link, "DELETE FROM users WHERE username = '$username';");
-            header("location: register.php"); //Boring error messages from anything else!
-            
+            header("location: ../client/register.php"); //Boring error messages from anything else! 
         }
     }
     mysqli_close($link);

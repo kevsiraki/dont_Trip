@@ -1,8 +1,6 @@
 <?php
 // Initialize the session
 session_start();
-//error_reporting(0);
-require_once "config.php";
 
 // Check if the user is already logged in, if yes then redirect him to welcome page
 /*
@@ -17,11 +15,11 @@ if (isset($_COOKIE["idrm_tkn"]))
 	exit();
 }
 */
-
-include_once 'vendor/sonata-project/google-authenticator/src/FixedBitNotation.php';
-include_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticatorInterface.php';
-include_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator.php';
-include_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
+require_once "config.php";
+require_once 'vendor/sonata-project/google-authenticator/src/FixedBitNotation.php';
+require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticatorInterface.php';
+require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator.php';
+require_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
 require_once 'vendor/autoload.php';
 require_once 'redirect_backend.php';
 
