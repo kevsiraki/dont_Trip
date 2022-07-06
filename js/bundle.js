@@ -31,7 +31,6 @@
     }],
     2: [function(require, module, exports) {
         const polyline = require("google-polyline");
-        //let iconExists = ["bar", "food", "park", "place_of_worship", "point_of_interest", "restaurant", "store"]; //mimicking google's json to display custom icons
         let markers = [];
         let placesList = document.getElementById("places");
         let waypoints = [];
@@ -54,7 +53,6 @@
             });
             map.setZoom(6);
             if (d.getHours() >= 6 && d.getHours() <= 18) {
-                //iconExists = [];
                 document.getElementById("sidebar").style.backgroundColor = "#FFFFED";
                 document.getElementsByName("rust")[0].style.backgroundColor = "#FFFFED";
                 document.getElementById("dragbar").style.backgroundColor = "#FFFFED";
@@ -497,7 +495,7 @@
             for (const place of places) {
                 placeListND.push(place.place_id); //list of previous places, avoids duplications
             }
-            for (const place of places) { //sadly, O(n^3) time complexity loop
+            for (const place of places) {
                 if (place.geometry && place.geometry.location) {
                     let image = {
                         url: place.icon,
@@ -506,11 +504,6 @@
                         anchor: new google.maps.Point(17, 34),
                         scaledSize: new google.maps.Size(25, 25),
                     };
-                    //if (iconExists.includes(place.types[1], 0) && !(d.getHours() >= 6 && d.getHours() <= 18)) {
-                    //image.url = "../icons/" + place.types[1] + ".png"; //uncomment this line and below line for custom icons! modify "d" checks for day-mode icon switching.
-                    //} else if ((place.types[1].includes("store") || place.types[1].includes("grocery")) && !(d.getHours() >= 6 && d.getHours() <= 18)) {
-                    //image.url = "../icons/store.png";
-                    //}
                     let marker = new google.maps.Marker({
                         map,
                         icon: image,
@@ -575,7 +568,6 @@
                                 const b1 = document.createElement("br");
                                 const b2 = document.createElement("br");
                                 service.getDetails(request, callback);
-
                                 function callback(place, status) {
                                     if (status == google.maps.places.PlacesServiceStatus.OK) {
                                         placePhoneNumber.textContent = place.formatted_phone_number;
