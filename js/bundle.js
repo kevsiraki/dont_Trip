@@ -30,7 +30,7 @@
         "./map": 2
     }],
     2: [function(require, module, exports) {
-        const polyline = require("google-polyline"); //some required globals
+        const polyline = require("google-polyline");
         //let iconExists = ["bar", "food", "park", "place_of_worship", "point_of_interest", "restaurant", "store"]; //mimicking google's json to display custom icons
         let markers = [];
         let placesList = document.getElementById("places");
@@ -449,7 +449,6 @@
             while (switching) {
                 switching = false;
                 b = list.getElementsByTagName("LI");
-                //console.log(b.length - 1);
                 for (var i = 0; i < (b.length - 1); i++) {
                     shouldSwitch = false;
                     let umm = b[i].innerHTML.toString();
@@ -569,7 +568,6 @@
                                         maxWidth: 1500,
                                         maxHeight: 400
                                     })
-                                    //content.appendChild(photoElement);
                                 }
                                 const placeAddressElement = document.createElement("p");
                                 placeAddressElement.textContent = results[0].formatted_address;
@@ -630,8 +628,6 @@
                                 openInMaps.appendChild(document.createElement("br"));
                                 content.appendChild(placeOpen);
                                 content.appendChild(placeRating);
-                                //content.appendChild(placePhoneNumber);
-                                //content.appendChild(placeWebsite);
                                 content.appendChild(moreInfo);
                                 service = new google.maps.places.PlacesService(map);
                                 dir2.textContent = "Add to Route";

@@ -3,10 +3,9 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<meta content="initial-scale=1.0, user-scalable=no" name="viewport">
 		<title>Account Settings</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<meta content="initial-scale=1.0, user-scalable=no" name="viewport">
 		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<link href="../style/navbar.css" rel="stylesheet">
@@ -16,25 +15,25 @@
 		<link rel="stylesheet" href="../style/settings_style.css">	
 	</head>	
 	<div class="topnav">
-			<a href="javascript:void(0);" class="active" onclick="myFunction()">
-				<i class="fa fa-bars"></i>
-			</a>
-			<div id="myLinks">
-				<a href="../client/searches.php">Your Searches</a>
-				<a href="../client/state.php">Popular In <?php echo $stateFull ?></a>
-				<a href="../client/dt.php">Back to Don't Trip</a>
-			</div>
-		</div>		
+		<a href="javascript:void(0);" class="active" onclick="myFunction()">
+			<i class="fa fa-bars"></i>
+		</a>
+		<div id="myLinks">
+			<a href="../client/searches.php">Your Searches</a>
+			<a href="../client/state.php">Popular In <?php echo $stateFull ?></a>
+			<a href="../client/dt.php">Back to Don't Trip</a>
+		</div>
+	</div>		
 	<body>
 		<br>
 		<div class="center" >
 			<div class="wrapper" >
-				<img src="https://mpng.subpng.com/20180802/icj/kisspng-user-profile-default-computer-icons-network-video-the-foot-problems-of-the-disinall-foot-care-founde-5b6346121ec769.0929994515332326581261.jpg" width="30" height="30" style="opacity: 0.5; float: left;">
+				<img src="../icons/user.jpg" width="33" height="30" style="opacity: 0.5; float: left;">
 				<h5 style="float:left; padding:5px;"><?php echo $_SESSION['username']; ?></h5>
 				<br>
 				<br>
 				<br>
-				<form  method="post"  >
+				<form method="post">
 					<?php if (isset($basics)): ?>
 						<input type="checkbox"  name="2fa" value="Yes" ><b>&nbsp;&nbsp;&nbsp;</b></input>
 						<input type="submit" name="formSubmit2" value="Update 2FA Status?" class="btn btn-secondary btn-sm" />
@@ -72,16 +71,13 @@
 								<br>
 								<img src = "<?php echo $url; ?>" alt = "QR Code" />
 							</div>
+						<?php endif; ?>
+						<br>
+						<input type="checkbox" name="del" value="Yes" > <b>&nbsp;&nbsp;</b></input>
+						<input type="submit" name="formSubmit" value="Delete Account?" class="btn btn-secondary btn-sm" />
 					<?php endif; ?>
-				</form>
-				<br>
-				<form  method="post">
-					<input type="checkbox" name="del" value="Yes" > <b>&nbsp;&nbsp;</b></input>
-					<input type="submit" name="formSubmit" value="Delete Account?" class="btn btn-secondary btn-sm" />
-				</form>
-				<?php endif; ?>
-				<br>
-				<form  method="post">
+					<br>
+					<br>
 					<input type="checkbox" name="delS" value="Yes" > <b>&nbsp;&nbsp;</b></input>
 					<input type="submit" name="formSubmit" value="Clear Search History?" class="btn btn-secondary btn-sm" />
 				</form>

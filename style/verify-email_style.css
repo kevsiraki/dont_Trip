@@ -10,7 +10,7 @@ html, body {
 	font-family: 'Comfortaa';
 	display: grid;
 	place-items: center;
-		width: 100%;
+	width: 100%;
 	height: 100%;
 	background: #e8f3fd;
 }
@@ -41,6 +41,7 @@ html, body {
 	border-radius: 1em;
 	background: #ece9e6;
 	background: linear-gradient(to right, #ffffff, #ece9e6);
+	background-image: linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url("../icons/form_bg.jpg");
 }
 .card__body {
 	padding: 1rem;

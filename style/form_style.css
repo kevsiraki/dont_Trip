@@ -47,7 +47,7 @@ body, html {
 	-webkit-border-radius: 6px;
 	box-shadow: 0 0 5px #ccc;
 	border: 1px solid #fff;
-	background-image: linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url("https://wallpapercave.com/wp/wp4313180.jpg");
+	background-image: linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url("../icons/form_bg.jpg");
 	background-size: cover;
 }
 .form-control {
