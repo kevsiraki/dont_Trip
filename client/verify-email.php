@@ -7,6 +7,7 @@
 		<title>Email Verification</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<link rel="stylesheet" href="../style/verify-email_style.css">
+		<script src="../js/lightMode.js"></script>
 		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 	</head>

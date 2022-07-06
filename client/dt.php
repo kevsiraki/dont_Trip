@@ -6,12 +6,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<meta charset="utf-8">
 		<meta content="initial-scale=1.0, user-scalable=no" name="viewport">
+		<title>Don't Trip</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
-		<meta charset="utf-8">
-		<title>Don't Trip</title>
 		<link href="../style/style.css" rel="stylesheet">
 		<link href="../style/autofill.css" rel="stylesheet">
 		<link href="../style/navbar.css" rel="stylesheet">

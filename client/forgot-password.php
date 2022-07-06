@@ -3,17 +3,14 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-
 		<meta content="initial-scale=1.0, user-scalable=no" name="viewport">
-
-		<title>Reset Password</title>
+		<title>Password Reset Email</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
 		<link rel="stylesheet" href="../style/form_style.css">
 		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<script src="../js/lightMode.js"></script>
-		<title>Password Reset</title>
 	</head>
 	<body>
 		<?php if($expired == 1): ?>
