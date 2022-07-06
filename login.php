@@ -1,5 +1,4 @@
 <?php require "backend/login_backend.php"; ?>
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -12,7 +11,7 @@
 		<meta name="description" content="An itinerary planner utilizing the Google Maps API to give you customized places along a route!">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-		<link rel="stylesheet" href="style/login_style.css">
+		<link rel="stylesheet" href="style/form_style.css">
 		<link href="icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="icons/icon.png">
 		<script src="js/lightMode.js"></script>

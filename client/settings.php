@@ -1,7 +1,4 @@
-<?php 
-require "../backend/settings_backend.php";
-ini_set("allow_url_fopen", 1);
-?>
+<?php require "../backend/settings_backend.php";?>
 <!DOCTYPE html>
 <html>
 	<head>

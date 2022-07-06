@@ -9,14 +9,14 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
-		<link rel="stylesheet" href="../style/register_style.css">
+		<link rel="stylesheet" href="../style/form_style.css">
 		<script src="../js/lightMode.js"></script>
 		<title>Sign-Up</title>
 	</head>
 	<body>
 		<div class="wrapper">
 	  		<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
-			<a href="https://github.com/kevsiraki/dont_Trip"><i><small style ="float: right !important;">The better way to travel</small></i></a>
+			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
 			<div class="info-bar">
 				Fill Out This Form to Sign-Up

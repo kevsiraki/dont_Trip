@@ -1,5 +1,4 @@
 <?php require "../backend/searches_backend.php"; ?>
-
 <!DOCTYPE html>
 <html>
 	<head>

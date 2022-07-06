@@ -1,60 +1,22 @@
-html, body {
-	background-color: blue;
-}
-body {
-	background-color: #f7fef6;
-	text-align: center;
-}
-table {
-	margin: auto auto;
-	font-size: large;
-	border: 1px solid black;
-}
-h1 {
-	text-align: center;
-	color: #black;
-	font-size: xx-large;
-	font-family: "Gill Sans", "Gill Sans MT", " Calibri", "Trebuchet MS","sans-serif";
-}
-td {
-	background-color: #e8f3fd;
-	border: 1px solid black;
-}
-.tt {
-	color: #007bff;
-	text-align: center;
-	background-color: transparent;
-	border: 0 none;
-	margin-top: 25%;
-}
-.tt:hover {
-	text-decoration: underline;
-}
-th,td {
-	font-weight: bold;
-	border: 1px dotted black;
-	padding: 10px;
-	text-align: center;
-}
-td {
-	font-weight: lighter;
-}
-.center {
-	margin-left: auto;
-	margin-right: auto;
-}
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
 *,*::before,*::after {
 	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
 }
-body {
-	font-family: "Quicksand", sans-serif;
+html, body {
+	background-color: #f7fef6;
+	text-align: center;
+	font-family: 'Comfortaa';
 	display: grid;
 	place-items: center;
-	height: 100vh;
+		width: 100%;
+	height: 100%;
 	background: #e8f3fd;
+}
+.center {
+	margin-left: auto;
+	margin-right: auto;
 }
 .container {
 	display: flex;
@@ -64,10 +26,11 @@ body {
 	margin-block: 2rem;
 	gap: 2rem;
 }
-img {
-	max-width: 100%;
-	display: block;
-	object-fit: cover;
+.info-bar {
+	text-align: center;
+	color: #666;
+	font-size: 15px;
+	padding-bottom: 15px;
 }
 .card {
 	display: flex;
@@ -85,33 +48,6 @@ img {
 	flex-direction: column;
 	gap: 0.5rem;
 }
-.tag {
-	align-self: flex-start;
-	padding: 0.25em 0.75em;
-	border-radius: 1em;
-	font-size: 0.75rem;
-}
-.tag-blue {
-	background: #56ccf2;
-	background: linear-gradient(to bottom, #2f80ed, #56ccf2);
-	color: #fafafa;
-}
-.tag-white {
-	background: #56ccf2;
-	background: white;
-	color: #fafafa;
-	font-size: 2rem;
-}
-.tag-brown {
-	background: #d1913c;
-	background: linear-gradient(to bottom, #ffd194, #d1913c);
-	color: #fafafa;
-}
-.tag-red {
-	background: #cb2d3e;
-	background: linear-gradient(to bottom, #ef473a, #cb2d3e);
-	color: #fafafa;
-}
 .card__body h4 {
 	font-size: 1.5rem;
 	text-transform: capitalize;
@@ -119,14 +55,4 @@ img {
 .card__footer {
 	padding: 1rem;
 	margin-top: auto;
-}
-.user {
-	display: flex;
-	gap: 0.5rem;
-}
-.user__info > small {
-	color: #666;
-}
-textarea {
-	resize: none;
 }

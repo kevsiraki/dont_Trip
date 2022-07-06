@@ -6,7 +6,7 @@
 		<meta content="initial-scale=1.0, user-scalable=no" name="viewport">
 		<title>Reset Password</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-		<link rel="stylesheet" href="../style/fp_style.css">
+		<link rel="stylesheet" href="../style/form_style.css">
 		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<script src="../js/lightMode.js"></script>
@@ -14,8 +14,10 @@
 	</head>
 	<body>
 		<div class="wrapper">
-			<h2>Reset Password</h2>
-			<p></p>
+			<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
+			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
+			<br>
+			<div class = "info-bar">Enter your e-mail for a password recovery form.</div>
 			<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
 				<div class="form-group">
 					<label for="exampleInputEmail1">Email address: </label>

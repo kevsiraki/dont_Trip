@@ -66,7 +66,7 @@
 		</div>
 		<input type="hidden" id="api_key" name="api_key" value="<?php echo $_ENV['gmaps_api_key']?>">
 		<script src="../js/bundle.js"></script>
-		<script src="../style/jquery.js"></script>
+		<script src="../style/mobile_dragbar.js"></script>
 		<script src="../js/keywords.js"></script>
 	</body>
 </html>

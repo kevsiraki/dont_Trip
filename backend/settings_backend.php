@@ -31,7 +31,7 @@ if ((!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)) {
 if (isset($_POST['formSubmit']) && $_POST['del'] == 'Yes') {
     mysqli_query($link, "DELETE FROM searches WHERE username = '" . trim($_SESSION["username"]) . "';");
     mysqli_query($link, "DELETE FROM users WHERE username = '" . trim($_SESSION["username"]) . "';");
-    header("location: logout.php");
+    header("location: ../backend/logout.php");
 }
 if (isset($_POST['formSubmit']) && $_POST['delS'] == 'Yes') {
     mysqli_query($link, "DELETE FROM searches WHERE username = '" . trim($_SESSION["username"]) . "';");
