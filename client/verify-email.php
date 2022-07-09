@@ -13,7 +13,7 @@
 	</head>
 	<body> 
 		<div class="container mt-3">
-			<div class="card">
+			<div class="card" id="card">
 				<div class="card-header text-center">
 					<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="150" height="40" /></img></h2>
 					<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
@@ -23,7 +23,7 @@
 					</div>
 				</div>
 				<div class="card-body">
-					<p> <?php echo $msg; ?> </p>
+					<p id="info"> <?php echo $msg; ?> </p>
 					<a href="../login.php" class="btn-primary btn-sm " style="margin: auto;">Return to Login</a>
 				</div>
 			</div>

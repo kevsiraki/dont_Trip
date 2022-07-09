@@ -50,21 +50,23 @@
 		<div id="dragbar">&#9776;</div>
 		<div id="container" >
 			<div id="sidebar">
-				<h5><span id="total"></span></h5>
+				<h5 id="darkable"><span id="total"></span></h5>
 				<button class = "btn btn-link btn-sm" id="clear" style="margin-right: auto; margin-left: 0;display:none;">Clear Previous Routes</button>
 				<div id="panel"></div>
 				<audio id="audio" src=<?php echo $audio; ?> autostart="0" autostart="false" preload ="none" ></audio>
 			</div>
-			<div id="sidebar" name = "rust" style = "display:none;" >
-				<h5>Sort places by:</h5>
+			<div id="sidebar" name = "rust" style="display:none;">
+				<h5 id="darkable" name="sort">Sort places by:</h5>
+				<span>
 				<button type="button" class = "btn btn-link btn-sm" id = "sortA" >Name</button> 
 				<button type="button" class = "btn btn-link btn-sm" id = "sortD" >Distance</button>
+				</span>
 				<br>
 				<ul id="places"></ul>
 				<button id="more" class="btn btn-secondary btn-block">Load more results</button>
 			</div>	
 		</div>
-		<input type="hidden" id="api_key" name="api_key" value="<?php echo $_ENV['gmaps_api_key']?>">
+		<input type="hidden" id="api_key" name="api_key" value="<?php echo $gmaps_api_key?>">
 		<script src="../js/bundle.js"></script>
 		<script src="../style/mobile_dragbar.js"></script>
 		<script src="../js/keywords.js"></script>

@@ -1,0 +1,18 @@
+.pw-stength:before  {
+	content: 'x';
+	color: red;
+}
+.pw-stength-success:before {
+  content: '✓';
+  color: green;
+}
+@font-face{
+  font-family: text-security-disc;
+  src: url("https://raw.githubusercontent.com/noppa/text-security/master/dist/text-security-disc.woff");
+}
+.password {
+  -webkit-text-security: disc;
+  font-family: text-security-disc;
+  font: small-caption;
+  font-size: 16px;
+}

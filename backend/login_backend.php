@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $basics = mysqli_fetch_assoc($result3);
     // Check if username is empty
     if (empty(trim($_POST["username"])) && isset($_POST["Submit"])) {
-        $username_err = "Please enter username.";
+        $username_err = "Please enter your username.";
     } else {
         $usernameO = $username = trim($_POST["username"]);
     }
@@ -97,7 +97,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if(($basics["tfaen"]==1 || $basics4["tfaen"] == 1)&&(password_verify($password, $basics4['password'])||password_verify($password, $basics['password']))) {
 		$showTFA = true;
 	} else {
+           if(empty($username_err) && empty($password_err)) {
 		$login_err = "Invalid Credentials.";
+}
 	}
 	
     // Validate credentials

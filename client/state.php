@@ -25,7 +25,7 @@
 			</div>
 		</div>
 		<br>
-		<h1>Popular in <?php echo $stateFull ?></h1>
+		<h1 id="darkable">Popular in <?php echo $stateFull ?></h1>
 		<br>
 		<div id = "container">
 			<div id="sidebar">
@@ -44,7 +44,7 @@
 				</ul>
 			</div>
 			<div id="sidebar" name = "rust" >
-				<h1 id="underline">Keywords</h1>
+				<h1 id="underline" name="keywords">Keywords</h1>
 				<br>
 				<ul>
 					<?php

@@ -3,25 +3,26 @@ body, html {
 	height: 100%;
 	padding-top: 2%;
 	margin: 0;
-	background-color: #e8f3fd;
 	font-family: arial ;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	background-color:#202945;
 }
+/* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
 .center{
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
 }
-.wrapper {
-	width: 360px;
-	padding: 20px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 10%;
-}
 .title-bar {
-	font-family: myFirstFont;
+	font-family: arial;
 	text-align: center;
 	color: #333333;
 	font-size: 30px;
@@ -29,7 +30,7 @@ body, html {
 }
 .info-bar {
 	text-align: center;
-	color: #666;
+	color: #C0C0C0;
 	font-size: 15px;
 	padding-bottom: 15px;
 }
@@ -37,8 +38,31 @@ body, html {
 	color: #45b3e7;
 	text-decoration: none;
 }
+#info, #other, .pw-stength, #info-two{
+	color: #D3D3D3;
+}
+#other {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    text-align: center;
+}
+#other:before, #other:after {
+    position: absolute;
+    top: 51%;
+    overflow: hidden;
+    width: 50%;
+    height: 1px;
+    content: '\a0';
+    background-color: gray;
+
+}
+#other:before {
+    margin-left: -50%;
+    text-align: right;
+}
 .wrapper {
-	background-color: #ffffff;
+	background-color:#202945;
 	padding: 2%;
 	width: 25%;
 	min-width: 350px;
@@ -46,8 +70,7 @@ body, html {
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
 	box-shadow: 0 0 5px #ccc;
-	border: 1px solid #fff;
-	background-image: linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url("../icons/form_bg.jpg");
+	border: 1px #D3D3D3;
 	background-size: cover;
 }
 .form-control {
@@ -98,17 +121,3 @@ body, html {
 	-moz-transition: all .2s ease-in-out;
 	transition: all .2s ease-in-out;
 }
-meter {
-	width: 90%;
-	height: 12px;
-	margin-left: 0%;
-}
-meter[value="1"]::-webkit-meter-optimum-value { background: red; }
-meter[value="2"]::-webkit-meter-optimum-value { background: yellow; }
-meter[value="3"]::-webkit-meter-optimum-value { background: orange; }
-meter[value="4"]::-webkit-meter-optimum-value { background: green; }
-/* Gecko based browsers */
-meter[value="1"]::-moz-meter-bar { background: red; }
-meter[value="2"]::-moz-meter-bar { background: yellow; }
-meter[value="3"]::-moz-meter-bar { background: orange; }
-meter[value="4"]::-moz-meter-bar { background: green; }

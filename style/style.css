@@ -6,11 +6,8 @@ html,body {
 }
 .pac-container {
 	background: #FFFFFF;
-	/* for non-css3 browsers */
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c6cfea ', endColorstr='#DFEAF3 ');
-	/* for IE */
 	background: -webkit-gradient(linear, left top, left bottom, from(#c6cfea), to(#DFEAF3));
-	/* for webkit browsers */
 	background: -moz-linear-gradient(top, #c6cfea, #DFEAF3);
 	z-index: 10000 !important;
 	list-style-type: none;
@@ -56,18 +53,16 @@ button:hover {
 #container {
 	height: 100%;
 	display: flex;
-	background: #FFFFFF;
-	/* for non-css3 browsers */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c6cfea ', endColorstr='#DFEAF3 ');
-	/* for IE */
-	background: -webkit-gradient(linear, left top, left bottom, from(#c6cfea), to(#DFEAF3));
-	/* for webkit browsers */
-	background: -moz-linear-gradient(top, #c6cfea, #DFEAF3);
-	/* for firefox 3.6+ */
+	background-color:#1f2a3e;
 	width: 100%;
 	-webkit-text-size-adjust: none;
 	touch-action: pan-y;
-	/*prevent user scaling*/
+}
+#darkable{
+	color: #D3D3D3;
+}
+.adp-summary {
+	color: gray;
 }
 a[href^="http://maps.google.com/maps"] {
 	display: none !important
@@ -88,9 +83,7 @@ a[href^="https://maps.google.com/maps"] {
 	height: 100%;
 	box-sizing: border-box;
 	overflow: auto;
-	overflow-x: hidden;
-}
-#sidebar {
+	overflow-x: hidden; 
 	display: flex;
 	flex-direction: column;
 }
@@ -102,7 +95,8 @@ a[href^="https://maps.google.com/maps"] {
 	resize: vertical;
 }
 #dragbar {
-	background-color: #C6CFEA;
+	background-color:#1f2a3e;
+	color: gray;
 	height: 20px;
 	float: left;
 	width: 100%;
@@ -162,7 +156,7 @@ li {
 	list-style-type: none;
 }
 ul li:nth-of-type(even) {
-	background-color: #eee;
+	background-color: #d3d3d3;
 }
 ul li:hover {
 	box-shadow: inset -1em 0 #8b9dc3;

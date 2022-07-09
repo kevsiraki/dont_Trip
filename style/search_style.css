@@ -4,39 +4,15 @@ html,body {
 	padding: 0;
 	font-family: 'Comfortaa';
 	font-size:14;
-	background-color: #c6cfea;
-}
-#darkable {
-	background-color: #c6cfea;
-}
-.t {
-	background-color: #c6cfea;
-}
-button {
-	padding: 4px;
-}
-button:hover {
-	background-color: rgba(218, 218, 218);
-}
-.btn-primary {
-	margin-left: 30px;
-	margin-top: 5px;
+	background-color: #202945;
 }
 #container {
 	height: 100%;
 	display: flex;
-	background: #FFFFFF;
-	/* for non-css3 browsers */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c6cfea ', endColorstr='#DFEAF3 ');
-	/* for IE */
-	background: -webkit-gradient(linear, left top, left bottom, from(#c6cfea), to(#DFEAF3));
-	/* for webkit browsers */
-	background: -moz-linear-gradient(top, #c6cfea, #DFEAF3);
-	/* for firefox 3.6+ */
+	background: #202945;
 	width: 100%;
 	-webkit-text-size-adjust: none;
 	touch-action: pan-y;
-	/*prevent user scaling*/
 }
 #sidebar {
 	flex-basis: 15rem;
@@ -46,16 +22,14 @@ button:hover {
 	box-sizing: border-box;
 	overflow: auto;
 	overflow-x: hidden;
-}
-#sidebar {
 	display: flex;
 	flex-direction: column;
 }
-h1,h2 {
+#darkable, #underline {
 	font-size: 1.2rem;
 	margin: 0px 0px 0px 0px;
 	flex-grow: 0;
-	
+	color: #C0C0C0;
 }
 #underline {
 	border-bottom: 1px solid grey;
@@ -70,21 +44,18 @@ tr {
 tr:hover {
 	box-shadow: inset -1em 0 #8b9dc3;
 	-webkit-transition: box-shadow 0.5s;
-	/* For Safari 3.1 to 6.0 */
 	transition: box-shadow 0.5s;
 	font-family: 'Comfortaa';
 }
 tr:nth-of-type(even):hover {
 	box-shadow: inset -1em 0 #aaa;
 	-webkit-transition: box-shadow 0.5s;
-	/* For Safari 3.1 to 6.0 */
 	transition: box-shadow 0.5s;
 	font-family: 'Comfortaa';
 }
 ul {
 	list-style-type: none;
 	list-style-type: decimal !ie;
-	/*IE 7- hack*/
 	margin: 0;
 	margin-left: 0;
 	padding: 1px;
@@ -101,5 +72,6 @@ li {
 	list-style-type: none;
 }
 ul li:nth-of-type(even) {
-	background-color: #eee;
+	background-color: #d3d3d3;
+
 }
