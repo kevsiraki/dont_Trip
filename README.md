@@ -25,7 +25,7 @@
 	<li>Confirm email verification/forgot password recovery email form.</li>
 	<li>Expiring password reset forms with custom hashed tokens.</li>
 	<li>Realtime form (password/username/email/other) input strength/requirement meters.</li>
-	<li>SQL injection proof, prepare statments for any query in entire backend.</li>
+	<li>SQL injection proof, prepare/parameterized statments utilized for any query in entire backend.</li>
 	<li>Brute force protection/IDS setup to keep a log of visits and login attempts.</li>
 	<li>Inbound/Outbound traffic protection setup with AWS firewall/UFW with recovery/redeploy scripts on server (repository for these scripts coming soon).</li>
 	<li>XSRF/CSRF Protection.</li>
