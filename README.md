@@ -10,6 +10,8 @@
 <ul>
 	<p>Client Side/UX/Frontend</p>
 	<li>Find places along a route and add as many as you want along the way.</li>
+	<li>Fully featured automatic light/dark mode based upon time of day with custom CSS classes for each.</li>
+	<li>Regex for sorting places response list by distance or name.</li>
 	<li>Place info page with place name, distance, image, open/closed status/hours, website, address, and phone number.</li>
 	<li>Search history/clear search history options (both in settings and per history item).</li>
 	<li>Popular places in your state with geolocation REST API.</li>
@@ -28,5 +30,7 @@
 	<li>Inbound/Outbound traffic protection setup with AWS firewall/UFW with recovery/redeploy scripts on server (repository for these scripts coming soon).</li>
 	<li>XSRF/CSRF Protection.</li>
 	<li>AJAX/RESTful responses for backend.</li>
-	<li>Google Auth login integration</li>
+	<li>Google Auth login integration.</li>
+	<li>.htaccess file setup to redirect HTTP(Port 80) to HTTPS(Port 443), as well as hiding .php file extensions in URL.</li>
+	<li>PHP-Dot-Env used to safely store API keys, database credentials, email server information, etc.</li>
 </ul>
