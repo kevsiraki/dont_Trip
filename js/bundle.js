@@ -570,7 +570,7 @@
                                 const openInMaps = document.createElement("a");
                                 const b1 = document.createElement("br");
                                 const b2 = document.createElement("br");
-dir2.href="#";
+								dir2.href="#";
                                 service.getDetails(request, callback);
                                 function callback(place, status) {
                                     if (status == google.maps.places.PlacesServiceStatus.OK) {
