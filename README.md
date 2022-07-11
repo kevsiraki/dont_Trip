@@ -8,7 +8,7 @@
 
 <h3>Features:</h3>
 <ul>
-	<p>Client Side/UX/Frontend</p>
+	<p>Client Side/UI/UX/Frontend</p>
 	<li>Find places along a route and add as many as you want along the way.</li>
 	<li>Fully featured automatic light/dark mode based upon time of day with custom CSS classes for each.</li>
 	<li>Regex for sorting places response list by distance or name.</li>
