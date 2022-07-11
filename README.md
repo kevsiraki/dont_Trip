@@ -1,5 +1,5 @@
 <img src = "icons/dont_Trip.png"> </img>
-# Dont Trip (COMP 490/491 Senior Project and Freelance Framework Codebase)
+# Dont Trip (COMP 490/491 Senior Project)
 <p>An itinerary planner utilizing the Google Maps API to give you customized places along a route!</p>
 
 <p>Written primarily in Vanilla Javascript, PHP, and MySQL.</p>  
