@@ -565,11 +565,12 @@
                                 const placeRating = document.createElement("p");
                                 const placeOpen = document.createElement("p");
                                 const placeWebsite = document.createElement("a");
-                                const dir2 = document.createElement("button");
+                                const dir2 = document.createElement("a");
                                 const moreInfo = document.createElement("a");
                                 const openInMaps = document.createElement("a");
                                 const b1 = document.createElement("br");
                                 const b2 = document.createElement("br");
+dir2.href="#";
                                 service.getDetails(request, callback);
                                 function callback(place, status) {
                                     if (status == google.maps.places.PlacesServiceStatus.OK) {

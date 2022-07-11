@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 // Initialize the session
 session_start();
 // Check if the user is logged in, otherwise redirect to login page
@@ -14,15 +11,25 @@ require_once "config.php";
 // Define variables and initialize with empty values
 $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = "";
-$sql3 = "SELECT * FROM users WHERE username = '" . trim($_SESSION["username"]) . "' ";
-$result3 = mysqli_query($link, $sql3);
-$basics = mysqli_fetch_assoc($result3);
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	$sql = "SELECT * FROM users WHERE username = ? ;";
+	if ($stmt = mysqli_prepare($link, $sql))
+	{
+		// Bind variables to the prepared statement as parameters
+		mysqli_stmt_bind_param($stmt, "s", $param_username);
+		// Set parameters
+		$param_username = $_SESSION["username"];
+		// Attempt to execute the prepared statement
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		$userResults = mysqli_fetch_assoc($result);
+		mysqli_stmt_close($stmt);
+	}
     // Validate new password
     if (empty(trim($_POST["new_password"]))) {
         $new_password_err = "Please enter the new password.";
-    } else if (password_verify(trim($_POST["new_password"]), trim($basics["password"]))) {
+    } else if (password_verify(trim($_POST["new_password"]), trim($userResults["password"]))) {
         $new_password_err = 'New password cannot be the same as before.';
     } else if (!(preg_match('/[A-Za-z]/', trim($_POST["new_password"])) && preg_match('/[0-9]/', trim($_POST["new_password"])) && preg_match('/[A-Z]/', trim($_POST["new_password"])) && preg_match('/[a-z]/', trim($_POST["new_password"])))) {
         $new_password_err = 'New password must contain a lowercase letter, uppercase letter, and a number.';
@@ -32,13 +39,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $new_password = trim($_POST["new_password"]);
     }
     // Validate confirm password
-    if (empty(trim($_POST["confirm_password"]))) {
-        $confirm_password_err = "Please confirm the password.";
+	if (empty(trim($_POST["confirm_password"]))) {
+        $confirm_password_err = "Please confirm password.";
     } else {
-        $confirm_password = trim($_POST["confirm_password"]);
-        if (empty($new_password_err) && ($new_password != $confirm_password)) {
+        if (empty($new_password_err) && $new_password != trim($_POST["confirm_password"])) {
             $confirm_password_err = "Password did not match.";
         }
+		else if (empty($new_password_err)) {
+			$confirm_password = trim($_POST["confirm_password"]);
+		}
     }
     // Check input errors before updating the database
     if (empty($new_password_err) && empty($confirm_password_err)) {

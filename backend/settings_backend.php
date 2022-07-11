@@ -19,37 +19,95 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 $salt = $_ENV['2fa_salt'];
-$sql3 = "SELECT * FROM users WHERE username = '" . $_SESSION['username'] . "' ";
-$result3 = mysqli_query($link, $sql3);
-$basics = mysqli_fetch_assoc($result3);
 
-
+$sql = "SELECT * FROM users WHERE username = ? ;";
+if ($stmt = mysqli_prepare($link, $sql))
+{
+	// Bind variables to the prepared statement as parameters
+	mysqli_stmt_bind_param($stmt, "s", $param_username);
+	// Set parameters
+	$param_username = $_SESSION['username'];
+	// Attempt to execute the prepared statement
+	mysqli_stmt_execute($stmt);
+	$result = mysqli_stmt_get_result($stmt);
+	$userResults = mysqli_fetch_assoc($result);
+	mysqli_stmt_close($stmt);
+}
 if (isset($_POST['two_factor']))
 {
 	ob_start();
-	if($_POST['two_factor']=="true"&& $basics["tfaen"] == 0) {
+	if($_POST['two_factor']=="true"&& $userResults["tfaen"] == 0) {
 		ob_end_clean(); 
 		$g = new \Google\Authenticator\GoogleAuthenticator();
 		$secret = str_shuffle($salt);
-		mysqli_query($link,"UPDATE users SET tfaen=1 WHERE username = '".$basics["username"]."';");
-		mysqli_query($link,"UPDATE users SET tfa='".$secret ."' WHERE username = '".$basics["username"]."';");   
-		$url =  \Google\Authenticator\GoogleQrUrl::generate(urlencode($basics["username"]), urlencode($secret),urlencode("Don't-Trip"));
-	$response = "<br>2FA Enabled.  Secret: <b>{$secret}
-</b><br><br><img class=\"center\" src = \"{$url}\" alt = \"QR Code\" />";
+		$sql = "UPDATE users SET tfaen = 1 WHERE username = ? ;";
+		if ($stmt = mysqli_prepare($link, $sql))
+		{
+			// Bind variables to the prepared statement as parameters
+			mysqli_stmt_bind_param($stmt, "s", $param_username);
+			// Set parameters
+			$param_username = $userResults["username"];
+			// Attempt to execute the prepared statement
+			mysqli_stmt_execute($stmt);
+			mysqli_stmt_close($stmt);
+		}
+		$sql = "UPDATE users SET tfa = ? WHERE username = ? ;";
+		if ($stmt = mysqli_prepare($link, $sql))
+		{
+			// Bind variables to the prepared statement as parameters
+			mysqli_stmt_bind_param($stmt, "ss", $param_secret, $param_username);
+			// Set parameters
+			$param_secret = $secret;
+			$param_username = $userResults["username"];
+			// Attempt to execute the prepared statement
+			mysqli_stmt_execute($stmt);
+			mysqli_stmt_close($stmt);
+		}		
+		$url =  \Google\Authenticator\GoogleQrUrl::generate(urlencode($userResults["username"]), urlencode($secret),urlencode("Don't-Trip"));
+		$response = "<br>2FA Enabled.  Secret: <b>{$secret}
+						</b><br><br><img class=\"center\" src = \"{$url}\" alt = \"QR Code\" />";
 	}
-	else if ($_POST['two_factor']=="false"&&$basics["tfaen"] == 1 ) {
+	else if ($_POST['two_factor']=="false"&&$userResults["tfaen"] == 1 ) {
 		ob_end_clean(); 
 		$response = "<br>2FA Disabled.";
-		mysqli_query($link, "UPDATE users SET tfaen=0 WHERE username = '" . $basics["username"] . "';");
-		mysqli_query($link, "UPDATE users SET tfa='0' WHERE username = '" . $basics["username"] . "';");
+		$sql = "UPDATE users SET tfaen=0 WHERE username = ? ;";
+		if ($stmt = mysqli_prepare($link, $sql))
+		{
+			// Bind variables to the prepared statement as parameters
+			mysqli_stmt_bind_param($stmt, "s", $param_username);
+			// Set parameters
+			$param_username = $userResults["username"];
+			// Attempt to execute the prepared statement
+			mysqli_stmt_execute($stmt);
+			mysqli_stmt_close($stmt);
+		}
+		$sql = "UPDATE users SET tfa = 0 WHERE username = ? ;";
+		if ($stmt = mysqli_prepare($link, $sql))
+		{
+			// Bind variables to the prepared statement as parameters
+			mysqli_stmt_bind_param($stmt, "s", $param_username);
+			// Set parameters
+			$param_username = $userResults["username"];
+			// Attempt to execute the prepared statement
+			mysqli_stmt_execute($stmt);
+			mysqli_stmt_close($stmt);
+		}
 	}
 	echo $response;
 	die;
 }
-
 else if (isset($_POST['delete_searches'])) {
-    mysqli_query($link, "DELETE FROM searches WHERE username = '" . trim($_SESSION["username"]) . "';");
+	$sql = "DELETE FROM searches WHERE username = ? ;";
+	if ($stmt = mysqli_prepare($link, $sql))
+	{
+		// Bind variables to the prepared statement as parameters
+		mysqli_stmt_bind_param($stmt, "s", $param_username);
+		// Set parameters
+		$param_username = $_SESSION['username'];
+		// Attempt to execute the prepared statement
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+	}
 	die;
 }
-
 ?>

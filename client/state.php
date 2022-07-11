@@ -33,13 +33,13 @@
 				<br>
 				<ul>
 					<?php
-						while($rows = mysqli_fetch_assoc($result)) {
+					while($rows = mysqli_fetch_assoc($result)) {
 					?>
-							<li>
-								<a href ="dt.php?destVal=<?php echo htmlspecialchars($rows["destination"]);?>"><?php echo htmlspecialchars($rows["destination"]);?></a>
-							</li>
+						<li>
+							<a href ="dt.php?destVal=<?php echo htmlspecialchars($rows["destination"]);?>"><?php echo htmlspecialchars($rows["destination"]);?></a>
+						</li>
 					<?php
-						}
+					}
 					?>
 				</ul>
 			</div>
@@ -48,15 +48,15 @@
 				<br>
 				<ul>
 					<?php
-						while($rows2 = mysqli_fetch_assoc($result2)) {
-							if(!empty($rows2["keyword"])) {
+					while($rows2 = mysqli_fetch_assoc($result2)) {
+						if(!empty($rows2["keyword"])) {
 					?>
-								<li>
-									<a href ="dt.php?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>"> <?php echo htmlspecialchars($rows2["keyword"]);?></a>
-								</li>
+							<li>
+								<a href ="dt.php?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>"> <?php echo htmlspecialchars($rows2["keyword"]);?></a>
+							</li>
 					<?php
-							}
 						}
+					}
 					?>
 				</ul>
 			</div>

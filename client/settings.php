@@ -33,14 +33,14 @@
 				<img src="../icons/user.jpg" id="user-pic">
 				<h3 id="usernav" style="float:left; ">&nbsp;&nbsp;<?php echo $_SESSION['username']; ?></h3>
 				<br><br><br><br>
-				<?php if (isset($basics)){ ?>
+				<?php if (isset($userResults)){ ?>
 					<label class="switch" style="float:left;">
 						<input type="checkbox" name="accept" id="check" value="yes">
 						<span class="slider round"></span>
 					</label>
 					<div id="info" class="noselect">&nbsp;&nbsp;Two Factor Authentication</div>
 					<?php 
-					if($basics["tfaen"] == 1) { 
+					if($userResults["tfaen"] == 1) { 
 					?>
 						<script>
 							document.querySelector('input[type="checkbox"]').checked = true;
@@ -49,7 +49,7 @@
 						echo"<div id=\"to-hide\" style=\"display:block;\">
 								<br>
 								<div id=\"two_factor_div\">
-								2FA Enabled.  Secret: <b>{$basics['tfa']}</b>
+								2FA Enabled.  Secret: <b>{$userResults['tfa']}</b>
 								</div>
 							</div>";
 					} 

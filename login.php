@@ -29,7 +29,7 @@
 			<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">  
 				<div class="form-group">
 					<input type="text" name="username" placeholder="Username" class="center form-control 
-						<?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $usernameO; ?>"required>
+						<?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $usernameOrEmail; ?>"required>
 					<span class="invalid-feedback"style="text-align:center;"> <?php echo $username_err; ?> </span>
 				</div>
 				<div class="form-group">
@@ -37,7 +37,7 @@
 						<?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>"value="<?php echo $password; ?>"required>
 					<span class="invalid-feedback"style="text-align:center;"> <?php echo $password_err; ?> </span>
 				</div>
-				<?php if((isset($basics["tfaen"])||isset($basics4["tfaen"]))) { ?>
+				<?php if((isset($userResults["tfaen"])||isset($emailResults["tfaen"]))) { ?>
 					<?php if($showTFA) { ?>
 						<div class="form-group">
 							<input type="2fa" name="2fa" id="2fa" placeholder="2FA Google Authenticator Code" 
@@ -50,10 +50,6 @@
 						} 
 					}  
 					?>
-				<!--div class="form-group">
-					<input type="checkbox" name="remember" value="Yes"
-					<?php //if($_POST["remember"]=='Yes'):?> checked <?php  ?>>&nbsp;&nbsp;<p style="display:inline" class="form-text text-muted">Remember me</p></input>
-				</div-->
 				<br>
 				<input name="Submit" type="submit"  value="Login" class="center btn btn-success"></input>
 				<br>

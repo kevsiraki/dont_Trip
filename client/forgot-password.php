@@ -36,9 +36,8 @@
 					<div class="form-group">
 						<input type="password" name="new_password" id="password" 
 							onkeyup="getPassword();getConfirmPassword();" onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
-							autocomplete="new-password" required="" aria-describedby="emailHelp"
-							placeholder="New Password" class="center form-control 
-						<?php echo (!empty($new_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $new_password; ?>">
+							autocomplete="new-password" placeholder="New Password" class="center form-control 
+							<?php echo (!empty($new_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $new_password; ?>" required>
 						<span class="invalid-feedback"style="text-align:center;"><?php echo $new_password_err; ?></span>
 					</div>
 					<label style="margin-left:5%;">
@@ -55,19 +54,18 @@
 					<div class="form-group">
 						<input type="password" name="confirm_password" id="confirm-password"
 							onkeyup="getPassword();getConfirmPassword();" onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
-							autocomplete="new-password" required="" aria-describedby="emailHelp"
-							placeholder="Confirm New Password" class="center form-control 
-						<?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>">
+							autocomplete="new-password" placeholder="Confirm New Password" class="center form-control 
+							<?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>" required>
 						<span class="invalid-feedback"style="text-align:center;"><?php echo $confirm_password_err; ?></span>
 					</div>
 					<div id="confirm-password-strength" style="display: none;text-align:center;">
 						<div id="matching" class="pw-stength"><small> Matching</small></div>
 						<br>
 					</div>
-					<?php if($basics["tfaen"]==1 || $resUser['tfaen']==1)  : ?>
+					<?php if($userResults['tfaen']==1) : ?>
 						<div class="form-group">
 							<input type="2fa" name="2fa" id="2fa" autocomplete="off" 
-							placeholder="2FA Google Authenticator Code" class="center form-control
+								placeholder="2FA Google Authenticator Code" class="center form-control
 								<?php echo (!empty($tfa_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $code; ?>">
 							<span class="invalid-feedback"style="text-align:center;"> <?php echo $tfa_err; ?> </span>
 							<small id="2faHelp" class="form-text text-muted"style="margin-left:5%">2FA is Enabled.</small>

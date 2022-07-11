@@ -33,21 +33,21 @@
 				<br>
 				<ul>
 					<?php
-						while($rows = mysqli_fetch_assoc($result)) {
-							$res=$toSplit = $rows["destination"];
-							$res .= nl2br("\n ");
-							if(isset($rows['destination'])) {
+					while($rows = mysqli_fetch_assoc($result)) {
+						$res= $toSplit = $rows["destination"];
+						$res .= nl2br("\n ");
+						if(isset($rows['destination'])) {
 					?>
-								<li>
-									<form type="POST"> 																		
-										<a href ="dt.php?destVal=<?php echo htmlspecialchars($rows["destination"]);?>"> <?php echo $res ; ?></a>
-										<sub class = "text-danger">&nbsp;</sub>
-										<input type="hidden" name="toDelete" value="<?php echo htmlspecialchars($rows["destination"]);?>"><button name = "delete" value="<?php echo htmlspecialchars($rows["destination"]);?>" type="submit" class="btn-close btn-sm" aria-label="Close" style="float:right;margin-top:9px"></button>
-									</form>
-								</li>
+							<li>
+								<form type="POST"> 																		
+									<a href ="dt.php?destVal=<?php echo htmlspecialchars($rows["destination"]);?>"> <?php echo $res ; ?></a>
+									<sub class = "text-danger">&nbsp;</sub>
+									<input type="hidden" name="toDelete" value="<?php echo htmlspecialchars($rows["destination"]);?>"><button name = "delete" value="<?php echo htmlspecialchars($rows["destination"]);?>" type="submit" class="btn-close btn-sm" aria-label="Close" style="float:right;margin-top:9px"></button>
+								</form>
+							</li>
 					<?php
-							}
 						}
+					}
 					?>
 				</ul>
 			</div>
@@ -56,21 +56,21 @@
 				<br>
 				<ul>
 					<?php
-						while($rows2 = mysqli_fetch_assoc($result2)) {
-							$key = nl2br($rows2['keyword']);
-							$key .= nl2br("\n ");
-							if(isset($rows2["keyword"])) {
+					while($rows2 = mysqli_fetch_assoc($result2)) {
+						$key = nl2br($rows2['keyword']);
+						$key .= nl2br("\n ");
+						if(isset($rows2["keyword"])) {
 					?>
-								<li>
-									<form type="POST"> 
-										<a href ="dt.php?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>"> <?php echo $key;?></a>
-										<sub class = "text-danger">&nbsp;</sub>
-										<input type="hidden" name="toDelete2" value="<?php echo htmlspecialchars($rows2["keyword"]);?>"><button name = "delete2" value="<?php echo htmlspecialchars($rows2["keyword"]);?>" type="submit" class="btn-close btn-sm" aria-label="Close" style="float:right;margin-top:9px"></button>
-									</form>
-								</li>
+							<li>
+								<form type="POST"> 
+									<a href ="dt.php?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>"> <?php echo $key;?></a>
+									<sub class = "text-danger">&nbsp;</sub>
+									<input type="hidden" name="toDelete2" value="<?php echo htmlspecialchars($rows2["keyword"]);?>"><button name = "delete2" value="<?php echo htmlspecialchars($rows2["keyword"]);?>" type="submit" class="btn-close btn-sm" aria-label="Close" style="float:right;margin-top:9px"></button>
+								</form>
+							</li>
 					<?php
-							}
 						}
+					}
 					?>
 				</ul>
 			</div>

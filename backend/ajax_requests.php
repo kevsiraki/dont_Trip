@@ -1,6 +1,8 @@
 <?php
 include "config.php";
 
+$username = $email =  "";
+
 function valid_email($email) 
 {
     if(is_array($email) || is_numeric($email) || is_bool($email) || is_float($email) || is_file($email) || is_dir($email) || is_int($email))
@@ -19,9 +21,19 @@ function valid_email($email)
 
 if (isset($_POST['username']))
 {
-    $username = mysqli_real_escape_string($link, $_POST['username']);
-    $query = "select count(*) as cntUser from users where username='" . $username . "'";
-    $result = mysqli_query($link, $query);
+    $username = trim($_POST['username']);
+	$sql = "SELECT COUNT(*) as cntUser FROM users WHERE username = ? ;";
+	if ($stmt = mysqli_prepare($link, $sql))
+	{
+		// Bind variables to the prepared statement as parameters
+		mysqli_stmt_bind_param($stmt, "s", $param_username);
+		// Set parameters
+		$param_username = $username;
+		// Attempt to execute the prepared statement
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		mysqli_stmt_close($stmt);
+	}
     $response = "<small><span style='color: green;'>Available.</span></small>";
     if (mysqli_num_rows($result))
     {
@@ -51,9 +63,19 @@ if (isset($_POST['username']))
 
 if (isset($_POST['email']))
 {
-    $email = mysqli_real_escape_string($link, $_POST['email']);
-    $query = "select count(*) as cntEmail from users where email='" . $email . "'";
-    $result = mysqli_query($link, $query);
+    $email = trim($_POST['email']);
+	$sql = "SELECT COUNT(*) as cntEmail FROM users WHERE email = ? ;";
+	if ($stmt = mysqli_prepare($link, $sql))
+	{
+		// Bind variables to the prepared statement as parameters
+		mysqli_stmt_bind_param($stmt, "s", $param_email);
+		// Set parameters
+		$param_email = $email;
+		// Attempt to execute the prepared statement
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		mysqli_stmt_close($stmt);
+	}
     $response = "<small><span style='color: green;'>Available.</span></small>";
     if (mysqli_num_rows($result))
     {
@@ -74,9 +96,19 @@ if (isset($_POST['email']))
 
 if (isset($_POST['email_reset']))
 {
-    $email = mysqli_real_escape_string($link, $_POST['email_reset']);
-    $query = "select count(*) as cntEmail from users where email='" . $email . "'";
-    $result = mysqli_query($link, $query);
+    $email = trim($_POST['email_reset']);
+	$sql = "SELECT COUNT(*) as cntEmail FROM users WHERE email = ? ;";
+	if ($stmt = mysqli_prepare($link, $sql))
+	{
+		// Bind variables to the prepared statement as parameters
+		mysqli_stmt_bind_param($stmt, "s", $param_email);
+		// Set parameters
+		$param_email = $email;
+		// Attempt to execute the prepared statement
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		mysqli_stmt_close($stmt);
+	}
     $response = "<small><span style='color: red;'>Not Found.</span></small>";
     if (mysqli_num_rows($result))
     {

@@ -5,8 +5,7 @@ session_start();
 require_once "config.php";
 require_once 'vendor/autoload.php';
 
-$password = "";
-$password_err = "";
+$password = $password_err = "";
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -50,8 +49,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                         if (password_verify($password, $hashed_password))
                         {
                             // Password is correct and they are verified, so delete the account
-							mysqli_query($link, "DELETE FROM searches WHERE username = '" . trim($_SESSION["username"]) . "';");
-							mysqli_query($link, "DELETE FROM users WHERE username = '" . trim($_SESSION["username"]) . "';");
+							mysqli_query($link, "DELETE FROM searches WHERE username = '" . $username . "';");
+							mysqli_query($link, "DELETE FROM users WHERE username = '" . $username . "';");
                             // Redirect user
                             header("location: ../backend/logout.php");
                         }
@@ -71,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         }
         else
         {
-            echo "Oops!";
+            echo "Database Issues.";
         }
         mysqli_stmt_close($stmt);
     }

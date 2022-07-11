@@ -12,7 +12,7 @@ use PHPMailer\PHPMailer\Exception;
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = $email = "";
 $username_err = $password_err = $confirm_password_err = $email_err = "";
-$rows = 0;
+$row = 0;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -52,12 +52,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mysqli_stmt_close($stmt);
         }
     }
+	//Validate email
     if (empty(trim($_POST["email"]))) {
         $email_err = "Please enter an email.";
     } else {
-        //validate email
-        $sql2 = "SELECT username FROM users WHERE email = ?";
-        if ($stmt = mysqli_prepare($link, $sql2)) {
+		// Prepare a select statement
+        $sql = "SELECT username FROM users WHERE email = ?";
+        if ($stmt = mysqli_prepare($link, $sql)) {
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "s", $param_email);
             // Set parameters
@@ -81,25 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             // Close statement
             mysqli_stmt_close($stmt);
-        } else if ($stmt = mysqli_prepare($link, $sql2)) {
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $email);
-            // Set parameters
-            $param_email = trim($_POST["email"]);
-            // Attempt to execute the prepared statement
-            if (mysqli_stmt_execute($stmt)) {
-                /* store result */
-                mysqli_stmt_store_result($stmt);
-                if (mysqli_stmt_num_rows($stmt) == 1) {
-                    $email_err = "This email is already taken.";
-                } else {
-                }
-            } else {
-                echo "Oops! Something went wrong. Please try again later.";
-            }
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
+        } 
     }
     // Validate password
     if (empty(trim($_POST["password"]))) {
@@ -128,21 +111,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "INSERT INTO users (username, password, email, email_verification_link) VALUES (?, ?, ?, ?)";
         if ($stmt = mysqli_prepare($link, $sql)) {
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ssss", $param_username, $param_password, $param_email, $token);
+            mysqli_stmt_bind_param($stmt, "ssss", $param_username, $param_password, $param_email, $param_token);
             // Set parameters
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+			$param_email = $email;
+			$param_token = $token;
             // Attempt to execute the prepared statement
-            if (mysqli_stmt_execute($stmt)) {
-            } else {
+            if (mysqli_stmt_execute($stmt)) {} 
+			else {
                 echo "Oops! Something went wrong. Please try again later.";
             }
             // Close statement
             mysqli_stmt_close($stmt);
         }
-        $result = mysqli_query($link, "SELECT * FROM users WHERE email= '" . $_POST["email"] . "'");
-        $row = mysqli_num_rows($result);
-        $rows = $row;
+		$sql = "SELECT * FROM users WHERE email = ? ;";
+		if ($stmt = mysqli_prepare($link, $sql))
+		{
+			// Bind variables to the prepared statement as parameters
+			mysqli_stmt_bind_param($stmt, "s", $param_email);
+			// Set parameters
+			$param_email = $email;
+			// Attempt to execute the prepared statement
+			mysqli_stmt_execute($stmt);
+			$result = mysqli_stmt_get_result($stmt);
+			$row = mysqli_num_rows($result);
+			mysqli_stmt_close($stmt);
+		}
         if ($row == 1) {
             //sends email
             $link2 = "<a href='https://donttrip.technologists.cloud/donttrip/client/verify-email.php?key=" . $_POST["email"] . "&token=" . $token . "'>Verify</a>";
@@ -179,22 +174,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } else if (date('H') >= 18) {
                     $greeting = "Good evening";
                 }
-                $mail->Body = $greeting . ".  Click On This Link to Verify Your Email: " . $link2 . ".";
+                $mail->Body = $greeting . ".  Verify Your Email: " . $link2 . ".";
             }
             catch(phpmailerException $e) {
                 echo $e->errorMessage();
             }
             catch(Exception $e) {
-                mysqli_query($link, "DELETE FROM users WHERE username = '".$username."';");
+				$sql = "DELETE FROM users WHERE username = ? ;";
+				if ($stmt = mysqli_prepare($link, $sql))
+				{
+					// Bind variables to the prepared statement as parameters
+					mysqli_stmt_bind_param($stmt, "s", $param_usernamel);
+					// Set parameters
+					$param_username = $username;
+					// Attempt to execute the prepared statement
+					mysqli_stmt_execute($stmt);
+					mysqli_stmt_close($stmt);
+				}
                 header("location: ../client/register.php"); //Boring error messages from anything else!
             }
             if ($mail->Send()) {
                 header("location: ../login.php");
             } else {
-                echo "Mail Error - >" . $mail->ErrorInfo;
+                echo "Mail Error ->" . $mail->ErrorInfo;
             }
         } else {
-            mysqli_query($link, "DELETE FROM users WHERE username = '$username';");
+            $sql = "DELETE FROM users WHERE username = ? ;";
+			if ($stmt = mysqli_prepare($link, $sql))
+			{
+				// Bind variables to the prepared statement as parameters
+				mysqli_stmt_bind_param($stmt, "s", $param_usernamel);
+				// Set parameters
+				$param_username = $username;
+				// Attempt to execute the prepared statement
+				mysqli_stmt_execute($stmt);
+				mysqli_stmt_close($stmt);
+			}
             header("location: ../client/register.php"); //Boring error messages from anything else! 
         }
     }

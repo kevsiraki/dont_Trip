@@ -35,18 +35,16 @@
 					<span class="invalid-feedback" style="text-align:center;"> <?php echo $email_err; ?> </span> 
 				</div>
 				<div class="form-group">
-					<input type="text" placeholder="Username" name="username" id="username" required="" aria-describedby="emailHelp" 
-					autocomplete="off" class="center form-control 
-					<?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
+					<input type="text" placeholder="Username" name="username" id="username" autocomplete="off" class="center form-control 
+					<?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>" required>
 					<div id="uname_response" style="text-align:center;"></div>
 					<span class="invalid-feedback"style="text-align:center;"> <?php echo $username_err; ?> </span>
 				</div>
 				<div class="form-group">
 					<input type="password" placeholder="Password" name="password" id="password" 
 					onkeyup="getPassword();getConfirmPassword();" onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
-					autocomplete="new-password" required="" aria-describedby="emailHelp" 
-					class="center form-control 
-						<?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
+					autocomplete="new-password" class="center form-control 
+						<?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>" required>
 					<span class="invalid-feedback"style="text-align:center;"> <?php echo $password_err; ?> </span>
 				</div>
 				<label style="margin-left:5%;">
@@ -63,15 +61,14 @@
 				<div class="form-group">
 					<input type="password" name="confirm_password" id="confirm-password" placeholder="Confirm Password" 
 					onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
-					autocomplete="new-password" onkeyup="getPassword();getConfirmPassword();" 
-					required="" aria-describedby="emailHelp" class="center form-control 
-						<?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
+					autocomplete="new-password" onkeyup="getPassword();getConfirmPassword();" class="center form-control 
+						<?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>" required>
 					<span class="invalid-feedback"style="text-align:center;"> <?php echo $confirm_password_err; ?> </span>
 				</div>
 				<div id="confirm-password-strength" style="display: none;text-align:center;">
 					<div id="matching" class="pw-stength"><small> Matching</small></div>
-					<br>
 				</div>
+                              <br> 
 					<script src="../js/lightMode.js"></script>
 					<input name="Submit" type="submit" value="Sign-Up" class="center btn btn-success">
 					<br>

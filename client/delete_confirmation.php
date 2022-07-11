@@ -29,10 +29,8 @@
 				<input style="display:none">
 				<input type="password" style="display:none" autocomplete="new-password"/>
 				<div class="form-group">
-					<input type="password" name="password" id="password" 
-					required="" aria-describedby="emailHelp"
-					placeholder="Confirm Password" class="center form-control 
-					<?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
+					<input type="password" name="password" id="password" placeholder="Confirm Password" class="center form-control 
+					<?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>" required>
 					<span class="invalid-feedback"style="text-align:center;"><?php echo $password_err; ?></span>
 				</div>
 				<label style="margin-left:5%;">
