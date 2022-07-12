@@ -15,25 +15,6 @@
 		<script src="../js/lightMode.js"></script>
 		<link rel="stylesheet" href="../style/settings_style.css">
 		<script src="../js/twoFactorAJAX.js"></script>
-		<script>
-		console.log((new Date).getHours());
-			function toggleDarkMode() {
-				if( //custom localStorage setting
-					localStorage.getItem("dark_mode")==="true" 
-					//Automatic mode
-					||((new Date).getHours() < 6 || (new Date).getHours() > 18 && localStorage.getItem("dark_mode") === null)) {
-					localStorage.setItem("dark_mode","false");
-					location.reload();
-				}
-				else {
-					localStorage.setItem("dark_mode","true");
-					location.reload();
-				}
-			}
-			
-		</script>
-				
-		
 	</head>	
 	<div class="topnav">
 		<a href="javascript:void(0);" class="active" onclick="myFunction()">
@@ -52,8 +33,10 @@
 			<div class="wrapper">
 				<img src="../icons/user.jpg" id="user-pic">
 				<h3 id="usernav" style="float:left; ">&nbsp;&nbsp;<?php echo $_SESSION['username']; ?></h3>
-				<button style = "float:right;"class="btn btn-secondary btn-sm" id="toggle-dark" onclick="toggleDarkMode();">&#127769;</button>
+				<button style = "float:right;"class="btn btn-outline-info btn-sm" id="reset-dark" onclick="resetDarkMode();">Reset</button>
+				<button style = "float:right;margin-right:5px;"class="btn btn-secondary btn-sm" id="toggle-dark" onclick="toggleDarkMode();">&#127769;</button>
 				<script defer>
+					//Dark mode button icon on page load.
 						//custom localStorage setting
 					if( localStorage.getItem("dark_mode")==="true"
 						//Automatic mode

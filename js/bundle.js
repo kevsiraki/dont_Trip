@@ -58,8 +58,8 @@
 				||(d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
 				document.getElementById("dragbar").style.backgroundColor = "#FFFFED";
                 document.getElementById("sidebar").style.backgroundColor = "#FFFFED";
-                document.getElementsByName("rust")[0].style.backgroundColor = "#FFFFED";
 				document.getElementById("darkable").style.color = "#000000";
+                document.getElementsByName("rust")[0].style.backgroundColor = "#FFFFED";
                 document.getElementsByName("sort")[0].style.color = "#000000";
                 $.get('../style/light_styles.js', function(data) {
                     map.setOptions({
