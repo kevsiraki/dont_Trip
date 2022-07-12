@@ -52,11 +52,10 @@
                 lng: -119.417931
             });
             map.setZoom(6);
-            if (d.getHours() >= 6 && d.getHours() <= 18) {
+            if (localStorage.getItem("dark_mode")==="false"&&(d.getHours() >= 6 && d.getHours() <= 18)) {
 				document.getElementById("dragbar").style.backgroundColor = "#FFFFED";
                 document.getElementById("sidebar").style.backgroundColor = "#FFFFED";
                 document.getElementsByName("rust")[0].style.backgroundColor = "#FFFFED";
-				
 				document.getElementById("darkable").style.color = "#000000";
                 document.getElementsByName("sort")[0].style.color = "#000000";
                 $.get('../style/light_styles.js', function(data) {

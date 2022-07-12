@@ -1,6 +1,7 @@
 //Description:
 //Append light styling during the daytime, nighttime/dark-mode CSS classes by default (sue me).
-if ((new Date()).getHours() >= 6 && (new Date()).getHours() <= 18) {
+//Local Storage setting to check for manual dark/light mode along with automatic overrides.
+if (localStorage.getItem("dark_mode")==="false"&&((new Date()).getHours() >= 6 && (new Date()).getHours() <= 18)) {
     window.addEventListener("load", function() {
         //DOM Elements
         if (document.body) {

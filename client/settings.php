@@ -15,6 +15,21 @@
 		<script src="../js/lightMode.js"></script>
 		<link rel="stylesheet" href="../style/settings_style.css">
 		<script src="../js/twoFactorAJAX.js"></script>
+		<script>
+			function toggleDarkMode() {
+				if(localStorage.getItem("dark_mode")==="true") {
+					localStorage.setItem("dark_mode","false");
+					location.reload();
+				}
+				else {
+					localStorage.setItem("dark_mode","true");
+					location.reload();
+				}
+			}
+			
+		</script>
+				
+		
 	</head>	
 	<div class="topnav">
 		<a href="javascript:void(0);" class="active" onclick="myFunction()">
@@ -27,11 +42,18 @@
 		</div>
 	</div>		
 	<body>
+
 		<br>
 		<div class="center">
 			<div class="wrapper">
 				<img src="../icons/user.jpg" id="user-pic">
 				<h3 id="usernav" style="float:left; ">&nbsp;&nbsp;<?php echo $_SESSION['username']; ?></h3>
+				<button style = "float:right;"class="btn btn-secondary btn-sm" id="toggle-dark" onclick="toggleDarkMode();">&#127769;</button>
+				<script defer>
+					if(localStorage.getItem("dark_mode")==="true") {
+						document.getElementById("toggle-dark").innerText = "☀️";
+					}
+				</script>
 				<br><br><br><br>
 				<?php if (isset($userResults)){ ?>
 					<label class="switch" style="float:left;">
