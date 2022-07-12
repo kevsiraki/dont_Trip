@@ -16,8 +16,12 @@
 		<link rel="stylesheet" href="../style/settings_style.css">
 		<script src="../js/twoFactorAJAX.js"></script>
 		<script>
+		console.log((new Date).getHours());
 			function toggleDarkMode() {
-				if(localStorage.getItem("dark_mode")==="true") {
+				if( //custom localStorage setting
+					localStorage.getItem("dark_mode")==="true" 
+					//Automatic mode
+					||((new Date).getHours() < 6 || (new Date).getHours() > 18 && localStorage.getItem("dark_mode") === null)) {
 					localStorage.setItem("dark_mode","false");
 					location.reload();
 				}
@@ -50,7 +54,10 @@
 				<h3 id="usernav" style="float:left; ">&nbsp;&nbsp;<?php echo $_SESSION['username']; ?></h3>
 				<button style = "float:right;"class="btn btn-secondary btn-sm" id="toggle-dark" onclick="toggleDarkMode();">&#127769;</button>
 				<script defer>
-					if(localStorage.getItem("dark_mode")==="true") {
+						//custom localStorage setting
+					if( localStorage.getItem("dark_mode")==="true"
+						//Automatic mode
+						||((new Date).getHours() < 6 || (new Date).getHours() > 18 && localStorage.getItem("dark_mode") === null)) {
 						document.getElementById("toggle-dark").innerText = "☀️";
 					}
 				</script>
