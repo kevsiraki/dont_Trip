@@ -9,19 +9,18 @@ document.addEventListener('DOMContentLoaded', function () {
 				two_factor: two_factor
 			},
 			success: function(response) {
-				$('#two_factor_response').html(response)
-				if(two_factor===false) {
-					setTimeout(function(){
-						document.getElementById("two_factor_response").innerHTML = '';
-					}, 3000);
-				}
+				$('#two_factor_response').html(response);
 			}
 		});
 		if (two_factor===false) {
 			if(document.getElementById("to-hide")) {
 				document.getElementById("to-hide").style.display="none";
 			}
-			
+			if(document.getElementById("two_factor_response")) {
+				setTimeout(function(){
+					document.getElementById("two_factor_response").innerHTML = '';
+				}, 3000);
+			}	
 		}
 	});
 });

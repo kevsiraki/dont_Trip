@@ -79,7 +79,6 @@ if (isset($_POST['two_factor']))
 								document.body.removeChild(elem);
 							}
 						</script>
-						<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css\">
 						<br>2FA On. Secret: <b id=\"copy\">{$secret}</b>
 						<button class = \"btn btn-outline-info btn-sm\" onclick=\"copySecret();\">📋</button>
 						<br><br>

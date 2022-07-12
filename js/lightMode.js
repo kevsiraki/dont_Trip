@@ -2,12 +2,12 @@
 //Append light styling during the daytime, nighttime/dark-mode CSS classes by default (sue me).
 //Local Storage setting to check for manual dark/light mode along with automatic overrides.
 function toggleDarkMode() {
-	if( //custom localStorage setting
+	if(
+		//custom localStorage setting
 		localStorage.getItem("dark_mode")==="true" 
 		//Automatic mode
 		||((new Date).getHours() < 6 || (new Date).getHours() > 18 && localStorage.getItem("dark_mode") === null)
-	) 
-	{
+	) {
 		localStorage.setItem("dark_mode","false");
 		location.reload();
 	}
@@ -16,13 +16,16 @@ function toggleDarkMode() {
 		location.reload();
 	}
 }
-function resetDarkMode() {
+function resetDarkMode() 
+{
 	window.localStorage.removeItem('dark_mode');
 	location.reload();
 }
-if (localStorage.getItem("dark_mode")==="false"
+if (
+	localStorage.getItem("dark_mode")==="false"
 	//Automatic setting.
-	||((new Date()).getHours() >= 6 && (new Date()).getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
+	||((new Date()).getHours() >= 6 && (new Date()).getHours() <= 18 && localStorage.getItem("dark_mode") === null)
+) {
     window.addEventListener("load", function() {
         //DOM Elements
         if (document.body) {

@@ -27,20 +27,21 @@
 		</div>
 	</div>		
 	<body>
-
 		<br>
 		<div class="center">
 			<div class="wrapper">
-				<img src="../icons/user.jpg" id="user-pic">
+				<img src="../icons/user.jpg" id="user-pic"/>
 				<h3 id="usernav" style="float:left; ">&nbsp;&nbsp;<?php echo $_SESSION['username']; ?></h3>
 				<button style = "float:right;"class="btn btn-outline-info btn-sm" id="reset-dark" onclick="resetDarkMode();">Reset</button>
 				<button style = "float:right;margin-right:5px;"class="btn btn-secondary btn-sm" id="toggle-dark" onclick="toggleDarkMode();">&#127769;</button>
 				<script defer>
 					//Dark mode button icon on page load.
-						//custom localStorage setting
-					if( localStorage.getItem("dark_mode")==="true"
+					if( //custom localStorage setting
+						localStorage.getItem("dark_mode")==="true"
 						//Automatic mode
-						||((new Date).getHours() < 6 || (new Date).getHours() > 18 && localStorage.getItem("dark_mode") === null)) {
+						||((new Date).getHours() < 6 || (new Date).getHours() > 18 && localStorage.getItem("dark_mode") === null)
+					) 
+					{
 						document.getElementById("toggle-dark").innerText = "☀️";
 					}
 				</script>
@@ -72,8 +73,7 @@
 									alert(\"Copied Secret: \" + copyText+\"\\nPaste into your authenticator app.\");
 									document.body.removeChild(elem);
 								}
-							</script>
-							<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css\">							
+							</script>				
 							<div id=\"to-hide\" style=\"display:block;\">		
 								<br>
 								<div id=\"two_factor_div\">
@@ -102,7 +102,7 @@
 				<br>
 			</div>
 		</div>
-               <br>
+        <br>
 		<script src="../js/clearSearchesAJAX.js"></script>
 	</body>
 </html>
