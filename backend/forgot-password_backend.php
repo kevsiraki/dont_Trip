@@ -135,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (empty($code) && isset($_POST["submit"])) {
                 $tfa_err = " ";
             } else {
-                $tfa_err = "Incorrect/Exipired.";
+                $tfa_err = "Incorrect/Expired.";
             }
         }
     }
@@ -157,16 +157,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "UPDATE users SET password = ? WHERE email = ?";
         if ($stmt = mysqli_prepare($link, $sql)) {
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_password, $email);
+            mysqli_stmt_bind_param($stmt, "ss", $param_password, $param_email);
             // Set parameters
             $param_password = password_hash($new_password, PASSWORD_DEFAULT);
+            $param_email = $email;
             // Attempt to execute the prepared statement
-            if (mysqli_stmt_execute($stmt)) {
+            if (mysqli_stmt_execute($stmt)) 
+            {
                 // Password updated successfully. Destroy the session, and redirect to login page
-                mysqli_query($link, "DELETE FROM password_reset_temp WHERE email='" . $email . "';");
+                $sql = "DELETE FROM password_reset_temp WHERE email = ?";
+        		if ($stmt2 = mysqli_prepare($link, $sql)) {
+            		// Bind variables to the prepared statement as parameters
+            		mysqli_stmt_bind_param($stmt2, "s", $param_email);
+            		// Set parameters
+            		$param_email = $email;
+            		// Attempt to execute the prepared statement
+            		mysqli_stmt_execute($stmt2);
+            		// Close statement
+            		mysqli_stmt_close($stmt2);
+        		}
                 header("location: ../login.php");
-            } else {
-                echo "Oops! Something went wrong. Please try again later.";
             }
             // Close statement
             mysqli_stmt_close($stmt);

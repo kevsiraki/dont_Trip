@@ -2,6 +2,12 @@
 // Initialize the session
 session_start();
 
+// Check if the user is logged in, otherwise redirect to login page
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("location: ../login.php");
+    exit;
+}
+
 require_once "config.php";
 require_once 'vendor/autoload.php';
 
@@ -49,8 +55,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                         if (password_verify($password, $hashed_password))
                         {
                             // Password is correct and they are verified, so delete the account
-							mysqli_query($link, "DELETE FROM searches WHERE username = '" . $username . "';");
-							mysqli_query($link, "DELETE FROM users WHERE username = '" . $username . "';");
+							//Delete user's search history
+							$sql = "DELETE FROM searches WHERE username = ? ;";
+							if ($stmt = mysqli_prepare($link, $sql))
+							{
+								// Bind variables to the prepared statement as parameters
+								mysqli_stmt_bind_param($stmt, "s", $param_username);
+								// Set parameters
+								$param_username = $username;
+								// Attempt to execute the prepared statement
+								mysqli_stmt_execute($stmt);
+								mysqli_stmt_close($stmt);
+							}
+							//Delete user's account
+							$sql = "DELETE FROM users WHERE username = ? ;";
+							if ($stmt = mysqli_prepare($link, $sql))
+							{
+								// Bind variables to the prepared statement as parameters
+								mysqli_stmt_bind_param($stmt, "s", $param_username);
+								// Set parameters
+								$param_username = $username;
+								// Attempt to execute the prepared statement
+								mysqli_stmt_execute($stmt);
+								mysqli_stmt_close($stmt);
+							}
                             // Redirect user
                             header("location: ../backend/logout.php");
                         }
@@ -63,7 +91,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 }
                 else
                 {
-                    // Username doesn't exist, display a generic error message
+                    // Username doesn't exist, display a generic error message.
+					// This is virtually impossible to reach.
                     $login_err = "Session Error.";
                 }
             }

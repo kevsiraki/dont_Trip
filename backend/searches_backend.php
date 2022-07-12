@@ -32,7 +32,7 @@ if ($stmt = mysqli_prepare($link, $sql))
 }
 if(isset($_GET['toDelete'])) 
 {
-	$sql = "UPDATE searches SET destination = null  WHERE destination = ? ;";
+	$sql = "UPDATE searches SET destination = null WHERE destination = ? ;";
 	if ($stmt = mysqli_prepare($link, $sql))
 	{
 		// Bind variables to the prepared statement as parameters
@@ -47,7 +47,7 @@ if(isset($_GET['toDelete']))
 }
 if(isset($_GET['toDelete2'])) 
 {
-	$sql = "UPDATE searches SET keyword = null  WHERE keyword = ? ;";
+	$sql = "UPDATE searches SET keyword = null WHERE keyword = ? ;";
 	if ($stmt = mysqli_prepare($link, $sql))
 	{
 		// Bind variables to the prepared statement as parameters

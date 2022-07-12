@@ -46,12 +46,31 @@
 							document.querySelector('input[type="checkbox"]').checked = true;
 						</script>
 					<?php
-						echo"<div id=\"to-hide\" style=\"display:block;\">
+						echo
+						"
+							<script>
+								function copySecret() {
+									var copyText = document.getElementById(\"copy\").innerText;
+									var elem = document.createElement(\"textarea\");
+									document.body.appendChild(elem);
+									elem.value = copyText;
+									elem.select();
+									elem.setSelectionRange(0, 99999); /* For mobile devices */
+									navigator.clipboard.writeText(elem.value);
+									alert(\"Copied Secret: \" + copyText+\"\\nPaste into your authenticator app.\");
+									document.body.removeChild(elem);
+								}
+							</script>
+							<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css\">							
+							<div id=\"to-hide\" style=\"display:block;\">		
 								<br>
 								<div id=\"two_factor_div\">
-								2FA Enabled.  Secret: <b>{$userResults['tfa']}</b>
+									2FA On. Secret: <b id=\"copy\">{$userResults['tfa']}</b>
+									<button class = \"btn btn-outline-info btn-sm\" onclick=\"copySecret();\">📋</button>
 								</div>
-							</div>";
+							</div>
+
+						";
 					} 
 					?>
 					<div id="two_factor_response"></div>

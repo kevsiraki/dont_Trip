@@ -10,7 +10,7 @@
 		<link href="../style/navbar.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="../js/nav.js"></script>
-		<script src="../js/subPageLightMode.js"></script>	
+		<script src="../js/lightMode.js"></script>	
 		<title>Search History</title>
 	</head>
 	<body>

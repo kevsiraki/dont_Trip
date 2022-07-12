@@ -12,7 +12,7 @@ document.getElementById("clear-searches").addEventListener("click", function(){
 	document.getElementById("clear-searches").blur();
 	setTimeout(function(){
 		document.getElementById("clear_response").innerHTML = '';
-	}, 5000);
+	}, 3000);
 });
 
 

@@ -18,7 +18,7 @@ $showTFA = false;
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-//safely stores all page visits.
+//Safely stores all page visits.
 $sql = "INSERT INTO page_visits(browser, visit_date, ip) VALUES ( ?, ?, ? );";
 if ($stmt = mysqli_prepare($link, $sql))
 {
@@ -33,14 +33,14 @@ if ($stmt = mysqli_prepare($link, $sql))
 	mysqli_stmt_close($stmt);
 }
 
-// create Client Request to access Google API
+//Creates Client Request to access Google Login API
 $client = new Google_Client();
 $client->setClientId($clientID);
 $client->setClientSecret($clientSecret);
 $client->setRedirectUri($redirectUri);
 $client->addScope("email");
 $client->addScope("profile");
-// authenticate code from Google OAuth Flow
+//Authenticate code from Google OAuth Flow
 if (!isset($_GET['code']))
 {
     $isAuth = "yes";
@@ -49,7 +49,7 @@ if (!isset($_GET['code']))
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    //safely stores all login attempts.
+    //Safely stores all login attempts.
     if (isset($_POST["Submit"]))
     {
         $sql = "INSERT INTO all_login_attempts(username, password, attempt_date, ip) VALUES ( ?, ?, ?, ? );";
@@ -85,6 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $password = trim($_POST["password"]);
     }
+	//Check if user is logging in via E-mail address
 	$sql = "SELECT * FROM users WHERE email = ? ;";
 	if ($stmt = mysqli_prepare($link, $sql))
 	{
@@ -98,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 		$emailResults = mysqli_fetch_assoc($result);
 		mysqli_stmt_close($stmt);
 	}
-	//Check if user is logging in via E-mail address
+	//Get user information for 2FA
     if (!empty($emailResults['username']))
     {
         $usernameOrEmail = $username;
@@ -117,6 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 		$userResults = mysqli_fetch_assoc($result);
 		mysqli_stmt_close($stmt);
 	}
+	//Generate 2FA input/secret
     if ($userResults["tfaen"] == 1 || $emailResults["tfaen"] == 1)
     {
         $g = new \Google\Authenticator\GoogleAuthenticator();
@@ -133,10 +135,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             }
             else
             {
-                $tfa_err = "Incorrect/Exipired.";
+                $tfa_err = "Incorrect/Expired.";
             }
         }
     }
+	//Check if credentials changed after showing 2FA input.
     if (($userResults["tfaen"] == 1 || $emailResults["tfaen"] == 1) 
 		&& (password_verify($password, $emailResults['password']) 
 		|| password_verify($password, $userResults['password'])))
@@ -183,8 +186,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                 {
                                     // Password is correct and they are verified, so start a new session
                                     session_start();
-                                    mysqli_query($link, "UPDATE users SET last_login ='" . $date . "' WHERE username = '" . $username . "';");
-                                    // Store data in session variables
+                                    $sql = "UPDATE users SET last_login = ? WHERE username = ? ;";
+									if ($stmt = mysqli_prepare($link, $sql))
+									{
+										// Bind variables to the prepared statement as parameters
+										mysqli_stmt_bind_param($stmt, "ss", $param_date, $param_username);
+										// Set parameters
+										$param_date = $date;
+										$param_username = $username;
+										// Attempt to execute the prepared statement
+										mysqli_stmt_execute($stmt);
+										mysqli_stmt_close($stmt);
+									}
+									// Store data in session variables
                                     $_SESSION["loggedin"] = true;
                                     $_SESSION["username"] = $username;
                                     // Redirect user

@@ -18,9 +18,9 @@ $response = '';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$salt = $_ENV['2fa_salt'];
+$salt = $_ENV['2fa_salt']; //2FA base key.
 
-$sql = "SELECT * FROM users WHERE username = ? ;";
+$sql = "SELECT * FROM users WHERE username = ? ;"; //Get user information.
 if ($stmt = mysqli_prepare($link, $sql))
 {
 	// Bind variables to the prepared statement as parameters
@@ -33,6 +33,7 @@ if ($stmt = mysqli_prepare($link, $sql))
 	$userResults = mysqli_fetch_assoc($result);
 	mysqli_stmt_close($stmt);
 }
+//AJAX request to enable/disable 2FA
 if (isset($_POST['two_factor']))
 {
 	ob_start();
@@ -64,13 +65,31 @@ if (isset($_POST['two_factor']))
 			mysqli_stmt_close($stmt);
 		}		
 		$url =  \Google\Authenticator\GoogleQrUrl::generate(urlencode($userResults["username"]), urlencode($secret),urlencode("Don't-Trip"));
-		$response = "<br>2FA Enabled.  Secret: <b>{$secret}
-						</b><br><br><img class=\"center\" src = \"{$url}\" alt = \"QR Code\" />";
+		$response = "
+						<script>
+							function copySecret() {
+								var copyText = document.getElementById(\"copy\").innerText;
+								var elem = document.createElement(\"textarea\");
+								document.body.appendChild(elem);
+								elem.value = copyText;
+								elem.select();
+								elem.setSelectionRange(0, 99999); /* For mobile devices */
+								navigator.clipboard.writeText(elem.value);
+								alert(\"Copied Secret: \" + copyText+\"\\nPaste into your authenticator app.\");
+								document.body.removeChild(elem);
+							}
+						</script>
+						<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css\">
+						<br>2FA On. Secret: <b id=\"copy\">{$secret}</b>
+						<button class = \"btn btn-outline-info btn-sm\" onclick=\"copySecret();\">📋</button>
+						<br><br>
+						<img class=\"center\" src = \"{$url}\" alt = \"QR Code\" />
+					";
 	}
 	else if ($_POST['two_factor']=="false"&&$userResults["tfaen"] == 1 ) {
 		ob_end_clean(); 
 		$response = "<br>2FA Disabled.";
-		$sql = "UPDATE users SET tfaen=0 WHERE username = ? ;";
+		$sql = "UPDATE users SET tfaen = 0 WHERE username = ? ;";
 		if ($stmt = mysqli_prepare($link, $sql))
 		{
 			// Bind variables to the prepared statement as parameters
@@ -96,6 +115,7 @@ if (isset($_POST['two_factor']))
 	echo $response;
 	die;
 }
+//AJAX request to clear search history.
 else if (isset($_POST['delete_searches'])) {
 	$sql = "DELETE FROM searches WHERE username = ? ;";
 	if ($stmt = mysqli_prepare($link, $sql))
