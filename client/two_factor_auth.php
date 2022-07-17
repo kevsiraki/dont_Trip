@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+if (empty($_SESSION["username"])) {
     header("location: ../login.php");
     exit;
 }
@@ -10,39 +10,34 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 	<head>
 		<meta charset="UTF-8">
 		<meta content="initial-scale=1.0, user-scalable=no" name="viewport">
-		<title>Delete Account</title>
+		<title>Two Factor Authentication</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<link rel="stylesheet" href="../style/form_style.css">
 		<script src="../js/lightMode.js"></script>
-		<script src="../js/generalAJAX.js"></script>
-		<script src="../js/deleteConfirmationAJAX.js"></script>
-		<link rel="stylesheet" href="../style/meter_styles.css">
+		<script src="../js/twoFactorLoginAJAX.js"></script>
 	</head>
 	<body>
 		<div class="wrapper" >
 			<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
-			<div class = "info-bar" id="info-bar">Were sorry to see you go!<br>Please enter your password to confirm deletion.</div>
-			<div class="center alert alert-danger" id="invalid-delete" style="text-align:center;width: 90%;display:none;"></div>
+			<div class = "info-bar" id="info-bar">Please enter your OTP to login.</div>
+			<div id="invalid-login" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"></div>
 			<form>
-				<input style="display:none">
-				<input type="password" style="display:none" autocomplete="new-password"/>
 				<div class="form-group">
-					<input type="password" name="password" id="password" placeholder="Confirm Password" class="center form-control" required>
+					<input type="2fa" name="tfa" id="tfa" placeholder="2FA OTP" autocomplete="off" class="center form-control" required>
 				</div>
-				<label style="margin-left:5%;">
-					<input type="checkbox" onclick="showF();">
-					<small id="info">Show</small>
-				</label>
 				<div class="form-group" style="margin-left:5%;">
-					<button type="button" id="delete-account" class="btn btn-secondary" onclick="this.blur();">Delete Account</button>
-					<a class="btn btn-link ml-2" href="settings">Cancel</a>
+					<button type="button" id="verify" onclick="this.blur();" class="btn btn-success" >Verify</button>
+					<a class="btn btn-link ml-2" href="../login">Cancel</a>
 				</div>
 			</form>
 		</div>    
 	</body>
 </html>
+
+
+

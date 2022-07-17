@@ -1,11 +1,6 @@
 <?php
 // Initialize the session
 session_start();
-// Check if the user is logged in, otherwise redirect to login page
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: ../login.php");
-    exit;
-}
 // Include config file
 require_once "config.php";
 // Define variables and initialize with empty values
@@ -28,27 +23,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
     // Validate new password
     if (empty(trim($_POST["new_password"]))) {
-        $new_password_err = "Please enter the new password.";
+        $new_password_err = " ";
     } else if (password_verify(trim($_POST["new_password"]), trim($userResults["password"]))) {
-        $new_password_err = 'New password cannot be the same as before.';
+        $new_password_err = "New password cannot be the same as before.<br>";
+		echo $new_password_err;
     } else if (!(preg_match('/[A-Za-z]/', trim($_POST["new_password"])) && preg_match('/[0-9]/', trim($_POST["new_password"])) && preg_match('/[A-Z]/', trim($_POST["new_password"])) && preg_match('/[a-z]/', trim($_POST["new_password"])))) {
-        $new_password_err = 'New password must contain a lowercase letter, uppercase letter, and a number.';
+        $new_password_err = " ";
     } else if (strlen(trim($_POST["new_password"])) < 8 || strlen(trim($_POST["new_password"])) > 25) {
-        $new_password_err = "New password must have atleast 8 characters and not exceed 25.";
+        $new_password_err = " ";
     } else {
         $new_password = trim($_POST["new_password"]);
     }
     // Validate confirm password
 	if (empty(trim($_POST["confirm_password"]))) {
-        $confirm_password_err = "Please confirm password.";
+        $confirm_password_err = " ";
     } else {
         if (empty($new_password_err) && $new_password != trim($_POST["confirm_password"])) {
-            $confirm_password_err = "Password did not match.";
+            $confirm_password_err = " ";
         }
 		else if (empty($new_password_err)) {
 			$confirm_password = trim($_POST["confirm_password"]);
 		}
     }
+	//Check all fields
+	if(empty(trim($_POST["confirm_password"]))||empty(trim($_POST["new_password"]))) {
+		echo "Please fill in all fields.";
+	}
     // Check input errors before updating the database
     if (empty($new_password_err) && empty($confirm_password_err)) {
         // Prepare an update statement
@@ -63,10 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (mysqli_stmt_execute($stmt)) {
                 // Password updated successfully. Destroy the session, and redirect to login page
                 session_destroy();
-                header("location: ../login.php");
+                echo 1;
                 exit();
-            } else {
-                echo "Oops! Something went wrong. Please try again later.";
             }
             // Close statement
             mysqli_stmt_close($stmt);

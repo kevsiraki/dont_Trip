@@ -11,7 +11,8 @@
 		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<script src="../js/lightMode.js"></script>
-		<script src="../js/checkpw.js"></script>
+		<script src="../js/generalAJAX.js"></script>
+		<script src="../js/fpAJAX.js"></script>
 	</head>
 	<body>
 		<div class="wrapper">
@@ -19,20 +20,19 @@
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
 			<div class = "info-bar" id="info-bar">Enter your e-mail for a password recovery form.</div>
-			<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
+			<div id="invalid-email" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"></div>
+			<form> 
 				<div class="form-group">
-					<input type="email" name="email"  id="email-reset" required="" aria-describedby="emailHelp" 
-					autocomplete="off" placeholder="E-mail Address" class="center form-control
-						<?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>">
+					<input type="email" name="email"  id="email-reset" aria-describedby="emailHelp" 
+					autocomplete="off" placeholder="E-mail Address" class="center form-control" required>
 					<div id="ename_response" style="text-align: center;"></div>	
-					<span class="invalid-feedback" style="text-align:center;"> <?php echo $email_err; ?> </span> 
 					<small id="emailHelp" class="form-text text-muted" style="margin-left:5%">
 						This serves as a re-verification token.
 					</small>
 				</div>
 				<div class="form-group" style="margin-left:5%">
-					<input type="submit" name="submit" class="btn btn-primary" value="Submit">
-					<a class="btn btn-link ml-2" href="../login.php">Cancel</a>
+					<button type="button" id="submit-email" class="btn btn-primary" onclick="this.blur();">Submit</button>
+					<a class="btn btn-link ml-2" href="../login">Cancel</a>
 				</div>
 			</form>
 		</div>    

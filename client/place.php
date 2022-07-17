@@ -3,7 +3,7 @@
 ?>
 <html lang="en">
 	<head>
-		<!--<meta charset="UTF-8" http-equiv="refresh" content="300;url=../backend/logout.php"/> -->
+		<!--<meta charset="UTF-8" http-equiv="refresh" content="300;url=../backend/logout"/> -->
 		<title><?php echo $_GET['name'] ?></title>
 		<link href="../icons/dt.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">

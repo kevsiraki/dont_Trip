@@ -14,6 +14,7 @@
 		<link rel="stylesheet" href="style/form_style.css">
 		<link href="icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="icons/icon.png">
+		<script src="js/loginAJAX.js"></script>
 		<script src="js/lightMode.js"></script>
 	</head>
 	<body><script src="js/lightMode.js"></script>
@@ -21,37 +22,16 @@
 			<h2><img draggable="false" src="icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br><br>
-			<?php 
-				if(!empty($login_err)){
-					echo '<div class="center alert alert-danger"style="text-align:center; width: 90%;">' . $login_err . '</div>';
-				}
-			?> 
-			<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">  
+			<div id="invalid-login" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"></div>
+			<form>  
 				<div class="form-group">
-					<input type="text" name="username" placeholder="Username" class="center form-control 
-						<?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $usernameOrEmail; ?>"required>
-					<span class="invalid-feedback"style="text-align:center;"> <?php echo $username_err; ?> </span>
+					<input type="text" id="username" name="username" placeholder="Username or E-mail" class="center form-control" required>
 				</div>
 				<div class="form-group">
-					<input type="password" name="password" placeholder="Password" class="center form-control 
-						<?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>"value="<?php echo $password; ?>"required>
-					<span class="invalid-feedback"style="text-align:center;"> <?php echo $password_err; ?> </span>
+					<input type="password" id="password" name="password" placeholder="Password" class="center form-control" required>
 				</div>
-				<?php if((isset($userResults["tfaen"])||isset($emailResults["tfaen"]))) { ?>
-					<?php if($showTFA) { ?>
-						<div class="form-group">
-							<input type="2fa" name="2fa" id="2fa" placeholder="2FA Google Authenticator Code" 
-							autocomplete="off" class="center form-control
-							<?php echo (!empty($tfa_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $code; ?>">
-							<span class="invalid-feedback"style="text-align:center;"> <?php echo $tfa_err; ?> </span>
-							<small id="2faHelp" style="margin-left:5%"class="form-text text-muted">2FA is Enabled.</small>
-						</div>
-					<?php 
-						} 
-					}  
-					?>
 				<br>
-				<input name="Submit" type="submit"  value="Login" class="center btn btn-success"></input>
+				<button type="button" id="log-in" onclick="this.blur();" class="center btn btn-success">Login</button>
 				<br>
 				<p id="other">&nbsp;&nbsp;Other Providers&nbsp;&nbsp;</p>
 				<?php
@@ -63,17 +43,17 @@
 				<?php
 					if(isset($_SESSION["loggedin"])&& $_SESSION["loggedin"]===true) {
 				?>
-					<p><a href="client/dt.php" class="text-success">Continue current session?</a></p>
+					<p><a href="client/dt" class="text-success">Continue current session?</a></p>
 				<?php
 					}
 					else {
 				?>
-					<p><a href="client/dt.php" class="text-info">Continue as guest?</a></p>
+					<p><a href="client/dt" class="text-info">Continue as guest?</a></p>
 				<?php
 					}
 				?>
-				<p id="info">Need an account? <a href="client/register.php" style="">Sign up here</a></p>
-				<a href="client/fp.php" style="white-space: nowrap;">Forgot your password?</a>
+				<p id="info">Need an account? <a href="client/register" style="">Sign up here</a></p>
+				<a href="client/fp" style="white-space: nowrap;">Forgot your password?</a>
 			</form>
 		</div>
 	</body>

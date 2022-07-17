@@ -1,0 +1,29 @@
+$(document).on('click', '#verify', function(e) {
+	e.preventDefault();
+    let tfa = $('#tfa').val();
+    $.ajax({
+        url: '../backend/two_factor_auth_backend',
+        type: 'post',
+        data: {
+            tfa: tfa
+        },
+        success: function(response) {
+			let button = document.getElementById("verify");
+			let error = document.getElementById("invalid-login");
+			if (response == 1) {
+				error.style.display = "none";
+                window.location.href = "dt";
+            }
+			else {
+				$('#invalid-login').html(response);
+				error.style.display = "block";
+				button.classList.remove("btn-success");
+				button.classList.add("btn-danger");
+				setTimeout(function(){
+					button.classList.remove("btn-danger");
+					button.classList.add("btn-success");
+				}, 2000);
+			}
+        }
+    });
+});

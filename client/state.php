@@ -19,9 +19,9 @@
 				<i class="fa fa-bars"></i>
 			</a>
 			<div id="myLinks">
-				<a href="../client/searches.php">Your Searches</a>
-				<a href="../client/settings.php">Account Settings</a>
-				<a href="../client/dt.php">Back to Don't Trip</a>
+				<a href="../client/searches">Your Searches</a>
+				<a href="../client/settings">Account Settings</a>
+				<a href="../client/dt">Back to Don't Trip</a>
 			</div>
 		</div>
 		<br>
@@ -36,7 +36,7 @@
 					while($rows = mysqli_fetch_assoc($result)) {
 					?>
 						<li>
-							<a href ="dt.php?destVal=<?php echo htmlspecialchars($rows["destination"]);?>"><?php echo htmlspecialchars($rows["destination"]);?></a>
+							<a href ="dt?destVal=<?php echo htmlspecialchars($rows["destination"]);?>"><?php echo htmlspecialchars($rows["destination"]);?></a>
 						</li>
 					<?php
 					}
@@ -52,7 +52,7 @@
 						if(!empty($rows2["keyword"])) {
 					?>
 							<li>
-								<a href ="dt.php?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>"> <?php echo htmlspecialchars($rows2["keyword"]);?></a>
+								<a href ="dt?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>"> <?php echo htmlspecialchars($rows2["keyword"]);?></a>
 							</li>
 					<?php
 						}

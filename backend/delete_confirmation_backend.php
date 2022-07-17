@@ -24,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     if (empty(trim($_POST["password"])))
     {
         $password_err = "Please enter your password.";
+		echo $password_err;
     }
     else
     {
@@ -79,27 +80,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 								mysqli_stmt_execute($stmt);
 								mysqli_stmt_close($stmt);
 							}
-                            // Redirect user
-                            header("location: ../backend/logout.php");
+                            // Redirect user response
+							echo 1;
                         }
 						else
 						{
-                        // Password is not valid, display a generic error message
-                        $password_err = "Incorrect Password.";
+							// Password is not valid, display a generic error message
+							$password_err = "Incorrect Password.";
+							echo $password_err;
 						}
                     }
                 }
-                else
-                {
-                    // Username doesn't exist, display a generic error message.
-					// This is virtually impossible to reach.
-                    $login_err = "Session Error.";
-                }
             }
-        }
-        else
-        {
-            echo "Database Issues.";
         }
         mysqli_stmt_close($stmt);
     }

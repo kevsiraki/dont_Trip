@@ -24,7 +24,7 @@
 				</div>
 				<div class="card-body">
 					<p id="info"> <?php echo $msg; ?> </p>
-					<a href="../login.php" class="btn-primary btn-sm " style="margin: auto;">Return to Login</a>
+					<a href="../login" class="btn-primary btn-sm " style="margin: auto;">Return to Login</a>
 				</div>
 			</div>
 		</div>

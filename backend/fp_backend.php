@@ -1,10 +1,4 @@
 <?php
-if (!isset($_SERVER['HTTP_REFERER'])) {
-    // redirect them to your desired location
-    header('location: ../login.php');
-    exit;
-}
-
 // Include config file
 require_once "config.php";
 require_once 'vendor/autoload.php';
@@ -21,7 +15,8 @@ $dotenv->load();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if email is valid
     if (empty(trim($_POST["email"]))) {
-        $email_err = "Please enter email.";
+        $email_err = "Please enter an e-mail.";
+		echo $email_err;
     } else {
         $email = trim($_POST["email"]);
 		$sql = "SELECT * FROM users WHERE email = ? ;";
@@ -38,7 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			mysqli_stmt_close($stmt);
 		}
         if (mysqli_num_rows($result) == 0) {
-            $email_err = "Email not found.";
+            $email_err = "E-mail address invalid.";
+			echo $email_err;
         } else {
             $email = trim($_POST["email"]);
         }
@@ -90,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo $e->errorMessage();
         }
         catch(Exception $e) {
-            header("location: https://donttrip.technologists.cloud/donttrip/"); //Boring error messages from anything else!
+            echo 404; //Boring error messages from anything else!
         }
         if ($mail->Send()) {
 			$sql = "DELETE FROM password_reset_temp WHERE email = ? ;";
@@ -115,15 +111,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $param_key = $key;
                 $param_expDate = $expDate;
                 // Attempt to execute the prepared statement
-                if (mysqli_stmt_execute($stmt)) {} 
-				else {
-                    echo "Oops! Something went wrong. Please try again later.";
-                }
+                mysqli_stmt_execute($stmt);
                 // Close statement
                 mysqli_stmt_close($stmt);
             }
             mysqli_close($link);
-            header("location: ../login.php");
+            echo 1;
         } else {
             echo "Mail Error - >" . $mail->ErrorInfo;
         }

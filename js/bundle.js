@@ -137,7 +137,7 @@
             });
             locationButton.addEventListener("click", () => {
                 let xmlhttp = new XMLHttpRequest();
-                xmlhttp.open("GET", "https://donttrip.technologists.cloud/donttrip/client/dt.php?go=yes&destination=" + document.getElementById("myInput").value + "&keyword=" + document.getElementById("keywordIn").value, true);
+                xmlhttp.open("GET", "https://donttrip.technologists.cloud/donttrip/client/dt?go=yes&destination=" + document.getElementById("myInput").value + "&keyword=" + document.getElementById("keywordIn").value, true);
                 xmlhttp.send();
                 if (document.getElementById("myInput").value == null || document.getElementById("myInput").value == "") {
                     alert("Please Choose a Destination.");

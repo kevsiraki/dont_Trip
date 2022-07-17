@@ -1,4 +1,4 @@
-<?php require "../backend/register_backend.php"; ?>
+<?php /*echo mj-if-else*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head> 
@@ -11,7 +11,8 @@
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<link rel="stylesheet" href="../style/form_style.css">
 		<script src="../js/lightMode.js"></script>
-		<script src="../js/checkpw.js"></script>
+		<script src="../js/generalAJAX.js"></script>
+		<script src="../js/registerAJAX.js"></script>
 		<link rel="stylesheet" href="../style/meter_styles.css">
 	</head>
 	<body>
@@ -19,33 +20,28 @@
 	  		<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
-			<div class="info-bar" id="info-bar">
-				Fill Out This Form to Sign-Up
-			</div>
-			<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+			<div class="info-bar" id="info-bar">Fill Out This Form to Sign-Up</div>
+			<div id="invalid-signup" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"></div>
+			<form>
 				<input style="display:none">
 				<input type="password" style="display:none" autocomplete="new-password"/>
 				<input style="display: none" type="text" name="fakeusernameremembered" />
 				<input style="display: none" type="password" name="fakepasswordremembered" />
 				<div class="form-group">
-					<input type="email" name="email" placeholder="E-mail Address" id="email" required="" 
-						autocomplete="off" aria-describedby="emailHelp" class="center form-control
-						<?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>"/>
+					<input type="email" name="email" placeholder="E-mail Address" id="email" autocomplete="off" 
+					onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" aria-describedby="emailHelp" class="center form-control" required>
 					<div id="ename_response" style="text-align:center;"></div>
-					<span class="invalid-feedback" style="text-align:center;"> <?php echo $email_err; ?> </span> 
 				</div>
 				<div class="form-group">
-					<input type="text" placeholder="Username" name="username" id="username" autocomplete="off" class="center form-control 
-					<?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>" required>
+					<input type="text" placeholder="Username" name="username" id="username" autocomplete="off" 
+					onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" class="center form-control" required>
 					<div id="uname_response" style="text-align:center;"></div>
-					<span class="invalid-feedback"style="text-align:center;"> <?php echo $username_err; ?> </span>
 				</div>
 				<div class="form-group">
 					<input type="password" placeholder="Password" name="password" id="password" 
-					onkeyup="getPassword();getConfirmPassword();" onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
-					onpaste="getPassword();getConfirmPassword();"autocomplete="new-password" class="center form-control 
-						<?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>" required>
-					<span class="invalid-feedback"style="text-align:center;"> <?php echo $password_err; ?> </span>
+						onkeyup="getPassword();getConfirmPassword();" onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
+						onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false"
+						oninput="getPassword();getConfirmPassword();"autocomplete="new-password" class="center form-control" required>
 				</div>
 				<label style="margin-left:5%;">
 					<input type="checkbox" onclick="showF();showMeter();showConfirmMeter();getPassword();getConfirmPassword();">
@@ -61,19 +57,17 @@
 				<div class="form-group">
 					<input type="password" name="confirm_password" id="confirm-password" placeholder="Confirm Password" 
 					onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
-					onpaste="getPassword();getConfirmPassword();"
-					autocomplete="new-password" onkeyup="getPassword();getConfirmPassword();" class="center form-control 
-						<?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>" required>
-					<span class="invalid-feedback"style="text-align:center;"> <?php echo $confirm_password_err; ?> </span>
+					onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false"
+					oninput="getPassword();getConfirmPassword();"autocomplete="new-password" onkeyup="getPassword();getConfirmPassword();" class="center form-control" required>
 				</div>
 				<div id="confirm-password-strength" style="display: none;text-align:center;">
 					<div id="matching" class="pw-stength"><small> Matching</small></div>
 				</div>
                     <br> 
 					<script src="../js/lightMode.js"></script>
-					<input name="Submit" type="submit" value="Sign-Up" class="center btn btn-success">
+					<button name="Submit" type="button" id="sign-up" class="center btn btn-success" onclick="this.blur();">Sign-Up</button>
 					<br>
-					<p id="info-two">Already have an account? <a href="../login.php">Login here</a></p> 
+					<p id="info-two">Already have an account? <a href="../login">Login here</a></p> 
 			</form>
 		</div>
 		<br>

@@ -30,7 +30,7 @@ if ($stmt = mysqli_prepare($link, $sql))
 	$result2 = mysqli_stmt_get_result($stmt);
 	mysqli_stmt_close($stmt);
 }
-if(isset($_GET['toDelete'])) 
+if(isset($_GET['toDeleteDestination'])) 
 {
 	$sql = "UPDATE searches SET destination = null WHERE destination = ? ;";
 	if ($stmt = mysqli_prepare($link, $sql))
@@ -38,14 +38,14 @@ if(isset($_GET['toDelete']))
 		// Bind variables to the prepared statement as parameters
 		mysqli_stmt_bind_param($stmt, "s", $param_destination);
 		// Set parameters
-		$param_destination = $_GET['toDelete'];
+		$param_destination = $_GET['toDeleteDestination'];
 		// Attempt to execute the prepared statement
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 	}
-	header("location: searches.php");
+	echo 1;
 }
-if(isset($_GET['toDelete2'])) 
+if(isset($_GET['toDeleteKeyword'])) 
 {
 	$sql = "UPDATE searches SET keyword = null WHERE keyword = ? ;";
 	if ($stmt = mysqli_prepare($link, $sql))
@@ -53,11 +53,11 @@ if(isset($_GET['toDelete2']))
 		// Bind variables to the prepared statement as parameters
 		mysqli_stmt_bind_param($stmt, "s", $param_keyword);
 		// Set parameters
-		$param_keyword = $_GET['toDelete2'];
+		$param_keyword = $_GET['toDeleteKeyword'];
 		// Attempt to execute the prepared statement
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 	}
-	header("location: searches.php");
+	echo 2;
 }
 ?>

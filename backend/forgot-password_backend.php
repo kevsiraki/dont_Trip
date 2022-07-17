@@ -5,178 +5,229 @@ require_once 'vendor/sonata-project/google-authenticator/src/FixedBitNotation.ph
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticatorInterface.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
-// Define variables and initialize with empty values
 date_default_timezone_set('America/Los_Angeles');
 $date = date("Y-m-d H:i:s");
 $email = $new_password = $confirm_password = $code = $tfa_err = "";
 $new_password_err = $confirm_password_err = "";
 $expired = 0;
 
-if (isset($_GET["key"]) && isset($_GET["token"])) {
-	$sql = "SELECT * FROM users WHERE email = ? ;";
-	if ($stmt = mysqli_prepare($link, $sql))
-	{
-		// Bind variables to the prepared statement as parameters
-		mysqli_stmt_bind_param($stmt, "s", $param_email);
-		// Set parameters
-		$param_email = $_GET["key"];
-		// Attempt to execute the prepared statement
-		mysqli_stmt_execute($stmt);
-		$result = mysqli_stmt_get_result($stmt);
-		$userResults = mysqli_fetch_assoc($result);
-		mysqli_stmt_close($stmt);
-	}
+if (isset($_GET["key"]) && isset($_GET["token"]))
+{
+    $sql = "SELECT * FROM users WHERE email = ? ;";
+    if ($stmt = mysqli_prepare($link, $sql))
+    {
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "s", $param_email);
+        // Set parameters
+        $param_email = $_GET["key"];
+        // Attempt to execute the prepared statement
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $userResults = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+    }
     $email = trim($_GET["key"]);
     $key = $_GET["token"];
     $curDate = $date;
     $sql = "SELECT * FROM password_reset_temp WHERE keyTO = ? AND email = ? ;";
-	if ($stmt = mysqli_prepare($link, $sql))
-	{
-		// Bind variables to the prepared statement as parameters
-		mysqli_stmt_bind_param($stmt, "ss", $param_key, $param_email);
-		// Set parameters
-		$param_key = $key;
-		$param_email = $email;
-		// Attempt to execute the prepared statement
-		if(mysqli_stmt_execute($stmt)) {
-			$result = mysqli_stmt_get_result($stmt);
-			$array = mysqli_fetch_assoc($result);
-			$row = mysqli_num_rows($result);
-			if ($row == "") {
-				$expired = 1;
-			} 
-			else {
-				$row = $array;
-				$expDate = $row['expD']; 
-				if ($expDate < $curDate) {
-					mysqli_query($link, "DELETE FROM password_reset_temp WHERE email='" . $email . "';");
-					$expired = 1;
-				}
-			}
-		}
-		mysqli_stmt_close($stmt);
-	}
-    
+    if ($stmt = mysqli_prepare($link, $sql))
+    {
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "ss", $param_key, $param_email);
+        // Set parameters
+        $param_key = $key;
+        $param_email = $email;
+        // Attempt to execute the prepared statement
+        if (mysqli_stmt_execute($stmt))
+        {
+            $result = mysqli_stmt_get_result($stmt);
+            $array = mysqli_fetch_assoc($result);
+            $row = mysqli_num_rows($result);
+            if ($row == "")
+            {
+                $expired = 1;
+            }
+            else
+            {
+                $row = $array;
+                $expDate = $row['expD'];
+                if ($expDate < $curDate)
+                {
+                    mysqli_query($link, "DELETE FROM password_reset_temp WHERE email='" . $email . "';");
+                    $expired = 1;
+                }
+            }
+        }
+        mysqli_stmt_close($stmt);
+    }
+
+}
+else
+{
+    $expired = 1;
 }
 // Processing form data when form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
     $email = $_POST["email"];
     $sql = "SELECT * FROM users WHERE email = ? ;";
-	if ($stmt = mysqli_prepare($link, $sql))
-	{
-		// Bind variables to the prepared statement as parameters
-		mysqli_stmt_bind_param($stmt, "s", $param_email);
-		// Set parameters
-		$param_email = $email;
-		// Attempt to execute the prepared statement
-		mysqli_stmt_execute($stmt);
-		$result = mysqli_stmt_get_result($stmt);
-		$userResults = mysqli_fetch_assoc($result);
-		mysqli_stmt_close($stmt);
-	}
+    if ($stmt = mysqli_prepare($link, $sql))
+    {
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "s", $param_email);
+        // Set parameters
+        $param_email = $email;
+        // Attempt to execute the prepared statement
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $userResults = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+    }
     $key = $_POST["key"];
     $curDate = $date;
     $sql = "SELECT * FROM password_reset_temp WHERE keyTO = ? AND email = ? ;";
-	if ($stmt = mysqli_prepare($link, $sql))
-	{
-		// Bind variables to the prepared statement as parameters
-		mysqli_stmt_bind_param($stmt, "ss", $param_key, $param_email);
-		// Set parameters
-		$param_key = $key;
-		$param_email = $email;
-		// Attempt to execute the prepared statement
-		if(mysqli_stmt_execute($stmt)) {
-			$result = mysqli_stmt_get_result($stmt);
-			$array = mysqli_fetch_assoc($result);
-			$row = mysqli_num_rows($result);
-			if ($row == "") {
-				$expired = 1;
-			}
-			else {
-				$row = $array;
-				$expDate = $row['expD'];
-				if ($expDate < $curDate) {
-					mysqli_query($link, "DELETE FROM password_reset_temp WHERE email='" . $email . "';");
-					$expired = 1;
-				}
-			}
-		}
-		mysqli_stmt_close($stmt);
-	}
+    if ($stmt = mysqli_prepare($link, $sql))
+    {
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "ss", $param_key, $param_email);
+        // Set parameters
+        $param_key = $key;
+        $param_email = $email;
+        // Attempt to execute the prepared statement
+        if (mysqli_stmt_execute($stmt))
+        {
+            $result = mysqli_stmt_get_result($stmt);
+            $array = mysqli_fetch_assoc($result);
+            $row = mysqli_num_rows($result);
+            if ($row == "")
+            {
+                $expired = 1;
+            }
+            else
+            {
+                $row = $array;
+                $expDate = $row['expD'];
+                if ($expDate < $curDate)
+                {
+                    mysqli_query($link, "DELETE FROM password_reset_temp WHERE email='" . $email . "';");
+                    $expired = 1;
+                }
+            }
+        }
+        mysqli_stmt_close($stmt);
+    }
+
     // Validate new password
-    if (empty(trim($_POST["new_password"]))) {
-        $new_password_err = "Please enter the new password.";
-    } else if (password_verify(trim($_POST["new_password"]), trim($userResults['password']))) {
-        $new_password_err = 'Password cannot be the same as before.';
-    } else if (!(preg_match('/[A-Za-z]/', trim($_POST["new_password"])) && preg_match('/[0-9]/', trim($_POST["new_password"])) && preg_match('/[A-Z]/', trim($_POST["new_password"])) && preg_match('/[a-z]/', trim($_POST["new_password"])))) {
-        $new_password_err = 'Password must contain a lowercase letter, uppercase letter, and a number.';
-    } else if (strlen(trim($_POST["new_password"])) < 8 || strlen(trim($_POST["new_password"])) > 25) {
-        $new_password_err = "Password must have atleast 8 characters and not exceed 25.";
-    } else {
+    if (empty(trim($_POST["new_password"])))
+    {
+        $new_password_err = " ";
+    }
+    else if (password_verify(trim($_POST["new_password"]) , trim($userResults['password'])))
+    {
+        $new_password_err = 'Password cannot be the same as before.<br>';
+        echo $new_password_err;
+    }
+    else if (!(preg_match('/[A-Za-z]/', trim($_POST["new_password"])) && preg_match('/[0-9]/', trim($_POST["new_password"])) && preg_match('/[A-Z]/', trim($_POST["new_password"])) && preg_match('/[a-z]/', trim($_POST["new_password"]))))
+    {
+        $new_password_err = " ";
+    }
+    else if (strlen(trim($_POST["new_password"])) < 8 || strlen(trim($_POST["new_password"])) > 25)
+    {
+        $new_password_err = " ";
+    }
+    else
+    {
         $new_password = trim($_POST["new_password"]);
     }
     // Validate confirm new password
-	if (empty(trim($_POST["confirm_password"]))) {
-        $confirm_password_err = "Please confirm password.";
-    } else {
-        if (empty($new_password_err) && $new_password != trim($_POST["confirm_password"])) {
-            $confirm_password_err = "Password did not match.";
-        }
-		else if (empty($new_password_err)) {
-			$confirm_password = trim($_POST["confirm_password"]);
-		}
+    if (empty(trim($_POST["confirm_password"])))
+    {
+        $confirm_password_err = " ";
     }
-    if ($userResults["tfaen"] == 1) {
+    else
+    {
+        if (empty($new_password_err) && $new_password != trim($_POST["confirm_password"]))
+        {
+            $confirm_password_err = " ";
+        }
+        else if (empty($new_password_err))
+        {
+            $confirm_password = trim($_POST["confirm_password"]);
+        }
+    }
+    if ($userResults["tfaen"] == 1)
+    {
         $g = new \Google\Authenticator\GoogleAuthenticator();
         $secret = $userResults["tfa"];
-        $code = trim($_POST["2fa"]);
-        if ($g->checkCode($secret, $code) && isset($_POST["submit"])) {
-        } else if (!($g->checkCode($secret, $code)) && isset($_POST["submit"])) {
-            if (empty($code) && isset($_POST["submit"])) {
-                $tfa_err = " ";
-            } else {
-                $tfa_err = "Incorrect/Expired.";
+        $code = trim($_POST["tfa"]);
+        if ($g->checkCode($secret, $code))
+        {
+        }
+        else if (!($g->checkCode($secret, $code)))
+        {
+            if (!empty(trim($_POST["new_password"])) && !empty(trim($_POST["confirm_password"])))
+            {
+                if (empty($code))
+                {
+                    $tfa_err = "Please enter OTP.<br>";
+                    echo $tfa_err;
+                }
+                else
+                {
+                    $tfa_err = "Incorrect or Expired OTP.<br>";
+                    echo $tfa_err;
+                }
             }
         }
     }
+    //Check all fields
+    if (empty(trim($_POST["new_password"])) || empty(trim($_POST["confirm_password"])))
+    {
+        echo 'Please fill in all fields.<br>';
+    }
     // Check input errors before updating the database
-    if (empty($new_password_err) && empty($tfa_err) && empty($confirm_password_err)) {
+    if (empty($new_password_err) && empty($tfa_err) && empty($confirm_password_err))
+    {
         $sql = "UPDATE users SET email_verified_at = ? WHERE email = ? ;";
-		if ($stmt = mysqli_prepare($link, $sql))
-		{
-			// Bind variables to the prepared statement as parameters
-			mysqli_stmt_bind_param($stmt, "ss", $param_date, $param_email);
-			// Set parameters
-			$param_date = $date;
-			$param_email = $email;
-			// Attempt to execute the prepared statement
-			mysqli_stmt_execute($stmt);
-			mysqli_stmt_close($stmt);
-		}
-		// Prepare an update statement
+        if ($stmt = mysqli_prepare($link, $sql))
+        {
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "ss", $param_date, $param_email);
+            // Set parameters
+            $param_date = $date;
+            $param_email = $email;
+            // Attempt to execute the prepared statement
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        }
+        // Prepare an update statement
         $sql = "UPDATE users SET password = ? WHERE email = ?";
-        if ($stmt = mysqli_prepare($link, $sql)) {
+        if ($stmt = mysqli_prepare($link, $sql))
+        {
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "ss", $param_password, $param_email);
             // Set parameters
             $param_password = password_hash($new_password, PASSWORD_DEFAULT);
             $param_email = $email;
             // Attempt to execute the prepared statement
-            if (mysqli_stmt_execute($stmt)) 
+            if (mysqli_stmt_execute($stmt))
             {
                 // Password updated successfully. Destroy the session, and redirect to login page
                 $sql = "DELETE FROM password_reset_temp WHERE email = ?";
-        		if ($stmt2 = mysqli_prepare($link, $sql)) {
-            		// Bind variables to the prepared statement as parameters
-            		mysqli_stmt_bind_param($stmt2, "s", $param_email);
-            		// Set parameters
-            		$param_email = $email;
-            		// Attempt to execute the prepared statement
-            		mysqli_stmt_execute($stmt2);
-            		// Close statement
-            		mysqli_stmt_close($stmt2);
-        		}
-                header("location: ../login.php");
+                if ($stmt2 = mysqli_prepare($link, $sql))
+                {
+                    // Bind variables to the prepared statement as parameters
+                    mysqli_stmt_bind_param($stmt2, "s", $param_email);
+                    // Set parameters
+                    $param_email = $email;
+                    // Attempt to execute the prepared statement
+                    mysqli_stmt_execute($stmt2);
+                    // Close statement
+                    mysqli_stmt_close($stmt2);
+                }
+                echo 1;
+                //header("location: ../login.php");
+                
             }
             // Close statement
             mysqli_stmt_close($stmt);

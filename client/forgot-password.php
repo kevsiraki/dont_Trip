@@ -11,7 +11,8 @@
 		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<script src="../js/lightMode.js"></script>
-		<script src="../js/checkpw.js"></script>
+		<script src="../js/generalAJAX.js"></script>
+		<script src="../js/forgotPasswordAJAX.js"></script>
 		<link rel="stylesheet" href="../style/meter_styles.css">
 	</head>
 	<body>
@@ -21,7 +22,7 @@
 				<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 				<br>
 				<div class = "info-bar">Expired/Invalid Link.</div>
-				<a class="center btn btn-info" href="../login.php">Back To Login</a>
+				<a class="center btn btn-info" href="../login">Back To Login</a>
 			</div>    
 		<?php endif; ?>
 		<?php if($expired == 0): ?>
@@ -30,15 +31,14 @@
 				<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 				<br>
 				<div class = "info-bar" id="info-bar">Please fill out this form to reset your password.</div>
-				<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
+				<div id="invalid-reset" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"></div>
+				<form> 
 					<input style="display:none">
 					<input type="password" style="display:none" autocomplete="new-password">
 					<div class="form-group">
 						<input type="password" name="new_password" id="password" 
 							onkeyup="getPassword();getConfirmPassword();" onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
-							autocomplete="new-password" placeholder="New Password" class="center form-control 
-							<?php echo (!empty($new_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $new_password; ?>" required>
-						<span class="invalid-feedback"style="text-align:center;"><?php echo $new_password_err; ?></span>
+							autocomplete="new-password" placeholder="New Password" class="center form-control" required>
 					</div>
 					<label style="margin-left:5%;">
 						<input type="checkbox" onclick="showF();showMeter();showConfirmMeter();getPassword();getConfirmPassword();">
@@ -54,9 +54,7 @@
 					<div class="form-group">
 						<input type="password" name="confirm_password" id="confirm-password"
 							onkeyup="getPassword();getConfirmPassword();" onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
-							autocomplete="new-password" placeholder="Confirm New Password" class="center form-control 
-							<?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>" required>
-						<span class="invalid-feedback"style="text-align:center;"><?php echo $confirm_password_err; ?></span>
+							autocomplete="new-password" placeholder="Confirm New Password" class="center form-control" required>
 					</div>
 					<div id="confirm-password-strength" style="display: none;text-align:center;">
 						<div id="matching" class="pw-stength"><small> Matching</small></div>
@@ -64,18 +62,16 @@
 					</div>
 					<?php if($userResults['tfaen']==1) : ?>
 						<div class="form-group">
-							<input type="2fa" name="2fa" id="2fa" autocomplete="off" 
-								placeholder="2FA Google Authenticator Code" class="center form-control
-								<?php echo (!empty($tfa_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $code; ?>">
-							<span class="invalid-feedback"style="text-align:center;"> <?php echo $tfa_err; ?> </span>
+							<input type="text" name="tfa" id="tfa" autocomplete="off" 
+								placeholder="2FA Google Authenticator Code" class="center form-control" required>
 							<small id="2faHelp" class="form-text text-muted"style="margin-left:5%">2FA is Enabled.</small>
 						</div>
 					<?php endif; ?>
-					<input type="hidden" name="email" value="<?php echo $email;?>"/>
-					<input type="hidden" name="key" value="<?php echo $key;?>"/>
+					<input type="hidden" name="email" id="hidden-email" value="<?php echo $email;?>"/>
+					<input type="hidden" name="key" id="hidden-key"value="<?php echo $key;?>"/>
 					<div class="form-group"style="margin-left:5%;">
-						<input type="submit" name="submit" class="btn btn-primary" value="Submit">
-						<a class="btn btn-link ml-2" href="../login.php">Cancel</a>
+						<button type="button" id="submit-password" class="btn btn-primary" onclick="this.blur();">Submit</button>
+						<a class="btn btn-link ml-2" href="../login">Cancel</a>
 					</div>
 				</form>
 			</div>    

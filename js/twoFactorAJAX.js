@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-	var checkbox = document.querySelector('input[type="checkbox"]');
+	let checkbox = document.querySelector('input[type="checkbox"]');
 	checkbox.addEventListener('change', function () {
-		var two_factor = checkbox.checked;
+		let two_factor = checkbox.checked;
 		$.ajax({
-			url: '../backend/settings_backend.php',
+			url: '../backend/settings_backend',
 			type: 'post',
 			data: {
 				two_factor: two_factor
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			if(document.getElementById("two_factor_response")) {
 				setTimeout(function(){
 					document.getElementById("two_factor_response").innerHTML = '';
-				}, 3000);
+				}, 1000);
 			}	
 		}
 	});

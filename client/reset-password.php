@@ -1,4 +1,11 @@
-<?php require "../backend/reset-password_backend.php"; ?>
+<?php 
+session_start();
+// Check if the user is logged in, otherwise redirect to login page
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("location: ../login.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -11,7 +18,8 @@
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<link rel="stylesheet" href="../style/form_style.css">
 		<script src="../js/lightMode.js"></script>
-		<script src="../js/checkpw.js"></script>
+		<script src="../js/generalAJAX.js"></script>
+		<script src="../js/resetPasswordAJAX.js"></script>
 		<link rel="stylesheet" href="../style/meter_styles.css">
 	</head>
 	<body>
@@ -20,16 +28,15 @@
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
 			<div class = "info-bar" id="info-bar">Fill out this form to reset your password.</div>
-			<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+			<div id="invalid-reset" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"></div>
+			<form>
 				<input style="display:none">
 				<input type="password" style="display:none" autocomplete="new-password"/>
 				<div class="form-group">
-					<label></label>
-					<input type="password" name="new_password" id="password" 
-					onkeyup="getPassword();getConfirmPassword();" onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
-					autocomplete="new-password" placeholder="New Password" class="center form-control 
-					<?php echo (!empty($new_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $new_password; ?>" required>
-					<span class="invalid-feedback"style="text-align:center;"><?php echo $new_password_err; ?></span>
+					<input type="password" name="new_password" id="password" onkeyup="getPassword();getConfirmPassword();" 
+					onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
+					autocomplete="new-password" placeholder="New Password" class="center form-control" required>
+
 				</div>
 				<label style="margin-left:5%;">
 					<input type="checkbox" onclick="showF();showMeter();showConfirmMeter();getPassword();getConfirmPassword();">
@@ -43,19 +50,17 @@
 					<br>
 				</div>
 				<div class="form-group">
-					<input type="password" name="confirm_password" id="confirm-password"
-					onkeyup="getPassword();getConfirmPassword();" onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
-					autocomplete="new-password" placeholder="Confirm New Password" class="center form-control 
-					<?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" required>
-					<span class="invalid-feedback"style="text-align:center;"><?php echo $confirm_password_err; ?></span>
+					<input type="password" name="confirm_password" id="confirm-password" onkeyup="getPassword();getConfirmPassword();" 
+					onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
+					autocomplete="new-password" placeholder="Confirm New Password" class="center form-control" required>
 				</div>
 				<div id="confirm-password-strength" style="display: none;text-align:center;">
 					<div id="matching" class="pw-stength"><small> Matching</small></div>
 				<br>
 				</div>
 				<div class="form-group" style="margin-left:5%;">
-					<input type="submit" class="btn btn-primary" value="Submit">
-					<a class="btn btn-link ml-2" href="settings.php">Cancel</a>
+					<button type="button" id="submit-password" class="btn btn-primary" onclick="this.blur();">Submit</button>
+					<a class="btn btn-link ml-2" href="settings">Cancel</a>
 				</div>
 			</form>
 		</div>    

@@ -2,7 +2,6 @@
 	require "../backend/dt_backend.php"; 
 	require "redirect.php";
 ?>
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -27,9 +26,9 @@
 					<i class="fa fa-bars"></i>
 				</a>
 				<div id="myLinks">
-					<a href="../client/searches.php">Your Searches</a>
-					<a href="../client/state.php">Popular In <?php echo $stateFull ?></a>
-					<a href="../client/settings.php">Account Settings</a>
+					<a href="../client/searches">Your Searches</a>
+					<a href="../client/state">Popular In <?php echo $stateFull ?></a>
+					<a href="../client/settings">Account Settings</a>
 				</div>
 			</div>
 	<?php
@@ -41,7 +40,7 @@
 					<i class="fa fa-bars"></i>
 				</a>
 				<div id="myLinks">
-					<a href="../login.php">Homepage</a>
+					<a href="../login">Homepage</a>
 				</div>
 			</div>
 		<?php } ?>

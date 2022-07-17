@@ -21,9 +21,9 @@
 			<i class="fa fa-bars"></i>
 		</a>
 		<div id="myLinks">
-			<a href="../client/searches.php">Your Searches</a>
-			<a href="../client/state.php">Popular In <?php echo $stateFull ?></a>
-			<a href="../client/dt.php">Back to Don't Trip</a>
+			<a href="../client/searches">Your Searches</a>
+			<a href="../client/state">Popular In <?php echo $stateFull ?></a>
+			<a href="../client/dt">Back to Don't Trip</a>
 		</div>
 	</div>		
 	<body>
@@ -34,14 +34,13 @@
 				<h3 id="usernav" style="float:left; ">&nbsp;&nbsp;<?php echo $_SESSION['username']; ?></h3>
 				<button style = "float:right;"class="btn btn-outline-info btn-sm" id="reset-dark" onclick="resetDarkMode();">Reset</button>
 				<button style = "float:right;margin-right:5px;"class="btn btn-secondary btn-sm" id="toggle-dark" onclick="toggleDarkMode();">&#127769;</button>
-				<script defer>
+				<script>
 					//Dark mode button icon on page load.
 					if( //custom localStorage setting
 						localStorage.getItem("dark_mode")==="true"
 						//Automatic mode
-						||((new Date).getHours() < 6 || (new Date).getHours() > 18 && localStorage.getItem("dark_mode") === null)
-					) 
-					{
+						||(((new Date).getHours() < 6 || (new Date).getHours() > 18) && localStorage.getItem("dark_mode") === null)
+					) {
 						document.getElementById("toggle-dark").innerText = "☀️";
 					}
 				</script>
@@ -87,9 +86,9 @@
 					?>
 					<div id="two_factor_response"></div>
 					<br>
-					<a class="btn btn-outline-danger" href="delete_confirmation.php">Delete Account</a>
+					<a class="btn btn-outline-danger" href="delete_confirmation">Delete Account</a>
 					<br><br>
-					<a href="../client/reset-password.php" class="btn btn-outline-primary">Reset Password</a>
+					<a href="../client/reset-password" class="btn btn-outline-primary">Reset Password</a>
 					<br><br>
 				<?php } ?>
 				<a class="btn btn-outline-warning" id="clear-searches" href="#">Clear Search History</a>
@@ -97,7 +96,7 @@
 				<div id="clear_response"></div>
 				<br><br>
 				<div style="text-align:center;">
-					<a href="../backend/logout.php" class="btn btn-secondary" value="Submit" >Sign Out</a>
+					<a href="../backend/logout" class="btn btn-secondary" value="Submit" >Sign Out</a>
 				</div>
 				<br>
 			</div>

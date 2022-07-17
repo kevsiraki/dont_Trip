@@ -40,13 +40,13 @@
 }
 #placeName {
 	position: relative;
-	width: 70%;
-	height: 40px;
-	top: 0;
+	width: 90%;
+	height: 30px;
+	top: 12px;
 	left: 5%;
-	margin-bottom: 7px;
-	font-size: 34px;
-	text-align: left;
+	margin-bottom: 40px;
+	font-size: 22px;
+	text-align: center;
 }
 #placeDist {
 	position: relative;
@@ -54,6 +54,7 @@
 	height: 30px;
 	top: 0;
 	left: 6%;
+	margin-top: 22px;
 	margin-bottom: 10px;
 	font-size: 21px;
 	text-align: left;
@@ -89,7 +90,7 @@
 	height: 30px;
 	top: 12px;
 	left: 5%;
-	margin-bottom: 12px;
+	margin-bottom: 40px;
 	font-size: 22px;
 	text-align: center;
 }

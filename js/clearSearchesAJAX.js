@@ -1,6 +1,6 @@
 document.getElementById("clear-searches").addEventListener("click", function(){ 
 	$.ajax({
-		url: '../backend/settings_backend.php',
+		url: '../backend/settings_backend',
 		type: 'post',
 		data: {
 			delete_searches: "true"
@@ -12,7 +12,5 @@ document.getElementById("clear-searches").addEventListener("click", function(){
 	document.getElementById("clear-searches").blur();
 	setTimeout(function(){
 		document.getElementById("clear_response").innerHTML = '';
-	}, 3000);
+	}, 2000);
 });
-
-

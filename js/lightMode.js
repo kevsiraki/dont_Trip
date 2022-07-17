@@ -6,12 +6,14 @@ function toggleDarkMode() {
 		//custom localStorage setting
 		localStorage.getItem("dark_mode")==="true" 
 		//Automatic mode
-		||((new Date).getHours() < 6 || (new Date).getHours() > 18 && localStorage.getItem("dark_mode") === null)
-	) {
+		||(((new Date).getHours() < 6 || (new Date).getHours() > 18) && localStorage.getItem("dark_mode") === null)
+	) 
+	{
 		localStorage.setItem("dark_mode","false");
 		location.reload();
 	}
-	else {
+	else 
+	{
 		localStorage.setItem("dark_mode","true");
 		location.reload();
 	}
