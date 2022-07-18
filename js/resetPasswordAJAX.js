@@ -5,6 +5,7 @@ $(document).on('click', '#submit-password', function(e) {
     $.ajax({
         url: '../backend/reset-password_backend',
         type: 'post',
+		timeout: 5000,
         data: {
             new_password: new_password,
 			confirm_password: confirm_password
@@ -20,6 +21,9 @@ $(document).on('click', '#submit-password', function(e) {
 				if(containsAnyLetter(response)) {
 					error.style.display = "block";
 					$('#invalid-reset').html(response);
+					$('#invalid-reset').on('click', function(e) {
+						error.style.display = "none";
+					});
 				}
 				else {
 					error.style.display = "none";

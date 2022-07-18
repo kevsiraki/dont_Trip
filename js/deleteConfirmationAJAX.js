@@ -4,6 +4,7 @@ $(document).on('click', '#delete-account', function(e) {
     $.ajax({
         url: '../backend/delete_confirmation_backend',
         type: 'post',
+		timeout: 5000,
         data: {
             password: password
         },
@@ -20,7 +21,9 @@ $(document).on('click', '#delete-account', function(e) {
 				if(containsAnyLetter(response)) {
 					$('#invalid-delete').html(response);
 					error.style.display = "block";
-					
+					$('#invalid-delete').on('click', function(e) {
+						error.style.display = "none";
+					});
 				}
 				else {
 					error.style.display = "none";

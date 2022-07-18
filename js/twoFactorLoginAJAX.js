@@ -4,6 +4,7 @@ $(document).on('click', '#verify', function(e) {
     $.ajax({
         url: '../backend/two_factor_auth_backend',
         type: 'post',
+		timeout: 5000,
         data: {
             tfa: tfa
         },
@@ -17,6 +18,9 @@ $(document).on('click', '#verify', function(e) {
 			else {
 				$('#invalid-login').html(response);
 				error.style.display = "block";
+				$('#invalid-login').on('click', function(e) {
+					error.style.display = "none";
+				});
 				button.classList.remove("btn-success");
 				button.classList.add("btn-danger");
 				setTimeout(function(){

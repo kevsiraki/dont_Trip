@@ -1,4 +1,4 @@
-/* password and confirm password checking functions */
+/* password and confirm password checking functions (client side checks before server-side checks) */
 //check the password, respond with CSS class injection
 function getPassword() {
 	$(".invalid-feedback").html("");
@@ -70,15 +70,29 @@ function hideMeter() {
 function hideCPMeter() {
     document.getElementById('confirm-password-strength').style.display = 'none';
 }
+//throttle requests
+function throttle(func, wait) {
+    var timeout;
+    return function() {
+        var context = this, args = arguments;
+        if (!timeout) {
+            timeout = setTimeout(function() {
+                timeout = null;
+                func.apply(context, args);
+            }, wait);
+        }
+    }
+}
 /* username, email, and email reset ajax requests to check against database as well. */
 $(document).ready(function() {
-    $("#username").keyup(function() {
+    $("#username").keyup(throttle(function() {
 		$(".invalid-feedback").html("");
         let username = $(this).val().trim();
         if (username != '') {
             $.ajax({
                 url: '../backend/ajax_requests',
                 type: 'post',
+				timeout: 5000,
                 data: {
                     username: username
                 },
@@ -89,17 +103,18 @@ $(document).ready(function() {
         } else {
             $("#uname_response").html("");
         }
-    });
+    },100));
 });
 
 $(document).ready(function() {
-    $("#email").keyup(function() {
+    $("#email").keyup(throttle(function() {
 		$(".invalid-feedback").html("");
         let email = $(this).val().trim();
         if (email != '') {
             $.ajax({
                 url: '../backend/ajax_requests',
                 type: 'post',
+				timeout: 5000,
                 data: {
                     email: email
                 },
@@ -110,17 +125,18 @@ $(document).ready(function() {
         } else {
             $("#ename_response").html("");
         }
-    });
+    },100));
 });
 
 $(document).ready(function() {
-    $("#email-reset").keyup(function() {
+    $("#email-reset").keyup(throttle(function() {
 		$(".invalid-feedback").html("");
         let email_reset = $(this).val().trim();
         if (email_reset != '') {
             $.ajax({
                 url: '../backend/ajax_requests',
                 type: 'post',
+				timeout: 5000,
                 data: {
                     email_reset: email_reset
                 },
@@ -131,5 +147,5 @@ $(document).ready(function() {
         } else {
             $("#ename_response").html("");
         }
-    });
+    },100));
 });

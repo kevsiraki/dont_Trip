@@ -1,29 +1,32 @@
 <?php require "../backend/state_backend.php"; ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<meta charset="utf-8">
 		<meta content="initial-scale=1.0, user-scalable=no" name="viewport">
+		<title>Popular in <?php echo $state ?></title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link href="../style/search_style.css" rel="stylesheet">
 		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<link href="../style/navbar.css" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link href="../style/footer.css" rel="stylesheet">
 		<script src="../js/nav.js"></script>
 		<script src="../js/lightMode.js"></script>	
-		<title>Popular in <?php echo $state ?></title>
 	</head>
 	<body>
-		<div class="topnav">
+		<header class="topnav" id="topnav">
 			<a href="javascript:void(0);" class="active" onclick="myFunction()">
-				<i class="fa fa-bars"></i>
+				<i class="fa fa-bars" id="burger"></i>
 			</a>
 			<div id="myLinks">
-				<a href="../client/searches">Your Searches</a>
-				<a href="../client/settings">Account Settings</a>
-				<a href="../client/dt">Back to Don't Trip</a>
+				<a href="../client/searches" class="navlink">Your Searches</a>
+				<a href="../client/settings" class="navlink">Account Settings</a>
+				<a href="../client/dt" class="navlink">Back to Don't Trip</a>
 			</div>
-		</div>
+		</header>
 		<br>
 		<h1 id="darkable">Popular in <?php echo $stateFull ?></h1>
 		<br>
@@ -61,5 +64,13 @@
 				</ul>
 			</div>
 		</div>
+		<footer id="footer">
+			<a href="." class="logo">
+				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
+			</a>
+			<div class="footer-right">
+				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;Github</i></a>
+			</div>
+		</footer>
 	</body>
 </html>

@@ -2,6 +2,7 @@ document.getElementById("clear-searches").addEventListener("click", function(){
 	$.ajax({
 		url: '../backend/settings_backend',
 		type: 'post',
+		timeout: 5000,
 		data: {
 			delete_searches: "true"
 		},

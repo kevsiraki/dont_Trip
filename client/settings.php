@@ -1,32 +1,33 @@
 <?php require "../backend/settings_backend.php";?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<meta content="initial-scale=1.0, user-scalable=no" name="viewport">
 		<title>Account Settings</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
-		<link href="../style/navbar.css" rel="stylesheet">
+		<link rel="stylesheet" href="../style/navbar.css" >
+		<link rel="stylesheet" href="../style/settings_style.css">
+		<link rel="stylesheet" href="../style/footer.css">
 		<script src="../js/nav.js"></script>
 		<script src="../js/lightMode.js"></script>
-		<link rel="stylesheet" href="../style/settings_style.css">
 		<script src="../js/twoFactorAJAX.js"></script>
-	</head>	
-	<div class="topnav">
-		<a href="javascript:void(0);" class="active" onclick="myFunction()">
-			<i class="fa fa-bars"></i>
-		</a>
-		<div id="myLinks">
-			<a href="../client/searches">Your Searches</a>
-			<a href="../client/state">Popular In <?php echo $stateFull ?></a>
-			<a href="../client/dt">Back to Don't Trip</a>
-		</div>
-	</div>		
+	</head>			
 	<body>
+		<header class="topnav" id="topnav">
+			<a href="javascript:void(0);" class="active" onclick="myFunction()">
+				<i class="fa fa-bars" id="burger"></i>
+			</a>
+			<div id="myLinks">
+				<a href="../client/searches" class="navlink">Your Searches</a>
+				<a href="../client/state" class="navlink">Popular In <?php echo $stateFull ?></a>
+				<a href="../client/dt" class="navlink">Back to Don't Trip</a>
+			</div>
+		</header>
 		<br>
 		<div class="center">
 			<div class="wrapper">

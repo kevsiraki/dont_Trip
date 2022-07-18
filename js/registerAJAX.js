@@ -7,6 +7,7 @@ $(document).on('click', '#sign-up', function(e) {
     $.ajax({
         url: '../backend/register_backend',
         type: 'post',
+		timeout: 5000,
         data: {
             email: email,
             username: username,
@@ -24,6 +25,9 @@ $(document).on('click', '#sign-up', function(e) {
 				if(containsAnyLetter(response)) {
 					$('#invalid-signup').html(response);
 					error.style.display = "block";
+					$('#invalid-signup').on('click', function(e) {
+						error.style.display = "none";
+					});
 				}
 				else {
 					error.style.display = "none";

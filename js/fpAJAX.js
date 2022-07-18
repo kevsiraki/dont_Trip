@@ -4,6 +4,7 @@ $(document).on('click', '#submit-email', function(e) {
     $.ajax({
         url: '../backend/fp_backend',
         type: 'post',
+		timeout: 5000,
         data: {
             email: emailReset
         },
@@ -12,14 +13,17 @@ $(document).on('click', '#submit-email', function(e) {
 			let error = document.getElementById("invalid-email");
 			if (response == 1) {
 				error.style.display = "none";
-                window.location.href = "../login";
 				button.classList.remove("btn-primary");
 				button.classList.add("btn-success");
+                window.location.href = "../login";
             }
 			else {
 				if(containsAnyLetter(response)) {
 					$('#invalid-email').html(response);
 					error.style.display = "block";
+					$('#invalid-email').on('click', function(e) {
+						error.style.display = "none";
+					});
 				}
 				else {
 					error.style.display = "none";

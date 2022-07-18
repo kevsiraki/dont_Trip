@@ -134,5 +134,26 @@ if (
         if (document.getElementById("underline")) {
             document.getElementById("underline").style.color = "#000000";
         }
+		//header/footer/hamburger menu (navbar header)
+		if(document.getElementById("header")) {
+			document.getElementById("header").style.backgroundImage = "linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url(\"https://donttrip.technologists.cloud/donttrip/icons/form_bg.jpg\")";
+		}
+		if(document.getElementById("footer")) {
+			document.getElementById("footer").style.backgroundImage = "linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url(\"https://donttrip.technologists.cloud/donttrip/icons/form_bg.jpg\")";
+			
+		}
+		if(document.getElementById("footer-link")) {
+			document.getElementById("footer-link").style.color = "black";
+		}
+		if(document.getElementById("topnav")) {
+			document.getElementById("topnav").style.backgroundColor = "#E8E8E8";
+			document.getElementById("burger").style.color = "black";
+			const links = document.querySelectorAll('.navlink');
+			links.forEach(link => {
+				link.style.color = 'black';
+				link.style.fontWeight = '500';
+			});
+			
+		}
     });
 }

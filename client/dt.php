@@ -3,48 +3,51 @@
 	require "redirect.php";
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<meta content="initial-scale=1.0, user-scalable=no" name="viewport">
 		<title>Don't Trip</title>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<link href="../style/style.css" rel="stylesheet">
 		<link href="../style/autofill.css" rel="stylesheet">
 		<link href="../style/navbar.css" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="../js/nav.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="../js/lightMode.js"></script>
 	</head>
-	<?php
+	<body>
+		<?php
 		if(isset($_SESSION["loggedin"])&& $_SESSION["loggedin"]===true) {
-	?>
-			<div class="topnav">
+		?>
+			<header class="topnav" id="topnav">
 				<a href="javascript:void(0);" class="active" onclick="myFunction()">
-					<i class="fa fa-bars"></i>
+					<i class="fa fa-bars" id="burger"></i>
 				</a>
 				<div id="myLinks">
-					<a href="../client/searches">Your Searches</a>
-					<a href="../client/state">Popular In <?php echo $stateFull ?></a>
-					<a href="../client/settings">Account Settings</a>
+					<a href="../client/searches" class="navlink">Your Searches</a>
+					<a href="../client/state" class="navlink">Popular In <?php echo $stateFull ?></a>
+					<a href="../client/settings" class="navlink">Account Settings</a>
 				</div>
-			</div>
-	<?php
+			</header>
+		<?php
 		}
 		else {
-	?>
-			<div class="topnav">
+		?>
+			<header class="topnav" id="topnav">
 				<a href="javascript:void(0);" class="active" onclick="myFunction()">
-					<i class="fa fa-bars"></i>
+					<i class="fa fa-bars" id="burger"></i>
 				</a>
 				<div id="myLinks">
-					<a href="../login">Homepage</a>
+					<a href="../login" class="navlink">Homepage</a>
 				</div>
-			</div>
-		<?php } ?>
-	<body>
+			</header>
+		<?php 
+		} 
+		?>
 		<div id="map"></div>
 		<div id="dragbar">&#9776;</div>
 		<div id="container" >
