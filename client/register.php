@@ -17,6 +17,12 @@
 		<script src="../js/generalAJAX.js"></script>
 		<script src="../js/registerAJAX.js"></script>
 		<link rel="stylesheet" href="../style/meter_styles.css">
+		<style> 
+        #footer { 
+            bottom:-15%;
+            width: 100%;
+        } 
+    </style> 
 	</head>
 	<body>
 		<header class="header" id="header">

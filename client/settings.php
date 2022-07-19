@@ -16,6 +16,13 @@
 		<script src="../js/nav.js"></script>
 		<script src="../js/lightMode.js"></script>
 		<script src="../js/twoFactorAJAX.js"></script>
+        <style> 
+        #footer { 
+            position: fixed; 
+            bottom: 0; 
+            width: 100%; 
+        } 
+		</style> 
 	</head>			
 	<body>
 		<header class="topnav" id="topnav">
@@ -23,9 +30,10 @@
 				<i class="fa fa-bars" id="burger"></i>
 			</a>
 			<div id="myLinks">
-				<a href="../client/searches" class="navlink">Your Searches</a>
-				<a href="../client/state" class="navlink">Popular In <?php echo $stateFull ?></a>
-				<a href="../client/dt" class="navlink">Back to Don't Trip</a>
+				<a href="dt" class="navlink">Itinerary Planner</a>
+				<a href="state" class="navlink">Popular In <?php echo $stateFull ?></a>
+				<a href="searches" class="navlink">Your Searches</a>
+				<a href="settings" class="navlink currentPage">Account Settings</a>
 			</div>
 		</header>
 		<br>
@@ -102,7 +110,15 @@
 				<br>
 			</div>
 		</div>
-        <br>
+              <br><br><br>
+              	<footer id="footer">
+		<a href="." class="logo">
+			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
+		</a>
+		<div class="footer-right">
+			<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;Github</i></a>
+		</div>
+	</footer>
 		<script src="../js/clearSearchesAJAX.js"></script>
 	</body>
 </html>

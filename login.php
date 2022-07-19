@@ -18,6 +18,12 @@
 		<link rel="apple-touch-icon"  sizes="512x512" href="icons/icon.png">
 		<script src="js/loginAJAX.js"></script>
 		<script src="js/lightMode.js"></script>
+                   <style> 
+        #footer { 
+            bottom:-15%;
+            width: 100%;
+        } 
+    </style> 
 	</head>
 	<body>
 		<header class="header" id="header">
@@ -66,7 +72,7 @@
 				<p id="info">Need an account? <a href="client/register" style="">Sign up here</a></p>
 				<a href="client/fp" style="white-space: nowrap;">Forgot your password?</a>
 			</form>
-			<br>
+        <br>
 		</div>
 		<footer id="footer">
 			<a href="." class="logo">

@@ -15,6 +15,14 @@
 		<script src="../js/nav.js"></script>
 		<script src="../js/lightMode.js"></script>	
 		<script src="../js/searchesAJAX.js"></script>
+		<script>
+			function redirectTo(s,event) {
+				window.location.href = s;
+			}
+			function no(event) {
+				event.stopPropagation();
+			}
+		</script>
 	</head>
 	<body>
 		<header class="topnav" id="topnav">
@@ -22,9 +30,10 @@
 				<i class="fa fa-bars" id="burger"></i>
 			</a>
 			<div id="myLinks">
-					<a href="../client/state" class="navlink">Popular In <?php echo $stateFull ?></a>
-					<a href="../client/settings" class="navlink">Account Settings</a>
-					<a href="../client/dt" class="navlink">Back to Don't Trip</a>
+				<a href="dt" class="navlink">Itinerary Planner</a>
+				<a href="state" class="navlink">Popular In <?php echo $stateFull ?></a>
+				<a href="searches" class="navlink currentPage">Your Searches</a>
+				<a href="settings" class="navlink">Account Settings</a>
 			</div>
 		</header>
 		<br>
@@ -39,15 +48,14 @@
 					while($rows = mysqli_fetch_assoc($result)) {
 						$res = $toSplit = $rows["destination"];
 						$res .= nl2br("\n ");
-						if(isset($rows['destination'])) {
 					?>
-							<li>																	
-								<a href ="dt?destVal=<?php echo htmlspecialchars($rows["destination"]);?>"> <?php echo $res ; ?></a>
-								<sub>&nbsp;</sub>
-								<button data-id= "<?php echo htmlspecialchars($rows["destination"]);?>" value="<?php echo htmlspecialchars($rows["destination"]);?>" type="button" class="deleteDest btn-close btn-sm" aria-label="Close" style="float:right;margin-top:9px"></button>
-							</li>
+						<li class="links" onclick="redirectTo('dt?destVal=<?php echo htmlspecialchars($rows["destination"]);?>');">																	
+							<a class="link" href ="dt?destVal=<?php echo htmlspecialchars($rows["destination"]);?>"> <?php echo $res ; ?></a>
+							<sub>&nbsp;</sub>
+							<button onclick ="no(event);" data-id= "<?php echo htmlspecialchars($rows["destination"]);?>" value="<?php echo htmlspecialchars($rows["destination"]);?>" type="button" class="deleteDest btn-close btn-sm" aria-label="Close" style="float:right;margin-top:9px"></button>
+						</li>
 					<?php
-						}
+						
 					}
 					?>
 				</ul>
@@ -60,15 +68,14 @@
 					while($rows2 = mysqli_fetch_assoc($result2)) {
 						$key = nl2br($rows2['keyword']);
 						$key .= nl2br("\n ");
-						if(isset($rows2["keyword"])) {
 					?>
-							<li>
-								<a href ="dt?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>"> <?php echo $key;?></a>
-								<sub>&nbsp;</sub>
-								<button data-id="<?php echo htmlspecialchars($rows2["keyword"]);?>" value="<?php echo htmlspecialchars($rows2["keyword"]);?>" type="button" class="deleteKey btn-close btn-sm" aria-label="Close" style="float:right;margin-top:9px"></button>
-							</li>
+						<li class="links" onclick="redirectTo('dt?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>');">
+							<a class="link" href ="dt?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>"> <?php echo $key;?></a>
+							<sub>&nbsp;</sub>
+							<button onclick ="no(event);" data-id="<?php echo htmlspecialchars($rows2["keyword"]);?>" value="<?php echo htmlspecialchars($rows2["keyword"]);?>" type="button" class="deleteKey btn-close btn-sm" aria-label="Close" style="float:right;margin-top:9px"></button>
+						</li>
 					<?php
-						}
+						
 					}
 					?>
 				</ul>

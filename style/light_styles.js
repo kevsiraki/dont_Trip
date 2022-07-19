@@ -6,5 +6,13 @@
             "visibility":"off"
          }
       ]
+   },
+   {
+      "featureType":"transit",
+      "stylers":[
+         {
+            "visibility":"off"
+         }
+      ]
    }
 ]

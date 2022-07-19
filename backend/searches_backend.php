@@ -6,7 +6,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: ../login.php");
     exit;
 }
-$sql = "SELECT DISTINCT destination FROM searches WHERE username in (SELECT username FROM searches WHERE username = ? ) ;";
+$sql = "SELECT DISTINCT destination FROM searches WHERE username in (SELECT username FROM searches WHERE username = ? ) AND destination IS NOT NULL ;";
 if ($stmt = mysqli_prepare($link, $sql))
 {
 	// Bind variables to the prepared statement as parameters
@@ -18,7 +18,7 @@ if ($stmt = mysqli_prepare($link, $sql))
 	$result = mysqli_stmt_get_result($stmt);
 	mysqli_stmt_close($stmt);
 }
-$sql = "SELECT DISTINCT keyword FROM searches WHERE username IN (SELECT username FROM searches WHERE username = ? ) ;";
+$sql = "SELECT DISTINCT keyword FROM searches WHERE username IN (SELECT username FROM searches WHERE username = ? ) AND keyword IS NOT NULL ;";
 if ($stmt = mysqli_prepare($link, $sql))
 {
 	// Bind variables to the prepared statement as parameters

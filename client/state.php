@@ -15,6 +15,11 @@
 		<link href="../style/footer.css" rel="stylesheet">
 		<script src="../js/nav.js"></script>
 		<script src="../js/lightMode.js"></script>	
+		<script>
+			function redirectTo(s) {
+				window.location.href = s;
+			}
+		</script>
 	</head>
 	<body>
 		<header class="topnav" id="topnav">
@@ -22,9 +27,10 @@
 				<i class="fa fa-bars" id="burger"></i>
 			</a>
 			<div id="myLinks">
-				<a href="../client/searches" class="navlink">Your Searches</a>
-				<a href="../client/settings" class="navlink">Account Settings</a>
-				<a href="../client/dt" class="navlink">Back to Don't Trip</a>
+				<a href="dt" class="navlink">Itinerary Planner</a>
+				<a href="state" class="navlink currentPage">Popular In <?php echo $stateFull ?></a>
+				<a href="searches" class="navlink">Your Searches</a>
+				<a href="settings" class="navlink">Account Settings</a>
 			</div>
 		</header>
 		<br>
@@ -38,27 +44,26 @@
 					<?php
 					while($rows = mysqli_fetch_assoc($result)) {
 					?>
-						<li>
-							<a href ="dt?destVal=<?php echo htmlspecialchars($rows["destination"]);?>"><?php echo htmlspecialchars($rows["destination"]);?></a>
+						<li class="links" onclick="redirectTo('dt?destVal=<?php echo htmlspecialchars($rows["destination"]);?>');">
+							<a class="link"  href ="dt?destVal=<?php echo htmlspecialchars($rows["destination"]);?>"><?php echo htmlspecialchars($rows["destination"]);?></a>
 						</li>
 					<?php
 					}
 					?>
 				</ul>
 			</div>
-			<div id="sidebar" name = "rust" >
+			<div id="sidebar" name = "rust">
 				<h1 id="underline" name="keywords">Keywords</h1>
 				<br>
 				<ul>
 					<?php
 					while($rows2 = mysqli_fetch_assoc($result2)) {
-						if(!empty($rows2["keyword"])) {
 					?>
-							<li>
-								<a href ="dt?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>"> <?php echo htmlspecialchars($rows2["keyword"]);?></a>
-							</li>
+						<li class="links" onclick="redirectTo('dt?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>');">
+							<a class="link" href ="dt?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>"> <?php echo htmlspecialchars($rows2["keyword"]);?></a>
+						</li>
 					<?php
-						}
+						
 					}
 					?>
 				</ul>

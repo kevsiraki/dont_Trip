@@ -44,21 +44,34 @@
         let waypoint = new Array();
         let addedWaypoint = new Array();
         let offset = 40;
-
+        let distanceSort = false;
+        let nameSort = false;
+        //really fucking irritating problem I fixed
+        $('#panel').bind('DOMSubtreeModified', function() {
+            lightenSideBars();
+        });
+        //bad demonic call stack killer removed
         function initMap() { //set up the map/styles, initial route from geolocation to endpoint, places along the route, and initial directions.
             map = new google.maps.Map(document.getElementById("map"));
+
             map.setCenter({
                 lat: 36.778259,
                 lng: -119.417931
             });
             map.setZoom(6);
-            if (//Custom localStorage setting
-				localStorage.getItem("dark_mode")==="false"
-				//Automatic mode
-				||(d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
-				document.getElementById("dragbar").style.backgroundColor = "#FFFFED";
+            if ( //Custom localStorage setting
+                localStorage.getItem("dark_mode") === "false"
+                //Automatic mode
+                ||
+                (d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
+                $(document).ready(function() {
+                    $('link[href*="style.css"]').attr("disabled", "true");
+                    $('link[href*="autofill.css"]').attr("disabled", "true");
+                });
+                $('head').append('<link rel="stylesheet" href="../style/lightMapInputs.css" type="text/css" />');
+                document.getElementById("dragbar").style.backgroundColor = "#FFFFED";
                 document.getElementById("sidebar").style.backgroundColor = "#FFFFED";
-				document.getElementById("darkable").style.color = "#000000";
+                document.getElementById("darkable").style.color = "#000000";
                 document.getElementsByName("rust")[0].style.backgroundColor = "#FFFFED";
                 document.getElementsByName("sort")[0].style.color = "#000000";
                 $.get('../style/light_styles.js', function(data) {
@@ -85,7 +98,7 @@
                     });
                 });
             }
-            infoWindow = new google.maps.InfoWindow();
+            //infoWindow = new google.maps.InfoWindow();
             const br = document.createElement("br");
             google.maps.event.addDomListener(window, 'load', initialize);
             const keyword = document.createElement("div"); //buttons and inputs
@@ -130,9 +143,17 @@
                 locationButton.click();
             });
             document.getElementById("sortA").addEventListener("click", () => {
+                document.getElementById("sortD").innerHTML = "Distance";
+                document.getElementById("sortA").innerHTML = "✓ Name";
+                distanceSort = false;
+                nameSort = true;
                 sortListAlphabetically();
             });
             document.getElementById("sortD").addEventListener("click", () => {
+                document.getElementById("sortD").innerHTML = "✓ Distance";
+                document.getElementById("sortA").innerHTML = "Name";
+                distanceSort = true;
+                nameSort = false;
                 sortListByDistance();
             });
             locationButton.addEventListener("click", () => {
@@ -493,14 +514,16 @@
         function addPlaces(places, map, pos, latlng2) { //shows places fetched from nearby search on map/li element
             const infowindow = new google.maps.InfoWindow();
             let photoElement;
-            const infowindowContent = document.getElementById("infowindow-content");
-            infowindow.setContent(infowindowContent);
+            //const infowindowContent = document.getElementById("infowindow-content");
+            //infowindow.setContent(infowindowContent);
             const service2 = new google.maps.places.PlacesService(map);
             const geocoder = new google.maps.Geocoder();
             for (const place of places) {
                 placeListND.push(place.place_id); //list of previous places, avoids duplications
             }
             for (const place of places) {
+                lightenSideBars();
+                sortHelper();
                 if (place.geometry && place.geometry.location) {
                     let image = {
                         url: place.icon,
@@ -547,6 +570,7 @@
                                 };
                                 marker.setVisible(true);
                                 const content = document.createElement("div");
+                                content.classList.add("russy");
                                 content.style.height = "150px";
                                 content.style.width = "150px";
                                 const nameElement = document.createElement("p");
@@ -572,7 +596,7 @@
                                 const openInMaps = document.createElement("a");
                                 const b1 = document.createElement("br");
                                 const b2 = document.createElement("br");
-								dir2.href="#";
+                                dir2.href = "#";
                                 service.getDetails(request, callback);
                                 function callback(place, status) {
                                     if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -590,6 +614,7 @@
                                         placeWebsite.appendChild(document.createElement("br"));
                                     }
                                     moreInfo.textContent = "More Info";
+                                    moreInfo.style.textDecoration = "underline";
                                     moreInfo.href = "https://donttrip.technologists.cloud/donttrip/client/place" +
                                         "?rating=" +
                                         place.rating +
@@ -614,6 +639,9 @@
                                     moreInfo.appendChild(document.createElement("br"));
                                 }
                                 openInMaps.textContent = "View in Google Maps";
+
+                                openInMaps.style.textDecoration = "underline";
+
                                 openInMaps.href = "https://www.google.com/maps/search/?api=1&query=" + place.geometry.location.lat() + "%2C" + place.geometry.location.lng() + "&query_place_id=" + place.place_id;
                                 openInMaps.target = "_blank";
                                 openInMaps.appendChild(document.createElement("br"));
@@ -621,8 +649,10 @@
                                 content.appendChild(placeOpen);
                                 content.appendChild(placeRating);
                                 content.appendChild(moreInfo);
+                                $('div:has(.russy)').addClass('placeInfo'); //so fucking annoying oh my god
                                 service = new google.maps.places.PlacesService(map);
                                 dir2.textContent = "Add to Route";
+                                dir2.style.textDecoration = "underline";
                                 if (!addedWaypoint.includes(place.place_id)) {
                                     content.appendChild(dir2);
                                     content.appendChild(b1);
@@ -673,6 +703,7 @@
                                 });
                                 infowindow.setContent(content);
                                 infowindow.open(map, marker);
+                                $('div:has(.russy)').addClass('placeInfo'); //so fucking annoying oh my god
                             })
                             .catch((e) => window.alert("Geocoder failed due to: " + e));
                     });
@@ -681,6 +712,35 @@
                         map.setZoom(20);
                     });
                 }
+                lightenSideBars();
+                sortHelper();
+            }
+        }
+
+        function sortHelper() {
+            if (distanceSort) {
+                sortListByDistance();
+				lightenSideBars();
+            } else if (nameSort) {
+                sortListAlphabetically();
+				lightenSideBars();
+            }
+        }
+
+        function lightenSideBars() {
+            if ( //Custom localStorage setting
+                localStorage.getItem("dark_mode") === "false"
+                //Automatic mode
+                ||
+                (d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
+                $("tr").css("background-color", "#c6cfea");
+                $("tr").css("color", "black");
+                $("tr").mouseenter(function() {
+                    $(this).css("box-shadow", "inset -0.3em 0 #8b9dc3")
+                }).mouseleave(function() {
+                    $(this).css("box-shadow", "none");
+                });
+                $(".adp-stepicon").css("background-color", "#c6cfea");
             }
         }
 

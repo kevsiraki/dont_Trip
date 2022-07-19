@@ -15,9 +15,11 @@
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<link href="../style/style.css" rel="stylesheet">
 		<link href="../style/autofill.css" rel="stylesheet">
-		<link href="../style/navbar.css" rel="stylesheet">
+        <link href="../style/navbar.css" rel="stylesheet">
+        <link href="../style/footer.css" rel="stylesheet">
 		<script src="../js/nav.js"></script>
 		<script src="../js/lightMode.js"></script>
+
 	</head>
 	<body>
 		<?php
@@ -28,9 +30,10 @@
 					<i class="fa fa-bars" id="burger"></i>
 				</a>
 				<div id="myLinks">
-					<a href="../client/searches" class="navlink">Your Searches</a>
-					<a href="../client/state" class="navlink">Popular In <?php echo $stateFull ?></a>
-					<a href="../client/settings" class="navlink">Account Settings</a>
+					<a href="dt" class="navlink currentPage">Itinerary Planner</a>
+					<a href="state" class="navlink">Popular In <?php echo $stateFull ?></a>
+					<a href="searches" class="navlink">Your Searches</a>
+					<a href="settings" class="navlink">Account Settings</a>
 				</div>
 			</header>
 		<?php
@@ -49,7 +52,7 @@
 		} 
 		?>
 		<div id="map"></div>
-		<div id="dragbar">&#9776;</div>
+		<div id="dragbar">&#x21CA;</div>
 		<div id="container" >
 			<div id="sidebar">
 				<h5 id="darkable"><span id="total"></span></h5>
@@ -72,5 +75,13 @@
 		<script src="../js/bundle.js"></script>
 		<script src="../style/mobile_dragbar.js"></script>
 		<script src="../js/keywords.js"></script>
+        <footer id="footer">
+		<a href="." class="logo">
+			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
+		</a>
+		<div class="footer-right">
+			<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;Github</i></a>
+		</div>
+	</footer>
 	</body>
 </html>

@@ -106,6 +106,18 @@ if (
             document.getElementById("panel4").style.color = "#000000";
             document.getElementById("panel4").style.backgroundColor = "#f4f4f4";
         }
+		if (
+            document.getElementById("panel1") &&
+            document.getElementById("panel2") &&
+            document.getElementById("panel3") 
+        ) {
+            document.getElementById("panel1").style.color = "#000000";
+            document.getElementById("panel1").style.backgroundColor = "#f4f4f4";
+            document.getElementById("panel2").style.color = "#000000";
+            document.getElementById("panel2").style.backgroundColor = "#f4f4f4";
+            document.getElementById("panel3").style.color = "#000000";
+            document.getElementById("panel3").style.backgroundColor = "#f4f4f4";
+        }
         //E-mail verification card Div
         if (document.getElementById("card")) {
             document.getElementById("card").style.backgroundImage = "linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url(\"https://donttrip.technologists.cloud/donttrip/icons/form_bg.jpg\")";
@@ -133,6 +145,25 @@ if (
         }
         if (document.getElementById("underline")) {
             document.getElementById("underline").style.color = "#000000";
+			$("li").css("background-color", "#c6cfea");
+			$(".link").css("color", "	#202020");
+			$("li:nth-of-type(even)").css("background-color", "#d3d3d3");
+			$("button").css("background-color", "transparent");
+			$("li").mouseenter(function() {
+				$(this).css("box-shadow", "inset -0.4em 0 #8b9dc3")
+			}).mouseleave(function() {
+				$(this).css("box-shadow", "none");
+			});
+			$("li:nth-of-type(even)").mouseenter(function() {
+				$(this).css("box-shadow", "inset -0.4em 0 #aaa")
+			}).mouseleave(function() {
+				$(this).css("box-shadow", "none");
+			});
+			
+		}
+		
+		if (document.getElementById("dragbar")) {
+            document.getElementById("dragbar").style.color = "#000000";
         }
 		//header/footer/hamburger menu (navbar header)
 		if(document.getElementById("header")) {
@@ -146,14 +177,17 @@ if (
 			document.getElementById("footer-link").style.color = "black";
 		}
 		if(document.getElementById("topnav")) {
-			document.getElementById("topnav").style.backgroundColor = "#E8E8E8";
+			document.getElementById("topnav").style.backgroundColor = "#E8E8E8";// #d3d3d3(other good color)
 			document.getElementById("burger").style.color = "black";
 			const links = document.querySelectorAll('.navlink');
 			links.forEach(link => {
 				link.style.color = 'black';
 				link.style.fontWeight = '500';
 			});
-			
+			const activePages = document.querySelectorAll('.currentPage');
+			activePages.forEach(link => {
+				link.style.backgroundColor = '#c6cfea';
+			});
 		}
     });
 }

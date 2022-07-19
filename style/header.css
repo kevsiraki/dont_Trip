@@ -2,7 +2,7 @@
 	box-sizing: border-box;
 }
 .header {
-	position: sticky;
+	/*position: sticky;*/ /*mehhh*/
 	top: 0;
 	overflow: hidden;
 	background-color: #35363A;

@@ -31,8 +31,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 				<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
 			</a>
 			<div class="header-right">
-				<a href="../login" ><small>Login</small></a>
-				<a href="register" ><small>Sign Up</small></a>
+				<a href="../login"><small>Login</small></a>
+				<a href="register"><small>Sign Up</small></a>
 			</div>
 		</header>
 		<div class="wrapper" >
