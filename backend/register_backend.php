@@ -12,6 +12,12 @@ $row = 0;
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
+//not super neccessary but could be insanely useful for building reusable components.
+function imageUrl()
+{
+    return "https://" . $_SERVER['SERVER_NAME'] . substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], "../") + 1) . "donttrip/icons/dont_Trip.png";
+}
+
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
@@ -212,7 +218,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 {
                     $greeting = "Good evening";
                 }
-                $mail->Body = $greeting . ".  Verify Your Email: " . $link2 . ".";
+				$html = file_get_contents('../email_templates/register.html');
+				$html =  str_replace("{{USERNAME}}",$username,$html);
+				$html =  str_replace("{{IMGICON}}",imageUrl(),$html);
+				$html =  str_replace("{{LINK}}","https://donttrip.technologists.cloud/donttrip/client/verify-email.php?key=".$_POST["email"]."&token=".$token."",$html);
+				$html =  str_replace("{{GREETING}}",$greeting,$html);
+				$mail->Body = $html;
+                //$mail->Body = $greeting . ".  Verify Your Email: " . $link2 . ".";
             }
             catch(phpmailerException $e)
             {

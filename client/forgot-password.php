@@ -17,8 +17,16 @@
 		<script src="../js/generalAJAX.js"></script>
 		<script src="../js/forgotPasswordAJAX.js"></script>
 		<link rel="stylesheet" href="../style/meter_styles.css">
+
+    <style> 
+        #footer { 
+            bottom:-15%;
+            width: 100%;
+        } 
+    </style> 
+
 	</head>
-	<body class="d-flex flex-column justify-content-between">
+	<body>
 		<header class="header" id="header">
 			<a href="../login" class="logo">
 				<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
@@ -29,6 +37,12 @@
 			</div>
 		</header>
 		<?php if($expired == 1): ?>
+			<style> 
+				#footer { 
+					bottom:-38%;
+					width: 100%;
+				} 
+			</style>
 			<div class="wrapper">
 				<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
 				<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
@@ -93,7 +107,7 @@
 				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
 			</a>
 			<div class="footer-right">
-				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;Github</i></a>
+				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
 			</div>
 		</footer> 
 	</body>

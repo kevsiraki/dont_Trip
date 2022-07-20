@@ -18,12 +18,12 @@
 		<link rel="apple-touch-icon"  sizes="512x512" href="icons/icon.png">
 		<script src="js/loginAJAX.js"></script>
 		<script src="js/lightMode.js"></script>
-                   <style> 
-        #footer { 
-            bottom:-15%;
-            width: 100%;
-        } 
-    </style> 
+        <style> 
+			#footer { 
+				bottom:-15%;
+				width: 100%;
+			} 
+		</style> 
 	</head>
 	<body>
 		<header class="header" id="header">
@@ -79,7 +79,7 @@
 				<img draggable="false" src="icons/dont_Trip.png" width="150" height="40"></img>
 			</a>
 			<div class="footer-right">
-				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;Github</i></a>
+				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
 			</div>
 		</footer>
 	</body>

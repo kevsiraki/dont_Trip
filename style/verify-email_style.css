@@ -38,7 +38,7 @@ html, body {
 	box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);
 	border-radius: 1em;
 	border: 1px solid gray;
-	background-color: #202945;
+	background-color: #35363A;
 }
 .card_body {
 	padding: 1rem;
@@ -47,7 +47,7 @@ html, body {
 	gap: 0.5rem;
 }
 #info {
-	color: #D3D3D3;
+	color: #C0C0C0;
 }
 .card_body h4 {
 	font-size: 1.5rem;

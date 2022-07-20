@@ -11,6 +11,11 @@ $new_password_err = $confirm_password_err = $email_err = $username_err = "";
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
+function imageUrl()
+{
+    return "https://" . $_SERVER['SERVER_NAME'] . substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], "../") + 1) . "donttrip/icons/dont_Trip.png";
+}
+
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if email is valid
@@ -54,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         try {
             $mail->CharSet = "utf-8";
             $mail->IsSMTP();
+			$mail->IsHTML();
             // enable SMTP authentication
             $mail->SMTPAuth = true;
             // email username
@@ -67,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->Port = $_ENV['port'];
             $mail->From = $_ENV['email']; 
             $mail->FromName = "WebMaster";
-            $mail->addAddress($_POST["email"], "user");
+            $mail->addAddress($_POST["email"], $userResults["username"]);
             $mail->Subject = "Reset your Password";
             $mail->IsHTML(true);
             date_default_timezone_set("America/Los_Angeles");
@@ -80,7 +86,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else if (date('H') >= 18) {
                 $greeting = "Good evening";
             }
-            $mail->Body = " " . $greeting . ". Click On This Link to Reset Password: " . $link2 . ".  This link auto-expires in 24 hours.";
+			$html = file_get_contents('../email_templates/forgot_password.html');
+			$html =  str_replace("{{USERNAME}}",$userResults["username"],$html);
+			$html =  str_replace("{{IMGICON}}",imageUrl(),$html);
+			$html =  str_replace("{{LINK}}","https://donttrip.technologists.cloud/donttrip/client/forgot-password.php?key=".$_POST["email"]."&token=".$key."",$html);
+			$html =  str_replace("{{GREETING}}",$greeting,$html);
+			$mail->Body = $html;
+			//$mail->Body = " " . $greeting . ". Click On This Link to Reset Password: " . $link2 . ".  This link auto-expires in 24 hours.";
         }
         catch(phpmailerException $e) {
             echo $e->errorMessage();
