@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="style/form_style.css">
 		<link rel="stylesheet" href="style/header.css">
 		<link rel="stylesheet" href="style/footer.css">
-		<link href="icons/icon.ico" rel="shortcut icon" type="image/x-icon">
+		<link href="icons/icon_header.png" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="icons/icon.png">
 		<script src="js/loginAJAX.js"></script>
 		<script src="js/lightMode.js"></script>

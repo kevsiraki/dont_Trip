@@ -12,7 +12,7 @@
 		<link rel="stylesheet" href="../style/header.css">
 		<link rel="stylesheet" href="../style/footer.css">
 		<script src="../js/lightMode.js"></script>
-		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
+		<link href="../icons/icon_header.png" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 	</head>
 	<body class="d-flex flex-column justify-content-between">

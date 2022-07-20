@@ -28,7 +28,7 @@ if (
 	//Automatic setting.
 	||((new Date()).getHours() >= 6 && (new Date()).getHours() <= 18 && localStorage.getItem("dark_mode") === null)
 ) {
-    window.addEventListener("load", function() {
+    window.addEventListener("DOMContentLoaded", function() {
         //DOM Elements
         if (document.body) {
             document.body.style.background = "#FFFFED";
@@ -49,6 +49,20 @@ if (
         if (document.getElementById("info")) {
             document.getElementById("info").style.color = "#000000";
         }
+		if(document.getElementsByClassName("form-control").length >0){
+
+		$('link[href*="form_style.css"]').attr("disabled", "true");
+               
+        $('head').append('<link rel="stylesheet" href="../style/formLightInputs.css" type="text/css" />');
+
+		}
+		if(document.getElementById("log-in")){
+
+		$('link[href*="form_style.css"]').attr("disabled", "true");
+               
+        $('head').append('<link rel="stylesheet" href="style/formLightInputs.css" type="text/css" />');
+
+		}
         if (document.getElementById("info-two")) {
             document.getElementById("info-two").style.color = "#000000";
         }

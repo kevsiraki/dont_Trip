@@ -8,7 +8,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link href="../style/search_style.css" rel="stylesheet">
-		<link href="../icons/icon.ico" rel="shortcut icon" type="image/x-icon">
+		<link href="../icons/icon_header.png" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<link href="../style/navbar.css" rel="stylesheet">
 		<link href="../style/footer.css" rel="stylesheet">
