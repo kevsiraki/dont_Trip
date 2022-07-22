@@ -1,4 +1,5 @@
 document.getElementById("clear-searches").addEventListener("click", function(){ 
+
 	$.ajax({
 		url: '../backend/settings_backend',
 		type: 'post',
@@ -7,7 +8,8 @@ document.getElementById("clear-searches").addEventListener("click", function(){
 			delete_searches: "true"
 		},
 		success: function(response) {
-			$('#clear_response').html("<br>Search History Cleared.")
+			$('#clear_response').html("<br>Search History Cleared.");
+
 		}
 	});
 	document.getElementById("clear-searches").blur();

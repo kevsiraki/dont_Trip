@@ -1,4 +1,6 @@
-<?php require "backend/login_backend.php"; ?>
+<?php 
+require "backend/login_backend.php"; 
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -12,6 +14,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="style/form_style.css">
+		<link rel="stylesheet" href="style/form_base_style.css">
 		<link rel="stylesheet" href="style/header.css">
 		<link rel="stylesheet" href="style/footer.css">
 		<link href="icons/icon_header.png" rel="shortcut icon" type="image/x-icon">
@@ -20,9 +23,11 @@
 		<script src="js/lightMode.js"></script>
         <style> 
 			#footer { 
-				bottom:-15%;
 				width: 100%;
 			} 
+			#space {
+				height: 90%;
+			}
 		</style> 
 	</head>
 	<body>
@@ -74,6 +79,7 @@
 			</form>
         <br>
 		</div>
+		<div id="space"></div>
 		<footer id="footer">
 			<a href="." class="logo">
 				<img draggable="false" src="icons/dont_Trip.png" width="150" height="40"></img>

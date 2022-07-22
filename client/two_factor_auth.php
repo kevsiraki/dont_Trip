@@ -17,6 +17,7 @@ if (empty($_SESSION["username"])) {
 		<link href="../icons/icon_header.png" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<link rel="stylesheet" href="../style/form_style.css">
+		<link rel="stylesheet" href="../style/form_base_style.css">
 		<link rel="stylesheet" href="../style/header.css">
 		<link rel="stylesheet" href="../style/footer.css">
 		<script src="../js/lightMode.js"></script>

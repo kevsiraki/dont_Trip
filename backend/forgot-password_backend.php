@@ -60,7 +60,6 @@ if (isset($_GET["key"]) && isset($_GET["token"]))
         }
         mysqli_stmt_close($stmt);
     }
-
 }
 else
 {

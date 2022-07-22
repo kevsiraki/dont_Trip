@@ -24,4 +24,11 @@ $details = json_decode(file_get_contents("http://ip-api.com/json/{$ip}"));
 $city = $details->city;
 $state = $details->region;
 $stateFull = $details->regionName;
+
+function getGeo($ip_address) {
+	$details = json_decode(file_get_contents("http://ip-api.com/json/{$ip_address}"));
+	$city = $details->city;
+	$stateFull = $details->regionName;
+	return $city.", ".$stateFull;
+}
 ?>

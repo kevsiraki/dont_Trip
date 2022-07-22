@@ -17,8 +17,8 @@
 		<script src="../js/lightMode.js"></script>
 		<script src="../js/twoFactorAJAX.js"></script>
         <style> 
-        #footer { 
-            position: fixed; 
+       #footer { 
+            position:fixed;
             bottom: 0; 
             width: 100%; 
         } 

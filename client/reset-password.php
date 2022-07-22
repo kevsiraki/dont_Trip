@@ -18,14 +18,27 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 		<link href="../icons/icon_header.png" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<link rel="stylesheet" href="../style/form_style.css">
+		<link rel="stylesheet" href="../style/form_base_style.css">
 		<link rel="stylesheet" href="../style/header.css">
 		<link rel="stylesheet" href="../style/footer.css">
 		<script src="../js/lightMode.js"></script>
 		<script src="../js/generalAJAX.js"></script>
 		<script src="../js/resetPasswordAJAX.js"></script>
 		<link rel="stylesheet" href="../style/meter_styles.css">
+<style>
+
+       #footer { 
+            /*bottom:-15%;*/
+            width: 100%;
+        } 
+
+#space {
+				height: 90%;
+			}
+
+</style>
 	</head>
-	<body class="d-flex flex-column justify-content-between">
+	<body>
 		<header class="header" id="header">
 			<a href="../login" class="logo">
 				<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
@@ -76,6 +89,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 				</div>
 			</form>
 		</div>  
+<div id="space"></div>
 		<footer id="footer">
 			<a href="." class="logo">
 				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>

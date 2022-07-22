@@ -8,6 +8,8 @@ use PHPMailer\PHPMailer\Exception;
 $username = $email = $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = $email_err = $username_err = "";
 
+//todo: email spam fix
+
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
@@ -44,6 +46,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $email = trim($_POST["email"]);
         }
     }
+	$sql = "SELECT COUNT(*) as cntEmail FROM password_reset_temp WHERE email = ? ;";
+	if ($stmt = mysqli_prepare($link, $sql))
+	{
+		// Bind variables to the prepared statement as parameters
+		mysqli_stmt_bind_param($stmt, "s", $param_email);
+		// Set parameters
+		$param_email = $email;
+		// Attempt to execute the prepared statement
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		mysqli_stmt_close($stmt);
+	}
+	if (mysqli_num_rows($result))
+    {
+        $row = mysqli_fetch_array($result);
+        $count = $row['cntEmail'];
+		if($count>=5) {
+			$email_err = "Too many requests.";
+			echo $email_err;
+		}
+	}
+
     // Check if email is validated
     $expFormat = mktime(date("H"), date("i"), date("s"), date("m"), date("d") + 1, date("Y"));
     $expDate = date("Y-m-d H:i:s", $expFormat);
@@ -92,7 +116,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$html =  str_replace("{{LINK}}","https://donttrip.technologists.cloud/donttrip/client/forgot-password.php?key=".$_POST["email"]."&token=".$key."",$html);
 			$html =  str_replace("{{GREETING}}",$greeting,$html);
 			$mail->Body = $html;
-			//$mail->Body = " " . $greeting . ". Click On This Link to Reset Password: " . $link2 . ".  This link auto-expires in 24 hours.";
         }
         catch(phpmailerException $e) {
             echo $e->errorMessage();
@@ -101,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo 404; //Boring error messages from anything else!
         }
         if ($mail->Send()) {
-			$sql = "DELETE FROM password_reset_temp WHERE email = ? ;";
+			$sql = "UPDATE password_reset_temp SET keyTO = null WHERE email = ? ;";
 			if ($stmt = mysqli_prepare($link, $sql))
 			{
 				// Bind variables to the prepared statement as parameters
