@@ -48,7 +48,7 @@ $(document).on('click', '#sign-up', function(e) {
     });
 }
 else {
-	$('#invalid-signup').html("Please fill in all fields");
+	$('#invalid-signup').html("Please fill in all fields.");
         error.style.display = "block";
         error.classList.remove("alert-danger");
         error.classList.add("alert-warning");
@@ -69,3 +69,13 @@ else {
 function containsAnyLetter(str) {
   return /[a-zA-Z]/.test(str);
 }
+
+$(function() {
+    $(document).keydown(function(e) {
+        switch (e.which) {
+            case 13: 
+                $("#sign-up").trigger("click");
+                break;
+        }
+    });
+});

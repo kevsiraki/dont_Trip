@@ -1,7 +1,10 @@
 <?php 
 require_once '../backend/vendor/autoload.php'; 
 require_once '../backend/redirect_backend.php'; 
-session_start();
+if(!isset($_SESSION)) 
+{ 
+	session_start(); 
+} 
 $client = new Google_Client();
 $client->setClientId($clientID);
 $client->setClientSecret($clientSecret);

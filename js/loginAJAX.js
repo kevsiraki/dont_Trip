@@ -11,7 +11,7 @@ $(document).on('click', '#log-in', function(e)
         {
             url: 'backend/login_backend',
             type: 'post',
-            timeout: 5000,
+			timeout: 5000,
             data:
             {
                 username: username,
@@ -19,8 +19,6 @@ $(document).on('click', '#log-in', function(e)
             },
             success: function(response)
             {
-                console.log(response);
-
                 if (response.includes("ten"))
                 {
                     button.disabled = true;
@@ -36,11 +34,15 @@ $(document).on('click', '#log-in', function(e)
                     }, 10000);
 
                 }
+				else if (response.includes("google"))
+                {
+					button.style.display = "none";
+                    window.location.href = "https://donttrip.technologists.cloud/donttrip/client/hecker";
+                }
                 else if (response.includes("404"))
                 {
-                    location.reload();
                     button.style.display = "none";
-                    window.location.href = "https://donttrip.technologists.cloud/donttrip/client/heckerman";
+					window.location.href = "https://donttrip.technologists.cloud/donttrip/client/locked";
                 }
                 else if (response == 1)
                 {
@@ -76,12 +78,19 @@ $(document).on('click', '#log-in', function(e)
                         button.classList.add("btn-success");
                     }, 2000);
                 }
-            }
+            },
+			error: function(xhr, textStatus, errorThrown) {
+                        var text = 'Ajax Request Error: ' + 'XMLHTTPRequestObject status: ('+xhr.status + ', ' + xhr.statusText+'), ' +
+                                                'text status: ('+textStatus+'), error thrown: ('+errorThrown+')';
+                        console.log('The AJAX request failed with the error: ' + text);
+                        console.log(xhr.responseText);
+                        console.log(xhr.getAllResponseHeaders());
+			}
         });
     }
     else
     {
-        $('#invalid-login').html("Please fill in all fields");
+        $('#invalid-login').html("Please fill in all fields.");
         error.style.display = "block";
         error.classList.remove("alert-danger");
         error.classList.add("alert-warning");
@@ -103,3 +112,13 @@ function containsAnyLetter(str)
 {
     return /[a-zA-Z]/.test(str);
 }
+
+$(function() {
+    $(document).keydown(function(e) {
+        switch (e.which) {
+            case 13: 
+                $("#log-in").trigger("click");
+                break;
+        }
+    });
+});

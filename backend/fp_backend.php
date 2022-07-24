@@ -1,14 +1,25 @@
 <?php
+header("Content-Type: text/html");
 // Include config file
+require_once 'rateLimiter.php';
 require_once "config.php";
 require_once 'vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
+if (!isset($_SESSION))
+{
+    session_start();
+}
+if (!empty($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
+{
+    header("location: ../login.php");
+    exit;
+}
+
 // Define variables and initialize with empty values
 $username = $email = $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = $email_err = $username_err = "";
-
-//todo: email spam fix
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -19,71 +30,104 @@ function imageUrl()
 }
 
 // Processing form data when form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
+
     // Check if email is valid
-    if (empty(trim($_POST["email"]))) {
+    if (empty(trim($_POST["email"])))
+    {
         $email_err = "Please enter an e-mail.";
-		echo $email_err;
-    } else {
+        echo $email_err;
+    }
+    else
+    {
         $email = trim($_POST["email"]);
-		$sql = "SELECT * FROM users WHERE email = ? ;";
-		if ($stmt = mysqli_prepare($link, $sql))
-		{
-			// Bind variables to the prepared statement as parameters
-			mysqli_stmt_bind_param($stmt, "s", $param_email);
-			// Set parameters
-			$param_email = $email;
-			// Attempt to execute the prepared statement
-			mysqli_stmt_execute($stmt);
-			$result = mysqli_stmt_get_result($stmt);
-			$userResults = mysqli_fetch_assoc($result);
-			mysqli_stmt_close($stmt);
-		}
-        if (mysqli_num_rows($result) == 0) {
+        $sql = "SELECT * FROM users WHERE email = ? ;";
+        if ($stmt = mysqli_prepare($link, $sql))
+        {
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_email);
+            // Set parameters
+            $param_email = $email;
+            // Attempt to execute the prepared statement
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            $userResults = mysqli_fetch_assoc($result);
+            mysqli_stmt_close($stmt);
+        }
+        if (mysqli_num_rows($result) == 0)
+        {
             $email_err = "E-mail address invalid.";
-			echo $email_err;
-        } else {
+            die($email_err);
+        }
+        else
+        {
             $email = trim($_POST["email"]);
         }
     }
-	$sql = "SELECT COUNT(*) as cntEmail FROM password_reset_temp WHERE email = ? ;";
-	if ($stmt = mysqli_prepare($link, $sql))
-	{
-		// Bind variables to the prepared statement as parameters
-		mysqli_stmt_bind_param($stmt, "s", $param_email);
-		// Set parameters
-		$param_email = $email;
-		// Attempt to execute the prepared statement
-		mysqli_stmt_execute($stmt);
-		$result = mysqli_stmt_get_result($stmt);
-		mysqli_stmt_close($stmt);
-	}
-	if (mysqli_num_rows($result))
+    $sql = "SELECT COUNT(*) as cntEmail FROM password_reset_temp WHERE email = ? ;";
+    if ($stmt = mysqli_prepare($link, $sql))
+    {
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "s", $param_email);
+        // Set parameters
+        $param_email = $email;
+        // Attempt to execute the prepared statement
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+    }
+    if (mysqli_num_rows($result))
     {
         $row = mysqli_fetch_array($result);
         $count = $row['cntEmail'];
-		if($count>=5) {
-			$email_err = "Too many requests.";
-			echo $email_err;
-		}
-	}
-
+        if ($count >= 5)
+        {
+            $email_err = "Too many requests.";
+            die($email_err);
+        }
+    }
+    $sql = "SELECT sent_time FROM password_reset_temp WHERE email = ? ORDER BY sent_time DESC LIMIT 1;";
+    if ($stmt = mysqli_prepare($link, $sql))
+    {
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "s", $param_email);
+        // Set parameters
+        $param_email = $email;
+        // Attempt to execute the prepared statement
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $row = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+    }
+    if (!empty($row))
+    {
+        $count = $row['sent_time'];
+        if ($count + 120 > time())
+        {
+            $email_err = "Wait before requesting another reset.";
+            die($email_err);
+        }
+    }
     // Check if email is validated
-    $expFormat = mktime(date("H"), date("i"), date("s"), date("m"), date("d") + 1, date("Y"));
+    $expFormat = mktime(date("H") , date("i") , date("s") , date("m") , date("d") + 1, date("Y"));
     $expDate = date("Y-m-d H:i:s", $expFormat);
-    $key = md5(2418 * 2 + $email);
-    $addKey = substr(md5(uniqid(rand(), 1)), 3, 10);
-    $key = $key . $addKey;
-    if (empty($email_err)) {
-        $link2 = "<a href='https://donttrip.technologists.cloud/donttrip/client/forgot-password.php?key=" . $_POST["email"] . "&token=" . $key . "'>Reset Password</a>";
+    $key = bin2hex($email).bin2hex(random_bytes(8)).md5("777").sha1("rustgregmshreib");
+    $addKey = bin2hex(random_bytes(16));
+    $key = str_shuffle($key.$addKey.generatePassword(16));
+    if (empty($email_err))
+    {
+        echo 1;
+        $sent_time = time();
         require_once "phpmail/src/Exception.php";
         require_once "phpmail/src/PHPMailer.php";
         require_once "phpmail/src/SMTP.php";
         $mail = new PHPMailer(true);
-        try {
+        try
+        {
             $mail->CharSet = "utf-8";
             $mail->IsSMTP();
-			$mail->IsHTML();
+            $mail->IsHTML();
             // enable SMTP authentication
             $mail->SMTPAuth = true;
             // email username
@@ -95,7 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->Host = $_ENV['host'];
             // set the SMTP port for the XXX server
             $mail->Port = $_ENV['port'];
-            $mail->From = $_ENV['email']; 
+            $mail->From = $_ENV['email'];
             $mail->FromName = "WebMaster";
             $mail->addAddress($_POST["email"], $userResults["username"]);
             $mail->Subject = "Reset your Password";
@@ -103,58 +147,89 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             date_default_timezone_set("America/Los_Angeles");
             $date = date("Y-m-d H:i:s");
             $greeting = "";
-            if (date('H') < 12) {
+            if (date('H') < 12)
+            {
                 $greeting = "Good morning";
-            } else if (date('H') >= 12 && date('H') < 18) {
+            }
+            else if (date('H') >= 12 && date('H') < 18)
+            {
                 $greeting = "Good afternoon";
-            } else if (date('H') >= 18) {
+            }
+            else if (date('H') >= 18)
+            {
                 $greeting = "Good evening";
             }
-			$html = file_get_contents('../email_templates/forgot_password.html');
-			$html =  str_replace("{{USERNAME}}",$userResults["username"],$html);
-			$html =  str_replace("{{IMGICON}}",imageUrl(),$html);
-			$html =  str_replace("{{LINK}}","https://donttrip.technologists.cloud/donttrip/client/forgot-password.php?key=".$_POST["email"]."&token=".$key."",$html);
-			$html =  str_replace("{{GREETING}}",$greeting,$html);
-			$mail->Body = $html;
+            $html = file_get_contents('../email_templates/forgot_password.html');
+            $html = str_replace("{{USERNAME}}", $userResults["username"], $html);
+            $html = str_replace("{{IMGICON}}", imageUrl() , $html);
+            $html = str_replace("{{LINK}}", "https://donttrip.technologists.cloud/donttrip/client/forgot-password.php?key=" . $_POST["email"] . "&token=" . $key . "", $html);
+            $html = str_replace("{{GREETING}}", $greeting, $html);
+            $mail->Body = $html;
         }
-        catch(phpmailerException $e) {
+        catch(phpmailerException $e)
+        {
             echo $e->errorMessage();
         }
-        catch(Exception $e) {
-            echo 404; //Boring error messages from anything else!
+        catch(Exception $e)
+        {
+            die(404); //Boring error messages from anything else!
+            
         }
-        if ($mail->Send()) {
-			$sql = "UPDATE password_reset_temp SET keyTO = null WHERE email = ? ;";
-			if ($stmt = mysqli_prepare($link, $sql))
-			{
-				// Bind variables to the prepared statement as parameters
-				mysqli_stmt_bind_param($stmt, "s", $param_email);
-				// Set parameters
-				$param_email = $email;
-				// Attempt to execute the prepared statement
-				mysqli_stmt_execute($stmt);
-				$result = mysqli_stmt_get_result($stmt);
-				$userResults = mysqli_fetch_assoc($result);
-				mysqli_stmt_close($stmt);
-			}
-            $sql = "INSERT INTO password_reset_temp (email, keyTo, expD) VALUES (?,?,?)";
-            if ($stmt = mysqli_prepare($link, $sql)) {
+        if ($mail->Send())
+        {
+            $sql = "UPDATE password_reset_temp SET keyTO = null WHERE email = ? ;";
+            if ($stmt = mysqli_prepare($link, $sql))
+            {
                 // Bind variables to the prepared statement as parameters
-                mysqli_stmt_bind_param($stmt, "sss", $param_email, $param_key, $param_expDate);
+                mysqli_stmt_bind_param($stmt, "s", $param_email);
+                // Set parameters
+                $param_email = $email;
+                // Attempt to execute the prepared statement
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+                $userResults = mysqli_fetch_assoc($result);
+                mysqli_stmt_close($stmt);
+            }
+            $sql = "INSERT INTO password_reset_temp (email, keyTo, expD, sent_time) VALUES (?,?,?,?)";
+            if ($stmt = mysqli_prepare($link, $sql))
+            {
+                // Bind variables to the prepared statement as parameters
+                mysqli_stmt_bind_param($stmt, "ssss", $param_email, $param_key, $param_expDate, $param_sent_time);
                 // Set parameters
                 $param_email = $email;
                 $param_key = $key;
                 $param_expDate = $expDate;
+                $param_sent_time = $sent_time;
                 // Attempt to execute the prepared statement
                 mysqli_stmt_execute($stmt);
                 // Close statement
                 mysqli_stmt_close($stmt);
             }
             mysqli_close($link);
-            echo 1;
-        } else {
+            die(1);
+        }
+        else
+        {
             echo "Mail Error - >" . $mail->ErrorInfo;
         }
-    }  
+    }
+}
+
+function getRandomBytes($nbBytes = 32)
+{
+    $bytes = openssl_random_pseudo_bytes($nbBytes, $strong);
+    if (false !== $bytes && true === $strong)
+    {
+        return $bytes;
+    }
+    else
+    {
+        throw new \Exception("Unable to generate secure token from OpenSSL.");
+    }
+}
+
+function generatePassword($length)
+{
+    return substr(preg_replace("/[^a-zA-Z0-9]/", "", base64_encode(getRandomBytes($length + 1))) , 0, $length);
 }
 ?>

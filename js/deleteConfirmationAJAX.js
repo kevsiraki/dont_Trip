@@ -42,3 +42,13 @@ $(document).on('click', '#delete-account', function(e) {
 function containsAnyLetter(str) {
   return /[a-zA-Z]/.test(str);
 }
+
+$(function() {
+    $(document).keydown(function(e) {
+        switch (e.which) {
+            case 13: 
+                $("#delete-account").trigger("click");
+                break;
+        }
+    });
+});

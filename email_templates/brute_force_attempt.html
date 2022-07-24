@@ -276,11 +276,13 @@
 									<td class="padded">
 										<h1>Suspicious Activity On Your Account</h1>
 										<p>{{GREETING}} <strong>{{USERNAME}}</strong>.</p>
-										<p>We regret to inform you that your account information may be compromised.</p>
+										<p>We regret to inform you that your account information is likely compromised.</p>
 										<p>Several failed login attempts were made from the following IP Address:&nbsp;<strong>{{IPADD}}</strong><br> Located around: <strong>{{LOCATION}}</strong>.</p>
 										<p>This IP Address has been permanently banned from all of our services, but we suggest the following:</p>
-										<p>It is recommended that you proceed to login and reset your password in your account settings as well as enabling 2-Step Verification if it is not already enabled.</p>
-										<p style="text-align:center;"><a class="strong" href="https://donttrip.technologists.cloud/donttrip/login"><small>Login and Update My Settings</small></a></p>
+										<p>Your account has been locked and your password is now invalid.</p>
+										<p>The following temporary password can be used to login and reset your password.</p>
+										<p>It will expire once you recover your password.</p>
+										<p style="text-align:center;" class="strong">{{OTP}}</p>
 										<p class="caption">Thank you.</p>
 									</td>
 								</tr>

@@ -1,4 +1,6 @@
 <?php
+require_once 'rateLimiter.php';
+header("Content-Type: text/html");
 // Include config file
 require_once "config.php";
 require_once 'vendor/autoload.php';
@@ -52,7 +54,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 else
                 {
                     $email = trim($_POST["email"]);
-                    $token = md5($_POST["email"]) . rand(10, 9999);
+					$token = bin2hex($email).bin2hex(random_bytes(8));
+					$addKey = bin2hex(random_bytes(16));
+					$token = substr(str_shuffle($token.$addKey.generatePassword(24).md5(777)),0,36);
                 }
             }
             // Close statement
@@ -224,7 +228,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 				$html =  str_replace("{{LINK}}","https://donttrip.technologists.cloud/donttrip/client/verify-email.php?key=".$_POST["email"]."&token=".$token."",$html);
 				$html =  str_replace("{{GREETING}}",$greeting,$html);
 				$mail->Body = $html;
-                //$mail->Body = $greeting . ".  Verify Your Email: " . $link2 . ".";
             }
             catch(phpmailerException $e)
             {
@@ -283,5 +286,22 @@ function valid_email($email)
             return (preg_match($pattern, $email) === 1) ? $email : false;
         }
     }
+}
+function getRandomBytes($nbBytes = 32)
+{
+    $bytes = openssl_random_pseudo_bytes($nbBytes, $strong);
+    if (false !== $bytes && true === $strong)
+    {
+        return $bytes;
+    }
+    else
+    {
+        throw new \Exception("Unable to generate secure token from OpenSSL.");
+    }
+}
+
+function generatePassword($length)
+{
+    return substr(preg_replace("/[^a-zA-Z0-9]/", "", base64_encode(getRandomBytes($length + 1))) , 0, $length);
 }
 ?>

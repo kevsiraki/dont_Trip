@@ -1,4 +1,6 @@
-<?php require "../backend/fp_backend.php"; ?>
+<?php 
+require "../backend/fp_backend.php"; 
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -34,22 +36,19 @@
 			<br>
 			<div class = "info-bar" id="info-bar">Enter your e-mail for a password recovery form.</div>
 			<div id="invalid-email" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"></div>
-			<form> 
-				<div class="form-group">
-					<input type="email" name="email"  id="email-reset" aria-describedby="emailHelp" 
-					autocomplete="off" placeholder="E-mail Address" class="center form-control" required>
-					<div id="ename_response" style="text-align: center;"></div>	
-					<small id="emailHelp" class="form-text text-muted" style="margin-left:5%">
-						This serves as a re-verification token.
-					</small>
-				</div>
-				<div class="form-group" style="margin-left:5%">
-					<button type="button" id="submit-email" class="btn btn-primary" onclick="this.blur();">Submit</button>
-					<a class="btn btn-link ml-2" href="../login">Cancel</a>
-				</div>
-			</form>
+			<div class="form-group">
+				<input type="email" name="email"  id="email-reset" aria-describedby="emailHelp" 
+				autocomplete="off" placeholder="E-mail Address" class="center form-control" required>
+				<div id="ename_response" style="text-align: center;"></div>	
+				<small id="emailHelp" class="form-text text-muted" style="margin-left:5%">
+					This serves as a re-verification token.
+				</small>
+			</div>
+			<div class="form-group" style="margin-left:5%">
+				<button type="button" id="submit-email" class="btn btn-primary" onclick="this.blur();">Submit</button>
+				<a class="btn btn-link ml-2" href="../login">Cancel</a>
+			</div>
 		</div>
-		
 	</body>
 	<footer id="footer">
 			<a href="." class="logo">

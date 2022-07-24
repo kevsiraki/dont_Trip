@@ -85,7 +85,7 @@
 							<div id=\"to-hide\" style=\"display:block;\">		
 								<br>
 								<div id=\"two_factor_div\">
-									2FA On. Secret: <b id=\"copy\">{$userResults['tfa']}</b>
+									2FA On. Secret: <b id=\"copy\">".decrypt($userResults['tfa'])."</b>
 									<button class = \"btn btn-outline-info btn-sm\" onclick=\"copySecret();\">📋</button>
 								</div>
 							</div>

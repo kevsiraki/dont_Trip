@@ -48,3 +48,13 @@ $(document).on('click', '#submit-password', function(e) {
 function containsAnyLetter(str) {
   return /[a-zA-Z]/.test(str);
 }
+
+$(function() {
+    $(document).keydown(function(e) {
+        switch (e.which) {
+            case 13: 
+                $("#submit-password").trigger("click");
+                break;
+        }
+    });
+});

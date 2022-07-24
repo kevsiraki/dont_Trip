@@ -1,5 +1,11 @@
 <?php 
 require "backend/login_backend.php"; 
+// Initialize the session
+if(!isset($_SESSION)) 
+{ 
+	session_start(); 
+} 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +69,7 @@ require "backend/login_backend.php";
 				?>
 				<br>
 				<?php
-				if(isset($_SESSION["loggedin"])&& $_SESSION["loggedin"]===true) {
+				if(isset($_SESSION["loggedin"])&& $_SESSION["loggedin"]===true && $_SESSION["authorized"] !== false) {
 				?>
 					<p><a href="client/dt" class="text-success">Continue current session?</a></p>
 				<?php

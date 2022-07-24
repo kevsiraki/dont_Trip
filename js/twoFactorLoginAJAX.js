@@ -13,7 +13,7 @@ $(document).on('click', '#verify', function(e) {
 			let error = document.getElementById("invalid-login");
 			if (response == 1) {
 				error.style.display = "none";
-                window.location.href = "dt";
+                             window.location.href = "dt";
             }
 			else {
 				$('#invalid-login').html(response);
@@ -28,6 +28,16 @@ $(document).on('click', '#verify', function(e) {
 					button.classList.add("btn-success");
 				}, 2000);
 			}
+        }
+    });
+});
+
+$(function() {
+    $(document).keydown(function(e) {
+        switch (e.which) {
+            case 13: 
+                $("#verify").trigger("click");
+                break;
         }
     });
 });

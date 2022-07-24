@@ -2,8 +2,14 @@
 require_once "config.php";
 require_once "geolocation.php";
 require_once 'vendor/autoload.php';
-session_start();
-
+if(!isset($_SESSION)) 
+{ 
+	session_start(); 
+} 
+if(!empty($_SESSION["authorized"])&&$_SESSION["authorized"] === false) {
+	header("location: ../login.php");
+    exit;
+}
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 

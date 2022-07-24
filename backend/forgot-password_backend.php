@@ -1,15 +1,34 @@
 <?php
+header("Content-Type: text/html");
 // Include config file
 require_once "config.php";
 require_once 'vendor/sonata-project/google-authenticator/src/FixedBitNotation.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticatorInterface.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
+
+if(!isset($_SESSION)) 
+{ 
+	session_start(); 
+} 
+if(!empty($_SESSION["authorized"])&&$_SESSION["authorized"] === false) {
+	header("location: ../login.php");
+    exit;
+}
+
 date_default_timezone_set('America/Los_Angeles');
 $date = date("Y-m-d H:i:s");
+
 $email = $new_password = $confirm_password = $code = $tfa_err = "";
 $new_password_err = $confirm_password_err = "";
+
 $expired = 0;
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+define("encryption_method", $_ENV["recovery_encryption"]);
+define("key", $_ENV["recovery_key"]);
 
 if (isset($_GET["key"]) && isset($_GET["token"]))
 {
@@ -68,6 +87,7 @@ else
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
+	require_once 'rateLimiter.php';
     $email = $_POST["email"];
     $sql = "SELECT * FROM users WHERE email = ? ;";
     if ($stmt = mysqli_prepare($link, $sql))
@@ -123,8 +143,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     }
     else if (password_verify(trim($_POST["new_password"]) , trim($userResults['password'])))
     {
-        $new_password_err = 'Password cannot be the same as before.<br>';
+        $new_password_err = 'Password cannot be the same as before.';
         echo $new_password_err;
+		die;
     }
     else if (!(preg_match('/[A-Za-z]/', trim($_POST["new_password"])) && preg_match('/[0-9]/', trim($_POST["new_password"])) && preg_match('/[A-Z]/', trim($_POST["new_password"])) && preg_match('/[a-z]/', trim($_POST["new_password"]))))
     {
@@ -157,7 +178,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     if ($userResults["tfaen"] == 1)
     {
         $g = new \Google\Authenticator\GoogleAuthenticator();
-        $secret = $userResults["tfa"];
+        $secret = decrypt($userResults["tfa"]);
         $code = trim($_POST["tfa"]);
         if ($g->checkCode($secret, $code))
         {
@@ -168,13 +189,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             {
                 if (empty($code))
                 {
-                    $tfa_err = "Please enter OTP.<br>";
+                    $tfa_err = "Please enter OTP.";
                     echo $tfa_err;
+					die;
                 }
                 else
                 {
-                    $tfa_err = "Incorrect or Expired OTP.<br>";
+                    $tfa_err = "Incorrect or Expired OTP.";
                     echo $tfa_err;
+					die;
                 }
             }
         }
@@ -182,7 +205,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     //Check all fields
     if (empty(trim($_POST["new_password"])) || empty(trim($_POST["confirm_password"])))
     {
-        echo 'Please fill in all fields.<br>';
+        echo 'Please fill in all fields.';
+		die;
     }
     // Check input errors before updating the database
     if (empty($new_password_err) && empty($tfa_err) && empty($confirm_password_err))
@@ -211,7 +235,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             // Attempt to execute the prepared statement
             if (mysqli_stmt_execute($stmt))
             {
-                // Password updated successfully. Destroy the session, and redirect to login page
+                // Password updated successfully. Redirect to login page
                 $sql = "DELETE FROM password_reset_temp WHERE email = ?";
                 if ($stmt2 = mysqli_prepare($link, $sql))
                 {
@@ -225,8 +249,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                     mysqli_stmt_close($stmt2);
                 }
                 echo 1;
-                //header("location: ../login.php");
-                
             }
             // Close statement
             mysqli_stmt_close($stmt);
@@ -234,5 +256,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     }
     // Close connection
     mysqli_close($link);
+}
+function decrypt($data) {
+    $key = key;
+    $c = base64_decode($data);
+    $ivlen = openssl_cipher_iv_length($cipher = encryption_method);
+    $iv = substr($c, 0, $ivlen);
+    $hmac = substr($c, $ivlen, $sha2len = 32);
+    $ciphertext_raw = substr($c, $ivlen + $sha2len);
+    $original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options = OPENSSL_RAW_DATA, $iv);
+    $calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
+    if (hash_equals($hmac, $calcmac))
+    {
+        return $original_plaintext;
+    }
 }
 ?>

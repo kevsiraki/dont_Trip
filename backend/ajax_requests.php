@@ -1,4 +1,6 @@
 <?php
+header("Content-Type: text/html");
+
 include "config.php";
 
 $username = $email = "";

@@ -48,53 +48,48 @@ require "../backend/register_backend.php";
 			<br>
 			<div class="info-bar" id="info-bar">Fill Out This Form to Sign-Up</div>
 			<div id="invalid-signup" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"></div>
-			<form>
-				<input style="display:none">
-				<input type="password" style="display:none" autocomplete="new-password"/>
-				<input style="display: none" type="text" name="fakeusernameremembered" />
-				<input style="display: none" type="password" name="fakepasswordremembered" />
-				<div class="form-group">
-					<input type="email" name="email" placeholder="E-mail Address" id="email" autocomplete="off" 
-					onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" aria-describedby="emailHelp" class="center form-control" required>
-					<div id="ename_response" style="text-align:center;"></div>
-				</div>
-				<div class="form-group">
-					<input type="text" placeholder="Username" name="username" id="username" autocomplete="off" 
-					onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" class="center form-control" required>
-					<div id="uname_response" style="text-align:center;"></div>
-				</div>
-				<div class="form-group">
-					<input type="password" placeholder="Password" name="password" id="password" 
-						onkeyup="getPassword();getConfirmPassword();" onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
-						onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false"
-						oninput="getPassword();getConfirmPassword();"autocomplete="new-password" class="center form-control" required>
-				</div>
-				<label style="margin-left:5%;">
-					<input type="checkbox" onclick="showF();showMeter();showConfirmMeter();getPassword();getConfirmPassword();">
-					<small id="info">Show</small>
-				</label>
-				<div id="password-strength" style="display: none;text-align:center;">
-					<div id="length" class="pw-stength" ><small> At least 8 characters</small></div>
-					<div id="lowercase" class="pw-stength"><small> At least 1 lowercase letter</small></div>
-					<div id="uppercase" class="pw-stength"><small> At least 1 uppercase letter</small></div>
-					<div id="number" class="pw-stength"><small> At least 1 number</small></div>
-					<br>
-				</div>
-				<div class="form-group">
-					<input type="password" name="confirm_password" id="confirm-password" placeholder="Confirm Password" 
-					onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
-					onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false"
-					oninput="getPassword();getConfirmPassword();"autocomplete="new-password" onkeyup="getPassword();getConfirmPassword();" class="center form-control" required>
-				</div>
-				<div id="confirm-password-strength" style="display: none;text-align:center;">
-					<div id="matching" class="pw-stength"><small> Matching</small></div>
-				</div>
-                    <br> 
-					<script src="../js/lightMode.js"></script>
-					<button name="Submit" type="button" id="sign-up" class="center btn btn-success" onclick="this.blur();">Sign-Up</button>
-					<br>
-					<p id="info-two">Already have an account? <a href="../login">Login here</a></p> 
-			</form>
+			<input style="display:none">
+			<input type="password" style="display:none" autocomplete="new-password"/>
+			<input style="display: none" type="text" name="fakeusernameremembered" />
+			<input style="display: none" type="password" name="fakepasswordremembered" />
+			<div class="form-group">
+				<input type="email" name="email" placeholder="E-mail Address" id="email" autocomplete="off" 
+				aria-describedby="emailHelp" class="center form-control" required>
+				<div id="ename_response" style="text-align:center;"></div>
+			</div>
+			<div class="form-group">
+				<input type="text" placeholder="Username" name="username" id="username" autocomplete="off" class="center form-control" required>
+				<div id="uname_response" style="text-align:center;"></div>
+			</div>
+			<div class="form-group">
+				<input type="password" placeholder="Password" name="password" id="password" 
+					oninput="getPassword();getConfirmPassword();" onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
+					autocomplete="new-password" class="center form-control" required>
+			</div>
+			<label style="margin-left:5%;">
+				<input type="checkbox" onclick="showF();showMeter();showConfirmMeter();getPassword();getConfirmPassword();">
+				<small id="info">Show</small>
+			</label>
+			<div id="password-strength" style="display: none;text-align:center;">
+				<div id="length" class="pw-stength" ><small> At least 8 characters</small></div>
+				<div id="lowercase" class="pw-stength"><small> At least 1 lowercase letter</small></div>
+				<div id="uppercase" class="pw-stength"><small> At least 1 uppercase letter</small></div>
+				<div id="number" class="pw-stength"><small> At least 1 number</small></div>
+				<br>
+			</div>
+			<div class="form-group">
+				<input type="password" name="confirm_password" id="confirm-password" placeholder="Confirm Password" 
+				onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" autocomplete="new-password"
+				oninput="getPassword();getConfirmPassword();" class="center form-control" required>
+			</div>
+			<div id="confirm-password-strength" style="display: none;text-align:center;">
+				<div id="matching" class="pw-stength"><small> Matching</small></div>
+			</div>
+               <br> 
+			<script src="../js/lightMode.js"></script>
+			<button name="Submit" type="button" id="sign-up" class="center btn btn-success" onclick="this.blur();">Sign-Up</button>
+			<br>
+			<p id="info-two">Already have an account? <a href="../login">Login here</a></p> 
 		</div>
 		<br>
 		<br>

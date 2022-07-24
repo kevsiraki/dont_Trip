@@ -1,38 +1,40 @@
-$(document).on('click', '#submit-email', function(e) {
+$(document).on('click', '#recover-account', function(e) {
 	e.preventDefault();
-    let emailReset = $('#email-reset').val();
+	let username = $('#username').val();
+    let password = $('#password').val();
     $.ajax({
-        url: '../backend/fp_backend',
+        url: '../backend/recovery_backend',
         type: 'post',
 		timeout: 5000,
         data: {
-            email: emailReset
+			username: username,
+            password: password
         },
         success: function(response) {
-			let button = document.getElementById("submit-email");
-			let error = document.getElementById("invalid-email");
-			if (response == 1) {
+			let button = document.getElementById("recover-account");
+			let error = document.getElementById("invalid-recovery");
+            if (response == 1) {
 				error.style.display = "none";
-				button.classList.remove("btn-primary");
+				button.classList.remove("btn-secondary");
 				button.classList.add("btn-success");
-                window.location.href = "../login";
+                window.location.href = "../client/reset-password";
             }
 			else {
 				if(containsAnyLetter(response)) {
-					$('#invalid-email').html(response);
+					$('#invalid-recovery').html(response);
 					error.style.display = "block";
-					$('#invalid-email').on('click', function(e) {
+					$('#invalid-recovery').on('click', function(e) {
 						error.style.display = "none";
 					});
 				}
 				else {
 					error.style.display = "none";
 				}
-				button.classList.remove("btn-primary");
+				button.classList.remove("btn-secondary");
 				button.classList.add("btn-danger");
 				setTimeout(function(){
 					button.classList.remove("btn-danger");
-					button.classList.add("btn-primary");
+					button.classList.add("btn-secondary");
 				}, 2000);
 			}
         }
@@ -47,7 +49,7 @@ $(function() {
     $(document).keydown(function(e) {
         switch (e.which) {
             case 13: 
-                $("#submit-email").trigger("click");
+                $("#recover-account").trigger("click");
                 break;
         }
     });

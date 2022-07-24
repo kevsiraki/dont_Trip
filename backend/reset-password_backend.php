@@ -1,6 +1,10 @@
 <?php
+header("Content-Type: text/html");
 // Initialize the session
-session_start();
+if(!isset($_SESSION)) 
+{ 
+	session_start(); 
+} 
 // Include config file
 require_once "config.php";
 // Define variables and initialize with empty values
@@ -8,6 +12,7 @@ $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = "";
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	require_once 'rateLimiter.php';
 	$sql = "SELECT * FROM users WHERE username = ? ;";
 	if ($stmt = mysqli_prepare($link, $sql))
 	{
@@ -60,7 +65,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $param_password = password_hash($new_password, PASSWORD_DEFAULT);
             $param_username = $_SESSION["username"];
             // Attempt to execute the prepared statement
-            if (mysqli_stmt_execute($stmt)) {
+            if (mysqli_stmt_execute($stmt)) 
+			{
+				mysqli_query($link,"UPDATE failed_login_attempts SET username = null, otp = null WHERE username = '".$userResults["username"]."' ;");
                 // Password updated successfully. Destroy the session, and redirect to login page
                 session_destroy();
                 echo 1;

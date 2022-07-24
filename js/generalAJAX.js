@@ -85,7 +85,7 @@ function throttle(func, wait) {
 }
 /* username, email, and email reset ajax requests to check against database as well. */
 $(document).ready(function() {
-    $("#username").keyup(throttle(function() {
+    $("#username").on("input", throttle(function() {
 		$(".invalid-feedback").html("");
         let username = $(this).val().trim();
         if (username != '') {
@@ -107,7 +107,7 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    $("#email").keyup(throttle(function() {
+    $("#email").on("input", throttle(function() {
 		$(".invalid-feedback").html("");
         let email = $(this).val().trim();
         if (email != '') {
@@ -129,7 +129,7 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    $("#email-reset").keyup(throttle(function() {
+    $("#email-reset").on("input", throttle(function() {
 		$(".invalid-feedback").html("");
         let email_reset = $(this).val().trim();
         if (email_reset != '') {

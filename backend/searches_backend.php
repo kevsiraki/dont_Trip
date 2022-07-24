@@ -1,9 +1,17 @@
 <?php
+header("Content-Type: text/html");
 require_once "config.php";
 require_once "geolocation.php";
-session_start();
+if(!isset($_SESSION)) 
+{ 
+	session_start(); 
+} 
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: ../login.php");
+    exit;
+}
+else if(!empty($_SESSION["authorized"])&&$_SESSION["authorized"] === false) {
+	header("location: ../login.php");
     exit;
 }
 $sql = "SELECT DISTINCT destination FROM searches WHERE username in (SELECT username FROM searches WHERE username = ? ) AND destination IS NOT NULL ;";

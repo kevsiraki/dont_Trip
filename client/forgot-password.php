@@ -18,17 +18,15 @@
 		<script src="../js/generalAJAX.js"></script>
 		<script src="../js/forgotPasswordAJAX.js"></script>
 		<link rel="stylesheet" href="../style/meter_styles.css">
-
-    <style> 
-        #footer { 
-            bottom:-15%;
-            width: 100%;
-        } 
-        #space {
+		<style> 
+			#footer { 
+				bottom:-15%;
+				width: 100%;
+			} 
+			#space {
 				height: 90%;
 			}
-    </style> 
-
+		</style> 
 	</head>
 	<body>
 		<header class="header" id="header">
@@ -62,48 +60,46 @@
 				<br>
 				<div class = "info-bar" id="info-bar">Please fill out this form to reset your password.</div>
 				<div id="invalid-reset" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"></div>
-				<form> 
-					<input style="display:none">
-					<input type="password" style="display:none" autocomplete="new-password">
+				<input style="display:none">
+				<input type="password" style="display:none" autocomplete="new-password">
+				<div class="form-group">
+					<input type="password" name="new_password" id="password" 
+						oninput="getPassword();getConfirmPassword();" onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
+						autocomplete="new-password" placeholder="New Password" class="center form-control" required>
+				</div>
+				<label style="margin-left:5%;">
+					<input type="checkbox" onclick="showF();showMeter();showConfirmMeter();getPassword();getConfirmPassword();">
+					<small id="info">Show</small>
+				</label>
+				<div id="password-strength" style="display: none;text-align:center;">
+					<div id="length" class="pw-stength"><small> At least 8 characters</small></div>
+					<div id="lowercase" class="pw-stength"><small> At least 1 lowercase letter</small></div>
+					<div id="uppercase" class="pw-stength"><small> At least 1 uppercase letter</small></div>
+					<div id="number" class="pw-stength"><small> At least 1 number</small></div>
+					<br>
+				</div>
+				<div class="form-group">
+					<input type="password" name="confirm_password" id="confirm-password"
+						oninput="getPassword();getConfirmPassword();" onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
+						autocomplete="new-password" placeholder="Confirm New Password" class="center form-control" required>
+				</div>
+				<div id="confirm-password-strength" style="display: none;text-align:center;">
+					<div id="matching" class="pw-stength"><small> Matching</small></div>
+					<br>
+				</div>
+				<?php if($userResults['tfaen']==1) : ?>
 					<div class="form-group">
-						<input type="password" name="new_password" id="password" 
-							onkeyup="getPassword();getConfirmPassword();" onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
-							autocomplete="new-password" placeholder="New Password" class="center form-control" required>
+						<input type="text" name="tfa" id="tfa" autocomplete="off" 
+							placeholder="2FA Google Authenticator Code" class="center form-control" required>
+						<small id="2faHelp" class="form-text text-muted"style="margin-left:5%">2FA is Enabled.</small>
 					</div>
-					<label style="margin-left:5%;">
-						<input type="checkbox" onclick="showF();showMeter();showConfirmMeter();getPassword();getConfirmPassword();">
-						<small id="info">Show</small>
-					</label>
-					<div id="password-strength" style="display: none;text-align:center;">
-						<div id="length" class="pw-stength"><small> At least 8 characters</small></div>
-						<div id="lowercase" class="pw-stength"><small> At least 1 lowercase letter</small></div>
-						<div id="uppercase" class="pw-stength"><small> At least 1 uppercase letter</small></div>
-						<div id="number" class="pw-stength"><small> At least 1 number</small></div>
-						<br>
-					</div>
-					<div class="form-group">
-						<input type="password" name="confirm_password" id="confirm-password"
-							onkeyup="getPassword();getConfirmPassword();" onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
-							autocomplete="new-password" placeholder="Confirm New Password" class="center form-control" required>
-					</div>
-					<div id="confirm-password-strength" style="display: none;text-align:center;">
-						<div id="matching" class="pw-stength"><small> Matching</small></div>
-						<br>
-					</div>
-					<?php if($userResults['tfaen']==1) : ?>
-						<div class="form-group">
-							<input type="text" name="tfa" id="tfa" autocomplete="off" 
-								placeholder="2FA Google Authenticator Code" class="center form-control" required>
-							<small id="2faHelp" class="form-text text-muted"style="margin-left:5%">2FA is Enabled.</small>
-						</div>
-					<?php endif; ?>
-					<input type="hidden" name="email" id="hidden-email" value="<?php echo $email;?>"/>
-					<input type="hidden" name="key" id="hidden-key"value="<?php echo $key;?>"/>
-					<div class="form-group"style="margin-left:5%;">
-						<button type="button" id="submit-password" class="btn btn-primary" onclick="this.blur();">Submit</button>
-						<a class="btn btn-link ml-2" href="../login">Cancel</a>
-					</div>
-				</form>
+				<?php endif; ?>
+				<input type="hidden" name="email" id="hidden-email" value="<?php echo $email;?>"/>
+				<input type="hidden" name="key" id="hidden-key"value="<?php echo $key;?>"/>
+				<div class="form-group"style="margin-left:5%;">
+					<button type="button" id="submit-password" class="btn btn-primary" onclick="this.blur();">Submit</button>
+					<a class="btn btn-link ml-2" href="../login">Cancel</a>
+				</div>
 			</div>    
 		<?php endif; ?>
 <div id="space"></div>

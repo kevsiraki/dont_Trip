@@ -1,5 +1,8 @@
 <?php 
-session_start();
+if(!isset($_SESSION)) 
+{ 
+	session_start(); 
+} 
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: ../login.php");
     exit;
@@ -41,21 +44,19 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 			<br>
 			<div class = "info-bar" id="info-bar">Were sorry to see you go!<br>Please enter your password to confirm deletion.</div>
 			<div class="center alert alert-danger" id="invalid-delete" style="text-align:center;width: 90%;display:none;"></div>
-			<form>
-				<input style="display:none">
-				<input type="password" style="display:none" autocomplete="new-password"/>
-				<div class="form-group">
-					<input type="password" name="password" id="password" placeholder="Confirm Password" class="center form-control" required>
-				</div>
-				<label style="margin-left:5%;">
-					<input type="checkbox" onclick="showF();">
-					<small id="info">Show</small>
-				</label>
-				<div class="form-group" style="margin-left:5%;">
-					<button type="button" id="delete-account" class="btn btn-secondary" onclick="this.blur();">Delete Account</button>
-					<a class="btn btn-link ml-2" href="settings">Cancel</a>
-				</div>
-			</form>
+			<input style="display:none">
+			<input type="password" style="display:none" autocomplete="new-password"/>
+			<div class="form-group">
+				<input type="password" name="password" id="password" placeholder="Confirm Password" class="center form-control" required>
+			</div>
+			<label style="margin-left:5%;">
+				<input type="checkbox" onclick="showF();">
+				<small id="info">Show</small>
+			</label>
+			<div class="form-group" style="margin-left:5%;">
+				<button type="button" id="delete-account" class="btn btn-secondary" onclick="this.blur();">Delete Account</button>
+				<a class="btn btn-link ml-2" href="settings">Cancel</a>
+			</div>
 		</div>
 		<footer id="footer">
 			<a href="." class="logo">
