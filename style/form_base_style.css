@@ -9,15 +9,9 @@ body, html {
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, 
-input:-webkit-autofill:active
-{
+input:-webkit-autofill:active {
 	background-clip: content-box !important;
 }
-
-  input:-webkit-autofill,
-  input:-webkit-autofill:focus {
-  }
-
 .center{
 	display: block;
 	margin-left: auto;
@@ -37,8 +31,6 @@ input:-webkit-autofill:active
 .info-bar a {
 	text-decoration: none;
 }
-#info, #other, .pw-stength, #info-two{
-}
 #other {
     position: relative;
     z-index: 1;
@@ -52,13 +44,11 @@ input:-webkit-autofill:active
     width: 50%;
     height: 1px;
     content: '\a0';
-
 }
 #other:before {
     margin-left: -50%;
     text-align: right;
 }
-
 .wrapper {
 	padding: 2%;
 	width: 25%;
@@ -68,8 +58,6 @@ input:-webkit-autofill:active
 	-webkit-border-radius: 6px;
 	background-size: cover;
 }
-
-
 .form-control {
 	width: 90%;
 	margin-bottom: 10px;
@@ -81,17 +69,9 @@ input:-webkit-autofill:active
 	-moz-transition: all .2s ease-in-out;
 	transition: all .2s ease-in-out;
 }
-
 .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  opacity: 1;  /*Firefox */
+	opacity: 1;  /*Firefox */
 }
-
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-}
-
-::-ms-input-placeholder { /* Microsoft Edge */
-}
-
 .form-control:focus {
 	outline: none;
 	-webkit-transition: all .2s ease-in-out  !important;

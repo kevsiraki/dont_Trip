@@ -39,8 +39,8 @@
 		<br>
 		<div class="center">
 			<div class="wrapper">
-				<img src="../icons/user.jpg" id="user-pic"/>
-				<h3 id="usernav" style="float:left; ">&nbsp;&nbsp;<?php echo $_SESSION['username']; ?></h3>
+				<h4 id="usernav" style="text-align:center">&nbsp;&nbsp;<?php echo $_SESSION['username']; ?></h4>
+				<br>
 				<button style = "float:right;"class="btn btn-outline-info btn-sm" id="reset-dark" onclick="resetDarkMode();">Reset</button>
 				<button style = "float:right;margin-right:5px;"class="btn btn-secondary btn-sm" id="toggle-dark" onclick="toggleDarkMode();">&#127769;</button>
 				<script>
@@ -53,13 +53,13 @@
 						document.getElementById("toggle-dark").innerText = "☀️";
 					}
 				</script>
-				<br><br><br><br>
 				<?php if (isset($userResults)){ ?>
 					<label class="switch" style="float:left;">
 						<input type="checkbox" name="accept" id="check" value="yes">
 						<span class="slider round"></span>
 					</label>
 					<div id="info" class="noselect">&nbsp;&nbsp;Two Factor Authentication</div>
+					<br>
 					<?php 
 					if($userResults["tfaen"] == 1) { 
 					?>
@@ -109,16 +109,15 @@
 				</div>
 				<br>
 			</div>
-		</div>
-              <br><br><br>
-              	<footer id="footer">
-		<a href="." class="logo">
-			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
-		</a>
-		<div class="footer-right">
-			<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
-		</div>
-	</footer>
+		</div>  
+		<footer id="footer">
+			<a href="." class="logo">
+				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
+			</a>
+			<div class="footer-right">
+				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
+			</div>
+		</footer>
 		<script src="../js/clearSearchesAJAX.js"></script>
 	</body>
 </html>

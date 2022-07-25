@@ -2,7 +2,6 @@
 	box-sizing: border-box;
 }
 /*the container must be positioned relative:*/
-
 .autocomplete {
 	position: relative;
 	display: inline-block;
@@ -29,12 +28,10 @@
 	color: white;
 }
 /*when hovering an item:*/
-
 .autocomplete-items div:hover {
 	background-color: gray;
 }
 /*when navigating through the items using the arrow keys:*/
-
 .autocomplete-active {
 	background-color: DodgerBlue !important;
 	color: #ffffff;
