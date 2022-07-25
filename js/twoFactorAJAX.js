@@ -11,16 +11,9 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 			success: function(response) {
 				$('#two_factor_response').html(response);
-				//console.log(response);
-				if(response.includes("Secret:")) {
-					$('#two_factor_response').html(response);
+				if(response.includes("Disabled.")) {
+					document.getElementById("two_factor_response").innerHTML = '';
 				}
-				else if(response.includes("Disabled.")) {
-					//setTimeout(function(){
-						document.getElementById("two_factor_response").innerHTML = '';
-					//}, 1000);
-				}
-				
 			}
 		});
 		if (two_factor===false) {

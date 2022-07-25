@@ -20,7 +20,7 @@ $(document).on('click', '#submit-password', function(e) {
 			else{
 				if(containsAnyLetter(response)) {
 					error.style.display = "block";
-					$('#invalid-reset').html(response);
+					$('#invalid-reset').html(response + '<span style = "float:right;margin-right:-12px;margin-top:-12px;"> &#215; </span>');
 					$('#invalid-reset').on('click', function(e) {
 						error.style.display = "none";
 					});

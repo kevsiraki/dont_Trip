@@ -13,10 +13,10 @@ $(document).on('click', '#verify', function(e) {
 			let error = document.getElementById("invalid-login");
 			if (response == 1) {
 				error.style.display = "none";
-                             window.location.href = "dt";
+                window.location.href = "dt";
             }
 			else {
-				$('#invalid-login').html(response);
+				$('#invalid-login').html(response + '<span style = "float:right;margin-right:-12px;margin-top:-12px;"> &#215; </span>');
 				error.style.display = "block";
 				$('#invalid-login').on('click', function(e) {
 					error.style.display = "none";

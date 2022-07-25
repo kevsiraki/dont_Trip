@@ -1,7 +1,6 @@
 <?php
 header("Content-Type: text/html");
 // Include config file
-require_once 'rateLimiter.php';
 require_once "config.php";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -28,7 +27,7 @@ function imageUrl()
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-
+	require_once 'rateLimiter.php';
     // Check if email is valid
     if (empty(trim($_POST["email"])))
     {

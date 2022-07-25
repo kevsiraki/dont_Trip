@@ -6,8 +6,6 @@ $(document).on('click', '#sign-up', function(e) {
     let confirm_password = $('#confirm-password').val();
 	let button = document.getElementById("sign-up");
 	let error = document.getElementById("invalid-signup");
-	if (email !== "" &&username !== "" && password !== "" && confirm_password!=="")
-    {
     $.ajax({
         url: '../backend/register_backend',
         type: 'post',
@@ -25,10 +23,8 @@ $(document).on('click', '#sign-up', function(e) {
                 window.location.href = "../login?message=Success! Check your e-mail for an account verification link.";
             }
 			else {
-				error.classList.remove("alert-warning");
-                    error.classList.add("alert-danger");
 				if(containsAnyLetter(response)) {
-					$('#invalid-signup').html(response);
+					$('#invalid-signup').html(response + '<span style = "float:right;margin-right:-12px;margin-top:-12px;"> &#215; </span>');
 					error.style.display = "block";
 					$('#invalid-signup').on('click', function(e) {
 						error.style.display = "none";
@@ -46,24 +42,6 @@ $(document).on('click', '#sign-up', function(e) {
 			}
         }
     });
-}
-else {
-	$('#invalid-signup').html("Please fill in all fields.");
-        error.style.display = "block";
-        error.classList.remove("alert-danger");
-        error.classList.add("alert-warning");
-        $('#invalid-signup').on('click', function(e)
-        {
-            error.style.display = "none";
-        });
-        button.classList.remove("btn-success");
-        button.classList.add("btn-warning");
-        setTimeout(function()
-        {
-            button.classList.remove("btn-warning");
-            button.classList.add("btn-success");
-        }, 2000);
-}
 });
 
 function containsAnyLetter(str) {

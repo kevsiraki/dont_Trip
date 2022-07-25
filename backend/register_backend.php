@@ -1,5 +1,4 @@
 <?php
-require_once 'rateLimiter.php';
 header("Content-Type: text/html");
 // Include config file
 require_once "config.php";
@@ -20,6 +19,7 @@ function imageUrl()
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
+	require_once 'rateLimiter.php';
     //Validate email
     if (empty(trim($_POST["email"])))
     {

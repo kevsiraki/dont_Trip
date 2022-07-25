@@ -21,7 +21,7 @@ $(document).on('click', '#recover-account', function(e) {
             }
 			else {
 				if(containsAnyLetter(response)) {
-					$('#invalid-recovery').html(response);
+					$('#invalid-recovery').html(response + '<span style = "float:right;margin-right:-12px;margin-top:-12px;"> &#215; </span>');
 					error.style.display = "block";
 					$('#invalid-recovery').on('click', function(e) {
 						error.style.display = "none";
