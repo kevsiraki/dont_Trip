@@ -2,15 +2,8 @@
 header("Content-Type: text/html");
 
 require_once "config.php";
-require_once 'vendor/autoload.php';
 
 $password = $password_err = "";
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-
-define("encryption_method", $_ENV["recovery_encryption"]);
-define("key", $_ENV["recovery_key"]);
 
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")

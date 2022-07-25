@@ -46,6 +46,8 @@
 					?>
 						<li class="links" onclick="redirectTo('dt?destVal=<?php echo htmlspecialchars($rows["destination"]);?>');">
 							<a class="link"  href ="dt?destVal=<?php echo htmlspecialchars($rows["destination"]);?>"><?php echo htmlspecialchars($rows["destination"]);?></a>
+							<br>
+							<sub><span class="bubble" id="bubble"><?php echo $rows["destCnt"]>1?$rows["destCnt"]." searches":$rows["destCnt"]." search"; ?></span></sub>
 						</li>
 					<?php
 					}
@@ -61,6 +63,8 @@
 					?>
 						<li class="links" onclick="redirectTo('dt?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>');">
 							<a class="link" href ="dt?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>"> <?php echo htmlspecialchars($rows2["keyword"]);?></a>
+							<br>
+							<sub><span class="bubble" id="bubble"><?php echo $rows2["keyCnt"]>1?$rows2["keyCnt"]." searches":$rows2["keyCnt"]." search"; ?></span></sub>
 						</li>
 					<?php
 						

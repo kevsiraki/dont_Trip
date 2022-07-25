@@ -176,6 +176,13 @@ function lightStyle() {
     if (document.getElementById("dragbar")) {
         document.getElementById("dragbar").style.color = "#000000";
     }
+	if (document.getElementById("bubble")) {
+        const bubbles = document.querySelectorAll('.bubble');
+        bubbles.forEach(bubble => {
+			bubble.style.backgroundColor = '#F0F0F0';
+            bubble.style.color = 'black';
+        });
+    }
     //header/footer/hamburger menu (navbar header)
     if (document.getElementById("header")) {
         document.getElementById("header").style.backgroundImage = "linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url(\"https://donttrip.technologists.cloud/donttrip/icons/form_bg.jpg\")";

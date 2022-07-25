@@ -22,7 +22,7 @@ $(document).on('click', '#sign-up', function(e) {
 			
             if (response == 1) {
 				error.style.display = "none";
-                window.location.href = "../login";
+                window.location.href = "../login?message=Success! Check your e-mail for an account verification link.";
             }
 			else {
 				error.classList.remove("alert-warning");

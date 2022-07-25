@@ -49,11 +49,15 @@
 						$res = $toSplit = $rows["destination"];
 						$res .= nl2br("\n ");
 					?>
-						<li class="links" onclick="redirectTo('dt?destVal=<?php echo htmlspecialchars($rows["destination"]);?>');">																	
+					
+					
+						<li class="links" onclick="redirectTo('dt?destVal=<?php echo htmlspecialchars($rows["destination"]);?>');">					
 							<a class="link" href ="dt?destVal=<?php echo htmlspecialchars($rows["destination"]);?>"> <?php echo $res ; ?></a>
-							<sub>&nbsp;</sub>
+							<sub><span class="bubble" id="bubble"><?php echo $rows["destCnt"]>1?$rows["destCnt"]." searches":$rows["destCnt"]." search"; ?></span></sub>
 							<button onclick ="no(event);" data-id= "<?php echo htmlspecialchars($rows["destination"]);?>" value="<?php echo htmlspecialchars($rows["destination"]);?>" type="button" class="deleteDest btn-close btn-sm" aria-label="Close" style="float:right;margin-top:9px"></button>
+							
 						</li>
+						
 					<?php
 						
 					}
@@ -71,7 +75,7 @@
 					?>
 						<li class="links" onclick="redirectTo('dt?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>');">
 							<a class="link" href ="dt?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>"> <?php echo $key;?></a>
-							<sub>&nbsp;</sub>
+							<sub><span class="bubble" id="bubble"><?php echo $rows2["keyCnt"]>1?$rows2["keyCnt"]." searches":$rows2["keyCnt"]." search"; ?></span></sub>
 							<button onclick ="no(event);" data-id="<?php echo htmlspecialchars($rows2["keyword"]);?>" value="<?php echo htmlspecialchars($rows2["keyword"]);?>" type="button" class="deleteKey btn-close btn-sm" aria-label="Close" style="float:right;margin-top:9px"></button>
 						</li>
 					<?php

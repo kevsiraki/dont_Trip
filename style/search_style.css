@@ -90,3 +90,12 @@ ul li:nth-of-type(even):hover {
 .btn-close {
 	background-color: #696969;
 }
+.bubble {
+	margin-left: auto; 
+	margin-right: 0;
+	text-align: center;
+	background-color: #696969; 
+	color:#fff;
+	border-radius:20px;
+	padding:2px 7px;
+}

@@ -1,5 +1,11 @@
 $(document).on('click', '#log-in', function(e)
 {
+if(document.getElementById("successful")){
+
+document.getElementById("successful").style.display="none";
+
+}
+   
     e.preventDefault();
     let username = $('#username').val();
     let password = $('#password').val();
@@ -122,3 +128,9 @@ $(function() {
         }
     });
 });
+
+$(document).on('click', '#successful', function(e)
+
+                        {
+                            document.getElementById("successful").style.display = "none";
+                        });

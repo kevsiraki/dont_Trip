@@ -3,7 +3,6 @@ header("Content-Type: text/html");
 // Include config file
 require_once 'rateLimiter.php';
 require_once "config.php";
-require_once 'vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -20,9 +19,6 @@ if (!empty($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
 // Define variables and initialize with empty values
 $username = $email = $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = $email_err = $username_err = "";
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
 
 function imageUrl()
 {

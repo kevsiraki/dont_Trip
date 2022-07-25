@@ -1,7 +1,4 @@
 <?php
-//ini_set('display_errors', 1);
-//ini_set('display_startup_errors', 1);
-//error_reporting(E_ALL);
 require_once 'vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -18,7 +15,6 @@ $ip_address = getIpAddr();
 if ($link === false) {
     die("ERROR: Could not connect. " . mysqli_connect_error());
 }
-
 if ($_SERVER["REQUEST_METHOD"] != "POST")
 {
     //Brute Force Killer

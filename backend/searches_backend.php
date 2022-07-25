@@ -14,7 +14,8 @@ else if(!empty($_SESSION["authorized"])&&$_SESSION["authorized"] === false) {
 	header("location: ../login.php");
     exit;
 }
-$sql = "SELECT DISTINCT destination FROM searches WHERE username in (SELECT username FROM searches WHERE username = ? ) AND destination IS NOT NULL ;";
+$sql = "SELECT DISTINCT destination, COUNT(destination) AS destCnt FROM searches WHERE username in (SELECT username FROM searches WHERE username = ? ) AND destination IS NOT NULL GROUP BY destination ORDER BY destCnt DESC;
+";
 if ($stmt = mysqli_prepare($link, $sql))
 {
 	// Bind variables to the prepared statement as parameters
@@ -26,7 +27,7 @@ if ($stmt = mysqli_prepare($link, $sql))
 	$result = mysqli_stmt_get_result($stmt);
 	mysqli_stmt_close($stmt);
 }
-$sql = "SELECT DISTINCT keyword FROM searches WHERE username IN (SELECT username FROM searches WHERE username = ? ) AND keyword IS NOT NULL ;";
+$sql = "SELECT DISTINCT keyword, COUNT(keyword) AS keyCnt FROM searches WHERE username in (SELECT username FROM searches WHERE username = ? ) AND keyword IS NOT NULL GROUP BY keyword ORDER BY keyCnt DESC";
 if ($stmt = mysqli_prepare($link, $sql))
 {
 	// Bind variables to the prepared statement as parameters

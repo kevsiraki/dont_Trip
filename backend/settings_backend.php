@@ -2,7 +2,6 @@
 header("Content-Type: text/html");
 ini_set('allow_url_fopen', 'On');
 require_once "config.php";
-require_once 'vendor/autoload.php';
 require_once 'geolocation.php';
 require_once 'vendor/sonata-project/google-authenticator/src/FixedBitNotation.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticatorInterface.php';
@@ -23,9 +22,6 @@ else if(!empty($_SESSION["authorized"])&&$_SESSION["authorized"] === false) {
 }
 
 $response = '';
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
 
 define("encryption_method", $_ENV["recovery_encryption"]);
 define("key", $_ENV["recovery_key"]);

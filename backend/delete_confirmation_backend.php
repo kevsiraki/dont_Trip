@@ -15,12 +15,8 @@ else if(!empty($_SESSION["authorized"])&&$_SESSION["authorized"] === false) {
 }
 
 require_once "config.php";
-require_once 'vendor/autoload.php';
 
 $password = $password_err = "";
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
 
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")

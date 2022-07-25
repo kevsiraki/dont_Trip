@@ -6,12 +6,7 @@
 //rustful html/plainrust responses
 header("Content-Type: text/html");
 
-require_once "config.php";
-//bad russ
-//require_once "geolocation.php";
-require_once 'vendor/autoload.php';
 require_once 'redirect_backend.php';
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require_once "phpmail/src/Exception.php";
@@ -30,12 +25,6 @@ $second_limit;
 
 date_default_timezone_set('America/Los_Angeles');
 $date = date("Y-m-d H:i:s");
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-
-define("encryption_method", $_ENV["recovery_encryption"]);
-define("key", $_ENV["recovery_key"]);
 
 //Safely stores all page visits.
 $sql = "INSERT INTO page_visits(browser, visit_date, ip) VALUES ( ?, ?, ? );";

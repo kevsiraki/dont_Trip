@@ -1,19 +1,18 @@
 <?php
-require_once 'rateLimiter.php';
 header("Content-Type: text/html");
-if(!isset($_SESSION)) 
-{ 
-	session_start(); 
-} 
+
+require_once 'rateLimiter.php';
 require_once "config.php";
 require_once 'vendor/sonata-project/google-authenticator/src/FixedBitNotation.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticatorInterface.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
-require_once 'vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+if(!isset($_SESSION)) 
+{ 
+	session_start(); 
+} 
+
 
 define("encryption_method", $_ENV["recovery_encryption"]);
 define("key", $_ENV["recovery_key"]);

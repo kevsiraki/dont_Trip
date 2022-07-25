@@ -21,7 +21,7 @@ $(document).on('click', '#submit-password', function(e) {
 			let error = document.getElementById("invalid-reset");
             if (response == 1) {
 				error.style.display = "none";
-                window.location.href = "../login";
+                window.location.href = "../login?message=Password reset successfully.";
             }
 			else{
 				if(containsAnyLetter(response)) {

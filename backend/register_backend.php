@@ -3,16 +3,13 @@ require_once 'rateLimiter.php';
 header("Content-Type: text/html");
 // Include config file
 require_once "config.php";
-require_once 'vendor/autoload.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = $email = "";
 $username_err = $password_err = $confirm_password_err = $email_err = "";
 $row = 0;
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
 
 //not super neccessary but could be insanely useful for building reusable components.
 function imageUrl()

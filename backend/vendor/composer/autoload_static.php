@@ -4,11 +4,11 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit21e866edad5fc6e2caa8ac727c440433
+class ComposerStaticInit7a07b3b8e82cd0b6b930627f3c467255
 {
     public static $files = array (
-        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         'cf150f72bd303a2ff07711c9a70f2d53' => __DIR__ . '/..' . '/google/apiclient/src/Google/autoload.php',
     );
@@ -29,6 +29,10 @@ class ComposerStaticInit21e866edad5fc6e2caa8ac727c440433
         array (
             'GrahamCampbell\\ResultType\\' => 26,
             'Google\\Authenticator\\' => 21,
+        ),
+        'F' => 
+        array (
+            'Facebook\\' => 9,
         ),
         'D' => 
         array (
@@ -65,6 +69,10 @@ class ComposerStaticInit21e866edad5fc6e2caa8ac727c440433
         array (
             0 => __DIR__ . '/..' . '/sonata-project/google-authenticator/src',
         ),
+        'Facebook\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook',
+        ),
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
@@ -83,9 +91,9 @@ class ComposerStaticInit21e866edad5fc6e2caa8ac727c440433
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit21e866edad5fc6e2caa8ac727c440433::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit21e866edad5fc6e2caa8ac727c440433::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit21e866edad5fc6e2caa8ac727c440433::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit7a07b3b8e82cd0b6b930627f3c467255::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit7a07b3b8e82cd0b6b930627f3c467255::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit7a07b3b8e82cd0b6b930627f3c467255::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -236,7 +236,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             if (mysqli_stmt_execute($stmt))
             {
                 // Password updated successfully. Redirect to login page
-                $sql = "DELETE FROM password_reset_temp WHERE email = ?";
+                $sql = "UPDATE password_reset_temp SET keyTO = null WHERE email = ?";
                 if ($stmt2 = mysqli_prepare($link, $sql))
                 {
                     // Bind variables to the prepared statement as parameters

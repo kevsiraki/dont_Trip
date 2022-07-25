@@ -1,5 +1,4 @@
 <?php 
-require_once '../backend/vendor/autoload.php'; 
 require_once '../backend/redirect_backend.php'; 
 if(!isset($_SESSION)) 
 { 
@@ -20,6 +19,6 @@ if (isset($_GET['code'])) {
 	$email =  $google_account_info->email;
 	$name =  $google_account_info->name;
 	$_SESSION['loggedin'] = true;
-	$_SESSION['username'] = $name;
+	$_SESSION['username'] = $name."(G)";
 }
 ?>

@@ -1,4 +1,5 @@
 $(document).on('click', '#submit-email', function(e) {
+  
 	e.preventDefault();
     let emailReset = $('#email-reset').val();
     $.ajax({
@@ -15,7 +16,7 @@ $(document).on('click', '#submit-email', function(e) {
 				error.style.display = "none";
 				button.classList.remove("btn-primary");
 				button.classList.add("btn-success");
-                window.location.href = "../login";
+                window.location.href = "../login?message=Success! Check your e-mail for a password reset form.";
             }
 			else {
 				if(containsAnyLetter(response)) {
