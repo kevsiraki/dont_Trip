@@ -310,9 +310,7 @@
             dest.placeholder = "Destination";
             $.get("https://ipinfo.io", function(response) {
                 console.log(response.country);
-
                 let options = {
-                    types: ['(regions)'],
                     componentRestrictions: {
                         country: response.country
                     }

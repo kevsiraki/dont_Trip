@@ -21,6 +21,14 @@ function resetDarkMode() {
     window.localStorage.removeItem('dark_mode');
     location.reload();
 }
+
+window.addEventListener("DOMContentLoaded", function() {
+		if(localStorage.getItem("dark_mode") === null)
+{
+			document.getElementById("reset-dark").innerText = "✓Auto";
+}
+    });
+
 if (
     localStorage.getItem("dark_mode") === "false"
     //Automatic setting.
@@ -28,7 +36,10 @@ if (
     ((new Date()).getHours() >= 6 && (new Date()).getHours() <= 18 && localStorage.getItem("dark_mode") === null)
 ) {
     window.addEventListener("DOMContentLoaded", function() {
-		lightStyle();
+		lightStyle(); if(localStorage.getItem("dark_mode") === null)
+{
+			document.getElementById("reset-dark").innerText = "✓Auto";
+}
     });
 }
 
@@ -72,6 +83,10 @@ function lightStyle() {
         document.getElementsByClassName('wrapper')[0].style.backgroundImage = "linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url(\"https://donttrip.technologists.cloud/donttrip/icons/form_bg.jpg\")";
     }
     if (document.getElementById('other')) {
+		const others = document.querySelectorAll('.other');
+        others.forEach(other => {
+            other.style.color = '#000000';
+        });
         document.getElementById('other').style.color = "#000000";
     }
     //Password/Confirm Password strength/matching text

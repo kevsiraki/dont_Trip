@@ -143,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     }
     else if (password_verify(trim($_POST["new_password"]) , trim($userResults['password'])))
     {
-        $new_password_err = 'Password cannot be the same as before.';
+        $new_password_err = 'Password used recently.';
         echo $new_password_err;
 		die;
     }
@@ -227,6 +227,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $sql = "UPDATE users SET password = ? WHERE email = ?";
         if ($stmt = mysqli_prepare($link, $sql))
         {
+			if(isset($_SESSION)) 
+			{ 
+				session_destroy();										
+			}
+			if(isset($_SESSION["message_shown"]))
+			{ 
+				unset($_SESSION["message_shown"]);				 										
+			}
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "ss", $param_password, $param_email);
             // Set parameters
@@ -236,7 +244,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             if (mysqli_stmt_execute($stmt))
             {
                 // Password updated successfully. Redirect to login page
-                $sql = "UPDATE password_reset_temp SET keyTO = null WHERE email = ?";
+                $sql = "DELETE FROM password_reset_temp WHERE email = ?";
                 if ($stmt2 = mysqli_prepare($link, $sql))
                 {
                     // Bind variables to the prepared statement as parameters

@@ -20,7 +20,7 @@ $(document).on('click', '#sign-up', function(e) {
 			
             if (response == 1) {
 				error.style.display = "none";
-                window.location.href = "../login?message=Success! Check your e-mail for an account verification link.";
+                window.location.href = "../login?message=Success! Verify your e-mail.";
             }
 			else {
 				if(containsAnyLetter(response)) {

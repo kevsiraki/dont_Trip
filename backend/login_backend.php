@@ -190,10 +190,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                 {
                                     // Password is correct and they are verified, so start a new session
 									
-                                    if(!isset($_SESSION)) 
+                                    if(isset($_SESSION)) 
+									{ 
+										session_destroy(); 
+										session_start(); 
+									}
+									else if(!isset($_SESSION)) 
 									{ 
 										session_start(); 
-									} 
+									}
                                     $sql = "UPDATE users SET last_login = ? WHERE username = ? ;";
                                     if ($stmt = mysqli_prepare($link, $sql))
                                     {
@@ -217,10 +222,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                 {
                                     mysqli_query($link, "DELETE from failed_login_attempts where ip='$ip_address' AND username='$username'"); //reset failed attempts
                                     //2FA Enabled, don't log them in yet.
-									if(!isset($_SESSION)) 
+									if(isset($_SESSION)) 
+									{ 
+										session_destroy();
+										session_start(); 										
+									}
+									else if(!isset($_SESSION)) 
 									{ 
 										session_start(); 
-									} 
+									}
                                     // Store data in session variables
                                     $_SESSION["loggedin"] = false;
                                     $_SESSION["username"] = $username;

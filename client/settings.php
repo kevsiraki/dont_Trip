@@ -59,6 +59,7 @@
 			?>
 				<div id="usernav-bg" style="width=90%;border-radius: 25px; background: rgba(211, 211, 211, 0.2);">
 					<?php 
+					$login_type_logo = '';
 					if(!empty($_SESSION['userData'])) { //Discord Profile Picture
 						extract($_SESSION['userData']);
 						$avatar_url = "https://cdn.discordapp.com/avatars/$discord_id/$avatar.jpg";
@@ -83,16 +84,14 @@
 					<br>
 					<img id="user-pic" src="../icons/icon_pfp.png" style="background-color:#A9A9A9;" />
 					<?php 
-					}
-					?>
-					<?php
-					preg_match_all('/\(([A-Za-z0-9 ]+?)\)/', $_SESSION["username"], $out); 
-					$logo = strtolower($out[1][0]);
-					$class = "fab fa-{$logo}";
-					$login_type_logo = "<i class=\"".$class."\"></i>";
-					?>
+					} else if(!empty($_SESSION['userData'])||!empty($_SESSION['googleAvatar'])||!empty($_SESSION['fbAvatar'])) {
+						preg_match_all('/\(([A-Za-z0-9 ]+?)\)/', $_SESSION["username"], $out); 
+						$logo = strtolower($out[1][0]);
+						$class = "fab fa-{$logo}";
+						$login_type_logo = "<i class=\"".$class."\"></i>";
+					}?>
 					<h4 id="usernav" style="padding: 20px;text-align:center;font-family: 'Courier New', monospace;">
-						<?php echo preg_replace('/\[[^)]+\]/', '', preg_replace('/\([^)]+\)/',' '.$login_type_logo,$_SESSION['username'])); ?>
+						<?php echo trim(preg_replace('/\[[^)]+\]/', '', preg_replace('/\([^)]+\)/',' '.$login_type_logo,$_SESSION['username']))); ?>
 					</h4>
 				</div>
 			<?php } else { ?>
@@ -158,7 +157,7 @@
 							<div id=\"to-hide\" style=\"display:block;\">		
 								<br>
 								<div id=\"two_factor_div\">
-									2FA Secret: <b id=\"copy\">".decrypt($userResults['tfa'])."&nbsp</b>
+									2FA Secret: <b id=\"copy\">".decrypt($userResults['tfa'])."</b> &nbsp;
 									<button class = \"btn btn-outline-info btn-sm\" onclick=\"copySecret();\">📋</button>
 									<br><br>
 									<p>Keep this secret somewhere safe in case you lose access to your authenticator app.</p>

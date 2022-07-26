@@ -172,7 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         }
         if ($mail->Send())
         {
-            $sql = "UPDATE password_reset_temp SET keyTO = null WHERE email = ? ;";
+           /* $sql = "UPDATE password_reset_temp SET keyTO = null WHERE email = ? ;";
             if ($stmt = mysqli_prepare($link, $sql))
             {
                 // Bind variables to the prepared statement as parameters
@@ -184,7 +184,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 $result = mysqli_stmt_get_result($stmt);
                 $userResults = mysqli_fetch_assoc($result);
                 mysqli_stmt_close($stmt);
-            }
+            } */
+			if(isset($_SESSION["message_shown"]))
+			{ 
+				unset($_SESSION["message_shown"]);				 										
+			}
             $sql = "INSERT INTO password_reset_temp (email, keyTo, expD, sent_time) VALUES (?,?,?,?)";
             if ($stmt = mysqli_prepare($link, $sql))
             {

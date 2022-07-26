@@ -46,15 +46,17 @@ if(!isset($_SESSION))
 				<a href="client/register"><small>Sign Up</small></a>
 			</div>
 		</header>
-		<div class="wrapper" >
+		<div class="wrapper">
 			<h2><img draggable="false" src="icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br><br>
 			<div id="invalid-login" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"> </div>
 			<div id = "successful">
 			<?php 
-			if(isset($_GET["message"])){
+			
+			if(isset($_GET["message"])&& !isset($_SESSION['message_shown'])){
 				$msg_success = $_GET["message"];
+				$_SESSION['message_shown'] = 1;
 				echo 
 				'
 				<div class="center alert alert-success"style="text-align:center; width: 90%; ">'.$msg_success.'
@@ -73,30 +75,36 @@ if(!isset($_SESSION))
 			<br>
 			<button type="button" id="log-in" onclick="this.blur();" class="center btn btn-success">Login</button>
 			<br>
-			<p id="other">&nbsp;&nbsp;Other Providers&nbsp;&nbsp;</p>
+			<p id="other" class="other">&nbsp;&nbsp;Other Providers&nbsp;&nbsp;</p>
+			<p>
+				<div  style = "display: flex;justify-content: center; width:100%; ">
+				<?php
+					
+					if($isAuth == "yes") 
+					{
+						echo "<a class=\"btn btn-link\" style=\"display: inline-block; color: white; background-color: #306998;\" href='".$client->createAuthUrl()."'><i class=\"fa-brands fa-google\"></i> Google</a> &nbsp;&nbsp;";
+					}
+					echo "<a class=\"btn btn-link\" style=\"display: inline-block; color: white; background-color: #4267B2;\" href='client/facebook_bootstrap'><i class=\"fa fa-facebook\"></i> Facebook</a> &nbsp;&nbsp;";
+					echo "<a class=\"btn btn-link\" style=\"color: white; background-color: #738ADB;\" href='client/init-oauth.php'><i class=\"fa-brands fa-discord\"></i> Discord</a>";
+				?>
+				</div>
+			</p>
+			<p id="other" class="other">&nbsp;&nbsp;Or&nbsp;&nbsp;</p>
 			<?php
-				if($isAuth == "yes") {
-					echo "<a class=\"btn btn-block\" style=\"color: white; background-color: #536878;\" href='".$client->createAuthUrl()."'><i class=\"fa-brands fa-google\"></i> Google</a>";
-				}
-				echo "<a class=\"btn btn-block\" style=\"color: white; background-color: #4267B2;\" href='client/facebook_bootstrap'><i class=\"fa fa-facebook\"></i> Facebook</a>";
-				echo "<a class=\"btn btn-block\" style=\"color: white; background-color: #738ADB;\" href='client/init-oauth.php'><i class=\"fa-brands fa-discord\"></i> Discord</a>";
-			?>
-			<br>
-			<?php
-			if(isset($_SESSION["loggedin"])&& $_SESSION["loggedin"]===true && $_SESSION["authorized"] !== false) {
+			if(isset($_SESSION["loggedin"])&& $_SESSION["loggedin"]===true && (empty($_SESSION["authorized"])||$_SESSION["authorized"] !== false)) {
 			?>
 				<p><a href="client/dt" class="text-success">Continue current session?</a></p>
 			<?php
 			}
 			else {
 			?>
-				<p><a href="client/dt" class="text-info">Continue as guest?</a></p>
+				<p style="margin-top:5px;"><a href="client/dt" class="text-info">Continue as guest?</a></p>
 			<?php
 			}
 			?>
 			<p id="info">Need an account? <a href="client/register" style="">Sign up here</a></p>
-			<a href="client/fp" style="white-space: nowrap;">Forgot your password?</a>
-        <br>
+			<p><a href="client/fp" style="">Forgot your password?</a></p>
+        
 		</div>
 		<div id="space"></div>
 		<footer id="footer">

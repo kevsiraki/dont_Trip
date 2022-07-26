@@ -26,27 +26,29 @@ $response = '';
 define("encryption_method", $_ENV["recovery_encryption"]);
 define("key", $_ENV["recovery_key"]);
 
-$sql = "SELECT * FROM users WHERE username = ? ;"; //Get user information.
-if ($stmt = mysqli_prepare($link, $sql))
-{
-	// Bind variables to the prepared statement as parameters
-	mysqli_stmt_bind_param($stmt, "s", $param_username);
-	// Set parameters
-	$param_username = $_SESSION['username'];
-	// Attempt to execute the prepared statement
-	mysqli_stmt_execute($stmt);
-	$result = mysqli_stmt_get_result($stmt);
-	$userResults = mysqli_fetch_assoc($result);
-	mysqli_stmt_close($stmt);
+if(isset($_SESSION['username'])) {
+	$sql = "SELECT * FROM users WHERE username = ? ;"; //Get user information.
+	if ($stmt = mysqli_prepare($link, $sql))
+	{
+		// Bind variables to the prepared statement as parameters
+		mysqli_stmt_bind_param($stmt, "s", $param_username);
+		// Set parameters
+		$param_username = $_SESSION['username'];
+		// Attempt to execute the prepared statement
+		mysqli_stmt_execute($stmt);
+		$result = mysqli_stmt_get_result($stmt);
+		$userResults = mysqli_fetch_assoc($result);
+		mysqli_stmt_close($stmt);
+	}
 }
 //AJAX request to enable/disable 2FA
-if (isset($_POST['two_factor']))
+if (isset($_POST['two_factor'])&&!empty($userResults))
 {
 	ob_start();
 	if($_POST['two_factor']=="true"&& $userResults["tfaen"] == 0) {
 		ob_end_clean(); 
 		$g = new \Google\Authenticator\GoogleAuthenticator();
-		$secret = strtoupper(substr(preg_replace('/[0-9]+/', '',preg_replace("/[\/=+]/", "", base64_encode(openssl_random_pseudo_bytes(128)))),1,16));
+		$secret = randomstr(16,'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567');
 		$sql = "UPDATE users SET tfaen = 1 WHERE username = ? ;";
 		if ($stmt = mysqli_prepare($link, $sql))
 		{
@@ -85,7 +87,7 @@ if (isset($_POST['two_factor']))
 								document.body.removeChild(elem);
 							}
 						</script>
-						<br>2FA Secret: <b id=\"copy\">{$secret}&nbsp;</b>
+						<br>2FA Secret: <b id=\"copy\">{$secret}</b>&nbsp;
 						<button class = \"btn btn-outline-info btn-sm\" onclick=\"copySecret();\">📋</button>
 						<br><br>
 						<p>1. Copy and paste the code above or scan the QR code below in your authenticator app of choice.</p>
@@ -124,7 +126,7 @@ if (isset($_POST['two_factor']))
 	die;
 }
 //AJAX request to clear search history.
-else if (isset($_POST['delete_searches'])) {
+else if (isset($_POST['delete_searches'])&&isset($_SESSION["username"])) {
 	$sql = "DELETE FROM searches WHERE username = ? ;";
 	if ($stmt = mysqli_prepare($link, $sql))
 	{
@@ -162,5 +164,16 @@ function decrypt($data) {
     {
         return $original_plaintext;
     }
+}
+function randomstr($length, $chars)
+{
+    $retstr = '';
+    $data = openssl_random_pseudo_bytes($length);
+    $num_chars = strlen($chars);
+    for ($i = 0; $i <$length; $i++)
+    {
+        $retstr .= substr($chars, ord(substr($data, $i, 1)) %$num_chars, 1);
+    }
+	return $retstr;
 }
 ?>

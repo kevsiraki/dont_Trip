@@ -246,6 +246,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             }
             if ($mail->Send())
             {
+				if(isset($_SESSION["message_shown"]))
+				{ 
+					unset($_SESSION["message_shown"]);				 										
+				}				
                 echo 1;
             }
             else

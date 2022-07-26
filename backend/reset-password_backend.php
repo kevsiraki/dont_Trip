@@ -28,23 +28,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
     // Validate new password
     if (empty(trim($_POST["new_password"]))) {
-        $new_password_err = " ";
-    } else if (password_verify(trim($_POST["new_password"]), trim($userResults["password"]))) {
-        $new_password_err = "New password cannot be the same as before.<br>";
+        $new_password_err = "Please fill in all fields.";
 		echo $new_password_err;
+		die;
+    } else if (password_verify(trim($_POST["new_password"]), trim($userResults["password"]))) {
+        $new_password_err = "Password used recently.";
+		echo $new_password_err;
+		die;
     } else if (!(preg_match('/[A-Za-z]/', trim($_POST["new_password"])) && preg_match('/[0-9]/', trim($_POST["new_password"])) && preg_match('/[A-Z]/', trim($_POST["new_password"])) && preg_match('/[a-z]/', trim($_POST["new_password"])))) {
         $new_password_err = " ";
+		die;
     } else if (strlen(trim($_POST["new_password"])) < 8 || strlen(trim($_POST["new_password"])) > 25) {
         $new_password_err = " ";
+		die;
     } else {
         $new_password = trim($_POST["new_password"]);
     }
     // Validate confirm password
 	if (empty(trim($_POST["confirm_password"]))) {
         $confirm_password_err = " ";
+		die;
     } else {
         if (empty($new_password_err) && $new_password != trim($_POST["confirm_password"])) {
             $confirm_password_err = " ";
+			die;
         }
 		else if (empty($new_password_err)) {
 			$confirm_password = trim($_POST["confirm_password"]);
@@ -52,7 +59,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 	//Check all fields
 	if(empty(trim($_POST["confirm_password"]))||empty(trim($_POST["new_password"]))) {
-		echo "Please fill in all fields.";
+		$new_password_err = "Please fill in all fields.";
+		echo $new_password_err;
+		die;
 	}
     // Check input errors before updating the database
     if (empty($new_password_err) && empty($confirm_password_err)) {
@@ -71,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Password updated successfully. Destroy the session, and redirect to login page
                 session_destroy();
                 echo 1;
-                exit();
+                die;
             }
             // Close statement
             mysqli_stmt_close($stmt);

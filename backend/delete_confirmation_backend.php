@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $password_err = "Please enter your password.";
 		echo $password_err;
+		die;
     }
     else
     {
@@ -91,13 +92,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 							// Password is not valid, display a generic error message
 							$password_err = "Incorrect Password.";
 							echo $password_err;
+							die;
 						}
                     }
                 }
             }
         }
-        mysqli_stmt_close($stmt);
     }
+	mysqli_close($link);
 }
-mysqli_close($link);
 ?>

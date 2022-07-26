@@ -66,7 +66,6 @@ $(document).on('click', '#log-in', function(e) {
             console.log(xhr.getAllResponseHeaders());
         }
     });
-
 });
 
 function containsAnyLetter(str) {

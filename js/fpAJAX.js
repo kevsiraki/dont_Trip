@@ -15,7 +15,7 @@ $(document).on('click', '#submit-email', function(e) {
                 error.style.display = "none";
                 button.classList.remove("btn-primary");
                 button.classList.add("btn-success");
-                window.location.href = "../login?message=Success! Check your e-mail for a password reset form.";
+                window.location.href = "../login?message=Success! Check your e-mail to reset.";
             } else {
                 if (containsAnyLetter(response)) {
                     $('#invalid-email').html(response + '<span style = "float:right;margin-right:-12px;margin-top:-12px;"> &#215; </span>');

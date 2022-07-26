@@ -19,7 +19,6 @@ function valid_email($email)
         }
     }
 }
-
 if (isset($_POST['username']))
 {
     $username = trim($_POST['username']);
@@ -57,11 +56,9 @@ if (isset($_POST['username']))
             $response = "<small><span style='color: red;'>Not Available.</span></small>";
         }
     }
-
     echo $response;
     die;
 }
-
 if (isset($_POST['email']))
 {
     $email = trim($_POST['email']);
@@ -95,7 +92,6 @@ if (isset($_POST['email']))
     echo $response;
     die;
 }
-
 if (isset($_POST['email_reset']))
 {
     $email = trim($_POST['email_reset']);
@@ -125,7 +121,6 @@ if (isset($_POST['email_reset']))
             $response = "<small><span style='color: green;'>Found.</span></small>";
         }
     }
-
     $sql = "SELECT COUNT(*) as cntEmail FROM password_reset_temp WHERE email = ? ;";
     if ($stmt = mysqli_prepare($link, $sql))
     {
@@ -144,9 +139,7 @@ if (isset($_POST['email_reset']))
         $count = $row['cntEmail'];
         if ($count >= 5)
         {
-
             $response = "<small><span style='color: red;'>Too Many Requests.</span></small>";
-
         }
     }
     echo $response;
