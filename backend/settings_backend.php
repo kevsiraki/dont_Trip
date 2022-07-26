@@ -13,8 +13,8 @@ if(!isset($_SESSION))
 	session_start(); 
 } 
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: ../login.php");
-    exit;
+   //header("location: ../login.php");
+   //exit;
 }
 else if(!empty($_SESSION["authorized"])&&$_SESSION["authorized"] === false) {
 	header("location: ../login.php");
@@ -25,8 +25,6 @@ $response = '';
 
 define("encryption_method", $_ENV["recovery_encryption"]);
 define("key", $_ENV["recovery_key"]);
-
-$salt = $_ENV['2fa_salt']; //2FA base key.
 
 $sql = "SELECT * FROM users WHERE username = ? ;"; //Get user information.
 if ($stmt = mysqli_prepare($link, $sql))
@@ -48,7 +46,7 @@ if (isset($_POST['two_factor']))
 	if($_POST['two_factor']=="true"&& $userResults["tfaen"] == 0) {
 		ob_end_clean(); 
 		$g = new \Google\Authenticator\GoogleAuthenticator();
-		$secret = str_shuffle($salt);
+		$secret = strtoupper(substr(preg_replace('/[0-9]+/', '',preg_replace("/[\/=+]/", "", base64_encode(openssl_random_pseudo_bytes(128)))),1,16));
 		$sql = "UPDATE users SET tfaen = 1 WHERE username = ? ;";
 		if ($stmt = mysqli_prepare($link, $sql))
 		{
@@ -87,9 +85,12 @@ if (isset($_POST['two_factor']))
 								document.body.removeChild(elem);
 							}
 						</script>
-						<br>2FA On. Secret: <b id=\"copy\">{$secret}</b>
+						<br>2FA Secret: <b id=\"copy\">{$secret}&nbsp;</b>
 						<button class = \"btn btn-outline-info btn-sm\" onclick=\"copySecret();\">📋</button>
 						<br><br>
+						<p>1. Copy and paste the code above or scan the QR code below in your authenticator app of choice.</p>
+						<p>2. Keep this secret somewhere safe in case you lose access to your authenticator app.</p>
+						<p>3. The one-time code will refresh every 30 seconds and will be required for future logins/password resets</p>
 						<img class=\"center\" src = \"{$url}\" alt = \"QR Code\" />
 					";
 	}

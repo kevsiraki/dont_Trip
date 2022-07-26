@@ -19,7 +19,7 @@
 	<li>Responsive directions with click events.</li>
 	<li>Popular in your state, search history/keywords, and places along the route all feature hyperlinks to easily use them as search queries.</p>
 	<p>Security/Backend</p>
-	<li>Hashed/salted passwords.</li>
+	<li>Hashed/salted passwords and encryption of any secret keys in the DB.</li>
 	<li>Two factor authentication that works with any authenticator app of choice.</li>
 	<li>Account deletion with confirm password.</li>
 	<li>Confirm email verification/forgot password recovery email form with material design email templates.</li>
@@ -30,7 +30,7 @@
 	<li>Rate limiting on all actions, including email reset forms.</li>
 	<li>Inbound/Outbound traffic protection setup with AWS firewall/UFW with recovery/redeploy scripts on Ubuntu server (repository for these scripts coming soon).</li>
 	<li>RESTful architecture used for backend.</li>
-	<li>Google/Facebook login integration.</li>
+	<li>Google/Facebook/Discord login integration.</li>
 	<li>.htaccess file setup to redirect HTTP(Port 80) to HTTPS(Port 443), as well as hiding .php file extensions in URL.</li>
 	<li>PHP-Dot-Env used to safely store API keys, database credentials, email server information, etc.</li>
 </ul>

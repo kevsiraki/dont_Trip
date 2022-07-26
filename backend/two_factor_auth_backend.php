@@ -13,7 +13,6 @@ if(!isset($_SESSION))
 	session_start(); 
 } 
 
-
 define("encryption_method", $_ENV["recovery_encryption"]);
 define("key", $_ENV["recovery_key"]);
 

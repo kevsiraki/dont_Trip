@@ -19,7 +19,6 @@
         <link href="../style/footer.css" rel="stylesheet">
 		<script src="../js/nav.js"></script>
 		<script src="../js/lightMode.js"></script>
-
 	</head>
 	<body>
 		<?php
@@ -45,7 +44,8 @@
 					<i class="fa fa-bars" id="burger"></i>
 				</a>
 				<div id="myLinks">
-					<a href="../login" class="navlink">Homepage</a>
+					<a href="dt" class="navlink currentPage">Itinerary Planner</a>
+					<a href="settings" class="navlink">Settings</a>
 				</div>
 			</header>
 		<?php 

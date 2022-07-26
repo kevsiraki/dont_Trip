@@ -9,7 +9,6 @@ if (!isset($_SESSION["locked"]) || $_SESSION["locked"] !== true) {
     exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>

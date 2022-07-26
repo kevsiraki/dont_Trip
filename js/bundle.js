@@ -98,7 +98,6 @@
                     });
                 });
             }
-            //infoWindow = new google.maps.InfoWindow();
             const br = document.createElement("br");
             google.maps.event.addDomListener(window, 'load', initialize);
             const keyword = document.createElement("div"); //buttons and inputs
@@ -157,9 +156,6 @@
                 sortListByDistance();
             });
             locationButton.addEventListener("click", () => {
-                let xmlhttp = new XMLHttpRequest();
-                xmlhttp.open("GET", "https://donttrip.technologists.cloud/donttrip/client/dt?go=yes&destination=" + document.getElementById("myInput").value + "&keyword=" + document.getElementById("keywordIn").value, true);
-                xmlhttp.send();
                 if (document.getElementById("myInput").value == null || document.getElementById("myInput").value == "") {
                     alert("Please Choose a Destination.");
                 } else if (navigator.geolocation) { // Try HTML5 geolocation.
@@ -225,6 +221,9 @@
                                     };
                                     directionsService.route(request, function(result, status) {
                                         if (status == "OK") {
+                                            let xmlhttp = new XMLHttpRequest();
+                                            xmlhttp.open("GET", "https://donttrip.technologists.cloud/donttrip/client/dt?go=yes&destination=" + document.getElementById("myInput").value + "&keyword=" + document.getElementById("keywordIn").value, true);
+                                            xmlhttp.send();
                                             directionsRenderer.setDirections(result);
                                             waypoints = polyline.decode(result.routes[0].overview_polyline);
                                             directionsRenderer.setMap(map);
@@ -284,6 +283,10 @@
                                                     }
                                                 });
                                         } else {
+                                            let xxx = document.getElementsByName("rust");
+                                            let x = document.getElementById("clear");
+                                            xxx[0].style.display = "none";
+                                            x.style.display = "none";
                                             clear();
                                             alert("Please enter a desination you can drive to.");
                                         }
@@ -305,41 +308,52 @@
             dest.type = "text";
             dest.id = "myInput";
             dest.placeholder = "Destination";
-            let $_GET = {};
-            if (document.location.toString().indexOf('?') !== -1) {
-                let query = document.location
-                    .toString()
-                    // get the query string
-                    .replace(/^.*?\?/, '')
-                    // and remove any existing hash string (thanks, @vrijdenker)
-                    .replace(/#.*$/, '')
-                    .split('&');
+            $.get("https://ipinfo.io", function(response) {
+                console.log(response.country);
 
-                for (let i = 0, l = query.length; i < l; i++) {
-                    let aux = decodeURIComponent(query[i]).split('=');
-                    $_GET[aux[0]] = aux[1];
-                }
-                //get the 'index' query parameter
-            }
-            if ($_GET['destVal']) {
-                dest.value = $_GET['destVal'];
-            }
-            dest.addEventListener("change", function() {
-                dest.value = null;
-                $(".pac-container").remove();
-            });
-            dest.addEventListener("keydown", function(event) {
-                let KeyID = event.keyCode;
-                new google.maps.places.Autocomplete(dest);
-                if (event.keyCode == 8 && event.repeat) {
-                    dest.value = " ";
-                }
+                let options = {
+                    types: ['(regions)'],
+                    componentRestrictions: {
+                        country: response.country
+                    }
+                };
+                let $_GET = {};
+                if (document.location.toString().indexOf('?') !== -1) {
+                    let query = document.location
+                        .toString()
+                        // get the query string
+                        .replace(/^.*?\?/, '')
+                        // and remove any existing hash string (thanks, @vrijdenker)
+                        .replace(/#.*$/, '')
+                        .split('&');
 
-            });
-            map.controls[google.maps.ControlPosition.TOP_LEFT].push(dest);
-            if (!($_GET['destVal'])) {
-                new google.maps.places.Autocomplete(dest);
-            }
+                    for (let i = 0, l = query.length; i < l; i++) {
+                        let aux = decodeURIComponent(query[i]).split('=');
+                        $_GET[aux[0]] = aux[1];
+                    }
+                    //get the 'index' query parameter
+                }
+                if ($_GET['destVal']) {
+                    dest.value = $_GET['destVal'];
+                }
+                dest.addEventListener("change", function() {
+                    dest.value = null;
+                    $(".pac-container").remove();
+                });
+
+                dest.addEventListener("keydown", function(event) {
+                    let KeyID = event.keyCode;
+                    new google.maps.places.Autocomplete(dest, options);
+                    if (event.keyCode == 8 && event.repeat) {
+                        dest.value = " ";
+                    }
+                });
+
+                map.controls[google.maps.ControlPosition.TOP_LEFT].push(dest);
+                if (!($_GET['destVal'])) {
+                    new google.maps.places.Autocomplete(dest, options);
+                }
+            }, "jsonp");
         }
 
         function clear() {
@@ -598,6 +612,7 @@
                                 const b2 = document.createElement("br");
                                 dir2.href = "#";
                                 service.getDetails(request, callback);
+
                                 function callback(place, status) {
                                     if (status == google.maps.places.PlacesServiceStatus.OK) {
                                         placePhoneNumber.textContent = place.formatted_phone_number;
@@ -720,10 +735,10 @@
         function sortHelper() {
             if (distanceSort) {
                 sortListByDistance();
-				lightenSideBars();
+                lightenSideBars();
             } else if (nameSort) {
                 sortListAlphabetically();
-				lightenSideBars();
+                lightenSideBars();
             }
         }
 

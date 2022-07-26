@@ -1,4 +1,5 @@
 <?php
+//Callback Functions for Facebook API Requests
 session_start();
 
 require_once "config.php";
@@ -6,7 +7,6 @@ require_once "config.php";
 $fb = new Facebook\Facebook(['app_id' => $_ENV['app_id'], 'app_secret' => $_ENV['app_secret'], 'default_graph_version' => 'v2.5', ]);
 
 $helper = $fb->getRedirectLoginHelper();
-
 if (isset($_GET["error"]))
 {
     header("location: ../login");
@@ -35,8 +35,7 @@ catch(Facebook\Exceptions\FacebookSDKException $e)
 try
 {
     // Get the Facebook\GraphNodes\GraphUser object for the current user.
-    $response = $fb->get('/me?fields=id,name,email,first_name,last_name', $accessToken->getValue());
-
+    $response = $fb->get('/me?fields=id,name,email,first_name,last_name,picture.width(800).height(800)&access_token='.$accessToken->getValue().'', $accessToken->getValue());
 }
 catch(Facebook\Exceptions\FacebookResponseException $e)
 {
@@ -55,12 +54,9 @@ catch(Facebook\Exceptions\FacebookSDKException $e)
 
 $me = $response->getGraphUser();
 
-//echo "Full Name: ".$me->getProperty('name')."<br>";
-//echo "Email: ".$me->getProperty('email')."<br>";
-//echo "Facebook ID: <a href='https://www.facebook.com/".$me->getProperty('id')."' target='_blank'>".$me->getProperty('id')."</a>";
-
-$_SESSION["username"] = $me->getProperty('name') . "(FB)";
+$_SESSION["username"] = $me->getProperty('name') . " (Facebook)[".$me->getProperty('id')."]";
 $_SESSION["loggedin"] = true;
-header("location: ../client/dt");
+$_SESSION["fbAvatar"] = $me->getProperty('picture');
 
+header("location: ../client/dt");
 ?>

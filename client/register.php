@@ -22,15 +22,14 @@ require "../backend/register_backend.php";
 		<script src="../js/registerAJAX.js"></script>
 		<link rel="stylesheet" href="../style/meter_styles.css">
 		<style> 
-        #footer { 
-			
-            bottom:-15%;
-            width: 100%;
-        } 
-		#space {
-			height: 90%;
-		}
-    </style> 
+			#footer { 
+				bottom:-15%;
+				width: 100%;
+			} 
+			#space {
+				height: 90%;
+			}
+		</style> 
 	</head>
 	<body>
 		<header class="header" id="header">

@@ -18,6 +18,7 @@ if(!isset($_SESSION))
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://kit.fontawesome.com/4b68e7bba8.js" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="style/form_style.css">
 		<link rel="stylesheet" href="style/form_base_style.css">
 		<link rel="stylesheet" href="style/header.css">
@@ -75,9 +76,10 @@ if(!isset($_SESSION))
 			<p id="other">&nbsp;&nbsp;Other Providers&nbsp;&nbsp;</p>
 			<?php
 				if($isAuth == "yes") {
-					echo "<a class=\"btn btn-secondary btn-block\" href='".$client->createAuthUrl()."'><img width=\"20px\" style=\"margin-bottom:3px; margin-right:5px\" alt=\"Google sign-in\" src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png\" />Google</a>";
+					echo "<a class=\"btn btn-block\" style=\"color: white; background-color: #536878;\" href='".$client->createAuthUrl()."'><i class=\"fa-brands fa-google\"></i> Google</a>";
 				}
-				echo "<br><a class=\"btn btn-primary btn-block\" href='client/facebook_bootstrap'><i class=\"fa fa-facebook\"></i> Facebook/Meta</a>"
+				echo "<a class=\"btn btn-block\" style=\"color: white; background-color: #4267B2;\" href='client/facebook_bootstrap'><i class=\"fa fa-facebook\"></i> Facebook</a>";
+				echo "<a class=\"btn btn-block\" style=\"color: white; background-color: #738ADB;\" href='client/init-oauth.php'><i class=\"fa-brands fa-discord\"></i> Discord</a>";
 			?>
 			<br>
 			<?php
@@ -102,7 +104,7 @@ if(!isset($_SESSION))
 				<img draggable="false" src="icons/dont_Trip.png" width="150" height="40"></img>
 			</a>
 			<div class="footer-right">
-				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
+				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fab fa-github" >&nbsp;GitHub</i></a>
 			</div>
 		</footer>
 	</body>
