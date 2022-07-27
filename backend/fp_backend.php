@@ -100,16 +100,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $count = $row['sent_time'];
         if ($count + 120 > time())
         {
-            $email_err = "Wait before requesting another reset.";
+            $email_err = "Wait to request another reset.";
             die($email_err);
         }
     }
     // Check if email is validated
     $expFormat = mktime(date("H") , date("i") , date("s") , date("m") , date("d") + 1, date("Y"));
     $expDate = date("Y-m-d H:i:s", $expFormat);
-    $key = bin2hex($email).bin2hex(random_bytes(8)).md5("777").sha1("rustgregmshreib");
-    $addKey = bin2hex(random_bytes(16));
-    $key = str_shuffle($key.$addKey.generatePassword(16));
+    $key = hash("SHA512",$email);
+    $addKey = hash("SHA512",generatePassword(8));
+    $key = substr(str_shuffle($key.$addKey),0,64); //have fun cracking this lol
     if (empty($email_err))
     {
         echo 1;

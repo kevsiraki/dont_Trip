@@ -51,9 +51,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 else
                 {
                     $email = trim($_POST["email"]);
-					$token = bin2hex($email).bin2hex(random_bytes(8));
-					$addKey = bin2hex(random_bytes(16));
-					$token = substr(str_shuffle($token.$addKey.generatePassword(24).md5(777)),0,36);
+					$token = hash("SHA512", $email);
+					$addKey = hash("SHA512",generatePassword(8));
+					$token = substr(str_shuffle($token.$addKey),0,32);
                 }
             }
             // Close statement

@@ -6,7 +6,7 @@ if(!isset($_SESSION))
 // Check if the user is logged in, otherwise redirect to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: ../login.php");
-    exit;
+    exit; 
 }
 ?>
 <!DOCTYPE html>
@@ -55,6 +55,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 			<div id="invalid-reset" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"></div>
 			<input style="display:none">
 			<input type="password" style="display:none" autocomplete="new-password"/>
+			<input style="display: none" type="text" name="fakeusernameremembered" />
+			<input style="display: none" type="password" name="fakepasswordremembered" />
 			<div class="form-group">
 				<input type="password" name="new_password" id="password" oninput="getPassword();getConfirmPassword();" 
 				onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
