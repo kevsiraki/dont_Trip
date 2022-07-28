@@ -8,20 +8,19 @@ $password = $password_err = "";
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-	require_once 'rateLimiter.php';
-	// Check if password is empty
+    require_once 'rateLimiter.php';
+    // Check if password is empty
     if (empty(trim($_POST["password"])))
     {
         $password_err = "Please enter your password.";
-		echo $password_err;
-		die;
+        die($password_err);
     }
-	else
+    else
     {
         $password = trim($_POST["password"]);
     }
-	
-	$sql = "SELECT * FROM failed_login_attempts WHERE username = ? ";
+
+    $sql = "SELECT * FROM failed_login_attempts WHERE username = ? ";
     if ($stmt = mysqli_prepare($link, $sql))
     {
         // Bind variables to the prepared statement as parameters
@@ -34,8 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $userResults = mysqli_fetch_assoc($result);
         mysqli_stmt_close($stmt);
     }
-	$username = $userResults["username"];
-	
+    $username = $userResults["username"];
+
     // Validate credentials
     if (empty($password_err))
     {
@@ -59,27 +58,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                     mysqli_stmt_bind_result($stmt, $username, $hashed_password);
                     if (mysqli_stmt_fetch($stmt))
                     {
-						
-						// One Time Password is correct and they are verified
+
+                        // One Time Password is correct and they are verified
                         if (password_verify($password, $hashed_password))
                         {
-							if(!isset($_SESSION)) 
-							{ 
-								session_start(); 
-							} 
-							//Delete the failed attempts on success.
-							$_SESSION["loggedin"] = true;
-							$_SESSION["authorized"] = false;
+                            if (!isset($_SESSION))
+                            {
+                                session_start();
+                            }
+                            //Delete the failed attempts on success.
+                            $_SESSION["loggedin"] = true;
+                            $_SESSION["authorized"] = false;
                             $_SESSION["username"] = $username;
-							// Redirect user response
-							echo 1;
+                            // Redirect user response
+                            echo 1;
                         }
-						else
-						{
-							// Password is not valid, display a generic error message
-							$password_err = "Incorrect Password.";
-							echo $password_err;
-						}
+                        else
+                        {
+                            // Password is not valid, display a generic error message
+                            $password_err = "Incorrect Password.";
+                            die($password_err);
+                        }
                     }
                 }
             }

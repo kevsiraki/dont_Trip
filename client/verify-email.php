@@ -1,4 +1,4 @@
-<?php require "../backend/verify_email_backend.php"; ?>
+<?php require_once "../backend/verify_email_backend.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -18,7 +18,7 @@
 	<body class="d-flex flex-column justify-content-between">
 		<header class="header" id="header">
 			<a href="../login" class="logo">
-				<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
+			<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
 			</a>
 			<div class="header-right">
 				<a href="../login"><small>Login</small></a>
@@ -43,7 +43,7 @@
 		</div>
 		<footer id="footer">
 			<a href="." class="logo">
-				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
+			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
 			</a>
 			<div class="footer-right">
 				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>

@@ -1,6 +1,5 @@
 <?php
 //Discord O-Auth API requests
-
 require_once "config.php";
 
 if(!isset($_GET['code'])){
@@ -33,7 +32,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 $result = curl_exec($ch);
 
 if(!$result){
-    echo curl_error($ch);
+    die(curl_error($ch));
 }
 
 $result = json_decode($result,true);
@@ -72,6 +71,5 @@ $_SESSION["loggedin"] = true;
 
 header("location: ../client/dt");
 
-exit();
-
+die;
 ?>

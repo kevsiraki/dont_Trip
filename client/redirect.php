@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once '../backend/redirect_backend.php'; 
 if(!isset($_SESSION)) 
 { 

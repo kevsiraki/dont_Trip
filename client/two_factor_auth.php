@@ -5,7 +5,7 @@ if(!isset($_SESSION))
 } 
 if (empty($_SESSION["username"])) {
     header("location: ../login.php");
-    exit;
+    die;
 }
 ?>
 <!DOCTYPE html>
@@ -24,12 +24,12 @@ if (empty($_SESSION["username"])) {
 		<link rel="stylesheet" href="../style/header.css">
 		<link rel="stylesheet" href="../style/footer.css">
 		<script src="../js/lightMode.js"></script>
-		<script src="../js/twoFactorLoginAJAX.js"></script>
+		<script src="../ajax/twoFactorLoginAJAX.js"></script>
 	</head>
 	<body class="d-flex flex-column justify-content-between">
 		<header class="header" id="header">
 			<a href="../login" class="logo">
-				<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
+			<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
 			</a>
 			<div class="header-right">
 				<a href="../login" ><small>Login</small></a>
@@ -47,13 +47,13 @@ if (empty($_SESSION["username"])) {
 			</div>
 			<div class="form-group" style="margin-left:5%;">
 				<button type="button" id="verify" onclick="this.blur();" class="btn btn-success" >Verify</button>
-				<a class="btn btn-link ml-2" href="../login">Cancel</a>
+				<a class="btn btn-link ml-2" href="../backend/logout">Cancel</a>
 			</div>
-		</div>    
+		</div>
 		<div></div>
 		<footer id="footer">
 			<a href="." class="logo">
-				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
+			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
 			</a>
 			<div class="footer-right">
 				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
@@ -61,6 +61,3 @@ if (empty($_SESSION["username"])) {
 		</footer>
 	</body>
 </html>
-
-
-

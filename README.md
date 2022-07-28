@@ -2,7 +2,7 @@
 # Dont Trip
 <p>An itinerary planner utilizing the Google Maps API to give you customized places along a route!</p>
 
-<p>Written primarily in PHP7, MySQL, Vanilla Javascript, J-Query 3.6.0, and Bootstrap 4.5.2/Vanilla CSS3.</p>  
+<p>Written primarily in PHP 7.4, MySQL, Modern Vanilla Javascript, J-Query 3.6.0, and Bootstrap 4.5.2/Vanilla CSS3.</p>  
 
 <p><a href="https://donttrip.technologists.cloud/donttrip/"> Visit us</a> today at and let us know of any issues you may face!<p>
 
@@ -32,5 +32,8 @@
 	<li>RESTful architecture used for backend.</li>
 	<li>Google/Facebook/Discord login integration.</li>
 	<li>.htaccess file setup to redirect HTTP(Port 80) to HTTPS(Port 443), as well as hiding .php file extensions in URL.</li>
+	<li>Proxies/VPNs/TOR nodes as well as non-existent/fraudulent e-mail addresses filtered/prevented/redirected.</li>
 	<li>PHP-Dot-Env used to safely store API keys, database credentials, email server information, etc.</li>
+	<p>Misc.</p>
+	<li>Legible code/file structure with seperation of API/Frontend/Requests/Stylesheets.</li>
 </ul>

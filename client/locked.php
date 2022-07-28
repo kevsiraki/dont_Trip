@@ -25,14 +25,14 @@ if (!isset($_SESSION["locked"]) || $_SESSION["locked"] !== true) {
 		<link rel="stylesheet" href="../style/header.css">
 		<link rel="stylesheet" href="../style/footer.css">
 		<script src="../js/lightMode.js"></script>
-		<script src="../js/generalAJAX.js"></script>
-		<script src="../js/recoveryAJAX.js"></script>
+		<script src="../ajax/generalAJAX.js"></script>
+		<script src="../ajax/recoveryAJAX.js"></script>
 		<link rel="stylesheet" href="../style/meter_styles.css">
 	</head>
 	<body class="d-flex flex-column justify-content-between">
 		<header class="header" id="header">
 			<a href="../login" class="logo">
-				<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
+			<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
 			</a>
 		</header>
 		<div class="wrapper" >
@@ -53,7 +53,7 @@ if (!isset($_SESSION["locked"]) || $_SESSION["locked"] !== true) {
 		<input type="hidden" id="username" name="username" value="<?php echo $_SESSION["username"]?>">
 		<footer id="footer">
 			<a href="." class="logo">
-				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
+			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
 			</a>
 		</footer>
 	</body>

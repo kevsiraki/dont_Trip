@@ -24,14 +24,14 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 		<link rel="stylesheet" href="../style/header.css">
 		<link rel="stylesheet" href="../style/footer.css">
 		<script src="../js/lightMode.js"></script>
-		<script src="../js/generalAJAX.js"></script>
-		<script src="../js/deleteConfirmationAJAX.js"></script>
+		<script src="../ajax/generalAJAX.js"></script>
+		<script src="../ajax/deleteConfirmationAJAX.js"></script>
 		<link rel="stylesheet" href="../style/meter_styles.css">
 	</head>
 	<body class="d-flex flex-column justify-content-between">
 		<header class="header" id="header">
 			<a href="../login" class="logo">
-				<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
+			<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
 			</a>
 			<div class="header-right">
 				<a href="../login"><small>Login</small></a>
@@ -42,17 +42,14 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 			<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
-			<div class = "info-bar" id="info-bar">Were sorry to see you go!<br>Please enter your password to confirm deletion.</div>
+			<div class = "info-bar" id="info-bar">Were sorry to see you go!<br><small class="text-muted">Please enter your password to confirm deletion.</small></div>
 			<div class="center alert alert-danger" id="invalid-delete" style="text-align:center;width: 90%;display:none;"></div>
 			<input style="display:none">
 			<input type="password" style="display:none" autocomplete="new-password"/>
 			<div class="form-group">
 				<input type="password" name="password" id="password" placeholder="Confirm Password" class="center form-control" required>
 			</div>
-			<label style="margin-left:5%;">
-				<input type="checkbox" onclick="showF();">
-				<small id="info">Show</small>
-			</label>
+			<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 			<div class="form-group" style="margin-left:5%;">
 				<button type="button" id="delete-account" class="btn btn-secondary" onclick="this.blur();">Delete Account</button>
 				<a class="btn btn-link ml-2" href="settings">Cancel</a>
@@ -60,11 +57,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 		</div>
 		<footer id="footer">
 			<a href="." class="logo">
-				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
+			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
 			</a>
 			<div class="footer-right">
 				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
 			</div>
 		</footer>
+		<script src="../js/ayhPassword.js"></script>
 	</body>
 </html>

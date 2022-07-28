@@ -1,4 +1,4 @@
-<?php require "../backend/searches_backend.php"; ?>
+<?php require_once "../backend/searches_backend.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -14,15 +14,7 @@
 		<link href="../style/footer.css" rel="stylesheet">
 		<script src="../js/nav.js"></script>
 		<script src="../js/lightMode.js"></script>	
-		<script src="../js/searchesAJAX.js"></script>
-		<script>
-			function redirectTo(s,event) {
-				window.location.href = s;
-			}
-			function no(event) {
-				event.stopPropagation();
-			}
-		</script>
+		<script src="../ajax/searchesAJAX.js"></script>
 	</head>
 	<body>
 		<header class="topnav" id="topnav">
@@ -49,17 +41,12 @@
 						$res = $toSplit = $rows["destination"];
 						$res .= nl2br("\n ");
 					?>
-					
-					
 						<li class="links" onclick="redirectTo('dt?destVal=<?php echo htmlspecialchars($rows["destination"]);?>');">					
 							<a class="link" href ="dt?destVal=<?php echo htmlspecialchars($rows["destination"]);?>"> <?php echo $res ; ?></a>
 							<sub><span class="bubble" id="bubble"><?php echo $rows["destCnt"]>1?$rows["destCnt"]." searches":$rows["destCnt"]." search"; ?></span></sub>
 							<button onclick ="no(event);" data-id= "<?php echo htmlspecialchars($rows["destination"]);?>" value="<?php echo htmlspecialchars($rows["destination"]);?>" type="button" class="deleteDest btn-close btn-sm" aria-label="Close" style="float:right;margin-top:9px"></button>
-							
 						</li>
-						
-					<?php
-						
+					<?php	
 					}
 					?>
 				</ul>

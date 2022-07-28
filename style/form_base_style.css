@@ -100,3 +100,11 @@ input:-webkit-autofill:active {
 	-moz-transition: all .2s ease-in-out;
 	transition: all .2s ease-in-out;
 }
+.field-icon {
+	float: right;
+	position: relative;
+	margin-right: 25px;
+	margin-top: -42px;
+	z-index: 2;
+	color: white;
+}

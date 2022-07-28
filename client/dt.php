@@ -1,6 +1,6 @@
 <?php 
-	require "../backend/dt_backend.php"; 
-	require "redirect.php";
+	require_once "../backend/dt_backend.php"; 
+	require_once "redirect.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,7 +73,7 @@
 		</div>
 		<input type="hidden" id="api_key" name="api_key" value="<?php echo $gmaps_api_key?>">
 		<script src="../js/bundle.js"></script>
-		<script src="../style/mobile_dragbar.js"></script>
+		<script src="../js/mobile_dragbar.js"></script>
 		<script src="../js/keywords.js"></script>
         <footer id="footer">
 		<a href="." class="logo">

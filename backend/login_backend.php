@@ -1,9 +1,9 @@
 <?php
-//debug russt api
-//ini_set('display_errors', 1);
-//ini_set('display_startup_errors', 1);
-//error_reporting(E_ALL);
-//rustful html/plainrust responses
+/**
+* Function list:
+* - random_str()
+* - getGeo()
+*/
 header("Content-Type: text/html");
 
 require_once 'redirect_backend.php';
@@ -56,40 +56,38 @@ if (!isset($_GET['code']))
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-	require_once 'rateLimiter.php';
-	//First step of brute force prevention, lock user out consecutively for 10 seconds after 5 failed attempts;
-	$query = mysqli_query($link, "SELECT COUNT(*) AS total_count from failed_login_attempts where ip='$ip_address'");
-	$check_login_row = mysqli_fetch_assoc($query);
+    require_once 'rateLimiter.php';
+    //First step of brute force prevention, lock user out consecutively for 10 seconds after 5 failed attempts;
+    $query = mysqli_query($link, "SELECT COUNT(*) AS total_count from failed_login_attempts where ip='$ip_address'");
+    $check_login_row = mysqli_fetch_assoc($query);
     $total_count = $check_login_row['total_count'];
     if ($total_count >= 5 && $total_count < 20)
     {
         $queryLastAttempt = mysqli_query($link, "SELECT * from failed_login_attempts where ip='$ip_address' ORDER BY attempt_time DESC LIMIT 1");
         $lastAttempt = mysqli_fetch_assoc($queryLastAttempt);
-		$lockout = $total_count-4;
+        $lockout = $total_count - 4;
         //undo this security check after 1 day if they don't exceed 20 attempts.
         if ($lastAttempt['attempt_time'] + (24 * 3600) < time())
         {
             mysqli_query($link, "DELETE from failed_login_attempts where ip='$ip_address' ");
             $lock = false;
             $password_err = "";
-            echo "";
+            echo $password_err;
         }
-        if ($lastAttempt['attempt_time'] + 10> time())
+        if ($lastAttempt['attempt_time'] + 10 > time())
         {
             $lock = true;
             $password_err = "Try again in ten seconds.";
             echo $password_err;
-            //die;
         }
         else
         {
             $lock = false;
             $password_err = "";
-            echo "";
+            echo $password_err;
         }
     }
     //Safely stores ALL login attempts (hash attempted passwords, too).
-
     $sql = "INSERT INTO all_login_attempts(username, password, attempt_date, ip) VALUES ( ?, ?, ?, ? );";
     if ($stmt = mysqli_prepare($link, $sql))
     {
@@ -104,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
     }
-	
+
     if (!empty((trim($_POST["username"]))) && !empty((trim($_POST["password"]))))
     {
         $usernameOrEmail = $username = trim($_POST["username"]);
@@ -113,8 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     else
     {
         $password_err = "Please fill in all fields.";
-        echo $password_err;
-        die;
+        die($password_err);
     }
     //Check if user is logging in via E-mail address
     $sql = "SELECT * FROM users WHERE email = ? ;";
@@ -151,13 +148,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         mysqli_stmt_close($stmt);
     }
     //Check if user is authorized before sending 2FA response.
-	if(!empty($userResults["tfaen"])){
-		if (($userResults["tfaen"] == 1 || $emailResults["tfaen"] == 1) && (password_verify($password, $userResults['password'])))
-		{
-			$tfa_en = true;
-			echo 2;
-		}
-	}
+    if (!empty($userResults["tfaen"]))
+    {
+        if (($userResults["tfaen"] == 1 || $emailResults["tfaen"] == 1) && (password_verify($password, $userResults['password'])))
+        {
+            $tfa_en = true;
+            echo 2;
+        }
+    }
     // Validate credentials against database
     if (empty($username_err) && empty($password_err) && !$lock)
     {
@@ -189,16 +187,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                 if (!$tfa_en)
                                 {
                                     // Password is correct and they are verified, so start a new session
-									
-                                    if(isset($_SESSION)) 
-									{ 
-										session_destroy(); 
-										session_start(); 
-									}
-									else if(!isset($_SESSION)) 
-									{ 
-										session_start(); 
-									}
+                                    if (isset($_SESSION))
+                                    {
+                                        session_destroy();
+                                        session_start();
+                                    }
+                                    else if (!isset($_SESSION))
+                                    {
+                                        session_start();
+                                    }
                                     $sql = "UPDATE users SET last_login = ? WHERE username = ? ;";
                                     if ($stmt = mysqli_prepare($link, $sql))
                                     {
@@ -222,15 +219,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                 {
                                     mysqli_query($link, "DELETE from failed_login_attempts where ip='$ip_address' AND username='$username'"); //reset failed attempts
                                     //2FA Enabled, don't log them in yet.
-									if(isset($_SESSION)) 
-									{ 
-										session_destroy();
-										session_start(); 										
-									}
-									else if(!isset($_SESSION)) 
-									{ 
-										session_start(); 
-									}
+                                    if (isset($_SESSION))
+                                    {
+                                        session_destroy();
+                                        session_start();
+                                    }
+                                    else if (!isset($_SESSION))
+                                    {
+                                        session_start();
+                                    }
                                     // Store data in session variables
                                     $_SESSION["loggedin"] = false;
                                     $_SESSION["username"] = $username;
@@ -240,8 +237,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                             {
                                 //E-mail is not verified yet.
                                 $login_err = "Please Verify Your E-Mail.";
-                                echo $login_err;
-								die;
+                                die($login_err);
                             }
                         }
                         else
@@ -257,46 +253,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                             //In other cases, we respond with a nominal failed attempt message.
                             $queryEmailSent = mysqli_query($link, "SELECT * from failed_login_attempts where ip='$ip_address' or username = '" . $username . "'");
                             $check_email_sent = mysqli_fetch_assoc($queryEmailSent);
-							//if they have reset their account, dont add failed attempts since their password is invalid.
+                            //if they have reset their account, dont add failed attempts since their password is invalid.
                             if (empty($check_email_sent['otp']))
-							{	
-								$sql = "INSERT INTO failed_login_attempts (ip,attempt_time,username) values(?, ?, ?) ;";
-								if ($stmt = mysqli_prepare($link, $sql))
-								{
-									// Bind variables to the prepared statement as parameters
-									mysqli_stmt_bind_param($stmt, "sss", $param_ip, $param_attempt_time, $param_username);
-									// Set parameters
-									$param_ip = $ip_address;
-									$param_attempt_time = $try_time;
-									$param_username = $username;
-									// Attempt to execute the prepared statement
-									mysqli_stmt_execute($stmt);
-									mysqli_stmt_close($stmt);
-								}
-							}
-							if ($total_count >= 20)
                             {
-								if($ip_address==$check_email_sent['ip']) 
-								{
-									echo "google";
-								}
-								else 
-								{
-									if(!isset($_SESSION)) 
-									{ 
-										session_start(); 
-									} 
-									$_SESSION["locked"] = true;
-									$_SESSION["username"] = $username;
-									$password_err = "Error 404";
-									echo $password_err;
-								}
+                                $sql = "INSERT INTO failed_login_attempts (ip,attempt_time,username) values(?, ?, ?) ;";
+                                if ($stmt = mysqli_prepare($link, $sql))
+                                {
+                                    // Bind variables to the prepared statement as parameters
+                                    mysqli_stmt_bind_param($stmt, "sss", $param_ip, $param_attempt_time, $param_username);
+                                    // Set parameters
+                                    $param_ip = $ip_address;
+                                    $param_attempt_time = $try_time;
+                                    $param_username = $username;
+                                    // Attempt to execute the prepared statement
+                                    mysqli_stmt_execute($stmt);
+                                    mysqli_stmt_close($stmt);
+                                }
+                            }
+                            if ($total_count >= 20)
+                            {
+                                if ($ip_address == $check_email_sent['ip'])
+                                {
+                                    echo "google";
+                                }
+                                else
+                                {
+                                    if (!isset($_SESSION))
+                                    {
+                                        session_start();
+                                    }
+                                    $_SESSION["locked"] = true;
+                                    $_SESSION["username"] = $username;
+                                    $password_err = "Error 404";
+                                    echo $password_err;
+                                }
                                 if (empty($check_email_sent['otp']))
                                 {
                                     $recovery_otp = random_str(16);
                                     $resetted_password = random_str(60); //random numbers that cant be used to login ever.
                                     //Also prevents the victim from getting multiple emails in case of a distributed brute force attack.
-                                    mysqli_query($link, "UPDATE failed_login_attempts SET otp='".password_hash($recovery_otp, PASSWORD_DEFAULT)."' WHERE username='" . $userResults["username"] . "'");
+                                    mysqli_query($link, "UPDATE failed_login_attempts SET otp='" . password_hash($recovery_otp, PASSWORD_DEFAULT) . "' WHERE username='" . $userResults["username"] . "'");
                                     mysqli_query($link, "UPDATE users SET password='$resetted_password' WHERE username='" . $userResults["username"] . "'");
                                     $mail = new PHPMailer(true);
                                     try
@@ -338,12 +334,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                         $html = str_replace("{{GREETING}}", $greeting, $html);
                                         $html = str_replace("{{IPADD}}", $ip_address, $html);
                                         $html = str_replace("{{OTP}}", $recovery_otp, $html);
-                                        $html = str_replace("{{LOCATION}}", getGeo($ip_address), $html);
+                                        $html = str_replace("{{LOCATION}}", getGeo($ip_address) , $html);
                                         $mail->Body = $html;
                                     }
                                     catch(phpmailerException $e)
                                     {
-                                        echo $e->errorMessage();
+                                        die($e->errorMessage());
                                     }
                                     if ($mail->Send())
                                     {
@@ -354,25 +350,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                             else
                             {
                                 $login_err = "Invalid Credentials."; //regular failed attempt less than 10 times.
-                                echo $login_err;
-                                die;
+                                die($login_err);
                             }
                         }
                     }
-					else 
-					{
-						mysqli_stmt_close($stmt);
-						die;
-					}
+                    else
+                    {
+                        mysqli_stmt_close($stmt);
+                        die;
+                    }
                 }
                 else
                 {
-					//Username doesn't exist, attempt is saved, but since there is no account, not counted as a brute force attempt.
-					$login_err = "Invalid Credentials.";
-					echo $login_err;
-                    die;
+                    //Username doesn't exist, attempt is saved, but since there is no account, not counted as a brute force attempt.
+                    $login_err = "Invalid Credentials.";
+                    die($login_err);
                 }
-				
             }
         }
     }
@@ -380,25 +373,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 }
 // Function to generate OTP
 function random_str(int $length = 64, string $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#%^&()'):
-string
-{
-    if ($length < 1)
+    string
     {
-        throw new \RangeException("Length must be a positive integer");
+        if ($length < 1)
+        {
+            throw new \RangeException("Length must be a positive integer");
+        }
+        $pieces = [];
+        $max = mb_strlen($keyspace, '8bit') - 1;
+        for ($i = 0;$i < $length;++$i)
+        {
+            $pieces[] = $keyspace[random_int(0, $max) ];
+        }
+        return implode('', $pieces);
     }
-    $pieces = [];
-    $max = mb_strlen($keyspace, '8bit') - 1;
-    for ($i = 0;$i < $length;++$i)
+    function getGeo($ip_address)
     {
-        $pieces[] = $keyspace[random_int(0, $max) ];
+        ini_set('allow_url_fopen', 'On');
+        $details = json_decode(file_get_contents("http://ip-api.com/json/{$ip_address}"));
+        $city = $details->city;
+        $stateFull = $details->regionName;
+        return $city . ", " . $stateFull;
     }
-    return implode('', $pieces);
-}
-function getGeo($ip_address) {
-	ini_set('allow_url_fopen', 'On');
-	$details = json_decode(file_get_contents("http://ip-api.com/json/{$ip_address}"));
-	$city = $details->city;
-	$stateFull = $details->regionName;
-	return $city.", ".$stateFull;
-}
 ?>

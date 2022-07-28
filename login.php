@@ -1,5 +1,5 @@
 <?php
-require "backend/login_backend.php"; 
+require_once "backend/login_backend.php"; 
 // Initialize the session
 if(!isset($_SESSION)) 
 { 
@@ -25,7 +25,7 @@ if(!isset($_SESSION))
 		<link rel="stylesheet" href="style/footer.css">
 		<link href="icons/icon_header.png" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="icons/icon.png">
-		<script src="js/loginAJAX.js"></script>
+		<script src="ajax/loginAJAX.js"></script>
 		<script src="js/lightMode.js"></script>
         <style> 
 			#footer { 
@@ -49,7 +49,7 @@ if(!isset($_SESSION))
 		<div class="wrapper">
 			<h2><img draggable="false" src="icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
-			<br><br>
+			<br>
 			<div id="invalid-login" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"> </div>
 			<div id = "successful">
 			<?php 

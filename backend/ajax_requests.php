@@ -3,6 +3,8 @@ header("Content-Type: text/html");
 
 include "config.php";
 
+include "rateLimiter.php";
+
 $username = $email = "";
 
 function valid_email($email)
@@ -56,8 +58,7 @@ if (isset($_POST['username']))
             $response = "<small><span style='color: red;'>Not Available.</span></small>";
         }
     }
-    echo $response;
-    die;
+    die($response);
 }
 if (isset($_POST['email']))
 {
@@ -88,9 +89,7 @@ if (isset($_POST['email']))
             $response = "<small><span style='color: red;'>Not Available.</span></small>";
         }
     }
-
-    echo $response;
-    die;
+	die($response);
 }
 if (isset($_POST['email_reset']))
 {
@@ -142,7 +141,6 @@ if (isset($_POST['email_reset']))
             $response = "<small><span style='color: red;'>Too Many Requests.</span></small>";
         }
     }
-    echo $response;
-    die;
+    die($response);
 }
 ?>

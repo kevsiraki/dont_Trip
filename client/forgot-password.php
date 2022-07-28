@@ -1,4 +1,4 @@
-<?php require "../backend/forgot-password_backend.php"; ?>
+<?php require_once "../backend/forgot-password_backend.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -15,8 +15,8 @@
 		<link href="../icons/icon_header.png" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<script src="../js/lightMode.js"></script>
-		<script src="../js/generalAJAX.js"></script>
-		<script src="../js/forgotPasswordAJAX.js"></script>
+		<script src="../ajax/generalAJAX.js"></script>
+		<script src="../ajax/forgotPasswordAJAX.js"></script>
 		<link rel="stylesheet" href="../style/meter_styles.css">
 		<style> 
 			#footer { 
@@ -63,14 +63,10 @@
 				<input style="display:none">
 				<input type="password" style="display:none" autocomplete="new-password">
 				<div class="form-group">
-					<input type="password" name="new_password" id="password" 
-						oninput="getPassword();getConfirmPassword();" onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
-						autocomplete="new-password" placeholder="New Password" class="center form-control" required>
+					<input type="password" name="new_password" id="password" oninput="getBoth();" autocomplete="new-password" 
+						placeholder="New Password" class="center form-control" required>
 				</div>
-				<label style="margin-left:5%;">
-					<input type="checkbox" onclick="showF();showMeter();showConfirmMeter();getPassword();getConfirmPassword();">
-					<small id="info">Show</small>
-				</label>
+				<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 				<div id="password-strength" style="display: none;text-align:center;">
 					<div id="length" class="pw-stength"><small> At least 8 characters</small></div>
 					<div id="lowercase" class="pw-stength"><small> At least 1 lowercase letter</small></div>
@@ -79,9 +75,8 @@
 					<br>
 				</div>
 				<div class="form-group">
-					<input type="password" name="confirm_password" id="confirm-password"
-						oninput="getPassword();getConfirmPassword();" onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
-						autocomplete="new-password" placeholder="Confirm New Password" class="center form-control" required>
+					<input type="password" name="confirm_password" id="confirm-password" oninput="getBoth();" autocomplete="new-password" 
+						placeholder="Confirm New Password" class="center form-control" required>
 				</div>
 				<div id="confirm-password-strength" style="display: none;text-align:center;">
 					<div id="matching" class="pw-stength"><small> Matching</small></div>
@@ -102,7 +97,7 @@
 				</div>
 			</div>    
 		<?php endif; ?>
-<div id="space"></div>
+		<div id="space"></div>
 		<footer id="footer">
 			<a href="." class="logo">
 				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
@@ -111,5 +106,6 @@
 				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
 			</div>
 		</footer> 
+		<script src="../js/ayhPassword.js"></script>
 	</body>
 </html>

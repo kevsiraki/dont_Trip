@@ -1,4 +1,10 @@
 <?php
+/**
+* Function list:
+* - imageUrl()
+* - getRandomBytes()
+* - generatePassword()
+*/
 header("Content-Type: text/html");
 // Include config file
 require_once "config.php";
@@ -12,7 +18,7 @@ if (!isset($_SESSION))
 if (!empty($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
 {
     header("location: ../login.php");
-    exit;
+    die;
 }
 
 // Define variables and initialize with empty values
@@ -27,12 +33,12 @@ function imageUrl()
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-	require_once 'rateLimiter.php';
+    require_once 'rateLimiter.php';
     // Check if email is valid
     if (empty(trim($_POST["email"])))
     {
         $email_err = "Please enter an e-mail.";
-        echo $email_err;
+        die($email_err);
     }
     else
     {
@@ -107,9 +113,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     // Check if email is validated
     $expFormat = mktime(date("H") , date("i") , date("s") , date("m") , date("d") + 1, date("Y"));
     $expDate = date("Y-m-d H:i:s", $expFormat);
-    $key = hash("SHA512",$email);
-    $addKey = hash("SHA512",generatePassword(8));
-    $key = substr(str_shuffle($key.$addKey),0,64); //have fun cracking this lol
+    $key = hash("SHA512", $email);
+    $addKey = hash("SHA512", generatePassword(8));
+    $key = substr(str_shuffle($key . $addKey) , 0, 64); //have fun cracking this lol
     if (empty($email_err))
     {
         echo 1;
@@ -163,7 +169,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         }
         catch(phpmailerException $e)
         {
-            echo $e->errorMessage();
+            die($e->errorMessage());
         }
         catch(Exception $e)
         {
@@ -172,7 +178,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         }
         if ($mail->Send())
         {
-           /* $sql = "UPDATE password_reset_temp SET keyTO = null WHERE email = ? ;";
+            /*
+            $sql = "UPDATE password_reset_temp SET keyTO = null WHERE email = ? ;";
             if ($stmt = mysqli_prepare($link, $sql))
             {
                 // Bind variables to the prepared statement as parameters
@@ -184,11 +191,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 $result = mysqli_stmt_get_result($stmt);
                 $userResults = mysqli_fetch_assoc($result);
                 mysqli_stmt_close($stmt);
-            } */
-			if(isset($_SESSION["message_shown"]))
-			{ 
-				unset($_SESSION["message_shown"]);				 										
-			}
+            } 
+            */
+            if (isset($_SESSION["message_shown"]))
+            {
+                unset($_SESSION["message_shown"]);
+            }
             $sql = "INSERT INTO password_reset_temp (email, keyTo, expD, sent_time) VALUES (?,?,?,?)";
             if ($stmt = mysqli_prepare($link, $sql))
             {
@@ -209,7 +217,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         }
         else
         {
-            echo "Mail Error - >" . $mail->ErrorInfo;
+            die("Mail Error - >" . $mail->ErrorInfo);
         }
     }
 }

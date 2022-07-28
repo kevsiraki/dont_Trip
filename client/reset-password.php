@@ -1,4 +1,4 @@
-<?php 
+<?php
 if(!isset($_SESSION)) 
 { 
 	session_start(); 
@@ -25,8 +25,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 		<link rel="stylesheet" href="../style/header.css">
 		<link rel="stylesheet" href="../style/footer.css">
 		<script src="../js/lightMode.js"></script>
-		<script src="../js/generalAJAX.js"></script>
-		<script src="../js/resetPasswordAJAX.js"></script>
+		<script src="../ajax/generalAJAX.js"></script>
+		<script src="../ajax/resetPasswordAJAX.js"></script>
 		<link rel="stylesheet" href="../style/meter_styles.css">
 		<style>
 			#footer { 
@@ -40,7 +40,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 	<body>
 		<header class="header" id="header">
 			<a href="../login" class="logo">
-				<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
+			<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
 			</a>
 			<div class="header-right">
 				<a href="../login"><small>Login</small></a>
@@ -58,14 +58,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 			<input style="display: none" type="text" name="fakeusernameremembered" />
 			<input style="display: none" type="password" name="fakepasswordremembered" />
 			<div class="form-group">
-				<input type="password" name="new_password" id="password" oninput="getPassword();getConfirmPassword();" 
-				onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
-				autocomplete="new-password" placeholder="New Password" class="center form-control" required>
+				<input type="password" name="new_password" id="password" oninput="getBoth();" autocomplete="new-password" 
+					placeholder="New Password" class="center form-control" required>
 			</div>
-			<label style="margin-left:5%;">
-				<input type="checkbox" onclick="showF();showMeter();showConfirmMeter();getPassword();getConfirmPassword();">
-				<small id="info">Show</small>
-			</label>
+			<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 			<div id="password-strength" style="display: none;text-align:center;">
 				<div id="length" class="pw-stength"><small> At least 8 characters</small></div>
 				<div id="lowercase" class="pw-stength"><small> At least 1 lowercase letter</small></div>
@@ -74,27 +70,27 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 				<br>
 			</div>
 			<div class="form-group">
-				<input type="password" name="confirm_password" id="confirm-password" oninput="getPassword();getConfirmPassword();" 
-				onfocus="showMeter();showConfirmMeter();getPassword();getConfirmPassword();" 
-				autocomplete="new-password" placeholder="Confirm New Password" class="center form-control" required>
+				<input type="password" name="confirm_password" id="confirm-password" oninput="getBoth();" 
+					autocomplete="new-password" placeholder="Confirm New Password" class="center form-control" required>
 			</div>
 			<div id="confirm-password-strength" style="display: none;text-align:center;">
 				<div id="matching" class="pw-stength"><small> Matching</small></div>
-			<br>
+				<br>
 			</div>
 			<div class="form-group" style="margin-left:5%;">
 				<button type="button" id="submit-password" class="btn btn-primary" onclick="this.blur();">Submit</button>
 				<a class="btn btn-link ml-2" href="settings">Cancel</a>
 			</div>
-		</div>  
-<div id="space"></div>
+		</div>
+		<div id="space"></div>
 		<footer id="footer">
 			<a href="." class="logo">
-				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
+			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
 			</a>
 			<div class="footer-right">
 				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
 			</div>
 		</footer>
+		<script src="../js/ayhPassword.js"></script>
 	</body>
 </html>

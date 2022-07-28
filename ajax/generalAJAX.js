@@ -41,19 +41,8 @@ function checkIfMatching(p, cp) {
     return (p == cp && p.length > 0 && cp.length > 0);
 }
 
-/* toggle strength meters and showing password text */
-//show password/confirm password text
-function showF() {
-    let x = document.getElementById("password");
-    let y = document.getElementById("confirm-password");
-    if (x.type === "password") {
-        x.type = "text";
-        y.type = "text";
-    } else {
-        x.type = "password";
-        y.type = "password";
-    }
-}
+/*toggle strength meters*/
+
 //show the password meter
 function showMeter() {
     document.getElementById('password-strength').style.display = 'block';
@@ -61,6 +50,18 @@ function showMeter() {
 //show the confirm password meter
 function showConfirmMeter() {
     document.getElementById('confirm-password-strength').style.display = 'block';
+}
+//show both meters
+function showBoth() {
+    showMeter();
+	showConfirmMeter();
+}
+//check both passwords and show both meters
+function getBoth() {
+	showMeter();
+	showConfirmMeter();
+	getPassword();
+	getConfirmPassword();
 }
 //hide the password meter
 function hideMeter() {
@@ -84,7 +85,9 @@ function throttle(func, wait) {
         }
     }
 }
-/* username, email, and email reset ajax requests to check against database as well. */
+
+/* username, email, and email reset API requests to check against database as well. (Throttled on server side as well) */
+
 $(document).ready(function() {
     $("#username").on("input", throttle(function() {
         $(".invalid-feedback").html("");
@@ -104,7 +107,7 @@ $(document).ready(function() {
         } else {
             $("#uname_response").html("");
         }
-    }, 100));
+    }, 1000));
 });
 
 $(document).ready(function() {
@@ -126,7 +129,7 @@ $(document).ready(function() {
         } else {
             $("#ename_response").html("");
         }
-    }, 100));
+    }, 1000));
 });
 
 $(document).ready(function() {
@@ -148,5 +151,5 @@ $(document).ready(function() {
         } else {
             $("#ename_response").html("");
         }
-    }, 100));
+    }, 1000));
 });

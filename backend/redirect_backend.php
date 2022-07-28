@@ -1,6 +1,5 @@
 <?php
 //Initializes the Google O-Auth API
-
 require_once "config.php";
 
 $clientID = $_ENV['client_id'];

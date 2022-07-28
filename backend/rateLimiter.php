@@ -1,4 +1,8 @@
 <?php
+/**
+* Function list:
+* - compareMilliseconds()
+*/
 if (!isset($_SESSION))
 {
     session_start();
@@ -22,10 +26,8 @@ function compareMilliseconds($date1, $date2, $compare_amount)
 {
     if (strtotime($date1) == strtotime($date2))
     {
-
         list($throw, $milliseond1) = explode('.', $date1);
         list($throw, $milliseond2) = explode('.', $date2);
-
         return (($milliseond2 - $milliseond1) < $compare_amount);
     }
 }

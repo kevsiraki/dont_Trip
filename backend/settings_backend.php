@@ -1,4 +1,10 @@
 <?php
+/**
+* Function list:
+* - encrypt()
+* - decrypt()
+* - randomstr()
+*/
 header("Content-Type: text/html");
 ini_set('allow_url_fopen', 'On');
 require_once "config.php";
@@ -8,17 +14,17 @@ require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
 
-if(!isset($_SESSION)) 
-{ 
-	session_start(); 
-} 
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-   //header("location: ../login.php");
-   //exit;
+if (!isset($_SESSION))
+{
+    session_start();
 }
-else if(!empty($_SESSION["authorized"])&&$_SESSION["authorized"] === false) {
-	header("location: ../login.php");
-    exit;
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)
+{
+}
+else if (!empty($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
+{
+    header("location: ../login.php");
+    die;
 }
 
 $response = '';
@@ -26,54 +32,56 @@ $response = '';
 define("encryption_method", $_ENV["recovery_encryption"]);
 define("key", $_ENV["recovery_key"]);
 
-if(isset($_SESSION['username'])) {
-	$sql = "SELECT * FROM users WHERE username = ? ;"; //Get user information.
-	if ($stmt = mysqli_prepare($link, $sql))
-	{
-		// Bind variables to the prepared statement as parameters
-		mysqli_stmt_bind_param($stmt, "s", $param_username);
-		// Set parameters
-		$param_username = $_SESSION['username'];
-		// Attempt to execute the prepared statement
-		mysqli_stmt_execute($stmt);
-		$result = mysqli_stmt_get_result($stmt);
-		$userResults = mysqli_fetch_assoc($result);
-		mysqli_stmt_close($stmt);
-	}
+if (isset($_SESSION['username']))
+{
+    $sql = "SELECT * FROM users WHERE username = ? ;"; //Get user information.
+    if ($stmt = mysqli_prepare($link, $sql))
+    {
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "s", $param_username);
+        // Set parameters
+        $param_username = $_SESSION['username'];
+        // Attempt to execute the prepared statement
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $userResults = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+    }
 }
 //AJAX request to enable/disable 2FA
-if (isset($_POST['two_factor'])&&!empty($userResults))
+if (isset($_POST['two_factor']) && !empty($userResults))
 {
-	ob_start();
-	if($_POST['two_factor']=="true"&& $userResults["tfaen"] == 0) {
-		ob_end_clean(); 
-		$g = new \Google\Authenticator\GoogleAuthenticator();
-		$secret = randomstr(16,'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567');
-		$sql = "UPDATE users SET tfaen = 1 WHERE username = ? ;";
-		if ($stmt = mysqli_prepare($link, $sql))
-		{
-			// Bind variables to the prepared statement as parameters
-			mysqli_stmt_bind_param($stmt, "s", $param_username);
-			// Set parameters
-			$param_username = $userResults["username"];
-			// Attempt to execute the prepared statement
-			mysqli_stmt_execute($stmt);
-			mysqli_stmt_close($stmt);
-		}
-		$sql = "UPDATE users SET tfa = ? WHERE username = ? ;";
-		if ($stmt = mysqli_prepare($link, $sql))
-		{
-			// Bind variables to the prepared statement as parameters
-			mysqli_stmt_bind_param($stmt, "ss", $param_secret, $param_username);
-			// Set parameters
-			$param_secret = encrypt($secret);
-			$param_username = $userResults["username"];
-			// Attempt to execute the prepared statement
-			mysqli_stmt_execute($stmt);
-			mysqli_stmt_close($stmt);
-		}		
-		$url =  \Google\Authenticator\GoogleQrUrl::generate(urlencode($userResults["username"]), urlencode($secret),urlencode("Don't-Trip"));
-		$response = "
+    ob_start();
+    if ($_POST['two_factor'] == "true" && $userResults["tfaen"] == 0)
+    {
+        ob_end_clean();
+        $g = new \Google\Authenticator\GoogleAuthenticator();
+        $secret = $g->generateSecret();
+        $sql = "UPDATE users SET tfaen = 1 WHERE username = ? ;";
+        if ($stmt = mysqli_prepare($link, $sql))
+        {
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_username);
+            // Set parameters
+            $param_username = $userResults["username"];
+            // Attempt to execute the prepared statement
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        }
+        $sql = "UPDATE users SET tfa = ? WHERE username = ? ;";
+        if ($stmt = mysqli_prepare($link, $sql))
+        {
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "ss", $param_secret, $param_username);
+            // Set parameters
+            $param_secret = encrypt($secret);
+            $param_username = $userResults["username"];
+            // Attempt to execute the prepared statement
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        }
+        $url = \Google\Authenticator\GoogleQrUrl::generate(urlencode($userResults["username"]) , urlencode($secret) , urlencode("Don't-Trip"));
+        $response = "
 						<script>
 							function copySecret() {
 								var copyText = document.getElementById(\"copy\").innerText;
@@ -95,50 +103,51 @@ if (isset($_POST['two_factor'])&&!empty($userResults))
 						<p>3. The one-time code will refresh every 30 seconds and will be required for future logins/password resets</p>
 						<img class=\"center\" src = \"{$url}\" alt = \"QR Code\" />
 					";
-	}
-	else if ($_POST['two_factor']=="false"&&$userResults["tfaen"] == 1 ) {
-		ob_end_clean(); 
-		$response = "<br>2FA Disabled.";
-		$sql = "UPDATE users SET tfaen = 0 WHERE username = ? ;";
-		if ($stmt = mysqli_prepare($link, $sql))
-		{
-			// Bind variables to the prepared statement as parameters
-			mysqli_stmt_bind_param($stmt, "s", $param_username);
-			// Set parameters
-			$param_username = $userResults["username"];
-			// Attempt to execute the prepared statement
-			mysqli_stmt_execute($stmt);
-			mysqli_stmt_close($stmt);
-		}
-		$sql = "UPDATE users SET tfa = 0 WHERE username = ? ;";
-		if ($stmt = mysqli_prepare($link, $sql))
-		{
-			// Bind variables to the prepared statement as parameters
-			mysqli_stmt_bind_param($stmt, "s", $param_username);
-			// Set parameters
-			$param_username = $userResults["username"];
-			// Attempt to execute the prepared statement
-			mysqli_stmt_execute($stmt);
-			mysqli_stmt_close($stmt);
-		}
-	}
-	echo $response;
-	die;
+    }
+    else if ($_POST['two_factor'] == "false" && $userResults["tfaen"] == 1)
+    {
+        ob_end_clean();
+        $response = "<br>2FA Disabled.";
+        $sql = "UPDATE users SET tfaen = 0 WHERE username = ? ;";
+        if ($stmt = mysqli_prepare($link, $sql))
+        {
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_username);
+            // Set parameters
+            $param_username = $userResults["username"];
+            // Attempt to execute the prepared statement
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        }
+        $sql = "UPDATE users SET tfa = 0 WHERE username = ? ;";
+        if ($stmt = mysqli_prepare($link, $sql))
+        {
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_username);
+            // Set parameters
+            $param_username = $userResults["username"];
+            // Attempt to execute the prepared statement
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        }
+    }
+    die($response);
 }
 //AJAX request to clear search history.
-else if (isset($_POST['delete_searches'])&&isset($_SESSION["username"])) {
-	$sql = "DELETE FROM searches WHERE username = ? ;";
-	if ($stmt = mysqli_prepare($link, $sql))
-	{
-		// Bind variables to the prepared statement as parameters
-		mysqli_stmt_bind_param($stmt, "s", $param_username);
-		// Set parameters
-		$param_username = $_SESSION['username'];
-		// Attempt to execute the prepared statement
-		mysqli_stmt_execute($stmt);
-		mysqli_stmt_close($stmt);
-	}
-	die;
+else if (isset($_POST['delete_searches']) && isset($_SESSION["username"]))
+{
+    $sql = "DELETE FROM searches WHERE username = ? ;";
+    if ($stmt = mysqli_prepare($link, $sql))
+    {
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "s", $param_username);
+        // Set parameters
+        $param_username = $_SESSION['username'];
+        // Attempt to execute the prepared statement
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+    die;
 }
 function encrypt($data)
 {
@@ -151,7 +160,8 @@ function encrypt($data)
     $ciphertext = base64_encode($iv . $hmac . $ciphertext_raw);
     return $ciphertext;
 }
-function decrypt($data) {
+function decrypt($data)
+{
     $key = key;
     $c = base64_decode($data);
     $ivlen = openssl_cipher_iv_length($cipher = encryption_method);
@@ -170,10 +180,10 @@ function randomstr($length, $chars)
     $retstr = '';
     $data = openssl_random_pseudo_bytes($length);
     $num_chars = strlen($chars);
-    for ($i = 0; $i <$length; $i++)
+    for ($i = 0;$i < $length;$i++)
     {
-        $retstr .= substr($chars, ord(substr($data, $i, 1)) %$num_chars, 1);
+        $retstr .= substr($chars, ord(substr($data, $i, 1)) % $num_chars, 1);
     }
-	return $retstr;
+    return $retstr;
 }
 ?>

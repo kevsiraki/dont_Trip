@@ -1,4 +1,4 @@
-<?php require "../backend/state_backend.php"; ?>
+<?php require_once "../backend/state_backend.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -15,11 +15,6 @@
 		<link href="../style/footer.css" rel="stylesheet">
 		<script src="../js/nav.js"></script>
 		<script src="../js/lightMode.js"></script>	
-		<script>
-			function redirectTo(s) {
-				window.location.href = s;
-			}
-		</script>
 	</head>
 	<body>
 		<header class="topnav" id="topnav">

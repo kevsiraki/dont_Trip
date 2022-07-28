@@ -1,6 +1,7 @@
 <?php 
     //echo 'testingrust';
 ?>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<!--<meta charset="UTF-8" http-equiv="refresh" content="300;url=../backend/logout"/> -->

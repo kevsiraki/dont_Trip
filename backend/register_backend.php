@@ -1,26 +1,28 @@
 <?php
+/**
+* Function list:
+* - valid_email()
+* - getRandomBytes()
+* - generatePassword()
+* - imageUrl()
+*/
 header("Content-Type: text/html");
-// Include config file
+// Includes/variables
 require_once "config.php";
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-// Define variables and initialize with empty values
 $username = $password = $confirm_password = $email = "";
 $username_err = $password_err = $confirm_password_err = $email_err = "";
 $row = 0;
-
-//not super neccessary but could be insanely useful for building reusable components.
-function imageUrl()
-{
-    return "https://" . $_SERVER['SERVER_NAME'] . substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], "../") + 1) . "donttrip/icons/dont_Trip.png";
-}
-
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-	require_once 'rateLimiter.php';
-    //Validate email
+	//Check all inputs are filled before any further responses
+    if (empty(trim($_POST["email"])) || empty(trim($_POST["username"])) || empty(trim($_POST["password"])) || empty(trim($_POST["confirm_password"])))
+    {
+        die("Please fill in all fields.");
+    }
+    //Validate email exists and is not taken.
     if (empty(trim($_POST["email"])))
     {
         $email_err = " ";
@@ -42,40 +44,83 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 mysqli_stmt_store_result($stmt);
                 if (mysqli_stmt_num_rows($stmt) == 1)
                 {
-                    $email_err = " ";
+                    $email_err = "E-mail Unavailable.";
+                    die($email_err);
                 }
                 else if (!valid_email(trim($_POST["email"])))
                 {
-                    $email_err = " ";
+                    $email_err = "Invalid E-Mail.";
+                    die($email_err);
                 }
                 else
                 {
-                    $email = trim($_POST["email"]);
-					$token = hash("SHA512", $email);
-					$addKey = hash("SHA512",generatePassword(8));
-					$token = substr(str_shuffle($token.$addKey),0,32);
+                    $key = $_ENV["ip_quality_api_key"];
+                    $email = $_POST["email"];
+                    $timeout = 1;
+                    $fast = 'false';
+                    $abuse_strictness = 0;
+                    $parameters = array(
+                        'timeout' => $timeout,
+                        'fast' => $fast,
+                        'abuse_strictness' => $abuse_strictness
+                    );
+                    $formatted_parameters = http_build_query($parameters);
+                    $url = sprintf('https://www.ipqualityscore.com/api/json/email/%s/%s?%s', $key, urlencode($email) , $formatted_parameters);
+                    $curl = curl_init();
+                    curl_setopt($curl, CURLOPT_URL, $url);
+                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+                    curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $timeout);
+                    $json = curl_exec($curl);
+                    curl_close($curl);
+                    $result = json_decode($json, true);
+                    if (isset($result['success']) && $result['success'] === true)
+                    {
+                        if ($result['valid'] !== true)
+                        {
+                            $email_err = "E-mail Address Does Not Exist.";
+                            die($email_err);
+                        }
+                        else
+                        {
+                            $email = trim($_POST["email"]);
+                            $token = hash("SHA512", $email);
+                            $addKey = hash("SHA512", generatePassword(8));
+                            $token = substr(str_shuffle($token . $addKey) , 0, 32);
+                        }
+                    }
+                    else
+                    {
+                        $email = trim($_POST["email"]);
+                        $token = hash("SHA512", $email);
+                        $addKey = hash("SHA512", generatePassword(8));
+                        $token = substr(str_shuffle($token . $addKey) , 0, 32);
+                    }
                 }
             }
             // Close statement
             mysqli_stmt_close($stmt);
         }
     }
-    // Validate username
+    // Validate username.
     if (empty(trim($_POST["username"])))
     {
         $username_err = " ";
     }
     else if (!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"])))
     {
-        $username_err = " ";
+        $username_err = "Invalid Username.";
+        die($username_err);
     }
     else if (count(array_count_values(str_split(trim($_POST["username"])))) == 1)
     {
-        $username_err = " ";
+        $username_err = "Invalid Username.";
+        die($username_err);
     }
     else if (strlen(trim($_POST["username"])) < 8 || strlen(trim($_POST["username"])) > 25)
     {
-        $username_err = " ";
+        $username_err = "Invalid Username.";
+        die($username_err);
     }
     else
     {
@@ -94,7 +139,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 mysqli_stmt_store_result($stmt);
                 if (mysqli_stmt_num_rows($stmt) == 1)
                 {
-                    $username_err = " ";
+                    $username_err = "Username taken.";
+                    die($username_err);
                 }
                 else
                 {
@@ -112,12 +158,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     }
     else if (!(preg_match('/[A-Za-z]/', trim($_POST["password"])) && preg_match('/[0-9]/', trim($_POST["password"])) && preg_match('/[A-Z]/', trim($_POST["password"])) && preg_match('/[a-z]/', trim($_POST["password"]))))
     {
-        $password_err = " ";
+        $password_err = "Weak Password.";
+        die($password_err);
 
     }
     else if (strlen(trim($_POST["password"])) < 8 || strlen(trim($_POST["password"])) > 25)
     {
-        $password_err = " ";
+        $password_err = "Weak Password.";
+        die($password_err);
     }
     else
     {
@@ -130,18 +178,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     }
     else if (empty($password_err) && $password != trim($_POST["confirm_password"]))
     {
-        $confirm_password_err = " ";
+        $confirm_password_err = "Passwords Do Not Match.";
+        die($confirm_password_err);
     }
     else
     {
         $confirm_password = trim($_POST["confirm_password"]);
     }
-	
-	//Check all inputs for a final response 
-	if(empty(trim($_POST["email"]))||empty(trim($_POST["username"]))||empty(trim($_POST["password"]))||empty(trim($_POST["confirm_password"])))
-	{
-		echo "Please fill in all fields.";
-	}
     // Check input errors before inserting in database
     if (empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($email_err))
     {
@@ -157,9 +200,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             $param_email = $email;
             $param_token = $token;
             // Attempt to execute the prepared statement
-            if (mysqli_stmt_execute($stmt))
-            {
-            }
+            mysqli_stmt_execute($stmt);
             // Close statement
             mysqli_stmt_close($stmt);
         }
@@ -179,7 +220,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         if ($row == 1)
         {
             //sends email
-            $link2 = "<a href='https://donttrip.technologists.cloud/donttrip/client/verify-email.php?key=" . $_POST["email"] . "&token=" . $token . "'>Verify</a>";
             require_once "phpmail/src/Exception.php";
             require_once "phpmail/src/PHPMailer.php";
             require_once "phpmail/src/SMTP.php";
@@ -219,16 +259,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 {
                     $greeting = "Good evening";
                 }
-				$html = file_get_contents('../email_templates/register.html');
-				$html =  str_replace("{{USERNAME}}",$username,$html);
-				$html =  str_replace("{{IMGICON}}",imageUrl(),$html);
-				$html =  str_replace("{{LINK}}","https://donttrip.technologists.cloud/donttrip/client/verify-email.php?key=".$_POST["email"]."&token=".$token."",$html);
-				$html =  str_replace("{{GREETING}}",$greeting,$html);
-				$mail->Body = $html;
+                $html = file_get_contents('../email_templates/register.html');
+                $html = str_replace("{{USERNAME}}", $username, $html);
+                $html = str_replace("{{IMGICON}}", imageUrl() , $html);
+                $html = str_replace("{{LINK}}", "https://donttrip.technologists.cloud/donttrip/client/verify-email.php?key=" . $_POST["email"] . "&token=" . $token . "", $html);
+                $html = str_replace("{{GREETING}}", $greeting, $html);
+                $mail->Body = $html;
             }
             catch(phpmailerException $e)
             {
-                echo $e->errorMessage();
+                die($e->errorMessage());
             }
             catch(Exception $e)
             {
@@ -246,15 +286,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             }
             if ($mail->Send())
             {
-				if(isset($_SESSION["message_shown"]))
-				{ 
-					unset($_SESSION["message_shown"]);				 										
-				}				
+                if (isset($_SESSION["message_shown"]))
+                {
+                    unset($_SESSION["message_shown"]);
+                }
                 echo 1;
             }
             else
             {
-                echo "Mail Error ->" . $mail->ErrorInfo;
+                die("Mail Error ->" . $mail->ErrorInfo);
             }
         }
         else
@@ -304,5 +344,10 @@ function getRandomBytes($nbBytes = 32)
 function generatePassword($length)
 {
     return substr(preg_replace("/[^a-zA-Z0-9]/", "", base64_encode(getRandomBytes($length + 1))) , 0, $length);
+}
+//not super neccessary but could be insanely useful for building reusable components.
+function imageUrl()
+{
+    return "https://" . $_SERVER['SERVER_NAME'] . substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], "../") + 1) . "donttrip/icons/dont_Trip.png";
 }
 ?>

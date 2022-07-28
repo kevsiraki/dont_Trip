@@ -1,4 +1,8 @@
 <?php
+/**
+* Function list:
+* - decrypt()
+*/
 header("Content-Type: text/html");
 
 require_once 'rateLimiter.php';
@@ -8,10 +12,10 @@ require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
 
-if(!isset($_SESSION)) 
-{ 
-	session_start(); 
-} 
+if (!isset($_SESSION))
+{
+    session_start();
+}
 
 define("encryption_method", $_ENV["recovery_encryption"]);
 define("key", $_ENV["recovery_key"]);
@@ -36,21 +40,22 @@ $secret = decrypt($userResults["tfa"]);
 $code = trim($_POST["tfa"]);
 if ($g->checkCode($secret, $code))
 {
-	$_SESSION["loggedin"] = true;
-	echo 1;
+    $_SESSION["loggedin"] = true;
+    echo 1;
 }
 else if (!($g->checkCode($secret, $code)))
 {
     if (empty($code))
     {
-        echo "Please enter 2FA OTP.";
+        die("Please enter 2FA OTP.");
     }
     else
     {
-        echo "Incorrect/Expired.";
+        die("Incorrect/Expired.");
     }
 }
-function decrypt($data) {
+function decrypt($data)
+{
     $key = key;
     $c = base64_decode($data);
     $ivlen = openssl_cipher_iv_length($cipher = encryption_method);

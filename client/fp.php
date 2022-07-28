@@ -1,6 +1,4 @@
-<?php 
-require "../backend/fp_backend.php"; 
-?>
+<?php require_once "../backend/fp_backend.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -17,13 +15,13 @@ require "../backend/fp_backend.php";
 		<link href="../icons/icon_header.png" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<script src="../js/lightMode.js"></script>
-		<script src="../js/generalAJAX.js"></script>
-		<script src="../js/fpAJAX.js"></script>
+		<script src="../ajax/generalAJAX.js"></script>
+		<script src="../ajax/fpAJAX.js"></script>
 	</head>
 	<body class="d-flex flex-column justify-content-between">
 		<header class="header" id="header">
 			<a href="../login" class="logo">
-				<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
+			<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
 			</a>
 			<div class="header-right">
 				<a href="../login"><small>Login</small></a>
@@ -38,11 +36,9 @@ require "../backend/fp_backend.php";
 			<div id="invalid-email" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"></div>
 			<div class="form-group">
 				<input type="email" name="email"  id="email-reset" aria-describedby="emailHelp" 
-				autocomplete="off" placeholder="E-mail Address" class="center form-control" required>
-				<div id="ename_response" style="text-align: center;"></div>	
-				<small id="emailHelp" class="form-text text-muted" style="margin-left:5%">
-					This serves as a re-verification token.
-				</small>
+					autocomplete="off" placeholder="E-mail Address" class="center form-control" required>
+				<div id="ename_response" style="text-align: center;"></div>
+				<small id="emailHelp" class="form-text text-muted" style="margin-left:5%">This serves as a re-verification token.</small>
 			</div>
 			<div class="form-group" style="margin-left:5%">
 				<button type="button" id="submit-email" class="btn btn-primary" onclick="this.blur();">Submit</button>
@@ -51,11 +47,11 @@ require "../backend/fp_backend.php";
 		</div>
 	</body>
 	<footer id="footer">
-			<a href="." class="logo">
-				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
-			</a>
-			<div class="footer-right">
-				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
-			</div>
-		</footer>
+		<a href="." class="logo">
+		<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
+		</a>
+		<div class="footer-right">
+			<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
+		</div>
+	</footer>
 </html>

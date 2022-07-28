@@ -1,4 +1,8 @@
 <?php
+/**
+* Function list:
+* - decrypt()
+*/
 header("Content-Type: text/html");
 // Include config file
 require_once "config.php";
@@ -7,13 +11,14 @@ require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
 
-if(!isset($_SESSION)) 
-{ 
-	session_start(); 
-} 
-if(!empty($_SESSION["authorized"])&&$_SESSION["authorized"] === false) {
-	header("location: ../login.php");
-    exit;
+if (!isset($_SESSION))
+{
+    session_start();
+}
+if (!empty($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
+{
+    header("location: ../login.php");
+    die;
 }
 
 date_default_timezone_set('America/Los_Angeles');
@@ -87,7 +92,7 @@ else
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-	require_once 'rateLimiter.php';
+    require_once 'rateLimiter.php';
     $email = $_POST["email"];
     $sql = "SELECT * FROM users WHERE email = ? ;";
     if ($stmt = mysqli_prepare($link, $sql))
@@ -139,21 +144,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     // Validate new password
     if (empty(trim($_POST["new_password"])))
     {
-        $new_password_err = " ";
+        $new_password_err = "Please fill in all fields.";
+        die($new_password_err);
     }
     else if (password_verify(trim($_POST["new_password"]) , trim($userResults['password'])))
     {
         $new_password_err = 'Password used recently.';
-        echo $new_password_err;
-		die;
+        die($new_password_err);
+
     }
     else if (!(preg_match('/[A-Za-z]/', trim($_POST["new_password"])) && preg_match('/[0-9]/', trim($_POST["new_password"])) && preg_match('/[A-Z]/', trim($_POST["new_password"])) && preg_match('/[a-z]/', trim($_POST["new_password"]))))
     {
-        $new_password_err = " ";
+        $new_password_err = "Weak password.";
+        die($new_password_err);
     }
     else if (strlen(trim($_POST["new_password"])) < 8 || strlen(trim($_POST["new_password"])) > 25)
     {
-        $new_password_err = " ";
+        $new_password_err = "Weak password.";
+        die($new_password_err);
     }
     else
     {
@@ -162,13 +170,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     // Validate confirm new password
     if (empty(trim($_POST["confirm_password"])))
     {
-        $confirm_password_err = " ";
+        $confirm_password_err = "Please fill in all fields.";
+        die($confirm_password_err);
     }
     else
     {
         if (empty($new_password_err) && $new_password != trim($_POST["confirm_password"]))
         {
-            $confirm_password_err = " ";
+            $confirm_password_err = "Passwords not matching.";
+            die($confirm_password_err);
         }
         else if (empty($new_password_err))
         {
@@ -190,14 +200,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 if (empty($code))
                 {
                     $tfa_err = "Please enter OTP.";
-                    echo $tfa_err;
-					die;
+                    die($tfa_err);
                 }
                 else
                 {
                     $tfa_err = "Incorrect or Expired OTP.";
-                    echo $tfa_err;
-					die;
+                    die($tfa_err);
                 }
             }
         }
@@ -205,8 +213,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     //Check all fields
     if (empty(trim($_POST["new_password"])) || empty(trim($_POST["confirm_password"])))
     {
-        echo 'Please fill in all fields.';
-		die;
+        die('Please fill in all fields.');
     }
     // Check input errors before updating the database
     if (empty($new_password_err) && empty($tfa_err) && empty($confirm_password_err))
@@ -227,14 +234,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $sql = "UPDATE users SET password = ? WHERE email = ?";
         if ($stmt = mysqli_prepare($link, $sql))
         {
-			if(isset($_SESSION)) 
-			{ 
-				session_destroy();										
-			}
-			if(isset($_SESSION["message_shown"]))
-			{ 
-				unset($_SESSION["message_shown"]);				 										
-			}
+            if (isset($_SESSION))
+            {
+                session_destroy();
+            }
+            if (isset($_SESSION["message_shown"]))
+            {
+                unset($_SESSION["message_shown"]);
+            }
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "ss", $param_password, $param_email);
             // Set parameters
@@ -265,7 +272,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     // Close connection
     mysqli_close($link);
 }
-function decrypt($data) {
+function decrypt($data)
+{
     $key = key;
     $c = base64_decode($data);
     $ivlen = openssl_cipher_iv_length($cipher = encryption_method);

@@ -1,13 +1,14 @@
 <?php
 require_once "config.php";
 require_once "geolocation.php";
-if(!isset($_SESSION)) 
-{ 
-	session_start(); 
-} 
-if(!empty($_SESSION["authorized"])&&$_SESSION["authorized"] === false) {
-	header("location: ../login.php");
-    exit;
+if (!isset($_SESSION))
+{
+    session_start();
+}
+if (!empty($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
+{
+    header("location: ../login.php");
+    die;
 }
 
 $gmaps_api_key = $_ENV['gmaps_api_key'];

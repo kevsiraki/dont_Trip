@@ -22,24 +22,28 @@ function resetDarkMode() {
     location.reload();
 }
 
-window.addEventListener("DOMContentLoaded", function() {
-		if(localStorage.getItem("dark_mode") === null)
-{
-			document.getElementById("reset-dark").innerText = "✓Auto";
+function redirectTo(s, event) {
+    window.location.href = s;
 }
-    });
 
-if (
-    localStorage.getItem("dark_mode") === "false"
-    //Automatic setting.
-    ||
-    ((new Date()).getHours() >= 6 && (new Date()).getHours() <= 18 && localStorage.getItem("dark_mode") === null)
-) {
-    window.addEventListener("DOMContentLoaded", function() {
-		lightStyle(); if(localStorage.getItem("dark_mode") === null)
-{
-			document.getElementById("reset-dark").innerText = "✓Auto";
+function no(event) {
+    event.stopPropagation();
 }
+
+window.addEventListener("DOMContentLoaded", function() {
+    if (localStorage.getItem("dark_mode") === null&&document.getElementById("reset-dark")) {
+        document.getElementById("reset-dark").innerText = "✓Auto";
+    }
+});
+
+if (localStorage.getItem("dark_mode") === "false"
+    //Automatic setting.
+    ||((new Date()).getHours() >= 6 && (new Date()).getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
+    window.addEventListener("DOMContentLoaded", function() {
+        lightStyle();
+        if (localStorage.getItem("dark_mode") === null) {
+            document.getElementById("reset-dark").innerText = "✓Auto";
+        }
     });
 }
 
@@ -64,10 +68,10 @@ function lightStyle() {
     if (document.getElementById("info")) {
         document.getElementById("info").style.color = "#000000";
     }
-    if (document.getElementsByClassName("form-control").length > 0&& !document.getElementById("log-in")) {
+    if (document.getElementsByClassName("form-control").length > 0 && !document.getElementById("log-in")) {
         $('link[href*="form_style.css"]').attr("disabled", "true");
         $('head').append('<link rel="stylesheet" href="../style/formLightInputs.css" type="text/css" />');
-		$(document.documentElement).removeClass('hidden');
+        $(document.documentElement).removeClass('hidden');
     }
     if (document.getElementById("log-in")) {
         $('link[href*="form_style.css"]').attr("disabled", "true");
@@ -83,7 +87,7 @@ function lightStyle() {
         document.getElementsByClassName('wrapper')[0].style.backgroundImage = "linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url(\"https://donttrip.technologists.cloud/donttrip/icons/form_bg.jpg\")";
     }
     if (document.getElementById('other')) {
-		const others = document.querySelectorAll('.other');
+        const others = document.querySelectorAll('.other');
         others.forEach(other => {
             other.style.color = '#000000';
         });
@@ -191,11 +195,17 @@ function lightStyle() {
     if (document.getElementById("dragbar")) {
         document.getElementById("dragbar").style.color = "#000000";
     }
-	if (document.getElementById("bubble")) {
+    if (document.getElementById("bubble")) {
         const bubbles = document.querySelectorAll('.bubble');
         bubbles.forEach(bubble => {
-			bubble.style.backgroundColor = '#F0F0F0';
+            bubble.style.backgroundColor = '#F0F0F0';
             bubble.style.color = 'black';
+        });
+    }
+    if (document.getElementById("password")) {
+        const eyes = document.querySelectorAll('.toggle-password');
+        eyes.forEach(eye => {
+            eye.style.color = 'black';
         });
     }
     //header/footer/hamburger menu (navbar header)

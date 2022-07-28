@@ -1,4 +1,4 @@
-<?php require "../backend/settings_backend.php";?>
+<?php require_once "../backend/settings_backend.php";?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -16,7 +16,7 @@
 		<link rel="stylesheet" href="../style/footer.css">
 		<script src="../js/nav.js"></script>
 		<script src="../js/lightMode.js"></script>
-		<script src="../js/twoFactorAJAX.js"></script>
+		<script src="../ajax/twoFactorAJAX.js"></script>
         <style> 
 			#footer { 
 				position:fixed;
@@ -84,7 +84,7 @@
 					<br>
 					<img id="user-pic" src="../icons/icon_pfp.png" style="background-color:#A9A9A9;" />
 					<?php 
-					} else if(!empty($_SESSION['userData'])||!empty($_SESSION['googleAvatar'])||!empty($_SESSION['fbAvatar'])) {
+					} if(!empty($_SESSION['userData'])||!empty($_SESSION['googleAvatar'])||!empty($_SESSION['fbAvatar'])) {
 						preg_match_all('/\(([A-Za-z0-9 ]+?)\)/', $_SESSION["username"], $out); 
 						$logo = strtolower($out[1][0]);
 						$class = "fab fa-{$logo}";
@@ -106,13 +106,13 @@
 				<?php 
 				if(!empty($_SESSION['loggedin'])&&$_SESSION['loggedin']===true) {
 				?>
-					<button style = "float:right;"class="btn btn-outline-info btn-sm" id="reset-dark" onclick="resetDarkMode();">Reset</button>
+					<button style = "float:right;"class="btn btn-outline-info btn-sm" id="reset-dark" onclick="resetDarkMode();">Reset Theme</button>
 					<button style = "float:right;margin-right:5px;"class="btn btn-secondary btn-sm" id="toggle-dark" onclick="toggleDarkMode();">&#127769;</button>
 				<?php } else { ?>
 					<div style="text-align:center;">
 						<button class="btn btn-secondary " id="toggle-dark" onclick="toggleDarkMode();">&#127769;</button>
 						<br><br>
-						<button class="btn btn-info " id="reset-dark" onclick="resetDarkMode();">Automatic Day/Night Mode</button>
+						<button class="btn btn-info " id="reset-dark" onclick="resetDarkMode();">Reset Theme</button>
 					</div>
 				<?php } ?>
 				<script>
@@ -125,7 +125,7 @@
 						document.getElementById("toggle-dark").innerText = "☀️";
 					}
 				</script>
-				<?php if (isset($userResults)){ ?>
+				<?php if (isset($userResults) && !empty($_SESSION["loggedin"])&&$_SESSION['loggedin']===true) { ?>
 					<label class="switch" style="float:left;">
 						<input type="checkbox" name="accept" id="check" value="yes">
 						<span class="slider round"></span>
@@ -163,7 +163,6 @@
 									<p>Keep this secret somewhere safe in case you lose access to your authenticator app.</p>
 								</div>
 							</div>
-
 						";
 					} 
 					?>
@@ -175,16 +174,15 @@
 					<br><br>
 				<?php } ?>
 				<?php 
-				if(!empty($_SESSION['username'])) { 
+				if(!empty($_SESSION['username'])&& !empty($_SESSION["loggedin"])&&$_SESSION['loggedin']===true) { 
 				?>
 					<a class="btn btn-outline-warning" id="clear-searches" href="#">Clear Search History</a>
 					<br>
+					<div id="clear_response"></div>
 				<?php } ?>
-				
-				<div id="clear_response"></div>
 				<br><br>
 				<?php 
-				if(!empty($_SESSION['loggedin'])&&$_SESSION['loggedin']==true) {
+				if(!empty($_SESSION['loggedin'])&&$_SESSION['loggedin']===true) {
 				?>
 					<div style="text-align:center;">
 						<a href="../backend/logout" class="btn btn-secondary" value="Submit" >Sign Out</a>
@@ -206,6 +204,6 @@
 				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
 			</div>
 		</footer>
-		<script src="../js/clearSearchesAJAX.js"></script>
+		<script src="../ajax/clearSearchesAJAX.js"></script>
 	</body>
 </html>
