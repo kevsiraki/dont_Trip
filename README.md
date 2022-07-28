@@ -34,6 +34,5 @@
 	<li>.htaccess file setup to redirect HTTP(Port 80) to HTTPS(Port 443), as well as hiding .php file extensions in URL.</li>
 	<li>Proxies/VPNs/TOR nodes as well as non-existent/fraudulent e-mail addresses filtered/prevented/redirected.</li>
 	<li>PHP-Dot-Env used to safely store API keys, database credentials, email server information, etc.</li>
-	<p>Misc.</p>
 	<li>Legible code/file structure with seperation of API/Frontend/Requests/Stylesheets.</li>
 </ul>
