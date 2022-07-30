@@ -1,8 +1,0 @@
-{
-    "require": {
-        "sonata-project/google-authenticator": "^2.3",
-        "google/apiclient": "^1.1.9",
-        "vlucas/phpdotenv": "^5.4",
-		"facebook/graph-sdk" : "~5.0"
-    }
-}
