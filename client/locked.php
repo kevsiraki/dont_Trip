@@ -52,7 +52,7 @@ if (!isset($_SESSION["locked"]) || $_SESSION["locked"] !== true) {
 		</div>
 		<input type="hidden" id="username" name="username" value="<?php echo $_SESSION["username"]?>">
 		<footer id="footer">
-			<a href="." class="logo">
+			<a href="../login" class="logo">
 			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
 			</a>
 		</footer>

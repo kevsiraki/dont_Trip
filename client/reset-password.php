@@ -84,7 +84,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 		</div>
 		<div id="space"></div>
 		<footer id="footer">
-			<a href="." class="logo">
+			<a href="../login" class="logo">
 			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
 			</a>
 			<div class="footer-right">

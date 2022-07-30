@@ -274,10 +274,11 @@ input[type=text] {
 	border-radius: 20px;
 	border: 1px solid #2d9fd9;
 	color: white;
-	width: 165px;
-	height: 25px;
+	width: 165px; /*width: 165px heigh: 25px*/ 
+	height: 25px; 	 
 	padding-left: 10px;
 	background-color: #35363A;
+	font-size: 15px;
 }
 input[type=text]:focus {
 	outline: none;

@@ -4,6 +4,7 @@ $(document).on('click', '#delete-account', function(e) {
     $.ajax({
         url: '../backend/delete_confirmation_backend',
         type: 'post',
+		dataType: "html",
         timeout: 5000,
         data: {
             password: password

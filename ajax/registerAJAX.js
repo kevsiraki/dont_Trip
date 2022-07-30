@@ -9,6 +9,7 @@ $(document).on('click', '#sign-up', function(e) {
     $.ajax({
         url: '../backend/register_backend',
         type: 'post',
+		dataType: "html",
 		timeout: 5000,
         data: {
             email: email,
@@ -29,6 +30,9 @@ $(document).on('click', '#sign-up', function(e) {
 					$('#invalid-signup').on('click', function(e) {
 						error.style.display = "none";
 					});
+                    if(response.includes("Exist.")) {
+						$('#ename_response').html("<small><span style='color: red;'>E-mail Address Does Not Exist.</span></small>");
+					}
 				}
 				else {
 					error.style.display = "none";

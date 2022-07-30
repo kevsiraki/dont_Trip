@@ -72,11 +72,12 @@
 			</div>	
 		</div>
 		<input type="hidden" id="api_key" name="api_key" value="<?php echo $gmaps_api_key?>">
+		<input type="hidden" id="countryCode" name="countryCode" value="<?php echo $countryCode?>">
 		<script src="../js/bundle.js"></script>
 		<script src="../js/mobile_dragbar.js"></script>
 		<script src="../js/keywords.js"></script>
         <footer id="footer">
-		<a href="." class="logo">
+		<a href="../login" class="logo">
 			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
 		</a>
 		<div class="footer-right">

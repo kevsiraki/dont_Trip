@@ -96,6 +96,7 @@ $(document).ready(function() {
             $.ajax({
                 url: '../backend/ajax_requests',
                 type: 'post',
+				dataType: "html",
                 timeout: 5000,
                 data: {
                     username: username
@@ -118,6 +119,7 @@ $(document).ready(function() {
             $.ajax({
                 url: '../backend/ajax_requests',
                 type: 'post',
+				dataType: "html",
                 timeout: 5000,
                 data: {
                     email: email
@@ -140,6 +142,7 @@ $(document).ready(function() {
             $.ajax({
                 url: '../backend/ajax_requests',
                 type: 'post',
+				dataType: "html",
                 timeout: 5000,
                 data: {
                     email_reset: email_reset

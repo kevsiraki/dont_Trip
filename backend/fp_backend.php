@@ -1,16 +1,9 @@
 <?php
-/**
-* Function list:
-* - imageUrl()
-* - getRandomBytes()
-* - generatePassword()
-*/
 header("Content-Type: text/html");
-// Include config file
 require_once "config.php";
+require_once 'helpers.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
 if (!isset($_SESSION))
 {
     session_start();
@@ -20,16 +13,9 @@ if (!empty($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
     header("location: ../login.php");
     die;
 }
-
 // Define variables and initialize with empty values
 $username = $email = $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = $email_err = $username_err = "";
-
-function imageUrl()
-{
-    return "https://" . $_SERVER['SERVER_NAME'] . substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], "../") + 1) . "donttrip/icons/dont_Trip.png";
-}
-
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
@@ -174,25 +160,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         catch(Exception $e)
         {
             die(404); //Boring error messages from anything else!
-            
         }
         if ($mail->Send())
         {
-            /*
-            $sql = "UPDATE password_reset_temp SET keyTO = null WHERE email = ? ;";
-            if ($stmt = mysqli_prepare($link, $sql))
-            {
-                // Bind variables to the prepared statement as parameters
-                mysqli_stmt_bind_param($stmt, "s", $param_email);
-                // Set parameters
-                $param_email = $email;
-                // Attempt to execute the prepared statement
-                mysqli_stmt_execute($stmt);
-                $result = mysqli_stmt_get_result($stmt);
-                $userResults = mysqli_fetch_assoc($result);
-                mysqli_stmt_close($stmt);
-            } 
-            */
             if (isset($_SESSION["message_shown"]))
             {
                 unset($_SESSION["message_shown"]);
@@ -220,23 +190,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             die("Mail Error - >" . $mail->ErrorInfo);
         }
     }
-}
-
-function getRandomBytes($nbBytes = 32)
-{
-    $bytes = openssl_random_pseudo_bytes($nbBytes, $strong);
-    if (false !== $bytes && true === $strong)
-    {
-        return $bytes;
-    }
-    else
-    {
-        throw new \Exception("Unable to generate secure token from OpenSSL.");
-    }
-}
-
-function generatePassword($length)
-{
-    return substr(preg_replace("/[^a-zA-Z0-9]/", "", base64_encode(getRandomBytes($length + 1))) , 0, $length);
 }
 ?>

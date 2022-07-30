@@ -3,6 +3,7 @@ if(document.getElementById("clear-searches")) {
 		$.ajax({
 			url: '../backend/settings_backend',
 			type: 'post',
+			dataType: "html",
 			timeout: 5000,
 			data: {
 				delete_searches: "true"

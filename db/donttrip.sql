@@ -38,9 +38,9 @@ CREATE TABLE IF NOT EXISTS password_reset_temp (
   sent_time BIGINT
 );
 CREATE TABLE IF NOT EXISTS searches (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT, 
+  id int(10) unsigned NOT NULL AUTO_INCREMENT, 
   username VARCHAR(50), 
   destination VARCHAR(100), 
   keyword VARCHAR(50), 
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (id)
 );

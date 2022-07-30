@@ -7,6 +7,7 @@ $(document).ready(function() {
         $.ajax({
             url: '../backend/searches_backend',
             type: 'GET',
+			dataType: "html",
 			timeout: 5000,
             data: {
                 toDeleteDestination: delete_id
@@ -34,6 +35,7 @@ $(document).ready(function() {
             url: '../backend/searches_backend',
             type: 'GET',
 			timeout: 5000,
+			dataType: "html",
             data: {
                 toDeleteKeyword: delete_id
             },

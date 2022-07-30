@@ -130,7 +130,7 @@
 						<input type="checkbox" name="accept" id="check" value="yes">
 						<span class="slider round"></span>
 					</label>
-					<div id="info" class="noselect">&nbsp;&nbsp;Two Factor Authentication</div>
+					<div id="info" class="noselect">&nbsp;&nbsp;Two Factor Auth.</div>
 					<br>
 					<?php 
 					if($userResults["tfaen"] == 1) { 
@@ -197,7 +197,7 @@
 		</div> 
 		<br><br><br><br>
 		<footer id="footer">
-			<a href="." class="logo">
+			<a href="../login" class="logo">
 				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
 			</a>
 			<div class="footer-right">

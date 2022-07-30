@@ -25,7 +25,7 @@ if ($stmt = mysqli_prepare($link, $sql))
     mysqli_stmt_bind_param($stmt, "ss", $param_state, $param_stateFull);
     // Set parameters
     $param_state = "%$state%";
-    $param_stateFull = "%$$stateFull%";
+    $param_stateFull = "%$stateFull%";
     // Attempt to execute the prepared statement
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);

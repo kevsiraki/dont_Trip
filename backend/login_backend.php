@@ -1,31 +1,21 @@
 <?php
-/**
-* Function list:
-* - random_str()
-* - getGeo()
-*/
 header("Content-Type: text/html");
-
 require_once 'redirect_backend.php';
+require_once 'helpers.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require_once "phpmail/src/Exception.php";
 require_once "phpmail/src/PHPMailer.php";
 require_once "phpmail/src/SMTP.php";
-
 $username = $password = $usernameOrEmail = "";
 $username_err = $password_err = $login_err = $isAuth = "";
-
 $tfa_en = false;
 $lock = false;
 $total_count = 0;
-
 $first_limit;
 $second_limit;
-
 date_default_timezone_set('America/Los_Angeles');
 $date = date("Y-m-d H:i:s");
-
 //Safely stores all page visits.
 $sql = "INSERT INTO page_visits(browser, visit_date, ip) VALUES ( ?, ?, ? );";
 if ($stmt = mysqli_prepare($link, $sql))
@@ -52,7 +42,6 @@ if (!isset($_GET['code']))
 {
     $isAuth = "yes";
 }
-
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
@@ -71,20 +60,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         {
             mysqli_query($link, "DELETE from failed_login_attempts where ip='$ip_address' ");
             $lock = false;
-            $password_err = "";
-            echo $password_err;
         }
         if ($lastAttempt['attempt_time'] + 10 > time())
         {
             $lock = true;
             $password_err = "Try again in ten seconds.";
-            echo $password_err;
+            die($password_err);
         }
         else
         {
             $lock = false;
-            $password_err = "";
-            echo $password_err;
         }
     }
     //Safely stores ALL login attempts (hash attempted passwords, too).
@@ -102,7 +87,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
     }
-
     if (!empty((trim($_POST["username"]))) && !empty((trim($_POST["password"]))))
     {
         $usernameOrEmail = $username = trim($_POST["username"]);
@@ -153,7 +137,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         if (($userResults["tfaen"] == 1 || $emailResults["tfaen"] == 1) && (password_verify($password, $userResults['password'])))
         {
             $tfa_en = true;
-            echo 2;
         }
     }
     // Validate credentials against database
@@ -217,7 +200,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                 }
                                 else
                                 {
-                                    mysqli_query($link, "DELETE from failed_login_attempts where ip='$ip_address' AND username='$username'"); //reset failed attempts
+                                    
                                     //2FA Enabled, don't log them in yet.
                                     if (isset($_SESSION))
                                     {
@@ -231,6 +214,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                     // Store data in session variables
                                     $_SESSION["loggedin"] = false;
                                     $_SESSION["username"] = $username;
+									mysqli_query($link, "DELETE from failed_login_attempts where ip='$ip_address' AND username='$username'"); //reset failed attempts
+									//Redirect user
+									echo 2;
                                 }
                             }
                             else
@@ -291,7 +277,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                 {
                                     $recovery_otp = random_str(16);
                                     $resetted_password = random_str(60); //random numbers that cant be used to login ever.
-                                    //Also prevents the victim from getting multiple emails in case of a distributed brute force attack.
                                     mysqli_query($link, "UPDATE failed_login_attempts SET otp='" . password_hash($recovery_otp, PASSWORD_DEFAULT) . "' WHERE username='" . $userResults["username"] . "'");
                                     mysqli_query($link, "UPDATE users SET password='$resetted_password' WHERE username='" . $userResults["username"] . "'");
                                     $mail = new PHPMailer(true);
@@ -349,7 +334,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                             }
                             else
                             {
-                                $login_err = "Invalid Credentials."; //regular failed attempt less than 10 times.
+                                $login_err = "Invalid Credentials."; //regular failed attempt less than 5 times.
                                 die($login_err);
                             }
                         }
@@ -362,7 +347,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 }
                 else
                 {
-                    //Username doesn't exist, attempt is saved, but since there is no account, not counted as a brute force attempt.
+                    //Username doesn't exist, attempt is saved before we get here.
                     $login_err = "Invalid Credentials.";
                     die($login_err);
                 }
@@ -371,28 +356,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     }
     mysqli_close($link);
 }
-// Function to generate OTP
-function random_str(int $length = 64, string $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#%^&()'):
-    string
-    {
-        if ($length < 1)
-        {
-            throw new \RangeException("Length must be a positive integer");
-        }
-        $pieces = [];
-        $max = mb_strlen($keyspace, '8bit') - 1;
-        for ($i = 0;$i < $length;++$i)
-        {
-            $pieces[] = $keyspace[random_int(0, $max) ];
-        }
-        return implode('', $pieces);
-    }
-    function getGeo($ip_address)
-    {
-        ini_set('allow_url_fopen', 'On');
-        $details = json_decode(file_get_contents("http://ip-api.com/json/{$ip_address}"));
-        $city = $details->city;
-        $stateFull = $details->regionName;
-        return $city . ", " . $stateFull;
-    }
 ?>

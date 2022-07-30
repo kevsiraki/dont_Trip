@@ -82,10 +82,10 @@ if(!isset($_SESSION))
 					
 					if($isAuth == "yes") 
 					{
-						echo "<a class=\"btn btn-link\" style=\"display: inline-block; color: white; background-color: #306998;\" href='".$client->createAuthUrl()."'><i class=\"fa-brands fa-google\"></i> Google</a> &nbsp;&nbsp;";
+						echo "<a class=\"btn btn-link\" style=\"display: inline-block; color: white; background-color: #306998;\" href='".$client->createAuthUrl()."'><i class=\"fa-brands fa-google\">&nbsp;</i>Google</a>&nbsp;&nbsp;";
 					}
-					echo "<a class=\"btn btn-link\" style=\"display: inline-block; color: white; background-color: #4267B2;\" href='client/facebook_bootstrap'><i class=\"fa fa-facebook\"></i> Facebook</a> &nbsp;&nbsp;";
-					echo "<a class=\"btn btn-link\" style=\"color: white; background-color: #738ADB;\" href='client/init-oauth.php'><i class=\"fa-brands fa-discord\"></i> Discord</a>";
+					echo "<a class=\"btn btn-link\" style=\"display: inline-block; color: white; background-color: #4267B2;\" href='client/facebook_bootstrap'><i class=\"fa fa-facebook\">&nbsp;</i>Facebook</a>&nbsp;&nbsp;";
+					echo "<a class=\"btn btn-link\" style=\"color: white; background-color: #738ADB;\" href='client/init-oauth.php'><i class=\"fa-brands fa-discord\">&nbsp;</i>Discord</a>";
 				?>
 				</div>
 			</p>
@@ -104,7 +104,6 @@ if(!isset($_SESSION))
 			?>
 			<p id="info">Need an account? <a href="client/register" style="">Sign up here</a></p>
 			<p><a href="client/fp" style="">Forgot your password?</a></p>
-        
 		</div>
 		<div id="space"></div>
 		<footer id="footer">

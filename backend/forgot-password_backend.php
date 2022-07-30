@@ -1,16 +1,11 @@
 <?php
-/**
-* Function list:
-* - decrypt()
-*/
 header("Content-Type: text/html");
-// Include config file
 require_once "config.php";
+require_once 'helpers.php';
 require_once 'vendor/sonata-project/google-authenticator/src/FixedBitNotation.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticatorInterface.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
-
 if (!isset($_SESSION))
 {
     session_start();
@@ -20,21 +15,15 @@ if (!empty($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
     header("location: ../login.php");
     die;
 }
-
 date_default_timezone_set('America/Los_Angeles');
 $date = date("Y-m-d H:i:s");
-
 $email = $new_password = $confirm_password = $code = $tfa_err = "";
 $new_password_err = $confirm_password_err = "";
-
 $expired = 0;
-
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
-
 define("encryption_method", $_ENV["recovery_encryption"]);
 define("key", $_ENV["recovery_key"]);
-
 if (isset($_GET["key"]) && isset($_GET["token"]))
 {
     $sql = "SELECT * FROM users WHERE email = ? ;";
@@ -140,7 +129,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         }
         mysqli_stmt_close($stmt);
     }
-
     // Validate new password
     if (empty(trim($_POST["new_password"])))
     {
@@ -151,7 +139,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $new_password_err = 'Password used recently.';
         die($new_password_err);
-
     }
     else if (!(preg_match('/[A-Za-z]/', trim($_POST["new_password"])) && preg_match('/[0-9]/', trim($_POST["new_password"])) && preg_match('/[A-Z]/', trim($_POST["new_password"])) && preg_match('/[a-z]/', trim($_POST["new_password"]))))
     {
@@ -271,20 +258,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     }
     // Close connection
     mysqli_close($link);
-}
-function decrypt($data)
-{
-    $key = key;
-    $c = base64_decode($data);
-    $ivlen = openssl_cipher_iv_length($cipher = encryption_method);
-    $iv = substr($c, 0, $ivlen);
-    $hmac = substr($c, $ivlen, $sha2len = 32);
-    $ciphertext_raw = substr($c, $ivlen + $sha2len);
-    $original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options = OPENSSL_RAW_DATA, $iv);
-    $calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
-    if (hash_equals($hmac, $calcmac))
-    {
-        return $original_plaintext;
-    }
 }
 ?>

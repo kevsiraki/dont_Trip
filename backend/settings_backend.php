@@ -1,19 +1,13 @@
 <?php
-/**
-* Function list:
-* - encrypt()
-* - decrypt()
-* - randomstr()
-*/
 header("Content-Type: text/html");
 ini_set('allow_url_fopen', 'On');
 require_once "config.php";
+require_once 'helpers.php';
 require_once 'geolocation.php';
 require_once 'vendor/sonata-project/google-authenticator/src/FixedBitNotation.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticatorInterface.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
-
 if (!isset($_SESSION))
 {
     session_start();
@@ -26,12 +20,9 @@ else if (!empty($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
     header("location: ../login.php");
     die;
 }
-
 $response = '';
-
 define("encryption_method", $_ENV["recovery_encryption"]);
 define("key", $_ENV["recovery_key"]);
-
 if (isset($_SESSION['username']))
 {
     $sql = "SELECT * FROM users WHERE username = ? ;"; //Get user information.
@@ -148,42 +139,5 @@ else if (isset($_POST['delete_searches']) && isset($_SESSION["username"]))
         mysqli_stmt_close($stmt);
     }
     die;
-}
-function encrypt($data)
-{
-    $key = key;
-    $plaintext = $data;
-    $ivlen = openssl_cipher_iv_length($cipher = encryption_method);
-    $iv = openssl_random_pseudo_bytes($ivlen);
-    $ciphertext_raw = openssl_encrypt($plaintext, $cipher, $key, $options = OPENSSL_RAW_DATA, $iv);
-    $hmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
-    $ciphertext = base64_encode($iv . $hmac . $ciphertext_raw);
-    return $ciphertext;
-}
-function decrypt($data)
-{
-    $key = key;
-    $c = base64_decode($data);
-    $ivlen = openssl_cipher_iv_length($cipher = encryption_method);
-    $iv = substr($c, 0, $ivlen);
-    $hmac = substr($c, $ivlen, $sha2len = 32);
-    $ciphertext_raw = substr($c, $ivlen + $sha2len);
-    $original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options = OPENSSL_RAW_DATA, $iv);
-    $calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
-    if (hash_equals($hmac, $calcmac))
-    {
-        return $original_plaintext;
-    }
-}
-function randomstr($length, $chars)
-{
-    $retstr = '';
-    $data = openssl_random_pseudo_bytes($length);
-    $num_chars = strlen($chars);
-    for ($i = 0;$i < $length;$i++)
-    {
-        $retstr .= substr($chars, ord(substr($data, $i, 1)) % $num_chars, 1);
-    }
-    return $retstr;
 }
 ?>

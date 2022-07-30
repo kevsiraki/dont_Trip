@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
             $.ajax({
                 url: '../backend/settings_backend',
                 type: 'post',
+				dataType: "html",
                 timeout: 5000,
                 data: {
                     two_factor: two_factor

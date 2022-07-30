@@ -5,6 +5,7 @@ $(document).on('click', '#recover-account', function(e) {
     $.ajax({
         url: '../backend/recovery_backend',
         type: 'post',
+		dataType: "html",
 		timeout: 5000,
         data: {
 			username: username,

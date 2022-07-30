@@ -4,6 +4,7 @@ $(document).on('click', '#submit-email', function(e) {
     $.ajax({
         url: '../backend/fp_backend',
         type: 'post',
+		dataType: "html",
         timeout: 5000,
         data: {
             email: emailReset

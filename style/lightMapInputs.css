@@ -227,8 +227,6 @@ ul li:nth-of-type(even):hover {
 .hoverDark {
 	box-shadow: inset -1em 0 #505050;
 }
-.hoverEvenDark {	
-}
 input {
 	position: relative;
 	margin-top: 5px;
@@ -240,10 +238,11 @@ input[type=text] {
 	border-radius: 20px;
 	border: 1px solid #2d9fd9;
 	color: black;
-	width: 165px;
-	height: 25px;
+	width: 165px; /*width: 165px heigh: 25px*/ 
+	height: 25px; 	 
 	padding-left: 10px;
 	background-color: #fff;
+	font-size: 15px;
 }
 input[type=text]:focus {
 	outline: none;

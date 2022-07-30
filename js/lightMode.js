@@ -1,6 +1,7 @@
 //Description:
-//Append light styling during the daytime, nighttime/dark-mode CSS classes by default (sue me).
+//Append light styling during the daytime, nighttime/dark-mode CSS classes by default.
 //Local Storage setting to check for manual dark/light mode along with automatic overrides.
+//Also contains some general helper methods for dark/light mode.
 function toggleDarkMode() {
     if (
         //custom localStorage setting

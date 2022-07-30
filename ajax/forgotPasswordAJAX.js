@@ -8,6 +8,7 @@ $(document).on('click', '#submit-password', function(e) {
     $.ajax({
         url: '../backend/forgot-password_backend',
         type: 'post',
+		dataType: "html",
         timeout: 5000,
         data: {
             new_password: new_password,

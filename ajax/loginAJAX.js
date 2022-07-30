@@ -10,6 +10,7 @@ $(document).on('click', '#log-in', function(e) {
     $.ajax({
         url: 'backend/login_backend',
         type: 'post',
+		dataType: "html",
         timeout: 5000,
         data: {
             username: username,
@@ -85,3 +86,29 @@ $(function() {
 $(document).on('click', '#successful', function(e) {
     document.getElementById("successful").style.display = "none";
 });
+
+/*
+GET:
+var url = '/your/url?x=hello';
+
+fetch(url)
+.then(function (response) {
+  return response.text();
+})
+.then(function (body) {
+  console.log(body);
+});
+
+POST:
+var url = '/your/url';
+var formData = new FormData();
+formData.append('x', 'hello');
+
+fetch(url, { method: 'POST', body: { username: username, password: password} })
+.then(function (response) {
+  return response.text();
+})
+.then(function (body) {
+  console.log(body);
+});
+*/

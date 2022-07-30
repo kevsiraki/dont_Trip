@@ -6,6 +6,7 @@ $(document).on('click', '#submit-password', function(e) {
         url: '../backend/reset-password_backend',
         type: 'post',
 		timeout: 5000,
+		dataType: "html",
         data: {
             new_password: new_password,
 			confirm_password: confirm_password
