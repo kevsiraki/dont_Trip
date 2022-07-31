@@ -40,7 +40,7 @@ if (empty($_SESSION["username"])) {
 			<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
-			<div class = "info-bar" id="info-bar">Please enter your OTP to login.</div>
+			<div class = "info-bar darkable-text" id="info-bar">Please enter your OTP to login.</div>
 			<div id="invalid-login" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"></div>
 			<div class="form-group">
 				<input type="2fa" name="tfa" id="tfa" placeholder="2FA OTP" autocomplete="off" class="center form-control" required>

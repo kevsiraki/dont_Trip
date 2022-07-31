@@ -54,14 +54,14 @@
 		<div id="map"></div>
 		<div id="dragbar">&#x21CA;</div>
 		<div id="container" >
-			<div id="sidebar">
-				<h5 id="darkable"><span id="total"></span></h5>
+			<div id="sidebar" class = "rust">
+				<h5 id="darkable" class = "darakble-text"><span id="total"></span></h5>
 				<button class = "btn btn-link btn-sm" id="clear" style="margin-right: auto; margin-left: 0;display:none;">Clear Previous Routes</button>
 				<div id="panel"></div>
 				<audio id="audio" src=<?php echo $audio; ?> autostart="0" autostart="false" preload ="none" ></audio>
 			</div>
-			<div id="sidebar" name = "rust" style="display:none;">
-				<h5 id="darkable" name="sort">Sort places by:</h5>
+			<div id="sidebar" name = "rust" class = "rust" style="display:none;">
+				<h5 id="darkable" class = "darakble-text" name="sort">Sort places by:</h5>
 				<span>
 				<button type="button" class = "btn btn-link btn-sm" id = "sortA" >Name</button> 
 				<button type="button" class = "btn btn-link btn-sm" id = "sortD" >Distance</button>

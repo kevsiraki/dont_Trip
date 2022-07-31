@@ -39,7 +39,7 @@ if (!isset($_SESSION["locked"]) || $_SESSION["locked"] !== true) {
 			<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
-			<div class = "info-bar" id="info-bar">Account locked due to compromised credentials.<br>Please enter the OTP sent to your email to login and reset your password.</div>
+			<div class = "info-bar darkable-text" id="info-bar">Account locked due to compromised credentials.<br>Please enter the OTP sent to your email to login and reset your password.</div>
 			<div class="center alert alert-danger" id="invalid-recovery" style="text-align:center;width: 90%;display:none;"></div>
 			<input style="display:none">
 			<input type="password" style="display:none" autocomplete="new-password"/>

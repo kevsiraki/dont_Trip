@@ -32,7 +32,7 @@
 			<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
-			<div class = "info-bar" id="info-bar">Enter your e-mail for a password recovery form.</div>
+			<div class = "info-bar darkable-text" id="info-bar">Enter your e-mail for a password recovery form.</div>
 			<div id="invalid-email" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"></div>
 			<div class="form-group">
 				<input type="email" name="email"  id="email-reset" aria-describedby="emailHelp" 

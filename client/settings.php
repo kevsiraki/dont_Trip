@@ -90,7 +90,7 @@
 						$class = "fab fa-{$logo}";
 						$login_type_logo = "<i class=\"".$class."\"></i>";
 					}?>
-					<h4 id="usernav" style="padding: 20px;text-align:center;font-family: 'Courier New', monospace;">
+					<h4 id="usernav" class="darkable-text" style="padding: 20px;text-align:center;font-family: 'Courier New', monospace;">
 						<?php echo trim(preg_replace('/\[[^)]+\]/', '', preg_replace('/\([^)]+\)/',' '.$login_type_logo,$_SESSION['username']))); ?>
 					</h4>
 				</div>
@@ -98,7 +98,7 @@
 				<div id="usernav-bg" style="width=90%;border-radius: 25px; background: rgba(211, 211, 211, 0.3);">
 					<br>
 					<img id="user-pic" src="../icons/user.png" />
-					<h4 id="usernav" style="padding: 20px;text-align:center;font-family: 'Courier New', monospace;">Guest</h4>
+					<h4 id="usernav" class="darkable-text" style="padding: 20px;text-align:center;font-family: 'Courier New', monospace;">Guest</h4>
 				</div>
 				<br>
 			<?php } ?>
@@ -130,7 +130,7 @@
 						<input type="checkbox" name="accept" id="check" value="yes">
 						<span class="slider round"></span>
 					</label>
-					<div id="info" class="noselect">&nbsp;&nbsp;Two Factor Auth.</div>
+					<div id="info" class="noselect darkable-text">&nbsp;&nbsp;Two Factor Auth.</div>
 					<br>
 					<?php 
 					if($userResults["tfaen"] == 1) { 
@@ -156,7 +156,7 @@
 							</script>				
 							<div id=\"to-hide\" style=\"display:block;\">		
 								<br>
-								<div id=\"two_factor_div\">
+								<div id=\"two_factor_div\" class=\"darkable-text\">
 									2FA Secret: <b id=\"copy\">".decrypt($userResults['tfa'])."</b> &nbsp;
 									<button class = \"btn btn-outline-info btn-sm\" onclick=\"copySecret();\">📋</button>
 									<br><br>
@@ -166,7 +166,7 @@
 						";
 					} 
 					?>
-					<div id="two_factor_response"></div>
+					<div id="two_factor_response" class ="darkable-text" ></div>
 					<br>
 					<a class="btn btn-outline-danger" href="delete_confirmation">Delete Account</a>
 					<br><br>
@@ -178,7 +178,7 @@
 				?>
 					<a class="btn btn-outline-warning" id="clear-searches" href="#">Clear Search History</a>
 					<br>
-					<div id="clear_response"></div>
+					<div id="clear_response" class ="darkable-text"></div>
 				<?php } ?>
 				<br><br>
 				<?php 

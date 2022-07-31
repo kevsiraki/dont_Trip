@@ -102,7 +102,7 @@ if(!isset($_SESSION))
 			<?php
 			}
 			?>
-			<p id="info">Need an account? <a href="client/register" style="">Sign up here</a></p>
+			<p id="info" class="darkable-text">Need an account? <a href="client/register" style="">Sign up here</a></p>
 			<p><a href="client/fp" style="">Forgot your password?</a></p>
 		</div>
 		<div id="space"></div>

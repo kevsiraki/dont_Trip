@@ -1,15 +1,19 @@
-//Description:
-//Append light styling during the daytime, nighttime/dark-mode CSS classes by default.
-//Local Storage setting to check for manual dark/light mode along with automatic overrides.
-//Also contains some general helper methods for dark/light mode.
+const d = new Date();	
+if (localStorage.getItem("dark_mode") === "false" ||(d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
+    window.addEventListener("DOMContentLoaded", function() {
+        lightStyle();
+        if (localStorage.getItem("dark_mode") === null && document.getElementById("reset-dark")) {
+            document.getElementById("reset-dark").innerText = "✓Auto";
+        }
+    });
+}
+window.addEventListener("DOMContentLoaded", function() {
+    if (localStorage.getItem("dark_mode") === null && document.getElementById("reset-dark")) {
+        document.getElementById("reset-dark").innerText = "✓Auto";
+    }
+});
 function toggleDarkMode() {
-    if (
-        //custom localStorage setting
-        localStorage.getItem("dark_mode") === "true"
-        //Automatic mode
-        ||
-        (((new Date).getHours() < 6 || (new Date).getHours() > 18) && localStorage.getItem("dark_mode") === null)
-    ) {
+    if (localStorage.getItem("dark_mode") === "true" ||((d.getHours() < 6 || d.getHours() > 18) && localStorage.getItem("dark_mode") === null)) {
         localStorage.setItem("dark_mode", "false");
         location.reload();
     } else {
@@ -17,76 +21,53 @@ function toggleDarkMode() {
         location.reload();
     }
 }
-
 function resetDarkMode() {
     window.localStorage.removeItem('dark_mode');
     location.reload();
 }
-
 function redirectTo(s, event) {
     window.location.href = s;
 }
-
 function no(event) {
     event.stopPropagation();
 }
-
-window.addEventListener("DOMContentLoaded", function() {
-    if (localStorage.getItem("dark_mode") === null&&document.getElementById("reset-dark")) {
-        document.getElementById("reset-dark").innerText = "✓Auto";
-    }
-});
-
-if (localStorage.getItem("dark_mode") === "false"
-    //Automatic setting.
-    ||((new Date()).getHours() >= 6 && (new Date()).getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
-    window.addEventListener("DOMContentLoaded", function() {
-        lightStyle();
-        if (localStorage.getItem("dark_mode") === null) {
-            document.getElementById("reset-dark").innerText = "✓Auto";
-        }
-    });
-}
-
 function lightStyle() {
-    //DOM Elements
-    if (document.body) {
-        document.body.style.background = "#FFFFED";
-    }
-    if (document.body) {
-        document.body.style.backgroundColor = "#FFFFED";
-    }
-    if (document.documentElement) {
-        document.documentElement.style.background = "#FFFFED";
-    }
-    if (document.documentElement) {
-        document.documentElement.style.backgroundColor = "#FFFFED";
-    }
-    if (document.getElementById('bg')) {
-        document.getElementById('bg').style.backgroundColor = "#FFFFED";
-    }
-    //Text/Divs/Forms
-    if (document.getElementById("info")) {
-        document.getElementById("info").style.color = "#000000";
-    }
+	const form_bg = "linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url(\"https://donttrip.technologists.cloud/donttrip/icons/form_bg.jpg\")";
     if (document.getElementsByClassName("form-control").length > 0 && !document.getElementById("log-in")) {
         $('link[href*="form_style.css"]').attr("disabled", "true");
         $('head').append('<link rel="stylesheet" href="../style/formLightInputs.css" type="text/css" />');
-        $(document.documentElement).removeClass('hidden');
     }
     if (document.getElementById("log-in")) {
         $('link[href*="form_style.css"]').attr("disabled", "true");
         $('head').append('<link rel="stylesheet" href="style/formLightInputs.css" type="text/css" />');
     }
-    if (document.getElementById("info-two")) {
-        document.getElementById("info-two").style.color = "#000000";
+    if (document.documentElement) {
+        document.documentElement.style.background = "#FFFFED";
+		document.documentElement.style.backgroundColor = "#FFFFED";
+		document.body.style.background = "#FFFFED";
+		document.body.style.backgroundColor = "#FFFFED";
     }
-    if (document.getElementById("info-bar")) {
-        document.getElementById("info-bar").style.color = "#000000";
+    if (document.getElementById('bg')) {
+        document.getElementById('bg').style.backgroundColor = "#FFFFED";
     }
-    if (document.getElementsByClassName('wrapper')[0]) {
-        document.getElementsByClassName('wrapper')[0].style.backgroundImage = "linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url(\"https://donttrip.technologists.cloud/donttrip/icons/form_bg.jpg\")";
+	if(document.getElementsByClassName("rust").length > 0) {
+		const sidebars = document.querySelectorAll('.rust');
+        sidebars.forEach(sidebar => {
+            sidebar.style.backgroundColor = "#FFFFED";
+        });
+	}
+	if (document.getElementById("dragbar")) {
+        document.getElementById("dragbar").style.color = "#000000";
     }
+	if (document.getElementById("footer-link")) {
+        document.getElementById("footer-link").style.color = "#000000";
+    }
+	if(document.getElementsByClassName("darkable-text").length > 0) {
+		const darkables = document.querySelectorAll('.darkable-text');
+        darkables.forEach(darkable => {
+            darkable.style.color = '#000000';
+        });
+	}
     if (document.getElementById('other')) {
         const others = document.querySelectorAll('.other');
         others.forEach(other => {
@@ -94,87 +75,32 @@ function lightStyle() {
         });
         document.getElementById('other').style.color = "#000000";
     }
-    //Password/Confirm Password strength/matching text
-    if (document.getElementById("length")) {
-        document.getElementById("length").style.color = "#000000";
+    if (document.getElementById("password-strength")) {
+        const meters = document.querySelectorAll('.pw-stength');
+        meters.forEach(meter => {
+            meter.style.color = '#000000';
+        });
     }
-    if (document.getElementById("lowercase")) {
-        document.getElementById("lowercase").style.color = "#000000";
-    }
-    if (document.getElementById("uppercase")) {
-        document.getElementById("uppercase").style.color = "#000000";
-    }
-    if (document.getElementById("number")) {
-        document.getElementById("number").style.color = "#000000";
-    }
-    if (document.getElementById("matching")) {
-        document.getElementById("matching").style.color = "#000000";
-    }
-    //2 Factor AJAX requests/responses
-    if (document.getElementById("usernav")) {
-        document.getElementById("usernav").style.color = "#000000";
-    }
-    if (document.getElementById("two_factor_response")) {
-        document.getElementById("two_factor_response").style.color = "#000000";
-    }
-    if (document.getElementById("two_factor_div")) {
-        document.getElementById("two_factor_div").style.color = "#000000";
-    }
-    if (document.getElementById("clear_response")) {
-        document.getElementById("clear_response").style.color = "#000000";
-    }
-    //Sason's place info page Divs/Text
-    if (
-        document.getElementById("panel1") &&
-        document.getElementById("panel2") &&
-        document.getElementById("panel3") &&
-        document.getElementById("panel4")
-    ) {
-        document.getElementById("panel1").style.color = "#000000";
-        document.getElementById("panel1").style.backgroundColor = "#f4f4f4";
-        document.getElementById("panel2").style.color = "#000000";
-        document.getElementById("panel2").style.backgroundColor = "#f4f4f4";
-        document.getElementById("panel3").style.color = "#000000";
-        document.getElementById("panel3").style.backgroundColor = "#f4f4f4";
-        document.getElementById("panel4").style.color = "#000000";
-        document.getElementById("panel4").style.backgroundColor = "#f4f4f4";
-    }
-    if (
-        document.getElementById("panel1") &&
-        document.getElementById("panel2") &&
-        document.getElementById("panel3")
-    ) {
-        document.getElementById("panel1").style.color = "#000000";
-        document.getElementById("panel1").style.backgroundColor = "#f4f4f4";
-        document.getElementById("panel2").style.color = "#000000";
-        document.getElementById("panel2").style.backgroundColor = "#f4f4f4";
-        document.getElementById("panel3").style.color = "#000000";
-        document.getElementById("panel3").style.backgroundColor = "#f4f4f4";
-    }
-    //E-mail verification card Div
+	if(document.getElementsByClassName("panel").length > 0) {
+		const panels = document.querySelectorAll('.panel');
+        panels.forEach(panel => {
+            panel.style.color = '#000000';
+			panel.style.backgroundColor = "#f4f4f4";
+        });
+	}
     if (document.getElementById("card")) {
-        document.getElementById("card").style.backgroundImage = "linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url(\"https://donttrip.technologists.cloud/donttrip/icons/form_bg.jpg\")";
+        document.getElementById("card").style.backgroundImage = form_bg;
         document.getElementById("card").style.backgroundColor = "#f4f4f4";
         document.getElementById("card").style.border = "1px solid #FFFFED";
     }
-    //ul/li/hx/sidebar Divs for certain pages.
-    if (document.getElementsByName("darkable")[0]) {
-        document.getElementsByName("darkable")[0].style.backgroundColor = "#FFFFED";
+	if (document.getElementsByClassName('wrapper')[0]) {
+        document.getElementsByClassName('wrapper')[0].style.backgroundImage = form_bg;
     }
-    if (document.getElementsByName("keywords")[0]) {
-        document.getElementsByName("keywords")[0].style.color = "#000000";
+	if (document.getElementById("header")) {
+        document.getElementById("header").style.backgroundImage = form_bg;
     }
-    if (document.getElementsByName("rust")[0]) {
-        document.getElementsByName("rust")[0].style.backgroundColor = "#FFFFED";
-    }
-    if (document.getElementById("russ")) {
-        document.getElementById("russ").style.backgroundColor = "#FFFFED";
-    }
-    if (document.getElementById("sidebar")) {
-        document.getElementById("sidebar").style.backgroundColor = "#FFFFED";
-    }
-    if (document.getElementById("darkable")) {
-        document.getElementById("darkable").style.color = "#000000";
+    if (document.getElementById("footer")) {
+        document.getElementById("footer").style.backgroundImage = form_bg;
     }
     if (document.getElementById("underline")) {
         document.getElementById("underline").style.color = "#000000";
@@ -193,39 +119,25 @@ function lightStyle() {
             $(this).css("box-shadow", "none");
         });
     }
-    if (document.getElementById("dragbar")) {
-        document.getElementById("dragbar").style.color = "#000000";
-    }
     if (document.getElementById("bubble")) {
         const bubbles = document.querySelectorAll('.bubble');
         bubbles.forEach(bubble => {
             bubble.style.backgroundColor = '#F0F0F0';
-            bubble.style.color = 'black';
+            bubble.style.color = '#000000';
         });
     }
     if (document.getElementById("password")) {
         const eyes = document.querySelectorAll('.toggle-password');
         eyes.forEach(eye => {
-            eye.style.color = 'black';
+            eye.style.color = '#000000';
         });
     }
-    //header/footer/hamburger menu (navbar header)
-    if (document.getElementById("header")) {
-        document.getElementById("header").style.backgroundImage = "linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url(\"https://donttrip.technologists.cloud/donttrip/icons/form_bg.jpg\")";
-    }
-    if (document.getElementById("footer")) {
-        document.getElementById("footer").style.backgroundImage = "linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url(\"https://donttrip.technologists.cloud/donttrip/icons/form_bg.jpg\")";
-
-    }
-    if (document.getElementById("footer-link")) {
-        document.getElementById("footer-link").style.color = "black";
-    }
     if (document.getElementById("topnav")) {
-        document.getElementById("topnav").style.backgroundColor = "#E8E8E8"; // #d3d3d3(other good color)
-        document.getElementById("burger").style.color = "black";
+        document.getElementById("topnav").style.backgroundColor = "#E8E8E8";
+        document.getElementById("burger").style.color = "#000000";
         const links = document.querySelectorAll('.navlink');
         links.forEach(link => {
-            link.style.color = 'black';
+            link.style.color = '#000000';
             link.style.fontWeight = '500';
         });
         const activePages = document.querySelectorAll('.currentPage');

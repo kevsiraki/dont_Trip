@@ -29,10 +29,10 @@
 			</div>
 		</header>
 		<br>
-		<h1 id="darkable">Past Searches</h1>
+		<h1 id="darkable" class="darkable-text">Past Searches</h1>
 		<br>
 		<div id = "container">
-			<div id="sidebar">
+			<div id="sidebar" class = "rust">
 				<h1 id="underline">Destinations</h1>
 				<br>
 				<ul>
@@ -51,8 +51,8 @@
 					?>
 				</ul>
 			</div>
-			<div id="sidebar" name = "rust">
-				<h1 id="underline" name="keywords">Keywords</h1>
+			<div id="sidebar" name = "rust" class = "rust">
+				<h1 id="underline" class="darkable-text">Keywords</h1>
 				<br>
 				<ul>
 					<?php

@@ -55,7 +55,6 @@
             //bad demonic call stack killer removed
             function initMap() { //set up the map/styles, initial route from geolocation to endpoint, places along the route, and initial directions.
                 map = new google.maps.Map(document.getElementById("map"));
-
                 map.setCenter({
                     lat: 36.778259,
                     lng: -119.417931
@@ -73,7 +72,7 @@
                     $('head').append('<link rel="stylesheet" href="../style/lightMapInputs.css" type="text/css" />');
                     document.getElementById("dragbar").style.backgroundColor = "#FFFFED";
                     document.getElementById("sidebar").style.backgroundColor = "#FFFFED";
-                    document.getElementById("darkable").style.color = "#000000";
+					document.getElementById("darkable").style.color = "#000000";
                     document.getElementsByName("rust")[0].style.backgroundColor = "#FFFFED";
                     document.getElementsByName("sort")[0].style.color = "#000000";
                     $.get('../style/light_styles.js', function(data) {
@@ -121,7 +120,6 @@
                         // and remove any existing hash string (thanks, @vrijdenker)
                         .replace(/#.*$/, '')
                         .split('&');
-
                     for (let i = 0, l = query.length; i < l; i++) {
                         let aux = decodeURIComponent(query[i]).split('=');
                         $_GET[aux[0]] = aux[1];
@@ -224,9 +222,7 @@
                                         };
                                         directionsService.route(request, function(result, status) {
                                             if (status == "OK") {
-                                                let xmlhttp = new XMLHttpRequest();
-                                                xmlhttp.open("GET", "https://donttrip.technologists.cloud/donttrip/client/dt?go=yes&destination=" + document.getElementById("myInput").value + "&keyword=" + document.getElementById("keywordIn").value, true);
-                                                xmlhttp.send();
+												fetch("https://donttrip.technologists.cloud/donttrip/client/dt?go=yes&destination=" + document.getElementById("myInput").value + "&keyword=" + document.getElementById("keywordIn").value);
                                                 directionsRenderer.setDirections(result);
                                                 waypoints = polyline.decode(result.routes[0].overview_polyline);
                                                 directionsRenderer.setMap(map);
@@ -300,12 +296,10 @@
                     }
                 });
             }
-
             function playSound() {
                 let sound = document.getElementById("audio");
                 sound.play();
             }
-
             function initialize() {
                 const dest = document.createElement("input");
                 dest.type = "text";
@@ -325,7 +319,6 @@
                         // and remove any existing hash string (thanks, @vrijdenker)
                         .replace(/#.*$/, '')
                         .split('&');
-
                     for (let i = 0, l = query.length; i < l; i++) {
                         let aux = decodeURIComponent(query[i]).split('=');
                         $_GET[aux[0]] = aux[1];
@@ -339,7 +332,6 @@
                     dest.value = null;
                     $(".pac-container").remove();
                 });
-
                 dest.addEventListener("keydown", function(event) {
                     let KeyID = event.keyCode;
                     new google.maps.places.Autocomplete(dest, options);
@@ -347,13 +339,11 @@
                         dest.value = " ";
                     }
                 });
-
                 map.controls[google.maps.ControlPosition.TOP_LEFT].push(dest);
                 if (!($_GET['destVal'])) {
                     new google.maps.places.Autocomplete(dest, options);
                 }
             }
-
             function clear() {
                 clearMarkers();
                 markers = [];
@@ -363,7 +353,6 @@
                 placeListND = [];
                 waypoint = [];
             }
-
             function autocomplete(inp, arr) {
                 /*the autocomplete function takes two arguments,
                 the text field element and an array of possible autocompleted values:*/
@@ -431,7 +420,6 @@
                         }
                     }
                 });
-
                 function addActive(x) {
                     /*a function to classify an item as "active":*/
                     if (!x) return false;
@@ -442,14 +430,12 @@
                     /*add class "autocomplete-active":*/
                     x[currentFocus].classList.add("autocomplete-active");
                 }
-
                 function removeActive(x) {
                     /*a function to remove the "active" class from all autocomplete items:*/
                     for (let i = 0; i < x.length; i++) {
                         x[i].classList.remove("autocomplete-active");
                     }
                 }
-
                 function closeAllLists(elmnt) {
                     /*close all autocomplete lists in the document,
                     except the one passed as an argument:*/
@@ -465,11 +451,9 @@
                     closeAllLists(e.target);
                 });
             }
-
             function distanceTwoPoints(p3, p4) {
                 return (google.maps.geometry.spherical.computeDistanceBetween(p3, p4) / 1000); //dividing by 1000 to get Kilometers
             }
-
             function sortListByDistance() {
                 let list, switching, b, shouldSwitch;
                 let regex = /[+]?\d+(\.\d+)?/g;
@@ -501,7 +485,6 @@
                     }
                 }
             }
-
             function sortListAlphabetically() {
                 let list, i, switching, b, shouldSwitch;
                 list = document.getElementById("places");
@@ -522,12 +505,9 @@
                     }
                 }
             }
-
             function addPlaces(places, map, pos, latlng2) { //shows places fetched from nearby search on map/li element
                 const infowindow = new google.maps.InfoWindow();
                 let photoElement;
-                //const infowindowContent = document.getElementById("infowindow-content");
-                //infowindow.setContent(infowindowContent);
                 const service2 = new google.maps.places.PlacesService(map);
                 const geocoder = new google.maps.Geocoder();
                 for (const place of places) {
@@ -610,7 +590,6 @@
                                     const b2 = document.createElement("br");
                                     dir2.href = "#";
                                     service.getDetails(request, callback);
-
                                     function callback(place, status) {
                                         if (status == google.maps.places.PlacesServiceStatus.OK) {
                                             placePhoneNumber.textContent = place.formatted_phone_number;
@@ -652,9 +631,7 @@
                                         moreInfo.appendChild(document.createElement("br"));
                                     }
                                     openInMaps.textContent = "View in Google Maps";
-
                                     openInMaps.style.textDecoration = "underline";
-
                                     openInMaps.href = "https://www.google.com/maps/search/?api=1&query=" + place.geometry.location.lat() + "%2C" + place.geometry.location.lng() + "&query_place_id=" + place.place_id;
                                     openInMaps.target = "_blank";
                                     openInMaps.appendChild(document.createElement("br"));
@@ -729,7 +706,6 @@
                     sortHelper();
                 }
             }
-
             function sortHelper() {
                 if (distanceSort) {
                     sortListByDistance();
@@ -739,13 +715,8 @@
                     lightenSideBars();
                 }
             }
-
             function lightenSideBars() {
-                if ( //Custom localStorage setting
-                    localStorage.getItem("dark_mode") === "false"
-                    //Automatic mode
-                    ||
-                    (d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
+                if (localStorage.getItem("dark_mode") === "false"||(d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
                     $("tr").css("background-color", "#c6cfea");
                     $("tr").css("color", "black");
                     $("tr").mouseenter(function() {
@@ -756,7 +727,6 @@
                     $(".adp-stepicon").css("background-color", "#c6cfea");
                 }
             }
-
             function handleLocationError(browserHasGeolocation, infoWindow, pos) { //geolocation fetching error handler
                 infoWindow.setPosition(pos);
                 infoWindow.setContent(
@@ -766,26 +736,6 @@
                 );
                 infoWindow.open(map);
             }
-
-            /*
-        function displayRoute(origin, destination, service, display) { //function to display a route origin->dest
-            service.route({
-                    origin: origin,
-                    destination: destination,
-                    travelMode: google.maps.TravelMode.DRIVING,
-                    avoidTolls: true,
-                })
-                .then(
-                    (result) => {
-                        display.setDirections(result);
-                    }
-                )
-                .catch((e) => {
-                    alert("Please enter a desination you can drive to.");
-                });
-        }
-		*/
-
             function computeTotalDistance(result) { //computes the distance from an origin->dest (along the set route)
                 const myroute = result.routes[0];
                 if (!myroute) {
@@ -798,23 +748,19 @@
                 tot = total;
                 document.getElementById("total").innerHTML = (total * 0.621371).toFixed(1) + " Miles"; //convert km to miles
             }
-
             function getOccurrence(arr, val) { //how many times val occurs in array
                 let count = 0;
                 arr.forEach((v) => (v === val && count++));
                 return count;
             }
-
             function setMapOnAll(map) { // Sets the map on all markers in the array.
                 for (let i = 0; i < markers.length; i++) {
                     markers[i].setMap(map);
                 }
             }
-
             function clearMarkers() { // Removes the markers from the map, but keeps them in the array.
                 setMapOnAll(null);
             }
-
             function PolygonPoints(waypointsParam) { //split a polygon into points
                 let polypoints = waypoints
                 let PolyLength = polypoints.length;
@@ -835,7 +781,6 @@
                 let FullPoly = UpperBound.concat(reversebound);
                 return FullPoly;
             }
-
             function PolygonArray(latitude) { //return an array of smaller polygons from low->upper latitude
                 const R = 6378137;
                 const pi = 3.14;
@@ -849,7 +794,6 @@
                 lat_lower = latitude + (Lat_down * 180) / pi;
                 return [lat_upper, lat_lower];
             }
-
             let script = document.createElement("script"); //append the API key to the DOM
             script.src =
                 document.getElementById('api_key').value;
@@ -858,7 +802,6 @@
                 initMap();
             };
             document.head.appendChild(script);
-
         },
         {
             "google-polyline": 5
@@ -866,7 +809,6 @@
     ],
     3: [function(require, module, exports) { //minified functions
             let PRECISION = 1e5
-
             function decode(value) { //decode a polyline into an array of points
                 let points = []
                 let lat = 0
@@ -878,11 +820,9 @@
                 })
                 return points
             }
-
             decode.sign = function(value) {
                 return value & 1 ? ~(value >>> 1) : (value >>> 1)
             }
-
             decode.integers = function(value, callback) {
                 let values = 0
                 let x = 0
@@ -918,7 +858,6 @@
             for (let i = 0x20; i < 0x7F; i++) {
                 CHARMAP[i] = String.fromCharCode(i)
             }
-
             function encode(points) { //encode points into a string
                 // px, py, x and y store rounded exponentiated versions of the values
                 // they represent to compute the actual desired differences. This helps
@@ -935,7 +874,6 @@
                     return str
                 })
             }
-
             function reduce(points, callback) {
                 let point = null
                 let lat = 0
@@ -949,15 +887,12 @@
                 }
                 return str
             }
-
             function sign(value) {
                 return (value < 0) ? ~(value << 1) : (value << 1)
             }
-
             function charCode(value) {
                 return ((value & 0x1F) | 0x20) + 63
             }
-
             function chars(value) {
                 let str = ''
                 while (value >= 0x20) {

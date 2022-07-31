@@ -25,8 +25,8 @@
 		</style> 
 	</head>	
 	<body>
-		<div id="bg" ></div>
-		<div id="panel1">
+		<div id="bg"></div>
+		<div id="panel1" class="panel">
 			<button class = "btn btn-link btn-lg fa fa-close" style="color:red; float:left;"onclick="window.top.close();"></button>
 			<?php if(isset($_GET['photo'])&&$_GET['photo']!=="undefined") { ?>
 				<img id="placeImg" src=<?php echo $_GET['photo']; ?>></img>
@@ -34,7 +34,7 @@
 			<div id="placeName"><?php echo htmlspecialchars($_GET['name']);?></div>
 			<div id="placeDist"><?php echo $_GET['dist'];?> miles away</div>
 		</div>
-		<div id="panel2">
+		<div id="panel2" class="panel">
 			<?php if($_GET['rating']!=="undefined") { ?>
 				<div id="placeRatingTitle">Rating</div>
 				<?php if($_GET['rating']<=3) { ?>
@@ -48,7 +48,7 @@
 				<?php } ?>	
 			<?php } ?>
 		</div>
-		<div id="panel3">
+		<div id="panel3" class="panel">
 			<div id="placeInfoTitle">Info about <?php echo $_GET['name'];?></div>
 			<div id="placeAddress"><?php echo $_GET['address'];?></div>
 			<?php if($_GET['phone']!=="undefined") { ?>
@@ -59,7 +59,7 @@
 			<?php } ?>
 		</div>
 		<?php if(isset($_GET['week'])||isset($_GET['status'])) { ?>
-			<div id="panel4">
+			<div id="panel4" class="panel">
 				<div id="placeStatusTitle">Status</div>
 				<?php if(isset($_GET['status'])&&$_GET['status']!=="undefined") { ?>
 					<?php if(trim($_GET['status'])=="Open") { ?>

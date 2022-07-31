@@ -42,7 +42,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 			<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
-			<div class = "info-bar" id="info-bar">Were sorry to see you go!<br><small class="text-muted">Please enter your password to confirm deletion.</small></div>
+			<div class = "info-bar darkable-text" id="info-bar">Were sorry to see you go!<br><small class="text-muted">Please enter your password to confirm deletion.</small></div>
 			<div class="center alert alert-danger" id="invalid-delete" style="text-align:center;width: 90%;display:none;"></div>
 			<input style="display:none">
 			<input type="password" style="display:none" autocomplete="new-password"/>

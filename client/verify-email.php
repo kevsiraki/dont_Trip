@@ -36,7 +36,7 @@
 					</div>
 				</div>
 				<div class="card-body">
-					<p id="info"> <?php echo $msg; ?> </p>
+					<p id="info" class="darkable-text"> <?php echo $msg; ?> </p>
 					<a href="../login" class="btn-primary btn-sm " style="margin: auto;">Return to Login</a>
 				</div>
 			</div>

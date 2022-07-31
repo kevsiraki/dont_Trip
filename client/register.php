@@ -76,10 +76,9 @@
 				<div id="matching" class="pw-stength"><small> Matching</small></div>
 			</div>
 			<br> 
-			<!--script src="../js/lightMode.js"></script-->
 			<button name="Submit" type="button" id="sign-up" class="center btn btn-success" onclick="this.blur();">Sign-Up</button>
 			<br>
-			<p id="info-two">Already have an account? <a href="../login">Login here</a></p>
+			<p id="info-two" class="darkable-text">Already have an account? <a href="../login">Login here</a></p>
 		</div>
 		<br>
 		<br>
