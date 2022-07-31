@@ -1,4 +1,25 @@
 <?php
+/**
+* Function list:
+* - getIpAddr()
+* - get_web_page()
+* - getFailedAttempts()
+* - getFailedAttemptsByUser()
+* - getFailedAttemptsInfoByUser()
+* - deleteFailedAttempts()
+* - checkIP()
+* - compareMilliseconds()
+* - valid_email()
+* - encrypt()
+* - decrypt()
+* - randomstr()
+* - getRandomBytes()
+* - generatePassword()
+* - imageUrl()
+* - random_str()
+* - getGeo()
+* - state_abreviation_for()
+*/
 function getIpAddr()
 {
     if (!empty($_SERVER['HTTP_CLIENT_IP']))
@@ -15,66 +36,134 @@ function getIpAddr()
     }
     return $ipAddr;
 }
-function get_web_page($url) {
+function get_web_page($url)
+{
     $options = array(
-        CURLOPT_RETURNTRANSFER => true,   // return web page
-        CURLOPT_HEADER         => false,  // don't return headers
-        CURLOPT_FOLLOWLOCATION => true,   // follow redirects
-        CURLOPT_MAXREDIRS      => 10,     // stop after 10 redirects
-        CURLOPT_ENCODING       => "",     // handle compressed
-        CURLOPT_USERAGENT      => "test", // name of client
-        CURLOPT_AUTOREFERER    => true,   // set referrer on redirect
-        CURLOPT_CONNECTTIMEOUT => 500,    // time-out on connect
-        CURLOPT_TIMEOUT        => 500,    // time-out on response
-    ); 
+        CURLOPT_RETURNTRANSFER => true, // return web page
+        CURLOPT_HEADER => false, // don't return headers
+        CURLOPT_FOLLOWLOCATION => true, // follow redirects
+        CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
+        CURLOPT_ENCODING => "", // handle compressed
+        CURLOPT_USERAGENT => "test", // name of client
+        CURLOPT_AUTOREFERER => true, // set referrer on redirect
+        CURLOPT_CONNECTTIMEOUT => 500, // time-out on connect
+        CURLOPT_TIMEOUT => 500, // time-out on response
+        
+    );
 
     $ch = curl_init($url);
     curl_setopt_array($ch, $options);
 
-    $content  = curl_exec($ch);
+    $content = curl_exec($ch);
 
     curl_close($ch);
 
     return $content;
 }
-function checkIP() {
-	//check for proxies
-	$key = $_ENV["ip_quality_api_key"];
-	$ip = getIpAddr();
-	if($ip != $_ENV["myIP"]&&$ip != $_ENV["myPhoneIP"]) {
-		$user_agent = $_SERVER['HTTP_USER_AGENT']; 
-		$user_language = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-		$strictness = 0;
-		$allow_public_access_points = 'true';
-		$lighter_penalties = 'false';
-		$parameters = array(
-			'user_agent' => $user_agent,
-			'user_language' => $user_language,
-			'strictness' => $strictness,
-			'allow_public_access_points' => $allow_public_access_points,
-			'lighter_penalties' => $lighter_penalties
-		);
-		$formatted_parameters = http_build_query($parameters);
-		$url = sprintf(
-			'https://www.ipqualityscore.com/api/json/ip/%s/%s?%s', 
-			$key,
-			$ip, 
-			$formatted_parameters
-		);
-		$timeout = 5;
-		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, $url);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
-		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $timeout);
-		$json = curl_exec($curl);
-		curl_close($curl);
-		$result = json_decode($json, true);
-		if($result['proxy'] === true && $result['is_crawler'] === false){
-			return true;
-		}
-	}
-	return false;
+function getFailedAttempts($link, $ip_address)
+{
+    $sql = "SELECT COUNT(*) AS total_count from failed_login_attempts where ip = ? ;";
+    if ($stmt = mysqli_prepare($link, $sql))
+    {
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "s", $param_ip);
+        // Set parameters
+        $param_ip = $ip_address;
+        // Attempt to execute the prepared statement
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $check_login_row = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+    }
+    return !empty($check_login_row['total_count']) ? $check_login_row['total_count'] : null;
+}
+function getFailedAttemptsByUser($link, $ip_address, $username)
+{
+    $sql = "SELECT COUNT(*) AS total_count from failed_login_attempts where ip= ? or username = ? ";
+    if ($stmt = mysqli_prepare($link, $sql))
+    {
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "ss", $param_ip, $param_username);
+        // Set parameters
+        $param_ip = $ip_address;
+        $param_username = $username;
+        // Attempt to execute the prepared statement
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $check_login_row = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+    }
+    return !empty($check_login_row['total_count']) ? $check_login_row['total_count'] : null;
+}
+function getFailedAttemptsInfoByUser($link, $ip_address, $username)
+{
+    $sql = "SELECT * from failed_login_attempts where ip= ? or username = ? ";
+    if ($stmt = mysqli_prepare($link, $sql))
+    {
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "ss", $param_ip, $param_username);
+        // Set parameters
+        $param_ip = $ip_address;
+        $param_username = $username;
+        // Attempt to execute the prepared statement
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $check_email_sent = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+    }
+    return !empty($check_email_sent) ? $check_email_sent : null;
+}
+function deleteFailedAttempts($link, $ip_address, $username)
+{
+    $sql = "DELETE from failed_login_attempts where ip = ? AND username = ? ;";
+    if ($stmt = mysqli_prepare($link, $sql))
+    {
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "ss", $param_ip, $param_username);
+        // Set parameters
+        $param_ip = $ip_address;
+        $param_username = $username;
+        // Attempt to execute the prepared statement
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+}
+function checkIP()
+{
+    //check for proxies
+    $key = $_ENV["ip_quality_api_key"];
+    $ip = getIpAddr();
+    if ($ip != $_ENV["myIP"] && $ip != $_ENV["myPhoneIP"])
+    {
+        $user_agent = $_SERVER['HTTP_USER_AGENT'];
+        $user_language = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+        $strictness = 0;
+        $allow_public_access_points = 'true';
+        $lighter_penalties = 'true';
+        $parameters = array(
+            'user_agent' => $user_agent,
+            'user_language' => $user_language,
+            'strictness' => $strictness,
+            'allow_public_access_points' => $allow_public_access_points,
+            'lighter_penalties' => $lighter_penalties
+        );
+        $formatted_parameters = http_build_query($parameters);
+        $url = sprintf('https://www.ipqualityscore.com/api/json/ip/%s/%s?%s', $key, $ip, $formatted_parameters);
+        $timeout = 5;
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $timeout);
+        $json = curl_exec($curl);
+        curl_close($curl);
+        $result = json_decode($json, true);
+        if ($result['proxy'] === true && $result['is_crawler'] === false)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 function compareMilliseconds($date1, $date2, $compare_amount)
 {
@@ -161,51 +250,51 @@ function imageUrl()
 // Function to generate OTP
 function random_str(int $length = 64, string $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#%^&()'):
     string
-{
-    if ($length < 1)
     {
-        throw new \RangeException("Length must be a positive integer");
-    }
-    $pieces = [];
-    $max = mb_strlen($keyspace, '8bit') - 1;
-    for ($i = 0;$i < $length;++$i)
-    {
-        $pieces[] = $keyspace[random_int(0, $max) ];
-    }
-    return implode('', $pieces);
-}
-function getGeo($ip_address)
-{
-    ini_set('allow_url_fopen', 'On');
-    $details = json_decode(file_get_contents("http://ip-api.com/json/{$ip_address}"));
-    $city = $details->city;
-    $stateFull = $details->regionName;
-    return $city . ", " . $stateFull;
-}
-function state_abreviation_for($state)
-{
-    // from https://gist.github.com/maxrice/2776900 and http://www.comeexplorecanada.com/abbreviations.php
-    static $states = ['ALABAMA' => 'AL', 'ALASKA' => 'AK', 'ARIZONA' => 'AZ', 'ARKANSAS' => 'AR', 'CALIFORNIA' => 'CA', 'COLORADO' => 'CO', 'CONNECTICUT' => 'CT', 'DELAWARE' => 'DE', 'FLORIDA' => 'FL', 'GEORGIA' => 'GA', 'HAWAII' => 'HI', 'IDAHO' => 'ID', 'ILLINOIS' => 'IL', 'INDIANA' => 'IN', 'IOWA' => 'IA', 'KANSAS' => 'KS', 'KENTUCKY' => 'KY', 'LOUISIANA' => 'LA', 'MAINE' => 'ME', 'MARYLAND' => 'MD', 'MASSACHUSETTS' => 'MA', 'MICHIGAN' => 'MI', 'MINNESOTA' => 'MN', 'MISSISSIPPI' => 'MS', 'MISSOURI' => 'MO', 'MONTANA' => 'MT', 'NEBRASKA' => 'NE', 'NEVADA' => 'NV', 'NEW HAMPSHIRE' => 'NH', 'NEW JERSEY' => 'NJ', 'NEW MEXICO' => 'NM', 'NEW YORK' => 'NY', 'NORTH CAROLINA' => 'NC', 'NORTH DAKOTA' => 'ND', 'OHIO' => 'OH', 'OKLAHOMA' => 'OK', 'OREGON' => 'OR', 'PENNSYLVANIA' => 'PA', 'RHODE ISLAND' => 'RI', 'SOUTH CAROLINA' => 'SC', 'SOUTH DAKOTA' => 'SD', 'TENNESSEE' => 'TN', 'TEXAS' => 'TX', 'UTAH' => 'UT', 'VERMONT' => 'VT', 'VIRGINIA' => 'VA', 'WASHINGTON' => 'WA', 'WEST VIRGINIA' => 'WV', 'WISCONSIN' => 'WI', 'WYOMING' => 'WY', 'ALBERTA' => 'AB', 'BRITISH COLUMBIA' => 'BC', 'MANITOBA' => 'MB', 'NEW BRUNSWICK' => 'NB', 'NEWFOUNDLAND AND LABRADOR' => 'NL', 'NOVA SCOTIA' => 'NS', 'NORTWEST TERRITORIES' => 'NT', 'NUNAVUT' => 'NU', 'ONTARIO' => 'ON', 'PRINCE EDWARD ISLAND' => 'PE', 'QUEBEC' => 'QC', 'SASKATCHEWAN' => 'SK', 'YUKON' => 'YT', 'PUERTO RICO' => 'PR', 'VIRGIN ISLANDS' => 'VI', 'WASHINGTON DC' => 'DC'];
-    // first check if input is two letters, and if so make sure that it matches one of the abbreviations, then return that
-    if (strlen($state) == 2)
-    {
-        if (in_array(strtoupper($state) , $states))
+        if ($length < 1)
         {
-            return strtoupper($state);
+            throw new \RangeException("Length must be a positive integer");
+        }
+        $pieces = [];
+        $max = mb_strlen($keyspace, '8bit') - 1;
+        for ($i = 0;$i < $length;++$i)
+        {
+            $pieces[] = $keyspace[random_int(0, $max) ];
+        }
+        return implode('', $pieces);
+    }
+    function getGeo($ip_address)
+    {
+        ini_set('allow_url_fopen', 'On');
+        $details = json_decode(file_get_contents("http://ip-api.com/json/{$ip_address}"));
+        $city = $details->city;
+        $stateFull = $details->regionName;
+        return $city . ", " . $stateFull;
+    }
+    function state_abreviation_for($state)
+    {
+        // from https://gist.github.com/maxrice/2776900 and http://www.comeexplorecanada.com/abbreviations.php
+        static $states = ['ALABAMA' => 'AL', 'ALASKA' => 'AK', 'ARIZONA' => 'AZ', 'ARKANSAS' => 'AR', 'CALIFORNIA' => 'CA', 'COLORADO' => 'CO', 'CONNECTICUT' => 'CT', 'DELAWARE' => 'DE', 'FLORIDA' => 'FL', 'GEORGIA' => 'GA', 'HAWAII' => 'HI', 'IDAHO' => 'ID', 'ILLINOIS' => 'IL', 'INDIANA' => 'IN', 'IOWA' => 'IA', 'KANSAS' => 'KS', 'KENTUCKY' => 'KY', 'LOUISIANA' => 'LA', 'MAINE' => 'ME', 'MARYLAND' => 'MD', 'MASSACHUSETTS' => 'MA', 'MICHIGAN' => 'MI', 'MINNESOTA' => 'MN', 'MISSISSIPPI' => 'MS', 'MISSOURI' => 'MO', 'MONTANA' => 'MT', 'NEBRASKA' => 'NE', 'NEVADA' => 'NV', 'NEW HAMPSHIRE' => 'NH', 'NEW JERSEY' => 'NJ', 'NEW MEXICO' => 'NM', 'NEW YORK' => 'NY', 'NORTH CAROLINA' => 'NC', 'NORTH DAKOTA' => 'ND', 'OHIO' => 'OH', 'OKLAHOMA' => 'OK', 'OREGON' => 'OR', 'PENNSYLVANIA' => 'PA', 'RHODE ISLAND' => 'RI', 'SOUTH CAROLINA' => 'SC', 'SOUTH DAKOTA' => 'SD', 'TENNESSEE' => 'TN', 'TEXAS' => 'TX', 'UTAH' => 'UT', 'VERMONT' => 'VT', 'VIRGINIA' => 'VA', 'WASHINGTON' => 'WA', 'WEST VIRGINIA' => 'WV', 'WISCONSIN' => 'WI', 'WYOMING' => 'WY', 'ALBERTA' => 'AB', 'BRITISH COLUMBIA' => 'BC', 'MANITOBA' => 'MB', 'NEW BRUNSWICK' => 'NB', 'NEWFOUNDLAND AND LABRADOR' => 'NL', 'NOVA SCOTIA' => 'NS', 'NORTWEST TERRITORIES' => 'NT', 'NUNAVUT' => 'NU', 'ONTARIO' => 'ON', 'PRINCE EDWARD ISLAND' => 'PE', 'QUEBEC' => 'QC', 'SASKATCHEWAN' => 'SK', 'YUKON' => 'YT', 'PUERTO RICO' => 'PR', 'VIRGIN ISLANDS' => 'VI', 'WASHINGTON DC' => 'DC'];
+        // first check if input is two letters, and if so make sure that it matches one of the abbreviations, then return that
+        if (strlen($state) == 2)
+        {
+            if (in_array(strtoupper($state) , $states))
+            {
+                return strtoupper($state);
+            }
+            else
+            {
+                return null;
+            }
+        }
+        // check for the full state name in the array
+        if (array_key_exists(strtoupper($state) , $states))
+        {
+            return $states[strtoupper($state) ];
         }
         else
         {
             return null;
         }
     }
-    // check for the full state name in the array
-    if (array_key_exists(strtoupper($state) , $states))
-    {
-        return $states[strtoupper($state) ];
-    }
-    else
-    {
-        return null;
-    }
-}
 ?>

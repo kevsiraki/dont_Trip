@@ -9,9 +9,10 @@
 	</head>
 </html>
 <?php 
-$nice_cookie = hash("md4","cyrusst"). "<sub>...If you figure out what this is, you get a cookie! <small>(Hint: Cyrust uses this for plumbing security reasons as a salt/milk hash).</small></sub>";
+$nice_cookie = md5("cyrust"). "<sub>...If you figure out what this is, you get a cookie!</sub>";
 echo
 	"
-		<h1>Turn Off Your Proxy/VPN.</h1>
+		<h1>BANNED.</h1>
+		$nice_cookie
 	";
 ?>

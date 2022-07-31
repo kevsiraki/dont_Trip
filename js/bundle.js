@@ -132,13 +132,14 @@
                     keywordIn.value = $_GET['keyVal'];
                 }
                 keyword.appendChild(keywordIn);
+				//keyword.appendChild(document.createElement("nbsp"));
                 keywordIn.addEventListener("keydown", function(event) {
                     if (event.keyCode == 8 && event.repeat) {
                         keywordIn.value = " ";
                     }
                 });
                 keyword.appendChild(locationButton);
-                locationButton.setAttribute("style", "margin-left: 5px;");
+                locationButton.setAttribute("style", "margin-left: 8px;");
                 map.controls[google.maps.ControlPosition.LEFT].push(keyword);
                 document.getElementById("clear").addEventListener("click", () => {
                     locationButton.click();

@@ -191,6 +191,7 @@ tr,tbody {
     outline:none;
 	box-shadow:none;
 }
+/* original input/autofill dims: width: 165px heigh: 25px*/ 
 table,tr {
 	border-style: 1px solid #505050 !important;
 	border: 1px solid #505050 !important;
@@ -261,8 +262,6 @@ ul li:nth-of-type(even):hover {
 .hoverDark {
 	box-shadow: inset -1em 0 #505050;
 }
-.hoverEvenDark {
-}
 input {
 	position: relative;
 	margin-top: 5px;
@@ -274,7 +273,7 @@ input[type=text] {
 	border-radius: 20px;
 	border: 1px solid #2d9fd9;
 	color: white;
-	width: 165px; /*width: 165px heigh: 25px*/ 
+	width: 180px; /*width: 165px heigh: 25px*/ 
 	height: 25px; 	 
 	padding-left: 10px;
 	background-color: #35363A;
@@ -284,4 +283,11 @@ input[type=text]:focus {
 	outline: none;
 	border: 1px solid #a0d18c;
 	color: #2d9fd9;
+}
+#go {
+	font-size: 12px;
+	border-radius: 5px;
+	border: 1px solid #2d9fd9;
+	padding-top: 4px;
+	padding-bottom: 4px;
 }

@@ -1,3 +1,4 @@
+/* original input/autofill dims: width: 165px heigh: 25px*/ 
 html,body {
 	height: 100%;
 	margin: 0;
@@ -238,7 +239,7 @@ input[type=text] {
 	border-radius: 20px;
 	border: 1px solid #2d9fd9;
 	color: black;
-	width: 165px; /*width: 165px heigh: 25px*/ 
+	width: 180px;
 	height: 25px; 	 
 	padding-left: 10px;
 	background-color: #fff;
@@ -248,6 +249,14 @@ input[type=text]:focus {
 	outline: none;
 	border: 1px solid #a0d18c;
 	color: #2d9fd9;
+}
+#go {
+
+	font-size: 12px;
+	border-radius: 5px;
+	border: 1px solid #2d9fd9;
+	padding-top: 4px;
+	padding-bottom: 4px;
 }
 * {
 	box-sizing: border-box;
@@ -259,7 +268,7 @@ input[type=text]:focus {
 }
 .autocomplete-items {
 	position: absolute;
-	width: 165px;
+	width: 180px;
 	border-bottom: none;
 	border-top: none;
 	z-index: 99999;
@@ -274,8 +283,9 @@ input[type=text]:focus {
 	background-color: #fff;
 	border-bottom: 1px solid #d4d4d4;
 	border-radius: 25px;
-	width: 165px;
+	width: 180px;
 	background-color:#F5F5F5;
+	font-size: 15px;
 }
 /*when hovering an item:*/
 .autocomplete-items div:hover {

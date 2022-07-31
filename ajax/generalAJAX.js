@@ -86,25 +86,41 @@ function throttle(func, wait) {
     }
 }
 
-/* username, email, and email reset API requests to check against database as well. (Throttled on server side as well) */
+/* 
+-username, email, and email reset API requests to check against database as well. 
+-throttles how many requests can be sent at a time (tested in Insomnia)...
+-(Throttled on server side as well)...
+*/
 
 $(document).ready(function() {
     $("#username").on("input", throttle(function() {
         $(".invalid-feedback").html("");
         let username = $(this).val().trim();
         if (username != '') {
-            $.ajax({
-                url: '../backend/ajax_requests',
-                type: 'post',
-				dataType: "html",
-                timeout: 5000,
-                data: {
-                    username: username
-                },
-                success: function(response) {
-                    $('#uname_response').html(response);
-                }
-            });
+			let verify = function(){
+				$.ajax({
+					url: '../backend/ajax_requests',
+					type: 'post',
+					dataType: "html",
+					timeout: 5000,
+					data: {
+						username: username
+					},
+					success: function(response) {
+						if(response.includes("Verifying...")) {
+							$('#uname_response').html(response);
+							setTimeout(function() {
+								verify();
+								$('#uname_response').html(response);
+							}, 2000);
+						}
+						else {
+							$('#uname_response').html(response);
+						} 	
+					}
+				});
+			}
+			verify();
         } else {
             $("#uname_response").html("");
         }
@@ -116,18 +132,30 @@ $(document).ready(function() {
         $(".invalid-feedback").html("");
         let email = $(this).val().trim();
         if (email != '') {
-            $.ajax({
-                url: '../backend/ajax_requests',
-                type: 'post',
-				dataType: "html",
-                timeout: 5000,
-                data: {
-                    email: email
-                },
-                success: function(response) {
-                    $('#ename_response').html(response);
-                }
-            });
+			let verify = function(){
+				$.ajax({
+					url: '../backend/ajax_requests',
+					type: 'post',
+					dataType: "html",
+					timeout: 5000,
+					data: {
+						email: email
+					},
+					success: function(response) {
+						if(response.includes("Verifying...")) {
+							$('#ename_response').html(response);
+							setTimeout(function() {
+								verify();
+								$('#ename_response').html(response);
+							}, 2000);
+						}
+						else {
+							$('#ename_response').html(response);
+						} 
+					}
+				});
+			}
+			verify();
         } else {
             $("#ename_response").html("");
         }
@@ -139,18 +167,30 @@ $(document).ready(function() {
         $(".invalid-feedback").html("");
         let email_reset = $(this).val().trim();
         if (email_reset != '') {
-            $.ajax({
-                url: '../backend/ajax_requests',
-                type: 'post',
-				dataType: "html",
-                timeout: 5000,
-                data: {
-                    email_reset: email_reset
-                },
-                success: function(response) {
-                    $('#ename_response').html(response);
-                }
-            });
+			let verify = function(){
+				$.ajax({
+					url: '../backend/ajax_requests',
+					type: 'post',
+					dataType: "html",
+					timeout: 5000,
+					data: {
+						email_reset: email_reset
+					},
+					success: function(response) {
+						if(response.includes("Verifying...")) {
+							$('#ename_response').html(response);
+							setTimeout(function() {
+								verify();
+								$('#ename_response').html(response);
+							}, 2000);
+						}
+						else {
+							$('#ename_response').html(response);
+						} 
+					}
+				});
+			}
+			verify();
         } else {
             $("#ename_response").html("");
         }

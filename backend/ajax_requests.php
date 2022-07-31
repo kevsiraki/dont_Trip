@@ -10,10 +10,10 @@ if (isset($_SESSION['LAST_CALL']))
 {
     $last = $_SESSION['LAST_CALL'];
     $curr = date("Y-m-d h:i:s.u");
-    //$sec =  abs(myDateToMs($last) - myDateToMs($curr));
+    //throttle abuse of the live checking
     if (compareMilliseconds($last, $curr, 250))
     {
-        sleep(1);
+        die("<small><span style='color: #ff8c00;'>Verifying...</span></small>");
     }
 }
 $_SESSION['LAST_CALL'] = date('Y-m-d h:i:s.u');

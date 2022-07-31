@@ -1,3 +1,4 @@
+/* original input/autofill dims: width: 165px heigh: 25px*/ 
 * {
 	box-sizing: border-box;
 }
@@ -8,7 +9,7 @@
 }
 .autocomplete-items {
 	position: absolute;
-	width: 165px;
+	width: 195px;
 	border-bottom: none;
 	border-top: none;
 	z-index: 99999;
@@ -16,16 +17,17 @@
 	top: 100%;
 	left: 0;
 	right: 0;
+	
 }
 .autocomplete-items div {
 	padding: 5px;
 	cursor: pointer;
-	
 	border-bottom: 1px solid #404040;
 	border-radius: 25px;
-	width: 165px;
+	width: 180px;
 	background-color: #505050;
 	color: white;
+	font-size: 15px;
 }
 /*when hovering an item:*/
 .autocomplete-items div:hover {

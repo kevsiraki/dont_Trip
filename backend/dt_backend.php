@@ -20,11 +20,11 @@ $audio = $wilson[rand(0, 4) ]->audio;
 if (isset($_GET["go"]) && !empty($_GET["destination"]))
 {
     // Prepare an insert statement
-    $sql = "INSERT INTO searches (username, destination, keyword)VALUES (?, ?, ?)";
+    $sql = "INSERT INTO searches (username, destination, keyword, ip)VALUES (?, ?, ?, ?)";
     if ($stmt = mysqli_prepare($link, $sql))
     {
         // Bind variables to the prepared statement as parameters
-        mysqli_stmt_bind_param($stmt, "sss", $param_username, $param_destination, $param_keyword);
+        mysqli_stmt_bind_param($stmt, "ssss", $param_username, $param_destination, $param_keyword, $param_ip);
         // Set parameters
         if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)
         {
@@ -32,7 +32,7 @@ if (isset($_GET["go"]) && !empty($_GET["destination"]))
         }
         else
         {
-            $param_username = "Guest IP: " . $ip;
+            $param_username = "Guest";
         }
         $param_destination = trim($_GET["destination"]);
         if (!empty($_GET["keyword"]))
@@ -43,6 +43,7 @@ if (isset($_GET["go"]) && !empty($_GET["destination"]))
         {
             $param_keyword = null;
         }
+		$param_ip = $ip;
         // Attempt to execute the prepared statement
         mysqli_stmt_execute($stmt);
         // Close statement

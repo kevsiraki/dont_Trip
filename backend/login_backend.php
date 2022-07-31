@@ -12,8 +12,8 @@ $username_err = $password_err = $login_err = $isAuth = "";
 $tfa_en = false;
 $lock = false;
 $total_count = 0;
-$first_limit;
-$second_limit;
+$first_limit = 5;
+$second_limit = 20;
 date_default_timezone_set('America/Los_Angeles');
 $date = date("Y-m-d H:i:s");
 //Safely stores all page visits.
@@ -47,18 +47,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
     require_once 'rateLimiter.php';
     //First step of brute force prevention, lock user out consecutively for 10 seconds after 5 failed attempts;
-    $query = mysqli_query($link, "SELECT COUNT(*) AS total_count from failed_login_attempts where ip='$ip_address'");
-    $check_login_row = mysqli_fetch_assoc($query);
-    $total_count = $check_login_row['total_count'];
-    if ($total_count >= 5 && $total_count < 20)
+    $total_count = getFailedAttempts($link, $ip_address);
+    if ($total_count >= $first_limit && $total_count < $second_limit)
     {
-        $queryLastAttempt = mysqli_query($link, "SELECT * from failed_login_attempts where ip='$ip_address' ORDER BY attempt_time DESC LIMIT 1");
-        $lastAttempt = mysqli_fetch_assoc($queryLastAttempt);
-        $lockout = $total_count - 4;
+		$sql = "SELECT * from failed_login_attempts where ip = ? ORDER BY attempt_time DESC LIMIT 1 ;";
+		if ($stmt = mysqli_prepare($link, $sql))
+		{
+			// Bind variables to the prepared statement as parameters
+			mysqli_stmt_bind_param($stmt, "s", $param_ip);
+			// Set parameters
+			$param_ip = $ip_address;
+			// Attempt to execute the prepared statement
+			mysqli_stmt_execute($stmt);
+			$result = mysqli_stmt_get_result($stmt);
+			$lastAttempt = mysqli_fetch_assoc($result);
+			mysqli_stmt_close($stmt);
+		}
         //undo this security check after 1 day if they don't exceed 20 attempts.
         if ($lastAttempt['attempt_time'] + (24 * 3600) < time())
         {
-            mysqli_query($link, "DELETE from failed_login_attempts where ip='$ip_address' ");
+			$sql = "DELETE from failed_login_attempts where ip = ? ";
+			if ($stmt = mysqli_prepare($link, $sql))
+			{
+				// Bind variables to the prepared statement as parameters
+				mysqli_stmt_bind_param($stmt, "s", $param_ip);
+				// Set parameters
+				$param_ip = $ip_address;
+				// Attempt to execute the prepared statement
+				mysqli_stmt_execute($stmt);
+				mysqli_stmt_close($stmt);
+			}
             $lock = false;
         }
         if ($lastAttempt['attempt_time'] + 10 > time())
@@ -132,12 +150,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         mysqli_stmt_close($stmt);
     }
     //Check if user is authorized before sending 2FA response.
-    if (!empty($userResults["tfaen"]))
+    if (!empty($userResults["tfaen"]) && ($userResults["tfaen"] == 1 || $emailResults["tfaen"] == 1) && (password_verify($password, $userResults['password'])))
     {
-        if (($userResults["tfaen"] == 1 || $emailResults["tfaen"] == 1) && (password_verify($password, $userResults['password'])))
-        {
-            $tfa_en = true;
-        }
+		$tfa_en = true;
     }
     // Validate credentials against database
     if (empty($username_err) && empty($password_err) && !$lock)
@@ -194,7 +209,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                     // Store data in session variables
                                     $_SESSION["loggedin"] = true;
                                     $_SESSION["username"] = $username;
-                                    mysqli_query($link, "DELETE from failed_login_attempts where ip='$ip_address'AND username='$username'"); //reset failed attempts
+									deleteFailedAttempts($link,$ip_address, $username); 
                                     // Redirect user
                                     echo 1;
                                 }
@@ -214,7 +229,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                     // Store data in session variables
                                     $_SESSION["loggedin"] = false;
                                     $_SESSION["username"] = $username;
-									mysqli_query($link, "DELETE from failed_login_attempts where ip='$ip_address' AND username='$username'"); //reset failed attempts
+									deleteFailedAttempts($link,$ip_address, $username); 
 									//Redirect user
 									echo 2;
                                 }
@@ -231,15 +246,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                             // Password is not valid
                             $try_time = time();
                             //Brute Force Killer, the final step.
-                            $query = mysqli_query($link, "SELECT COUNT(*) AS total_count from failed_login_attempts where ip='$ip_address' or username = '" . $username . "'");
-                            $check_login_row = mysqli_fetch_assoc($query);
-                            $total_count = $check_login_row['total_count'];
-                            //On clearly malicious attempts, ban the IP address, send the real user an email.
-                            //This is in a case where the attacker actually has the victims username or email.
-                            //In other cases, we respond with a nominal failed attempt message.
-                            $queryEmailSent = mysqli_query($link, "SELECT * from failed_login_attempts where ip='$ip_address' or username = '" . $username . "'");
-                            $check_email_sent = mysqli_fetch_assoc($queryEmailSent);
-                            //if they have reset their account, dont add failed attempts since their password is invalid.
+                            $total_count = getFailedAttemptsByUser($link, $ip_address, $username); 
+                            //On malicious attempts, ban the IP address, destroy victims password, and send victim an email.
+                            $check_email_sent = getFailedAttemptsInfoByUser($link, $ip_address, $username);
+                            //If account is already reset, do not add failed attempts since their password is invalid.
                             if (empty($check_email_sent['otp']))
                             {
                                 $sql = "INSERT INTO failed_login_attempts (ip,attempt_time,username) values(?, ?, ?) ;";
@@ -256,11 +266,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                     mysqli_stmt_close($stmt);
                                 }
                             }
-                            if ($total_count >= 20)
+                            if ($total_count >= $second_limit)
                             {
                                 if ($ip_address == $check_email_sent['ip'])
                                 {
-                                    echo "google";
+                                    echo "google"; //redirect the attacker to some random place
                                 }
                                 else
                                 {
@@ -277,8 +287,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                 {
                                     $recovery_otp = random_str(16);
                                     $resetted_password = random_str(60); //random numbers that cant be used to login ever.
-                                    mysqli_query($link, "UPDATE failed_login_attempts SET otp='" . password_hash($recovery_otp, PASSWORD_DEFAULT) . "' WHERE username='" . $userResults["username"] . "'");
-                                    mysqli_query($link, "UPDATE users SET password='$resetted_password' WHERE username='" . $userResults["username"] . "'");
+                                    $sql = "UPDATE failed_login_attempts SET otp = ? WHERE username = ? ;";
+									if ($stmt = mysqli_prepare($link, $sql))
+									{
+										// Bind variables to the prepared statement as parameters
+										mysqli_stmt_bind_param($stmt, "ss", $param_otp, $param_username);
+										// Set parameters
+										$param_otp = password_hash($recovery_otp, PASSWORD_DEFAULT);
+										$param_username = $username;
+										// Attempt to execute the prepared statement
+										mysqli_stmt_execute($stmt);
+										mysqli_stmt_close($stmt);
+									}
+									$sql = "UPDATE users SET password = ? WHERE username = ? ;";
+									if ($stmt = mysqli_prepare($link, $sql))
+									{
+										// Bind variables to the prepared statement as parameters
+										mysqli_stmt_bind_param($stmt, "ss", $param_otp, $param_username);
+										// Set parameters
+										$param_password = $resetted_password;
+										$param_username = $username;
+										// Attempt to execute the prepared statement
+										mysqli_stmt_execute($stmt);
+										mysqli_stmt_close($stmt);
+									}
                                     $mail = new PHPMailer(true);
                                     try
                                     {
