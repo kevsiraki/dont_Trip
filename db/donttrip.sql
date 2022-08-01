@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS searches (
   id int(10) unsigned NOT NULL AUTO_INCREMENT, 
   username VARCHAR(50), 
   destination VARCHAR(100), 
-  keyword VARCHAR(50), 
+  keyword VARCHAR(50),
+  ip VARCHAR(255),  
   PRIMARY KEY (id)
 );

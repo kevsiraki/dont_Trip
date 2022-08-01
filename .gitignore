@@ -1,7 +1,5 @@
 .env
-.htaccess
 composer.json
 composer.lock
-robots.txt
 vendor/
 phpmail/
