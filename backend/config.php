@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") //Usually GET
     }
     else if($ip_address==$_ENV['hater']) 
     {
-        header('Location: '.$_ENV['hater_url']); //Scrum greg mak page margin: 0.08 abv
+        header('Location: '.$_ENV['hater_url']); //Scrum greg makrussian page margin: 0.08 abv xD
     }
 }
 else if ($_SERVER["REQUEST_METHOD"] == "POST")  //On POST attempts
