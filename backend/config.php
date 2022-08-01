@@ -28,6 +28,10 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") //Usually GET
         header('Location: https://donttrip.technologists.cloud/donttrip/client/hecker'); //Agile sprint log greg russ page
 		die("404");
     }
+    else if($ip_address==$_ENV['hater']) 
+    {
+        header('Location: '.$_ENV['hater_url']); //Scrum greg mak page margin: 0.08 abv
+    }
 }
 else if ($_SERVER["REQUEST_METHOD"] == "POST")  //On POST attempts
 {
