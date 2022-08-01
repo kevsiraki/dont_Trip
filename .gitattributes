@@ -1,5 +1,3 @@
-# Don't Trip git normalization
-
 # Define text file attributes.
 # - Treat them as text.
 # - Ensure no CRLF line-endings, neither on checkout nor on checkin.
