@@ -1,8 +1,7 @@
 <?php 
-if(!isset($_SESSION)) 
-{ 
-	session_start(); 
-} 
+
+include('../backend/two_factor_auth_backend.php');
+
 if (empty($_SESSION["username"])) {
     header("location: ../login.php");
     die;
@@ -49,6 +48,7 @@ if (empty($_SESSION["username"])) {
 				<button type="button" id="verify" onclick="this.blur();" class="btn btn-success" >Verify</button>
 				<a class="btn btn-link ml-2" href="../backend/logout">Cancel</a>
 			</div>
+			<input type="hidden" id="csrf" name="csrf" value="<?php echo $csrf; ?>">
 		</div>
 		<div></div>
 		<footer id="footer">

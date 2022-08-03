@@ -5,6 +5,7 @@ $(document).on('click', '#submit-password', function(e) {
     let tfa = $('#tfa').val();
     let email = $('#hidden-email').val();
     let key = $('#hidden-key').val();
+    let csrf = $('#csrf').val();
     $.ajax({
         url: '../backend/forgot-password_backend',
         type: 'post',
@@ -15,7 +16,8 @@ $(document).on('click', '#submit-password', function(e) {
             confirm_password: confirm_password,
             tfa: tfa,
             email: email,
-            key: key
+            key: key,
+            csrf: csrf
         },
         success: function(response) {
             let button = document.getElementById("submit-password");

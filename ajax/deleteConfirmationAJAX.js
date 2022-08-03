@@ -1,13 +1,15 @@
 $(document).on('click', '#delete-account', function(e) {
     e.preventDefault();
     let password = $('#password').val();
+    let csrf = $('#csrf').val();
     $.ajax({
         url: '../backend/delete_confirmation_backend',
         type: 'post',
 		dataType: "html",
         timeout: 5000,
         data: {
-            password: password
+            password: password,
+            csrf: csrf
         },
         success: function(response) {
             let button = document.getElementById("delete-account");

@@ -4,13 +4,14 @@ require_once "config.php";
 require_once 'helpers.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+include('php-csrf.php');
 if (!isset($_SESSION))
 {
     session_start();
 }
-if (!empty($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
+if (isset($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
 {
-    header("location: ../login.php");
+    header("location: ../backend/logout.php");
     die;
 }
 // Define variables and initialize with empty values

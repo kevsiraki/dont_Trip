@@ -1,8 +1,5 @@
 <?php
-if(!isset($_SESSION)) 
-{ 
-	session_start(); 
-} 
+require_once "../backend/recovery_backend.php"; 
 // Check if the user is logged in, otherwise redirect to login page
 if (!isset($_SESSION["locked"]) || $_SESSION["locked"] !== true) {
     header("location: ../login.php");
@@ -49,6 +46,7 @@ if (!isset($_SESSION["locked"]) || $_SESSION["locked"] !== true) {
 			<div class="form-group" style="margin-left:5%;">
 				<button type="button" id="recover-account" class="btn btn-secondary" onclick="this.blur();">Submit</button>
 			</div>
+			<input type="hidden" id="csrf" name="csrf" value="<?php echo $csrf; ?>">
 		</div>
 		<input type="hidden" id="username" name="username" value="<?php echo $_SESSION["username"]?>">
 		<footer id="footer">

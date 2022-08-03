@@ -1,18 +1,40 @@
 <?php
 header("Content-Type: text/html");
-require_once 'rateLimiter.php';
+
+include('php-csrf.php');
 require_once 'helpers.php';
 require_once "config.php";
 require_once 'vendor/sonata-project/google-authenticator/src/FixedBitNotation.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticatorInterface.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
-if (!isset($_SESSION))
-{
-    session_start();
+
+if(isset($_SESSION['loginTime'])&&$_SESSION['loginTime']+$_ENV["expire"] < time()) { 
+	$_SESSION = array();
+	// Destroy the session.
+	session_destroy();
+	header('location: https://donttrip.technologists.cloud/donttrip/client/session_expired.php');
+	die;
 }
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET")
+{
+	if(isset($_SESSION['loginTime'])) {
+		if($_SESSION['loginTime']+($_ENV["expire"]/3) < time()) {
+			session_regenerate_id(true); 
+		}
+		$_SESSION['loginTime'] = time();
+	}
+}
+
 define("encryption_method", $_ENV["recovery_encryption"]);
 define("key", $_ENV["recovery_key"]);
+
+if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
+
+require_once 'rateLimiter.php';
+
 //Query 2FA user secret
 $sql = "SELECT * FROM users WHERE username = ? ;";
 if ($stmt = mysqli_prepare($link, $sql))
@@ -27,7 +49,9 @@ if ($stmt = mysqli_prepare($link, $sql))
     $userResults = mysqli_fetch_assoc($result);
     mysqli_stmt_close($stmt);
 }
+
 //Authenticate OTP input
+
 $g = new \Google\Authenticator\GoogleAuthenticator();
 $secret = decrypt($userResults["tfa"]);
 $code = trim($_POST["tfa"]);
@@ -46,5 +70,6 @@ else if (!($g->checkCode($secret, $code)))
     {
         die("Incorrect/Expired.");
     }
+}
 }
 ?>

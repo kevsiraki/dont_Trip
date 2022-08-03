@@ -6,13 +6,10 @@ require_once 'vendor/sonata-project/google-authenticator/src/FixedBitNotation.ph
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticatorInterface.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
-if (!isset($_SESSION))
+include('php-csrf.php');
+if (isset($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
 {
-    session_start();
-}
-if (!empty($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
-{
-    header("location: ../login.php");
+    header("location: ../backend/logout.php");
     die;
 }
 date_default_timezone_set('America/Los_Angeles');

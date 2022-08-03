@@ -79,6 +79,7 @@
 			<button name="Submit" type="button" id="sign-up" class="center btn btn-success" onclick="this.blur();">Sign-Up</button>
 			<br>
 			<p id="info-two" class="darkable-text">Already have an account? <a href="../login">Login here</a></p>
+			<input type="hidden" id="csrf" name="csrf" value="<?php echo $csrf; ?>">
 		</div>
 		<br>
 		<br>

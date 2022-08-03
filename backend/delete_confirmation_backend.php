@@ -1,28 +1,42 @@
 <?php
 header("Content-Type: text/html");
-// Initialize the session
-if (!isset($_SESSION))
-{
-    session_start();
-}
+
+require_once "config.php";
+include('php-csrf.php');
+
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)
 {
     header("location: ../login.php");
     die;
 }
-else if (!empty($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
+if (isset($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
 {
-    header("location: ../login.php");
+    header("location: logout.php");
     die;
 }
-
-require_once "config.php";
+if(isset($_SESSION['loginTime'])&&$_SESSION['loginTime']+$_ENV["expire"] < time()) { 
+	$_SESSION = array();
+	// Destroy the session.
+	session_destroy();
+	header('location: https://donttrip.technologists.cloud/donttrip/client/session_expired.php');
+	die;
+}
+if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET")
+{
+	if(isset($_SESSION['loginTime'])) {
+		if($_SESSION['loginTime']+($_ENV["expire"]/3) < time()) {
+			session_regenerate_id(true); 
+		}
+		$_SESSION['loginTime'] = time();
+	}
+}
 
 $password = $password_err = "";
 
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
+
     require_once 'rateLimiter.php';
     $username = $_SESSION["username"];
     // Check if password is empty

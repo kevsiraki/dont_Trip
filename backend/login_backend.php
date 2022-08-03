@@ -1,6 +1,7 @@
 <?php
 header("Content-Type: text/html");
 require_once 'redirect_backend.php';
+include('php-csrf.php');
 require_once 'helpers.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -42,6 +43,7 @@ if (!isset($_GET['code']))
 {
     $isAuth = "yes";
 }
+
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
@@ -209,6 +211,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                     // Store data in session variables
                                     $_SESSION["loggedin"] = true;
                                     $_SESSION["username"] = $username;
+									$_SESSION['loginTime'] = time();
 									deleteFailedAttempts($link,$ip_address, $username); 
                                     // Redirect user
                                     echo 1;
@@ -229,6 +232,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                     // Store data in session variables
                                     $_SESSION["loggedin"] = false;
                                     $_SESSION["username"] = $username;
+									$_SESSION['loginTime'] = time();
 									deleteFailedAttempts($link,$ip_address, $username); 
 									//Redirect user
 									echo 2;
@@ -280,6 +284,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                     }
                                     $_SESSION["locked"] = true;
                                     $_SESSION["username"] = $username;
+									$_SESSION["authorized"] = false;
                                     $password_err = "Error 404";
                                     echo $password_err;
                                 }
@@ -303,7 +308,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 									if ($stmt = mysqli_prepare($link, $sql))
 									{
 										// Bind variables to the prepared statement as parameters
-										mysqli_stmt_bind_param($stmt, "ss", $param_otp, $param_username);
+										mysqli_stmt_bind_param($stmt, "ss", $param_password, $param_username);
 										// Set parameters
 										$param_password = $resetted_password;
 										$param_username = $username;
@@ -386,6 +391,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             }
         }
     }
-    mysqli_close($link);
+    mysqli_close($link); 
 }
 ?>

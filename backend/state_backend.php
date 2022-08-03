@@ -12,10 +12,27 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)
     header("location: ../login.php");
     die;
 }
-else if (!empty($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
+if (isset($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
 {
-    header("location: ../login.php");
+    header("location: ../backend/logout.php");
     die;
+}
+if(isset($_SESSION['loginTime'])&&$_SESSION['loginTime']+$_ENV["expire"] < time()) { 
+	$_SESSION = array();
+	// Destroy the session.
+	session_destroy();
+	header('location: https://donttrip.technologists.cloud/donttrip/client/session_expired.php');
+	die;
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET")
+{
+	if(isset($_SESSION['loginTime'])) {
+		if($_SESSION['loginTime']+($_ENV["expire"]/3) < time()) {
+			session_regenerate_id(true); 
+		}
+		$_SESSION['loginTime'] = time();
+	}
 }
 
 $sql = "SELECT DISTINCT destination, COUNT(destination) AS destCnt FROM searches WHERE (destination LIKE BINARY ? OR destination LIKE BINARY ? ) AND destination IS NOT NULL GROUP BY destination ORDER BY destCnt DESC LIMIT 100;";

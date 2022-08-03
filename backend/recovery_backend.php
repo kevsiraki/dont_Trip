@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: text/html");
-
 require_once "config.php";
+include('php-csrf.php');
 
 $password = $password_err = "";
 
@@ -66,10 +66,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                             {
                                 session_start();
                             }
+							else if (isset($_SESSION))
+                            {
+                                session_destroy();
+								session_start();
+                            }
                             //Delete the failed attempts on success.
                             $_SESSION["loggedin"] = true;
                             $_SESSION["authorized"] = false;
                             $_SESSION["username"] = $username;
+							$_SESSION['loginTime'] = time();
                             // Redirect user response
                             echo 1;
                         }

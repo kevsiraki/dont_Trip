@@ -1,8 +1,5 @@
 <?php
-if(!isset($_SESSION)) 
-{ 
-	session_start(); 
-} 
+include('../backend/reset-password_backend.php');
 // Check if the user is logged in, otherwise redirect to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: ../login.php");
@@ -81,6 +78,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 				<button type="button" id="submit-password" class="btn btn-primary" onclick="this.blur();">Submit</button>
 				<a class="btn btn-link ml-2" href="settings">Cancel</a>
 			</div>
+			<input type="hidden" id="csrf" name="csrf" value="<?php echo $csrf; ?>">
 		</div>
 		<div id="space"></div>
 		<footer id="footer">

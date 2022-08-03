@@ -5,6 +5,7 @@ $(document).on('click', '#log-in', function(e) {
     e.preventDefault();
     let username = $('#username').val();
     let password = $('#password').val();
+	let csrf = $('#csrf').val();
     let button = document.getElementById("log-in");
     let error = document.getElementById("invalid-login");
     $.ajax({
@@ -14,7 +15,8 @@ $(document).on('click', '#log-in', function(e) {
         timeout: 5000,
         data: {
             username: username,
-            password: password
+            password: password,
+			csrf: csrf
         },
         success: function(response) {
             if (response.includes("ten")) {

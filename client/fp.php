@@ -44,6 +44,7 @@
 				<button type="button" id="submit-email" class="btn btn-primary" onclick="this.blur();">Submit</button>
 				<a class="btn btn-link ml-2" href="../login">Cancel</a>
 			</div>
+			<input type="hidden" id="csrf" name="csrf" value="<?php echo $csrf; ?>">
 		</div>
 	</body>
 	<footer id="footer">

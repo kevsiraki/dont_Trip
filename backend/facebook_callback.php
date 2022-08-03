@@ -57,6 +57,7 @@ $me = $response->getGraphUser();
 $_SESSION["username"] = $me->getProperty('name') . " (Facebook)[" . $me->getProperty('id') . "]";
 $_SESSION["loggedin"] = true;
 $_SESSION["fbAvatar"] = $me->getProperty('picture');
+$_SESSION['loginTime'] = time();
 
 header("location: ../client/dt");
 ?>

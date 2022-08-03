@@ -2,6 +2,7 @@ $(document).on('click', '#recover-account', function(e) {
 	e.preventDefault();
 	let username = $('#username').val();
     let password = $('#password').val();
+    let csrf = $('#csrf').val();
     $.ajax({
         url: '../backend/recovery_backend',
         type: 'post',
@@ -9,7 +10,8 @@ $(document).on('click', '#recover-account', function(e) {
 		timeout: 5000,
         data: {
 			username: username,
-            password: password
+            password: password,
+            csrf: csrf
         },
         success: function(response) {
 			let button = document.getElementById("recover-account");

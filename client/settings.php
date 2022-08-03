@@ -1,4 +1,6 @@
-<?php require_once "../backend/settings_backend.php";?>
+<?php 
+require_once "../backend/settings_backend.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>

@@ -1,13 +1,15 @@
 $(document).on('click', '#verify', function(e) {
 	e.preventDefault();
     let tfa = $('#tfa').val();
+    let csrf = $('#csrf').val();
     $.ajax({
         url: '../backend/two_factor_auth_backend',
         type: 'post',
 		dataType: "html",
 		timeout: 5000,
         data: {
-            tfa: tfa
+            tfa: tfa,
+            csrf: csrf
         },
         success: function(response) {
 			let button = document.getElementById("verify");

@@ -5,10 +5,27 @@ if (!isset($_SESSION))
 {
     session_start();
 }
-if (!empty($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
+if (isset($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
 {
-    header("location: ../login.php");
+    header("location: ../backend/logout.php");
     die;
+}
+if(isset($_SESSION['loginTime'])&&$_SESSION['loginTime']+$_ENV["expire"] < time()) { 
+	$_SESSION = array();
+	// Destroy the session.
+	session_destroy();
+	header('location: https://donttrip.technologists.cloud/donttrip/client/session_expired.php');
+	die;
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET")
+{
+	if(isset($_SESSION['loginTime'])) {
+		if($_SESSION['loginTime']+($_ENV["expire"]/3) < time()) {
+			session_regenerate_id(true); 
+		}
+		$_SESSION['loginTime'] = time();
+	}
 }
 
 $gmaps_api_key = $_ENV['gmaps_api_key'];
@@ -20,7 +37,7 @@ $audio = $wilson[rand(0, 4) ]->audio;
 if (isset($_GET["go"]) && !empty($_GET["destination"]))
 {
     // Prepare an insert statement
-    $sql = "INSERT INTO searches (username, destination, keyword, ip)VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO searches (username, destination, keyword, ip) VALUES (?, ?, ?, ?)";
     if ($stmt = mysqli_prepare($link, $sql))
     {
         // Bind variables to the prepared statement as parameters

@@ -1,8 +1,7 @@
 <?php 
-if(!isset($_SESSION)) 
-{ 
-	session_start(); 
-} 
+
+require_once "../backend/delete_confirmation_backend.php"; 
+
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: ../login.php");
     exit;
@@ -54,6 +53,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 				<button type="button" id="delete-account" class="btn btn-secondary" onclick="this.blur();">Delete Account</button>
 				<a class="btn btn-link ml-2" href="settings">Cancel</a>
 			</div>
+			<input type="hidden" id="csrf" name="csrf" value="<?php echo $csrf ?>">
 		</div>
 		<footer id="footer">
 			<a href="../login" class="logo">

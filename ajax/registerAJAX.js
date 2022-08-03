@@ -4,6 +4,7 @@ $(document).on('click', '#sign-up', function(e) {
     let username = $('#username').val();
     let password = $('#password').val();
     let confirm_password = $('#confirm-password').val();
+    let csrf = $('#csrf').val();
 	let button = document.getElementById("sign-up");
 	let error = document.getElementById("invalid-signup");
     $.ajax({
@@ -15,7 +16,8 @@ $(document).on('click', '#sign-up', function(e) {
             email: email,
             username: username,
             password: password,
-            confirm_password: confirm_password
+            confirm_password: confirm_password,
+            csrf: csrf
         },
         success: function(response) {
 			

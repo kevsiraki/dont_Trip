@@ -2,6 +2,7 @@ $(document).on('click', '#submit-password', function(e) {
 	e.preventDefault();
     let new_password = $('#password').val();
 	let confirm_password = $('#confirm-password').val();
+        let csrf = $('#csrf').val();
     $.ajax({
         url: '../backend/reset-password_backend',
         type: 'post',
@@ -9,7 +10,8 @@ $(document).on('click', '#submit-password', function(e) {
 		dataType: "html",
         data: {
             new_password: new_password,
-			confirm_password: confirm_password
+			confirm_password: confirm_password,
+                      csrf: csrf
         },
         success: function(response) {
 			let button = document.getElementById("submit-password");

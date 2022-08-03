@@ -1,10 +1,10 @@
 <?php
-require_once "backend/login_backend.php"; 
 // Initialize the session
 if(!isset($_SESSION)) 
 { 
 	session_start(); 
 } 
+require_once "backend/login_backend.php"; 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,6 +47,8 @@ if(!isset($_SESSION))
 			</div>
 		</header>
 		<div class="wrapper">
+			
+			
 			<h2><img draggable="false" src="icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
@@ -104,6 +106,7 @@ if(!isset($_SESSION))
 			?>
 			<p id="info" class="darkable-text">Need an account? <a href="client/register" style="">Sign up here</a></p>
 			<p><a href="client/fp" style="">Forgot your password?</a></p>
+			<input type="hidden" id="csrf" name="csrf" value="<?php echo $csrf ?>">
 		</div>
 		<div id="space"></div>
 		<footer id="footer">

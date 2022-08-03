@@ -18,6 +18,7 @@ if ($link === false)
 {
     die("ERROR: Could not connect. " . mysqli_connect_error());
 }
+
 //Check if visitor is banned for bruteforcing, or if it is a recurring bruteforcer on a proxy...
 if ($_SERVER["REQUEST_METHOD"] != "POST") //Usually GET
 {
@@ -35,9 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") //Usually GET
 }
 else if ($_SERVER["REQUEST_METHOD"] == "POST")  //On POST attempts
 {
-    
     $total_count = getFailedAttempts($link, $ip_address);
-    if ($total_count >= 20 || (checkIP() && $total_count >= 5))
+    if (checkIP() && $total_count >= 5)
     {
 		die("404"); //Agile sprint log greg russ page
     }

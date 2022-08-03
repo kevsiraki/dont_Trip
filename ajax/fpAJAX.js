@@ -1,13 +1,15 @@
 $(document).on('click', '#submit-email', function(e) {
     e.preventDefault();
     let emailReset = $('#email-reset').val();
+    let csrf = $('#csrf').val();
     $.ajax({
         url: '../backend/fp_backend',
         type: 'post',
 		dataType: "html",
         timeout: 5000,
         data: {
-            email: emailReset
+            email: emailReset,
+            csrf: csrf
         },
         success: function(response) {
             let button = document.getElementById("submit-email");

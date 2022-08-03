@@ -133,6 +133,7 @@ function checkIP()
     //check for proxies
     $key = $_ENV["ip_quality_api_key"];
     $ip = getIpAddr();
+	
     if ($ip != $_ENV["myIP"] && $ip != $_ENV["myPhoneIP"])
     {
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
@@ -158,7 +159,7 @@ function checkIP()
         $json = curl_exec($curl);
         curl_close($curl);
         $result = json_decode($json, true);
-        if ($result['proxy'] === true && $result['is_crawler'] === false)
+        if (!empty($result['proxy']) &&$result['proxy'] === true && $result['is_crawler'] === false)
         {
             return true;
         }

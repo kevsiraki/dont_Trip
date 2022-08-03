@@ -4,9 +4,15 @@ require_once "config.php";
 require_once 'helpers.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+include('php-csrf.php');
 $username = $password = $confirm_password = $email = "";
 $username_err = $password_err = $confirm_password_err = $email_err = "";
 $row = 0;
+if (isset($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
+{
+    header("location: ../backend/logout.php");
+    die;
+}
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
