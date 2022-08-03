@@ -25,5 +25,6 @@ if ($client->getAccessToken()) {
 	$_SESSION['username'] = $name." (Google)[".$google_account_info->id."]";
 	$_SESSION['googleAvatar'] = $google_account_info->picture;
 	$_SESSION['loginTime'] = time();
+	session_regenerate_id(true);
 }
 ?>

@@ -20,16 +20,18 @@
 	<li>Popular in your state, search history/keywords, and places along the route all feature hyperlinks to easily use them as search queries.</p>
 	<p>Backend/Server</p>
 	<li>Proper SSL Encryption with HTTP->HTTPS traffic redirects.</li>
-	<li>Hashed/salted passwords and encryption of any secret keys in the DB.</li>
+	<li>Hashed/salted passwords and modern encryption of any secret keys in the DB.</li>
 	<li>Two factor authentication that works with any authenticator app of choice.</li>
 	<li>Account deletion with confirm password.</li>
 	<li>Confirm email verification/forgot password recovery email form with material design email templates.</li>
 	<li>Expiring password reset forms with custom hashed tokens.</li>
 	<li>Realtime form (password/username/email/other) input strength/requirement meters.</li>
 	<li>SQL injection proof, prepare/parameterized statments utilized for any query in entire backend.</li>
-	<li>Brute force/XSRF/CSRF protection/IDS setup to keep a log of visits and login attempts.</li>
-	<li>Rate limiting on all actions, including email reset forms.</li>
-	<li>RESTful architecture used for backend.</li>
+	<li>Brute force/XSS/CSRF protection with custom IDS setup to keep a log of visits and login attempt.</li>
+	<li>Session regeneration and expiry system to prevent session hijacking/fixation</li>
+	<li>Alert users on brute force attempts with an email and a temporary code to reset their password.</li>
+	<li>Rate limiting/throttling on all front-end components and server requests, including email reset forms.</li>
+	<li>RESTful architecture used for backend (not fully, however, as Sessions are used a bit).</li>
 	<li>Google/Facebook/Discord login integration.</li>
 	<li>Proxies/VPNs/TOR nodes as well as non-existent/fraudulent e-mail addresses filtered/prevented/redirected if suspicious activity is detected.</li>
 	<li>PHP-Dot-Env used to safely store API keys, database credentials, email server information, etc.</li>

@@ -8,6 +8,7 @@ if (isset($client) && isset($_SESSION["access_token"]))
     unset($_SESSION['access_token']);
     $client->revokeToken();
 }
+session_regenerate_id(true);
 $_SESSION = array();
 // Destroy the session.
 session_destroy();

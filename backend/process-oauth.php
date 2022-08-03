@@ -69,6 +69,7 @@ extract($_SESSION['userData']);
 $_SESSION["username"] = $name." (Discord)[".$discord_id."]";
 $_SESSION["loggedin"] = true;
 $_SESSION['loginTime'] = time();
+session_regenerate_id(true);
 
 header("location: ../client/dt");
 

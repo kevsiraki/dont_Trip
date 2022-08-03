@@ -58,6 +58,7 @@ $_SESSION["username"] = $me->getProperty('name') . " (Facebook)[" . $me->getProp
 $_SESSION["loggedin"] = true;
 $_SESSION["fbAvatar"] = $me->getProperty('picture');
 $_SESSION['loginTime'] = time();
+session_regenerate_id(true);
 
 header("location: ../client/dt");
 ?>

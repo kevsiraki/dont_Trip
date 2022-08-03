@@ -107,7 +107,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             {
                 mysqli_query($link, "UPDATE failed_login_attempts SET username = null, otp = null WHERE username = '" . $userResults["username"] . "' ;");
                 // Password updated successfully. Destroy the session, and redirect to login page
-                session_destroy();
+                session_regenerate_id(true);
+				session_destroy();
                 echo 1;
                 die;
             }

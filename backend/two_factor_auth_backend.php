@@ -59,6 +59,7 @@ if ($g->checkCode($secret, $code))
 {
     $_SESSION["loggedin"] = true;
     echo 1;
+	session_regenerate_id(true);
 }
 else if (!($g->checkCode($secret, $code)))
 {

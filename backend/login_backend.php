@@ -208,6 +208,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                         mysqli_stmt_execute($stmt);
                                         mysqli_stmt_close($stmt);
                                     }
+									session_regenerate_id(true);
                                     // Store data in session variables
                                     $_SESSION["loggedin"] = true;
                                     $_SESSION["username"] = $username;
@@ -229,6 +230,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                     {
                                         session_start();
                                     }
+									session_regenerate_id(true);
                                     // Store data in session variables
                                     $_SESSION["loggedin"] = false;
                                     $_SESSION["username"] = $username;
@@ -286,6 +288,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                     $_SESSION["username"] = $username;
 									$_SESSION["authorized"] = false;
                                     $password_err = "Error 404";
+									session_regenerate_id(true);
                                     echo $password_err;
                                 }
                                 if (empty($check_email_sent['otp']))

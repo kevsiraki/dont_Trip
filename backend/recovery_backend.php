@@ -76,6 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                             $_SESSION["authorized"] = false;
                             $_SESSION["username"] = $username;
 							$_SESSION['loginTime'] = time();
+							session_regenerate_id(true);
                             // Redirect user response
                             echo 1;
                         }
