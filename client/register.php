@@ -7,7 +7,7 @@
 		<title>Sign Up</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://kit.fontawesome.com/4b68e7bba8.js" crossorigin="anonymous"></script>
 		<link href="../icons/icon_header.png" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<link rel="stylesheet" href="../style/form_style.css">
@@ -42,25 +42,27 @@
 			<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
-			<div id="invalid-signup" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"></div>
+			<div id="invalid-signup" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;margin-bottom:35px !important;"></div>
 			<input style="display:none">
 			<input type="password" style="display:none" autocomplete="new-password"/>
 			<input style="display: none" type="text" name="fakeusernameremembered" />
 			<input style="display: none" type="password" name="fakepasswordremembered" />
-			<div class="form-group">
-				<input type="email" name="email" placeholder="E-mail Address" id="email" autocomplete="off" 
-					aria-describedby="emailHelp" class="center form-control" required>
-				<div id="ename_response" style="text-align:center;"></div>
+			<div class="form-group" style="margin-bottom: 1% !important;">
+				<input type="email" name="email" id="email" autocomplete="off" aria-describedby="emailHelp" class="center form-control" required>
+				<div class="field-placeholder"><span>E-Mail Address</span></div>
 			</div>
-			<div class="form-group">
-				<input type="text" placeholder="Username" name="username" id="username" autocomplete="off" class="center form-control" required>
-				<div id="uname_response" style="text-align:center;"></div>
+			<div id="ename_response" style="text-align:center;margin-bottom: 5.5%;"></div>
+			<div class="form-group" style="margin-bottom: 1% !important;">
+				<input type="text" name="username" id="username" autocomplete="off" class="center form-control" required>
+				<div class="field-placeholder"><span>Username</span></div>
 			</div>
+			<div id="uname_response" style="text-align:center;margin-bottom: 5.5%;"></div>
 			<div class="form-group">
-				<input type="password" placeholder="Password" name="password" id="password" 
-					oninput="getBoth();" autocomplete="new-password" class="center form-control" required>
+				<input type="password" name="password" id="password" oninput="getBoth();" autocomplete="new-password" class="center form-control" required>
+				<div class="field-placeholder"><span>Password</span></div>
+				<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 			</div>
-			<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+			
 			<div id="password-strength" style="display: none;text-align:center;">
 				<div id="length" class="pw-stength" ><small> At least 8 characters</small></div>
 				<div id="lowercase" class="pw-stength"><small> At least 1 lowercase letter</small></div>
@@ -69,16 +71,17 @@
 				<br>
 			</div>
 			<div class="form-group">
-				<input type="password" name="confirm_password" id="confirm-password" placeholder="Confirm Password" 
-					oninput="getBoth();" autocomplete="new-password" class="center form-control" required>
+				<input type="password" name="confirm_password" id="confirm-password" oninput="getBoth();" autocomplete="new-password" class="center form-control" required>
+				<div class="field-placeholder"><span>Confirm Password</span></div>
+				<span toggle="#confirm-password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 			</div>
 			<div id="confirm-password-strength" style="display: none;text-align:center;">
 				<div id="matching" class="pw-stength"><small> Matching</small></div>
 			</div>
 			<br> 
-			<button name="Submit" type="button" id="sign-up" class="center btn btn-success" onclick="this.blur();">Sign-Up</button>
+				<button name="Submit" type="button" id="sign-up" class="center btn btn-success" onclick="this.blur();">Sign-Up</button>
 			<br>
-			<p id="info-two" class="darkable-text">Already have an account? <a href="../login">Login here</a></p>
+			<div id="info-two" class="darkable-text">Already have an account? <a href="../login">Login here</a></div>
 			<input type="hidden" id="csrf" name="csrf" value="<?php echo $csrf; ?>">
 		</div>
 		<br>

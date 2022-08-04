@@ -91,8 +91,8 @@ input:-webkit-autofill {
 	-webkit-transition: all .2s ease-in-out;
 	-moz-transition: all .2s ease-in-out;
 	transition: all .2s ease-in-out;
-       background-color: #35363A;
-       color: white;
+    background-color: #35363A;
+    color: white;
 }
 .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
 	color: #c0c0c0;
@@ -109,7 +109,7 @@ input:-webkit-autofill {
     background-color: #35363A;
     color: white;
 	border-color: #c0c0c0 !important;
-	box-shadow: 0 0 10px #c0c0c0;
+	box-shadow: 0 0 1px #c0c0c0;
 	-webkit-transition: all .2s ease-in-out  !important;
 	-moz-transition: all .2s ease-in-out;
 	transition: all .2s ease-in-out ;
@@ -141,4 +141,10 @@ input:-webkit-autofill {
 	-webkit-transition: all .2s ease-in-out;
 	-moz-transition: all .2s ease-in-out;
 	transition: all .2s ease-in-out;
+}
+.form-group .field-placeholder,
+.form-group .field-placeholder span,
+.form-group input:not([disabled]):focus~.field-placeholder
+{
+    color: #c0c0c0 !important;
 }

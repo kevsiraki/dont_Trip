@@ -146,3 +146,25 @@ function lightStyle() {
         });
     }
 }
+        $(function () {
+
+            $(".form-group .field-placeholder").on("click", function () {
+                $(this).closest(".form-group").find("input").focus();
+            });
+            $(".form-group input").on("change", function () {
+                var value = $.trim($(this).val());
+                if (value) {
+                    $(this).closest(".form-group").addClass("hasValue");
+                } else {
+                    $(this).closest(".form-group").removeClass("hasValue");
+                }
+            });
+			$(".form-group input").on("input", function () {
+                var value = $.trim($(this).val());
+                if (value) {
+                    $(this).closest(".form-group").addClass("hasValue");
+                } else {
+                    $(this).closest(".form-group").removeClass("hasValue");
+                }
+            });
+        });

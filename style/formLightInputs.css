@@ -84,7 +84,7 @@ input:-webkit-autofill:active{
 .form-control:focus {
 	outline: none;
 	border-color: #9ecaed;
-	box-shadow: 0 0 10px #9ecaed;
+	box-shadow: 0 0 1px #9ecaed;
 	-webkit-transition: all .2s ease-in-out;
 	-moz-transition: all .2s ease-in-out;
 	transition: all .2s ease-in-out;

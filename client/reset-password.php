@@ -14,7 +14,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 		<title>Reset Password</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://kit.fontawesome.com/4b68e7bba8.js" crossorigin="anonymous"></script>
 		<link href="../icons/icon_header.png" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
 		<link rel="stylesheet" href="../style/form_style.css">
@@ -49,16 +49,16 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
 			<div class = "info-bar darkable-text" id="info-bar">Fill out this form to reset your password.</div>
-			<div id="invalid-reset" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"></div>
+			<div id="invalid-reset" class="center alert alert-danger"style="text-align:center; width: 90%; display:none; margin-bottom:25px !important;"></div>
 			<input style="display:none">
 			<input type="password" style="display:none" autocomplete="new-password"/>
 			<input style="display: none" type="text" name="fakeusernameremembered" />
 			<input style="display: none" type="password" name="fakepasswordremembered" />
-			<div class="form-group">
-				<input type="password" name="new_password" id="password" oninput="getBoth();" autocomplete="new-password" 
-					placeholder="New Password" class="center form-control" required>
+			<div class="form-group" style="margin-top:10px !important;">
+				<input type="password" name="new_password" id="password" oninput="getBoth();" autocomplete="new-password" class="center form-control" required>
+				<div class="field-placeholder"><span>New Password</span></div>
+				<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 			</div>
-			<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 			<div id="password-strength" style="display: none;text-align:center;">
 				<div id="length" class="pw-stength"><small> At least 8 characters</small></div>
 				<div id="lowercase" class="pw-stength"><small> At least 1 lowercase letter</small></div>
@@ -67,8 +67,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 				<br>
 			</div>
 			<div class="form-group">
-				<input type="password" name="confirm_password" id="confirm-password" oninput="getBoth();" 
-					autocomplete="new-password" placeholder="Confirm New Password" class="center form-control" required>
+				<input type="password" name="confirm_password" id="confirm-password" oninput="getBoth();" autocomplete="new-password" class="center form-control" required>
+				<div class="field-placeholder"><span>Confirm Password</span></div>
+				<span toggle="#confirm-password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 			</div>
 			<div id="confirm-password-strength" style="display: none;text-align:center;">
 				<div id="matching" class="pw-stength"><small> Matching</small></div>

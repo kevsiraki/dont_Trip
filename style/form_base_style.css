@@ -103,8 +103,53 @@ input:-webkit-autofill:active {
 .field-icon {
 	float: right;
 	position: relative;
-	margin-right: 25px;
-	margin-top: -42px;
+	margin-left: 88%;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
 	z-index: 2;
 	color: white;
+}
+/* placeholder */
+.form-group{
+    position: relative;
+    margin-bottom: 5%;
+}
+.form-group .field-placeholder{
+    font-size: 15px;
+    position: absolute;
+    bottom: 19%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: gray;
+    left: 10%;
+    padding: 0 0px;
+    -webkit-transition: transform 150ms cubic-bezier(0.4,0,0.2,1),opacity 150ms cubic-bezier(0.4,0,0.2,1);
+    transition: transform 150ms cubic-bezier(0.4,0,0.2,1),opacity 150ms cubic-bezier(0.4,0,0.2,1);
+    z-index: 1;
+    text-align: left;
+    width: 100%;
+}
+        
+.form-group .field-placeholder span{
+    background: background: rgba(0,0,0,1);
+    padding: 0px -15%;
+	z-index: 10;
+	color: gray;
+}
+
+.form-group input:not([disabled]):focus~.field-placeholder
+{
+    color: gray;
+}
+
+.form-group input:not([disabled]):-webkit-autofill~.field-placeholder,
+.form-group input:not([disabled]):-webkit-autofill:active~.field-placeholder,
+.form-group input:not([disabled]):-webkit-autofill:hover~.field-placeholder,
+.form-group input:not([disabled]):-webkit-autofill:focus~.field-placeholder,
+.form-group input:not([disabled]):focus~.field-placeholder,
+.form-group.hasValue input:not([disabled])~.field-placeholder
+{
+    -webkit-transform: scale(.75) translateY(-165%) translateX(-22%);
+    transform: scale(.75) translateY(-165%) translateX(-22%);
 }

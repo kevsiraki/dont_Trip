@@ -4,7 +4,7 @@ if(!isset($_SESSION))
 { 
 	session_start(); 
 } 
-require_once "backend/login_backend.php"; 
+require_once "backend/login_backend.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,16 +52,17 @@ require_once "backend/login_backend.php";
 			<h2><img draggable="false" src="icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
-			<div id="invalid-login" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"> </div>
+			<div id="invalid-login" class="center alert alert-danger"style="text-align:center; width: 90%; display:none; margin-bottom:30px !important;"> </div>
 			<div id = "successful">
 			<?php 
 			
-			if(isset($_GET["message"])&& !isset($_SESSION['message_shown'])){
+			if(isset($_GET["message"])&& !isset($_SESSION['message_shown']))
+			{
 				$msg_success = $_GET["message"];
 				$_SESSION['message_shown'] = 1;
 				echo 
 				'
-				<div class="center alert alert-success"style="text-align:center; width: 90%; ">'.$msg_success.'
+				<div class="center alert alert-success"style="text-align:center; width: 90%; margin-bottom:30px !important; ">'.$msg_success.'
 					<span style = "float:right;margin-right:-12px;margin-top:-12px;"> &#215; </span>
 				</div>
 				';
@@ -69,13 +70,17 @@ require_once "backend/login_backend.php";
 			?>
 			</div>
 			<div class="form-group">
-				<input type="text" id="username" name="username" placeholder="Username or E-mail" class="center form-control" required>
+				<input type="text" id="username" name="username"  class="center form-control" required>
+				<div class="field-placeholder"><span>Username or E-mail</span></div>
 			</div>
-			<div class="form-group">
-				<input type="password" id="password" name="password" placeholder="Password" class="center form-control" required>
+			<div class="form-group" style="margin-top:20px;margin-bottom:1px !important;">
+				<input type="password" id="password" name="password" class="center form-control" required>
+				<div class="field-placeholder"><span>Password</span></div>
+				<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 			</div>
+			<span><small><a href="client/fp" style = "float:right;margin-right:5%;">Forgot?</a></small></span>
 			<br>
-			<button type="button" id="log-in" onclick="this.blur();" class="center btn btn-success">Login</button>
+			<button type="button" style = "margin-top:10px;" id="log-in" onclick="this.blur();" class="center btn btn-success">Login</button>
 			<br>
 			<p id="other" class="other">&nbsp;&nbsp;Other Providers&nbsp;&nbsp;</p>
 			<p>
@@ -104,8 +109,7 @@ require_once "backend/login_backend.php";
 			<?php
 			}
 			?>
-			<p id="info" class="darkable-text">Need an account? <a href="client/register" style="">Sign up here</a></p>
-			<p><a href="client/fp" style="">Forgot your password?</a></p>
+			<span id="info" class="darkable-text">Need an account? <a href="client/register">Sign up here</a></span>
 			<input type="hidden" id="csrf" name="csrf" value="<?php echo $csrf ?>">
 		</div>
 		<div id="space"></div>
@@ -117,5 +121,6 @@ require_once "backend/login_backend.php";
 				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fab fa-github" >&nbsp;GitHub</i></a>
 			</div>
 		</footer>
+		<script src="js/ayhPassword.js"></script>
 	</body>
 </html>

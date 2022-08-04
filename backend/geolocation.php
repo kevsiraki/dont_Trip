@@ -7,4 +7,6 @@ $city = $details->city;
 $state = $details->region;
 $stateFull = $details->regionName;
 $countryCode = $details->countryCode;
+$lat = $details->lat;
+$lon = $details->lon;
 ?>

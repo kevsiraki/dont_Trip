@@ -19,6 +19,16 @@
         <link href="../style/footer.css" rel="stylesheet">
 		<script src="../js/nav.js"></script>
 		<script src="../js/lightMode.js"></script>
+		<style>
+			#map,#body {
+				display: flex;
+				flex-direction: column;
+				min-height: 100vh;
+			} 
+			#container {
+				flex-grow:1 !important;
+			}
+		</style>
 	</head>
 	<body>
 		<?php
@@ -51,9 +61,9 @@
 		<?php 
 		} 
 		?>
-		<div id="map"></div>
-		<div id="dragbar">&#x21CA;</div>
-		<div id="container" >
+		<div id="map" style="height:100vh;"></div>
+		<div id="dragbar" style="display:none;">&#x21CA;</div>
+		<div id="container" style="height:0%;">
 			<div id="sidebar" class = "rust">
 				<h5 id="darkable" class = "darakble-text"><span id="total"></span></h5>
 				<button class = "btn btn-link btn-sm" id="clear" style="margin-right: auto; margin-left: 0;display:none;">Clear Previous Routes</button>
@@ -71,18 +81,20 @@
 				<button id="more" class="btn btn-secondary btn-block">Load more results</button>
 			</div>	
 		</div>
-		<input type="hidden" id="api_key" name="api_key" value="<?php echo $gmaps_api_key?>">
-		<input type="hidden" id="countryCode" name="countryCode" value="<?php echo $countryCode?>">
+		<input type="hidden" id="api_key" value="<?php echo $gmaps_api_key?>">
+		<input type="hidden" id="countryCode" value="<?php echo $countryCode?>">
+		<input type="hidden" id="lat" value="<?php echo $lat?>">
+		<input type="hidden" id="lon" value="<?php echo $lon?>">
 		<script src="../js/bundle.js"></script>
 		<script src="../js/mobile_dragbar.js"></script>
 		<script src="../js/keywords.js"></script>
         <footer id="footer">
-		<a href="../login" class="logo">
-			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
-		</a>
-		<div class="footer-right">
-			<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
-		</div>
-	</footer>
+			<a href="../login" class="logo">
+				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
+			</a>
+			<div class="footer-right">
+				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
+			</div>
+		</footer>
 	</body>
 </html>

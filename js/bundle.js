@@ -56,15 +56,12 @@
             function initMap() { //set up the map/styles, initial route from geolocation to endpoint, places along the route, and initial directions.
                 map = new google.maps.Map(document.getElementById("map"));
                 map.setCenter({
-                    lat: 36.778259,
-                    lng: -119.417931
+                    lat: parseFloat(document.getElementById('lat').value),
+                    lng: parseFloat(document.getElementById('lon').value)
                 });
+				console.log((document.getElementById('lon').value));
                 map.setZoom(6);
-                if ( //Custom localStorage setting
-                    localStorage.getItem("dark_mode") === "false"
-                    //Automatic mode
-                    ||
-                    (d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
+                if (localStorage.getItem("dark_mode") === "false"||(d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
                     $(document).ready(function() {
                         $('link[href*="style.css"]').attr("disabled", "true");
                         $('link[href*="autofill.css"]').attr("disabled", "true");
@@ -78,8 +75,8 @@
                     $.get('../style/light_styles.js', function(data) {
                         map.setOptions({
                             center: {
-                                lat: 36.778259,
-                                lng: -119.417931
+                                lat: parseFloat(document.getElementById('lat').value),
+                                lng: parseFloat(document.getElementById('lon').value)
                             },
                             keyboardShortcuts: false,
                             disableDefaultUI: true,
@@ -90,8 +87,8 @@
                     $.get('../style/dark_styles.js', function(data) {
                         map.setOptions({
                             center: {
-                                lat: 36.778259,
-                                lng: -119.417931
+                                lat: parseFloat(document.getElementById('lat').value),
+                                lng: parseFloat(document.getElementById('lon').value)
                             },
                             keyboardShortcuts: false,
                             disableDefaultUI: true,
@@ -158,7 +155,19 @@
                 });
                 locationButton.addEventListener("click", () => {
                     if (document.getElementById("myInput").value == null || document.getElementById("myInput").value == "") {
-                        alert("Please Choose a Destination.");
+                        let xxx = document.getElementsByName("rust");
+						let xx = document.getElementById("container");
+                        let x = document.getElementById("clear");
+                        xxx[0].style.display = "none";
+                        x.style.display = "none";
+						document.getElementById("dragbar").style.display = "none";
+						xx.style.height= "0.0%";
+						document.getElementById("map").style.minHeight = "100vh";
+						document.getElementById("map").style.height = "100vh";
+						document.getElementById("dragbar").textContent = "\u21CA";
+						set = 0;
+						clear();
+						alert("Please Choose a Destination.");
                     } else if (navigator.geolocation) { // Try HTML5 geolocation.
                         let xxx = document.getElementsByName("rust");
                         if (xxx[0].style.display === "none") {
@@ -168,6 +177,16 @@
                         if (x.style.display === "none") {
                             x.style.display = "block";
                         }
+						let xx = document.getElementById("container");
+						if (document.getElementById("dragbar").style.display === "none") {
+                            document.getElementById("dragbar").style.display = "block";
+                        }
+							document.getElementById("map").style.minHeight = "49%";
+                            xx.style.height= "100%";
+							document.getElementById("map").style.height = "50%";
+							document.getElementById("dragbar").textContent = "\u21CA";
+							set = 0;
+                        
                         navigator.geolocation.
                         getCurrentPosition(
                             (position) => {
@@ -283,9 +302,16 @@
                                                     });
                                             } else {
                                                 let xxx = document.getElementsByName("rust");
+												let xx = document.getElementById("container");
                                                 let x = document.getElementById("clear");
                                                 xxx[0].style.display = "none";
                                                 x.style.display = "none";
+												document.getElementById("dragbar").style.display = "none";
+												xx.style.height= "0.0%";
+												document.getElementById("map").style.minHeight = "100vh";
+												document.getElementById("map").style.height = "100vh";
+												document.getElementById("dragbar").textContent = "\u21CA";
+												set = 0;
                                                 clear();
                                                 alert("Please enter a desination you can drive to.");
                                             }

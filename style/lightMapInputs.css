@@ -296,3 +296,11 @@ input[type=text]:focus {
 	background-color: DodgerBlue !important;
 	color: #ffffff;
 }
+#map,#body {
+				display: flex;
+				flex-direction: column;
+				min-height: 100vh;
+			} 
+			#container {
+				flex-grow:1 !important;
+			}

@@ -40,9 +40,10 @@ if (empty($_SESSION["username"])) {
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
 			<div class = "info-bar darkable-text" id="info-bar">Please enter your OTP to login.</div>
-			<div id="invalid-login" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"></div>
-			<div class="form-group">
-				<input type="2fa" name="tfa" id="tfa" placeholder="2FA OTP" autocomplete="off" class="center form-control" required>
+			<div id="invalid-login" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;margin-bottom:25px !important;"></div>
+			<div class="form-group" style="margin-top:10px !important;">
+				<input type="2fa" name="tfa" id="tfa" autocomplete="off" class="center form-control" required>
+				<div class="field-placeholder"><span>2FA OTP</span></div>
 			</div>
 			<div class="form-group" style="margin-left:5%;">
 				<button type="button" id="verify" onclick="this.blur();" class="btn btn-success" >Verify</button>

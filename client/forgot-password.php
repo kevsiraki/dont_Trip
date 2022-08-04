@@ -7,7 +7,7 @@
 		<title>Password Reset Email</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://kit.fontawesome.com/4b68e7bba8.js" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="../style/form_style.css">
 		<link rel="stylesheet" href="../style/form_base_style.css">
 		<link rel="stylesheet" href="../style/header.css">
@@ -59,14 +59,14 @@
 				<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 				<br>
 				<div class = "info-bar darkable-text" id="info-bar">Please fill out this form to reset your password.</div>
-				<div id="invalid-reset" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;"></div>
+				<div id="invalid-reset" class="center alert alert-danger"style="text-align:center; width: 90%; display:none; margin-bottom:30px !important;"></div>
 				<input style="display:none">
 				<input type="password" style="display:none" autocomplete="new-password">
-				<div class="form-group">
-					<input type="password" name="new_password" id="password" oninput="getBoth();" autocomplete="new-password" 
-						placeholder="New Password" class="center form-control" required>
+				<div class="form-group" style="margin-top:10px !important;">
+					<input type="password" name="new_password" id="password" oninput="getBoth();" autocomplete="new-password" class="center form-control" required>
+					<div class="field-placeholder"><span>New Password</span></div>
+					<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 				</div>
-				<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 				<div id="password-strength" style="display: none;text-align:center;">
 					<div id="length" class="pw-stength"><small> At least 8 characters</small></div>
 					<div id="lowercase" class="pw-stength"><small> At least 1 lowercase letter</small></div>
@@ -75,8 +75,9 @@
 					<br>
 				</div>
 				<div class="form-group">
-					<input type="password" name="confirm_password" id="confirm-password" oninput="getBoth();" autocomplete="new-password" 
-						placeholder="Confirm New Password" class="center form-control" required>
+					<input type="password" name="confirm_password" id="confirm-password" oninput="getBoth();" autocomplete="new-password" class="center form-control" required>
+					<div class="field-placeholder"><span>Confirm Password</span></div>
+					<span toggle="#confirm-password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 				</div>
 				<div id="confirm-password-strength" style="display: none;text-align:center;">
 					<div id="matching" class="pw-stength"><small> Matching</small></div>
@@ -84,9 +85,8 @@
 				</div>
 				<?php if($userResults['tfaen']==1) : ?>
 					<div class="form-group">
-						<input type="text" name="tfa" id="tfa" autocomplete="off" 
-							placeholder="2FA Google Authenticator Code" class="center form-control" required>
-						<small id="2faHelp" class="form-text text-muted"style="margin-left:5%">2FA is Enabled.</small>
+						<input type="text" name="tfa" id="tfa" autocomplete="off" class="center form-control" required>
+						<div class="field-placeholder"><span>2FA code for <?php echo $userResults["username"]?></span></div>
 					</div>
 				<?php endif; ?>
 				<input type="hidden" name="email" id="hidden-email" value="<?php echo $email;?>"/>
