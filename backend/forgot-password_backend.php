@@ -1,26 +1,24 @@
 <?php
 header("Content-Type: text/html");
+
 require_once "config.php";
 require_once 'helpers.php';
 require_once 'vendor/sonata-project/google-authenticator/src/FixedBitNotation.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticatorInterface.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
-include('php-csrf.php');
-if (isset($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
-{
-    header("location: ../backend/logout.php");
-    die;
-}
+include 'php-csrf.php';
+
 date_default_timezone_set('America/Los_Angeles');
 $date = date("Y-m-d H:i:s");
+
 $email = $new_password = $confirm_password = $code = $tfa_err = "";
 $new_password_err = $confirm_password_err = "";
 $expired = 0;
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+
 define("encryption_method", $_ENV["recovery_encryption"]);
 define("key", $_ENV["recovery_key"]);
+
 if (isset($_GET["key"]) && isset($_GET["token"]))
 {
     $sql = "SELECT * FROM users WHERE email = ? ;";
@@ -63,7 +61,17 @@ if (isset($_GET["key"]) && isset($_GET["token"]))
                 $expDate = $row['expD'];
                 if ($expDate < $curDate)
                 {
-                    mysqli_query($link, "DELETE FROM password_reset_temp WHERE email='" . $email . "';");
+					$innerSql = "DELETE FROM password_reset_temp WHERE email = ?";
+					if ($innerStmt = mysqli_prepare($link, $innerSql))
+					{
+						// Bind variables to the prepared statement as parameters
+						mysqli_stmt_bind_param($innerStmt, "s", $param_email);
+						// Set parameters
+						$param_email = $email;
+						// Attempt to execute the prepared statement
+						mysqli_stmt_execute($innerStmt);
+						mysqli_stmt_close($innerStmt);
+					}
                     $expired = 1;
                 }
             }
@@ -119,7 +127,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 $expDate = $row['expD'];
                 if ($expDate < $curDate)
                 {
-                    mysqli_query($link, "DELETE FROM password_reset_temp WHERE email='" . $email . "';");
+					$innerSql = "DELETE FROM password_reset_temp WHERE email = ?";
+					if ($innerStmt = mysqli_prepare($link, $innerSql))
+					{
+						// Bind variables to the prepared statement as parameters
+						mysqli_stmt_bind_param($innerStmt, "s", $param_email);
+						// Set parameters
+						$param_email = $email;
+						// Attempt to execute the prepared statement
+						mysqli_stmt_execute($innerStmt);
+						mysqli_stmt_close($innerStmt);
+					}
                     $expired = 1;
                 }
             }
@@ -130,22 +148,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     if (empty(trim($_POST["new_password"])))
     {
         $new_password_err = "Please fill in all fields.";
-        die($new_password_err);
+        die($new_password_err); //response
     }
     else if (password_verify(trim($_POST["new_password"]) , trim($userResults['password'])))
     {
         $new_password_err = 'Password used recently.';
-        die($new_password_err);
+        die($new_password_err); //response
     }
-    else if (!(preg_match('/[A-Za-z]/', trim($_POST["new_password"])) && preg_match('/[0-9]/', trim($_POST["new_password"])) && preg_match('/[A-Z]/', trim($_POST["new_password"])) && preg_match('/[a-z]/', trim($_POST["new_password"]))))
+    else if ((strlen(trim($_POST["new_password"])) < 8 || strlen(trim($_POST["new_password"])) > 25)||!(preg_match('/[A-Za-z]/', trim($_POST["new_password"])) && preg_match('/[0-9]/', trim($_POST["new_password"])) && preg_match('/[A-Z]/', trim($_POST["new_password"])) && preg_match('/[a-z]/', trim($_POST["new_password"]))))
     {
         $new_password_err = "Weak password.";
-        die($new_password_err);
-    }
-    else if (strlen(trim($_POST["new_password"])) < 8 || strlen(trim($_POST["new_password"])) > 25)
-    {
-        $new_password_err = "Weak password.";
-        die($new_password_err);
+        die($new_password_err); //response
     }
     else
     {
@@ -155,14 +168,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     if (empty(trim($_POST["confirm_password"])))
     {
         $confirm_password_err = "Please fill in all fields.";
-        die($confirm_password_err);
+        die($confirm_password_err); //response
     }
     else
     {
         if (empty($new_password_err) && $new_password != trim($_POST["confirm_password"]))
         {
             $confirm_password_err = "Passwords not matching.";
-            die($confirm_password_err);
+            die($confirm_password_err); //response
         }
         else if (empty($new_password_err))
         {
@@ -184,12 +197,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 if (empty($code))
                 {
                     $tfa_err = "Please enter OTP.";
-                    die($tfa_err);
+                    die($tfa_err); //response
                 }
                 else
                 {
                     $tfa_err = "Incorrect or Expired OTP.";
-                    die($tfa_err);
+                    die($tfa_err); //response
                 }
             }
         }
@@ -197,7 +210,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     //Check all fields
     if (empty(trim($_POST["new_password"])) || empty(trim($_POST["confirm_password"])))
     {
-        die('Please fill in all fields.');
+        die('Please fill in all fields.'); //response
     }
     // Check input errors before updating the database
     if (empty($new_password_err) && empty($tfa_err) && empty($confirm_password_err))
@@ -247,7 +260,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                     // Close statement
                     mysqli_stmt_close($stmt2);
                 }
-                echo 1;
+                echo 1; //response
             }
             // Close statement
             mysqli_stmt_close($stmt);

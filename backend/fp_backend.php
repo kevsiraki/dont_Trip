@@ -1,22 +1,21 @@
 <?php
 header("Content-Type: text/html");
+
 require_once "config.php";
 require_once 'helpers.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 include('php-csrf.php');
+
 if (!isset($_SESSION))
 {
     session_start();
 }
-if (isset($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
-{
-    header("location: ../backend/logout.php");
-    die;
-}
+
 // Define variables and initialize with empty values
 $username = $email = $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = $email_err = $username_err = "";
+
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
@@ -25,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     if (empty(trim($_POST["email"])))
     {
         $email_err = "Please enter an e-mail.";
-        die($email_err);
+        die($email_err);  //response
     }
     else
     {
@@ -46,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         if (mysqli_num_rows($result) == 0)
         {
             $email_err = "E-mail address invalid.";
-            die($email_err);
+            die($email_err);  //response
         }
         else
         {
@@ -72,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         if ($count >= 5)
         {
             $email_err = "Too many requests.";
-            die($email_err);
+            die($email_err);  //response
         }
     }
     $sql = "SELECT sent_time FROM password_reset_temp WHERE email = ? ORDER BY sent_time DESC LIMIT 1;";
@@ -94,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         if ($count + 120 > time())
         {
             $email_err = "Wait to request another reset.";
-            die($email_err);
+            die($email_err);  //response
         }
     }
     // Check if email is validated
@@ -105,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $key = substr(str_shuffle($key . $addKey) , 0, 64); //have fun cracking this lol
     if (empty($email_err))
     {
-        echo 1;
+        echo 1; //response
         $sent_time = time();
         require_once "phpmail/src/Exception.php";
         require_once "phpmail/src/PHPMailer.php";
@@ -156,11 +155,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         }
         catch(phpmailerException $e)
         {
-            die($e->errorMessage());
+            die($e->errorMessage());  //response
         }
         catch(Exception $e)
         {
-            die(404); //Boring error messages from anything else!
+            die(404); //response
         }
         if ($mail->Send())
         {
@@ -184,11 +183,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 mysqli_stmt_close($stmt);
             }
             mysqli_close($link);
-            die(1);
+            die(1);  //response
         }
         else
         {
-            die("Mail Error - >" . $mail->ErrorInfo);
+            die("Mail Error - >" . $mail->ErrorInfo);  //response
         }
     }
 }

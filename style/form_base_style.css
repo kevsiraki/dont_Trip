@@ -103,17 +103,18 @@ input:-webkit-autofill:active {
 .field-icon {
 	float: right;
 	position: relative;
-	margin-left: 88%;
+	margin-left: 85%;
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
 	z-index: 2;
 	color: white;
+	opacity: 0.6;
 }
 /* placeholder */
 .form-group{
     position: relative;
-    margin-bottom: 5%;
+    margin-bottom: 5.5%;
 }
 .form-group .field-placeholder{
     font-size: 15px;
@@ -130,19 +131,16 @@ input:-webkit-autofill:active {
     text-align: left;
     width: 100%;
 }
-        
 .form-group .field-placeholder span{
     background: background: rgba(0,0,0,1);
     padding: 0px -15%;
 	z-index: 10;
 	color: gray;
 }
-
 .form-group input:not([disabled]):focus~.field-placeholder
 {
     color: gray;
 }
-
 .form-group input:not([disabled]):-webkit-autofill~.field-placeholder,
 .form-group input:not([disabled]):-webkit-autofill:active~.field-placeholder,
 .form-group input:not([disabled]):-webkit-autofill:hover~.field-placeholder,
@@ -150,6 +148,14 @@ input:-webkit-autofill:active {
 .form-group input:not([disabled]):focus~.field-placeholder,
 .form-group.hasValue input:not([disabled])~.field-placeholder
 {
-    -webkit-transform: scale(.75) translateY(-165%) translateX(-22%);
-    transform: scale(.75) translateY(-165%) translateX(-22%);
+    -webkit-transform: scale(.6) translateY(-200%) translateX(-40%);
+    transform: scale(.6) translateY(-200%) translateX(-40%);
 }
+.field-placeholder {
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+	cursor: pointer;
+} 

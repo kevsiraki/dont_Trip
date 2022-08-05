@@ -1,5 +1,7 @@
 <?php
-include "config.php";
+
+require_once 'config.php';
+
 if (isset($_GET['key']) && isset($_GET['token']))
 {
     $email = $_GET['key'];

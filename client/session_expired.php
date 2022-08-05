@@ -25,19 +25,17 @@
 				<a href="register"><small>Sign Up</small></a>
 			</div>
 		</header>
-		<div class="container mt-3">
-			<div class="card" id="card">
-				<div class="card-header text-center">
-					<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="150" height="40" /></img></h2>
-					<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
-					<br>
-					<div class="info-bar">
-						Session Expired Due To Inactivity.
-					</div>
+		<div class="card" id="card">
+			<div class="card-header text-center">
+				<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="150" height="40" /></img></h2>
+				<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
+				<br>
+				<div class="info-bar">
+					Session Expired Due To Inactivity.
 				</div>
-				<div class="card-body">
-					<a href="../backend/logout" class="btn-primary btn-sm " style="margin: auto;">Return to Login</a>
-				</div>
+			</div>
+			<div class="card-body">
+				<a href="../backend/logout" class="btn-primary btn-sm " style="margin: auto;">Return to Login</a>
 			</div>
 		</div>
 		<footer id="footer">

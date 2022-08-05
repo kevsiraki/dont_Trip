@@ -1,32 +1,7 @@
 <?php
 require_once "config.php";
 require_once "geolocation.php";
-if (!isset($_SESSION))
-{
-    session_start();
-}
-if (isset($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
-{
-    header("location: ../backend/logout.php");
-    die;
-}
-if(isset($_SESSION['loginTime'])&&$_SESSION['loginTime']+$_ENV["expire"] < time()) { 
-	$_SESSION = array();
-	// Destroy the session.
-	session_destroy();
-	header('location: https://donttrip.technologists.cloud/donttrip/client/session_expired.php');
-	die;
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET")
-{
-	if(isset($_SESSION['loginTime'])) {
-		if($_SESSION['loginTime']+($_ENV["expire"]/3) < time()) {
-			session_regenerate_id(true); 
-		}
-		$_SESSION['loginTime'] = time();
-	}
-}
+require_once 'middleware.php';
 
 $gmaps_api_key = $_ENV['gmaps_api_key'];
 //owen wilson api

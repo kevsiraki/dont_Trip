@@ -1,13 +1,17 @@
 <?php
 header("Content-Type: text/html");
+
 require_once "config.php";
 require_once 'helpers.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+require_once 'middleware.php';
 include('php-csrf.php');
+
 $username = $password = $confirm_password = $email = "";
 $username_err = $password_err = $confirm_password_err = $email_err = "";
 $row = 0;
+
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
@@ -15,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 	//Check all inputs are filled before any further responses
     if (empty(trim($_POST["email"])) || empty(trim($_POST["username"])) || empty(trim($_POST["password"])) || empty(trim($_POST["confirm_password"])))
     {
-        die("Please fill in all fields.");
+        die("Please fill in all fields."); //response
     }
     //Validate email exists and is not taken.
     if (empty(trim($_POST["email"])))
@@ -40,12 +44,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 if (mysqli_stmt_num_rows($stmt) == 1)
                 {
                     $email_err = "E-mail Unavailable.";
-                    die($email_err);
+                    die($email_err); //response
                 }
                 else if (!valid_email(trim($_POST["email"])))
                 {
                     $email_err = "Invalid E-Mail.";
-                    die($email_err);
+                    die($email_err); //response
                 }
                 else
                 {
@@ -74,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                         if ($result['valid'] !== true)
                         {
                             $email_err = "E-mail Address Does Not Exist.";
-                            die($email_err);
+                            die($email_err); //response
                         }
                         else
                         {
@@ -102,20 +106,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $username_err = " ";
     }
-    else if (!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"])))
+    else if (!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"]))||count(array_count_values(str_split(trim($_POST["username"])))) == 1||strlen(trim($_POST["username"])) < 8 || strlen(trim($_POST["username"])) > 25)
     {
         $username_err = "Invalid Username.";
-        die($username_err);
-    }
-    else if (count(array_count_values(str_split(trim($_POST["username"])))) == 1)
-    {
-        $username_err = "Invalid Username.";
-        die($username_err);
-    }
-    else if (strlen(trim($_POST["username"])) < 8 || strlen(trim($_POST["username"])) > 25)
-    {
-        $username_err = "Invalid Username.";
-        die($username_err);
+        die($username_err); //response
     }
     else
     {
@@ -135,7 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 if (mysqli_stmt_num_rows($stmt) == 1)
                 {
                     $username_err = "Username taken.";
-                    die($username_err);
+                    die($username_err); //response
                 }
                 else
                 {
@@ -151,15 +145,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $password_err = " ";
     }
-    else if (!(preg_match('/[A-Za-z]/', trim($_POST["password"])) && preg_match('/[0-9]/', trim($_POST["password"])) && preg_match('/[A-Z]/', trim($_POST["password"])) && preg_match('/[a-z]/', trim($_POST["password"]))))
+    else if (!(preg_match('/[A-Za-z]/', trim($_POST["password"])) && preg_match('/[0-9]/', trim($_POST["password"])) && preg_match('/[A-Z]/', trim($_POST["password"])) && preg_match('/[a-z]/', trim($_POST["password"])))||(strlen(trim($_POST["password"])) < 8 || strlen(trim($_POST["password"])) > 25))
     {
         $password_err = "Weak Password.";
-        die($password_err);
-    }
-    else if (strlen(trim($_POST["password"])) < 8 || strlen(trim($_POST["password"])) > 25)
-    {
-        $password_err = "Weak Password.";
-        die($password_err);
+        die($password_err); //response
     }
     else
     {
@@ -173,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     else if (empty($password_err) && $password != trim($_POST["confirm_password"]))
     {
         $confirm_password_err = "Passwords Do Not Match.";
-        die($confirm_password_err);
+        die($confirm_password_err); //response
     }
     else
     {
@@ -262,7 +251,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             }
             catch(phpmailerException $e)
             {
-                die($e->errorMessage());
+                die($e->errorMessage()); //response
             }
             catch(Exception $e)
             {
@@ -284,11 +273,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 {
                     unset($_SESSION["message_shown"]);
                 }
-                echo 1;
+                echo 1; //response
             }
             else
             {
-                die("Mail Error ->" . $mail->ErrorInfo);
+                die("Mail Error ->" . $mail->ErrorInfo); //response
             }
         }
         else

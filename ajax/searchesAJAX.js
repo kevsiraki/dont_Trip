@@ -1,53 +1,73 @@
 $(document).ready(function() {
-    // Delete 
+    // Delete One Destination
     $('.deleteDest').click(function() {
         let element = this;
         // Delete id
         let delete_id = $(this).data('id');
         $.ajax({
-            url: '../backend/searches_backend',
-            type: 'GET',
-			dataType: "html",
+            url: '../backend/delete_search',
+            type: 'DELETE',
 			timeout: 5000,
-            data: {
-                toDeleteDestination: delete_id
-            },
+			contentType: "application/json",
+			dataType: "text",
+			data: JSON.stringify({
+				"type": "destination",
+				"id": delete_id
+			}),
             success: function(response) {
-                if (response == 1) {
+				result = JSON.parse(response).message;
+                if (result === "Destination Deleted") {
                     // Remove row from HTML Table
                     $(element).closest('li').css('background', 'gray');
                     $(element).closest('li').fadeOut(800, function() {
                         $(this).remove();
                     });
                 }
-            }
+            },
+			error: function(xhr, textStatus, errorThrown) {
+				var text = 'Ajax Request Error: ' + 'XMLHTTPRequestObject status: (' + xhr.status + ', ' + xhr.statusText + '), ' +
+                'text status: (' + textStatus + '), error thrown: (' + errorThrown + ')';
+				console.log('The AJAX request failed with the error: ' + text);
+				console.log(xhr.responseText);
+				console.log(xhr.getAllResponseHeaders());
+			}
         });
     });
 });
 
 $(document).ready(function() {
-    // Delete 
+    // Delete One Keyword
     $('.deleteKey').click(function() {
         let element = this;
         // Delete id
         let delete_id = $(this).data('id');
         $.ajax({
-            url: '../backend/searches_backend',
-            type: 'GET',
+            url: '../backend/delete_search',
+            type: 'DELETE',
 			timeout: 5000,
-			dataType: "html",
-            data: {
-                toDeleteKeyword: delete_id
-            },
+			contentType: "application/json",
+			dataType: "text",
+			data: JSON.stringify({
+				"type": "keyword",
+				"id": delete_id
+			}),
             success: function(response) {
-                if (response == 2) {
+				result = JSON.parse(response).message;
+                if (result === "Keyword Deleted") {
                     // Remove row from HTML Table
                     $(element).closest('li').css('background', 'gray');
                     $(element).closest('li').fadeOut(800, function() {
                         $(this).remove();
                     });
                 }
-            }
+            },
+			error: function(xhr, textStatus, errorThrown) {
+				var text = 'Ajax Request Error: ' + 'XMLHTTPRequestObject status: (' + xhr.status + ', ' + xhr.statusText + '), ' +
+                'text status: (' + textStatus + '), error thrown: (' + errorThrown + ')';
+				console.log('The AJAX request failed with the error: ' + text);
+				console.log(xhr.responseText);
+				console.log(xhr.getAllResponseHeaders());
+			}
         });
     });
 });

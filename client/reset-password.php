@@ -1,11 +1,4 @@
-<?php
-include('../backend/reset-password_backend.php');
-// Check if the user is logged in, otherwise redirect to login page
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: ../login.php");
-    exit; 
-}
-?>
+<?php require_once '../backend/reset-password_backend.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>

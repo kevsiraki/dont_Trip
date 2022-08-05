@@ -1,5 +1,5 @@
 <?php
-if (isset($_SESSION))
+if (isset($_SESSION)&&isset($_SESSION['key']))
 {
     unset($_SESSION['key']);
 }
@@ -7,7 +7,8 @@ else if (!isset($_SESSION))
 {
     session_start();
 }
-if (empty($_SESSION['key'])) {
+if (empty($_SESSION['key'])) 
+{
 	$_SESSION['key'] = bin2hex(random_bytes(32));
 }
 

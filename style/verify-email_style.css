@@ -15,16 +15,6 @@ html, body {
 	margin-left: auto;
 	margin-right: auto;
 }
-.container {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-wrap: wrap;
-	justify-content: center;
-	max-width: 1200px;
-	margin-block: 2rem;
-	gap: 2rem;margin: auto;
-}
 .info-bar {
 	text-align: center;
 	color: #666;
@@ -32,7 +22,9 @@ html, body {
 	padding-bottom: 15px;
 }
 .card {
-	margin-top: 16.5%;
+	display: inline-block;
+	gap: 2rem;
+	margin: auto;
 	width: clamp(20rem, calc(20rem + 2vw), 22rem);
 	overflow: hidden;
 	box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);

@@ -1,7 +1,9 @@
 <?php
 header("Content-Type: text/html");
+
 require_once "config.php";
 require_once 'helpers.php';
+
 if (!isset($_SESSION))
 {
     session_start();
@@ -17,7 +19,9 @@ if (isset($_SESSION['LAST_CALL']))
     }
 }
 $_SESSION['LAST_CALL'] = date('Y-m-d h:i:s.u');
+
 $username = $email = "";
+
 if (isset($_POST['username']))
 {
     $username = trim($_POST['username']);

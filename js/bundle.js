@@ -48,18 +48,15 @@
             let offset = 40;
             let distanceSort = false;
             let nameSort = false;
-            //really fucking irritating problem I fixed
             $('#panel').bind('DOMSubtreeModified', function() {
                 lightenSideBars();
             });
-            //bad demonic call stack killer removed
             function initMap() { //set up the map/styles, initial route from geolocation to endpoint, places along the route, and initial directions.
                 map = new google.maps.Map(document.getElementById("map"));
                 map.setCenter({
                     lat: parseFloat(document.getElementById('lat').value),
                     lng: parseFloat(document.getElementById('lon').value)
                 });
-				console.log((document.getElementById('lon').value));
                 map.setZoom(6);
                 if (localStorage.getItem("dark_mode") === "false"||(d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
                     $(document).ready(function() {

@@ -42,7 +42,7 @@
 			<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
-			<div id="invalid-signup" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;margin-bottom:35px !important;"></div>
+			<div id="invalid-signup" class="center alert alert-danger"style="text-align:center; width: 90%; display:none;margin-bottom:30px !important;"></div>
 			<input style="display:none">
 			<input type="password" style="display:none" autocomplete="new-password"/>
 			<input style="display: none" type="text" name="fakeusernameremembered" />
@@ -62,7 +62,6 @@
 				<div class="field-placeholder"><span>Password</span></div>
 				<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 			</div>
-			
 			<div id="password-strength" style="display: none;text-align:center;">
 				<div id="length" class="pw-stength" ><small> At least 8 characters</small></div>
 				<div id="lowercase" class="pw-stength"><small> At least 1 lowercase letter</small></div>

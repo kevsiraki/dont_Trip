@@ -1,11 +1,4 @@
-<?php
-require_once "../backend/recovery_backend.php"; 
-// Check if the user is logged in, otherwise redirect to login page
-if (!isset($_SESSION["locked"]) || $_SESSION["locked"] !== true) {
-    header("location: ../login.php");
-    exit;
-}
-?>
+<?php require_once "../backend/recovery_backend.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>

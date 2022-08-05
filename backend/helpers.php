@@ -48,16 +48,11 @@ function get_web_page($url)
         CURLOPT_AUTOREFERER => true, // set referrer on redirect
         CURLOPT_CONNECTTIMEOUT => 500, // time-out on connect
         CURLOPT_TIMEOUT => 500, // time-out on response
-        
     );
-
     $ch = curl_init($url);
     curl_setopt_array($ch, $options);
-
     $content = curl_exec($ch);
-
     curl_close($ch);
-
     return $content;
 }
 function getFailedAttempts($link, $ip_address)
@@ -133,7 +128,6 @@ function checkIP()
     //check for proxies
     $key = $_ENV["ip_quality_api_key"];
     $ip = getIpAddr();
-	
     if ($ip != $_ENV["myIP"] && $ip != $_ENV["myPhoneIP"])
     {
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
@@ -238,7 +232,6 @@ function getRandomBytes($nbBytes = 32)
         throw new \Exception("Unable to generate secure token from OpenSSL.");
     }
 }
-
 function generatePassword($length)
 {
     return substr(preg_replace("/[^a-zA-Z0-9]/", "", base64_encode(getRandomBytes($length + 1))) , 0, $length);

@@ -1,11 +1,4 @@
-<?php
-// Initialize the session
-if(!isset($_SESSION)) 
-{ 
-	session_start(); 
-} 
-require_once "backend/login_backend.php";
-?>
+<?php require_once "backend/login_backend.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -17,7 +10,6 @@ require_once "backend/login_backend.php";
 		<meta name="description" content="An itinerary planner utilizing the Google Maps API to give you customized places along a route!">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="https://kit.fontawesome.com/4b68e7bba8.js" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="style/form_style.css">
 		<link rel="stylesheet" href="style/form_base_style.css">
@@ -27,6 +19,11 @@ require_once "backend/login_backend.php";
 		<link rel="apple-touch-icon"  sizes="512x512" href="icons/icon.png">
 		<script src="ajax/loginAJAX.js"></script>
 		<script src="js/lightMode.js"></script>
+		<script>
+			if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
+				window.location.reload();
+			}
+		</script>
         <style> 
 			#footer { 
 				width: 100%;
@@ -47,8 +44,6 @@ require_once "backend/login_backend.php";
 			</div>
 		</header>
 		<div class="wrapper">
-			
-			
 			<h2><img draggable="false" src="icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
@@ -112,6 +107,7 @@ require_once "backend/login_backend.php";
 			<span id="info" class="darkable-text">Need an account? <a href="client/register">Sign up here</a></span>
 			<input type="hidden" id="csrf" name="csrf" value="<?php echo $csrf ?>">
 		</div>
+              
 		<div id="space"></div>
 		<footer id="footer">
 			<a href="." class="logo">

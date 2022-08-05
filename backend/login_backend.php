@@ -1,13 +1,16 @@
 <?php
 header("Content-Type: text/html");
+
 require_once 'redirect_backend.php';
-include('php-csrf.php');
+require_once 'middleware.php';
+include 'php-csrf.php';
 require_once 'helpers.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require_once "phpmail/src/Exception.php";
 require_once "phpmail/src/PHPMailer.php";
 require_once "phpmail/src/SMTP.php";
+
 $username = $password = $usernameOrEmail = "";
 $username_err = $password_err = $login_err = $isAuth = "";
 $tfa_en = false;
@@ -15,8 +18,10 @@ $lock = false;
 $total_count = 0;
 $first_limit = 5;
 $second_limit = 20;
+
 date_default_timezone_set('America/Los_Angeles');
 $date = date("Y-m-d H:i:s");
+
 //Safely stores all page visits.
 $sql = "INSERT INTO page_visits(browser, visit_date, ip) VALUES ( ?, ?, ? );";
 if ($stmt = mysqli_prepare($link, $sql))
@@ -31,6 +36,7 @@ if ($stmt = mysqli_prepare($link, $sql))
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 }
+
 //Creates Client Request to access Google Login API
 $client = new Google_Client();
 $client->setClientId($clientID);
@@ -85,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         {
             $lock = true;
             $password_err = "Try again in ten seconds.";
-            die($password_err);
+            die($password_err); //response
         }
         else
         {
@@ -115,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     else
     {
         $password_err = "Please fill in all fields.";
-        die($password_err);
+        die($password_err); //response
     }
     //Check if user is logging in via E-mail address
     $sql = "SELECT * FROM users WHERE email = ? ;";
@@ -215,7 +221,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 									$_SESSION['loginTime'] = time();
 									deleteFailedAttempts($link,$ip_address, $username); 
                                     // Redirect user
-                                    echo 1;
+                                    echo 1; //response
                                 }
                                 else
                                 {
@@ -237,14 +243,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 									$_SESSION['loginTime'] = time();
 									deleteFailedAttempts($link,$ip_address, $username); 
 									//Redirect user
-									echo 2;
+									echo 2; //response
                                 }
                             }
                             else
                             {
                                 //E-mail is not verified yet.
                                 $login_err = "Please Verify Your E-Mail.";
-                                die($login_err);
+                                die($login_err); //response
                             }
                         }
                         else
@@ -276,7 +282,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                             {
                                 if ($ip_address == $check_email_sent['ip'])
                                 {
-                                    echo "google"; //redirect the attacker to some random place
+                                    echo "google"; //response
                                 }
                                 else
                                 {
@@ -289,7 +295,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 									$_SESSION["authorized"] = false;
                                     $password_err = "Error 404";
 									session_regenerate_id(true);
-                                    echo $password_err;
+                                    echo $password_err;  //response
                                 }
                                 if (empty($check_email_sent['otp']))
                                 {
@@ -364,32 +370,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                     }
                                     catch(phpmailerException $e)
                                     {
-                                        die($e->errorMessage());
+                                        die($e->errorMessage()); //response
                                     }
                                     if ($mail->Send())
                                     {
-                                        die;
+                                        die; //response
                                     }
                                 }
                             }
                             else
                             {
                                 $login_err = "Invalid Credentials."; //regular failed attempt less than 5 times.
-                                die($login_err);
+                                die($login_err); //response
                             }
                         }
                     }
                     else
                     {
                         mysqli_stmt_close($stmt);
-                        die;
+                        die; //response
                     }
                 }
                 else
                 {
                     //Username doesn't exist, attempt is saved before we get here.
                     $login_err = "Invalid Credentials.";
-                    die($login_err);
+                    die($login_err); //response
                 }
             }
         }

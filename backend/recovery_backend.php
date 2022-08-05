@@ -1,7 +1,9 @@
 <?php
 header("Content-Type: text/html");
-require_once "config.php";
-include('php-csrf.php');
+
+require_once 'config.php';
+require_once 'middleware.php';
+include 'php-csrf.php';
 
 $password = $password_err = "";
 
@@ -13,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     if (empty(trim($_POST["password"])))
     {
         $password_err = "Please enter your password.";
-        die($password_err);
+        die($password_err); //response
     }
     else
     {
@@ -78,13 +80,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 							$_SESSION['loginTime'] = time();
 							session_regenerate_id(true);
                             // Redirect user response
-                            echo 1;
+                            echo 1; //response
                         }
                         else
                         {
                             // Password is not valid, display a generic error message
                             $password_err = "Incorrect Password.";
-                            die($password_err);
+                            die($password_err); //response
                         }
                     }
                 }

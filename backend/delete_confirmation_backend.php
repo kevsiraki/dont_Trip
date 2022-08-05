@@ -2,34 +2,8 @@
 header("Content-Type: text/html");
 
 require_once "config.php";
-include('php-csrf.php');
-
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)
-{
-    header("location: ../login.php");
-    die;
-}
-if (isset($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
-{
-    header("location: logout.php");
-    die;
-}
-if(isset($_SESSION['loginTime'])&&$_SESSION['loginTime']+$_ENV["expire"] < time()) { 
-	$_SESSION = array();
-	// Destroy the session.
-	session_destroy();
-	header('location: https://donttrip.technologists.cloud/donttrip/client/session_expired.php');
-	die;
-}
-if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET")
-{
-	if(isset($_SESSION['loginTime'])) {
-		if($_SESSION['loginTime']+($_ENV["expire"]/3) < time()) {
-			session_regenerate_id(true); 
-		}
-		$_SESSION['loginTime'] = time();
-	}
-}
+require_once 'middleware.php';
+include 'php-csrf.php';
 
 $password = $password_err = "";
 
@@ -43,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     if (empty(trim($_POST["password"])))
     {
         $password_err = "Please enter your password.";
-        die($password_err);
+        die($password_err); //response
     }
     else
     {
@@ -99,14 +73,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                 mysqli_stmt_execute($stmt);
                                 mysqli_stmt_close($stmt);
                             }
-                            // Redirect user response
-                            echo 1;
+                            // Redirect user
+                            echo 1; //response
                         }
                         else
                         {
                             // Password is not valid, display a generic error message
                             $password_err = "Incorrect Password.";
-                            die($password_err);
+                            die($password_err); //response
                         }
                     }
                 }

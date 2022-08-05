@@ -1,43 +1,20 @@
 <?php
 header("Content-Type: text/html");
-ini_set('allow_url_fopen', 'On');
+
 require_once "config.php";
+require_once 'middleware.php';
 require_once 'helpers.php';
 require_once 'geolocation.php';
 require_once 'vendor/sonata-project/google-authenticator/src/FixedBitNotation.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticatorInterface.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleAuthenticator.php';
 require_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
-if (!isset($_SESSION))
-{
-    session_start();
-}
-if (isset($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
-{
-    header("location: ../backend/logout.php");
-    die;
-}
-if(isset($_SESSION['loginTime'])&&$_SESSION['loginTime']+$_ENV["expire"] < time()) { 
-	$_SESSION = array();
-	// Destroy the session.
-	session_destroy();
-	header('location: https://donttrip.technologists.cloud/donttrip/client/session_expired.php');
-	die;
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET")
-{
-	if(isset($_SESSION['loginTime'])) {
-		if($_SESSION['loginTime']+($_ENV["expire"]/3) < time()) {
-			session_regenerate_id(true); 
-		}
-		$_SESSION['loginTime'] = time();
-	}
-}
 
 $response = '';
+
 define("encryption_method", $_ENV["recovery_encryption"]);
 define("key", $_ENV["recovery_key"]);
+
 if (isset($_SESSION['username']))
 {
     $sql = "SELECT * FROM users WHERE username = ? ;"; //Get user information.
@@ -58,7 +35,7 @@ if (isset($_SESSION['username']))
 if (isset($_POST['two_factor']) && !empty($userResults))
 {
     ob_start();
-    if ($_POST['two_factor'] == "true" && $userResults["tfaen"] == 0)
+    if ($_POST['two_factor'] == "true" && ($userResults["tfaen"] == 0||empty($userResults["tfaen"])))
     {
         ob_end_clean();
         $g = new \Google\Authenticator\GoogleAuthenticator();

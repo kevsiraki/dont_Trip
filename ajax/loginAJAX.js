@@ -29,7 +29,6 @@ $(document).on('click', '#log-in', function(e) {
                 setTimeout(function() {
                     button.disabled = false;
                 }, 10000);
-
             } else if (response.includes("google")) {
                 button.style.display = "none";
                 window.location.href = "https://donttrip.technologists.cloud/donttrip/client/hecker";
@@ -88,29 +87,3 @@ $(function() {
 $(document).on('click', '#successful', function(e) {
     document.getElementById("successful").style.display = "none";
 });
-
-/*
-GET:
-var url = '/your/url?x=hello';
-
-fetch(url)
-.then(function (response) {
-  return response.text();
-})
-.then(function (body) {
-  console.log(body);
-});
-
-POST:
-var url = '/your/url';
-var formData = new FormData();
-formData.append('x', 'hello');
-
-fetch(url, { method: 'POST', body: { username: username, password: password} })
-.then(function (response) {
-  return response.text();
-})
-.then(function (body) {
-  console.log(body);
-});
-*/

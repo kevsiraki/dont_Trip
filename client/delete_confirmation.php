@@ -1,12 +1,4 @@
-<?php 
-
-require_once "../backend/delete_confirmation_backend.php"; 
-
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: ../login.php");
-    exit;
-}
-?>
+<?php require_once "../backend/delete_confirmation_backend.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>

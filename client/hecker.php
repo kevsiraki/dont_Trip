@@ -1,3 +1,5 @@
+<?php
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head> 
@@ -23,12 +25,6 @@
 		Commercial support is available at
 		<a href="http://nginx.com/">nginx.com</a>.</p>
 		<p><em>Thank you for using nginx.</em></p>
+		<?php echo md5("cyrust"). "<sub>...If you figure out what this is, you get a cookie!</sub>"; ?>
 	</body>
 </html>
-<?php 
-$nice_cookie = md5("cyrust"). "<sub>...If you figure out what this is, you get a cookie!</sub>";
-echo
-	"
-		$nice_cookie
-	";
-?>

@@ -2,7 +2,8 @@
 //Discord O-Auth API requests
 require_once "config.php";
 
-if(!isset($_GET['code'])){
+if(!isset($_GET['code']))
+{
     header("location: ../login");
     exit();
 }
@@ -31,7 +32,8 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 
 $result = curl_exec($ch);
 
-if(!$result){
+if(!$result)
+{
     die(curl_error($ch));
 }
 

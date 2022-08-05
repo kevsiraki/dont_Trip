@@ -1,12 +1,4 @@
-<?php 
-
-include('../backend/two_factor_auth_backend.php');
-
-if (empty($_SESSION["username"])) {
-    header("location: ../login.php");
-    die;
-}
-?>
+<?php require_once '../backend/two_factor_auth_backend.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -51,7 +43,6 @@ if (empty($_SESSION["username"])) {
 			</div>
 			<input type="hidden" id="csrf" name="csrf" value="<?php echo $csrf; ?>">
 		</div>
-		<div></div>
 		<footer id="footer">
 			<a href="../login" class="logo">
 			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>

@@ -1,25 +1,31 @@
-const d = new Date();	
-if (localStorage.getItem("dark_mode") === "false" ||(d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
-    window.addEventListener("DOMContentLoaded", function() {
+const d = new Date();
+if (localStorage.getItem("dark_mode") === "false" || (d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
+    window.addEventListener("DOMContentLoaded", function () {
         lightStyle();
         if (localStorage.getItem("dark_mode") === null && document.getElementById("reset-dark")) {
             document.getElementById("reset-dark").innerText = "✓Auto";
         }
     });
 }
-window.addEventListener("DOMContentLoaded", function() {
+window.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("dark_mode") === null && document.getElementById("reset-dark")) {
         document.getElementById("reset-dark").innerText = "✓Auto";
+		document.getElementById("reset-dark").disabled = "true";
     }
 });
 function toggleDarkMode() {
-    if (localStorage.getItem("dark_mode") === "true" ||((d.getHours() < 6 || d.getHours() > 18) && localStorage.getItem("dark_mode") === null)) {
+    if (localStorage.getItem("dark_mode") === "true" || ((d.getHours() < 6 || d.getHours() > 18) && localStorage.getItem("dark_mode") === null)) {
         localStorage.setItem("dark_mode", "false");
         location.reload();
     } else {
         localStorage.setItem("dark_mode", "true");
+		document.body.className = 'body fade-in'
+		setTimeout(setFadeOut, 5000);
         location.reload();
     }
+}
+function setFadeOut(){
+	document.body.className = 'body';
 }
 function resetDarkMode() {
     window.localStorage.removeItem('dark_mode');
@@ -32,7 +38,7 @@ function no(event) {
     event.stopPropagation();
 }
 function lightStyle() {
-	const form_bg = "linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url(\"https://donttrip.technologists.cloud/donttrip/icons/form_bg.jpg\")";
+    const form_bg = "linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url(\"https://donttrip.technologists.cloud/donttrip/icons/form_bg.jpg\")";
     if (document.getElementsByClassName("form-control").length > 0 && !document.getElementById("log-in")) {
         $('link[href*="form_style.css"]').attr("disabled", "true");
         $('head').append('<link rel="stylesheet" href="../style/formLightInputs.css" type="text/css" />');
@@ -43,31 +49,31 @@ function lightStyle() {
     }
     if (document.documentElement) {
         document.documentElement.style.background = "#FFFFED";
-		document.documentElement.style.backgroundColor = "#FFFFED";
-		document.body.style.background = "#FFFFED";
-		document.body.style.backgroundColor = "#FFFFED";
+        document.documentElement.style.backgroundColor = "#FFFFED";
+        document.body.style.background = "#FFFFED";
+        document.body.style.backgroundColor = "#FFFFED";
     }
     if (document.getElementById('bg')) {
         document.getElementById('bg').style.backgroundColor = "#FFFFED";
     }
-	if(document.getElementsByClassName("rust").length > 0) {
-		const sidebars = document.querySelectorAll('.rust');
+    if (document.getElementsByClassName("rust").length > 0) {
+        const sidebars = document.querySelectorAll('.rust');
         sidebars.forEach(sidebar => {
             sidebar.style.backgroundColor = "#FFFFED";
         });
-	}
-	if (document.getElementById("dragbar")) {
+    }
+    if (document.getElementById("dragbar")) {
         document.getElementById("dragbar").style.color = "#000000";
     }
-	if (document.getElementById("footer-link")) {
+    if (document.getElementById("footer-link")) {
         document.getElementById("footer-link").style.color = "#000000";
     }
-	if(document.getElementsByClassName("darkable-text").length > 0) {
-		const darkables = document.querySelectorAll('.darkable-text');
+    if (document.getElementsByClassName("darkable-text").length > 0) {
+        const darkables = document.querySelectorAll('.darkable-text');
         darkables.forEach(darkable => {
             darkable.style.color = '#000000';
         });
-	}
+    }
     if (document.getElementById('other')) {
         const others = document.querySelectorAll('.other');
         others.forEach(other => {
@@ -81,22 +87,22 @@ function lightStyle() {
             meter.style.color = '#000000';
         });
     }
-	if(document.getElementsByClassName("panel").length > 0) {
-		const panels = document.querySelectorAll('.panel');
+    if (document.getElementsByClassName("panel").length > 0) {
+        const panels = document.querySelectorAll('.panel');
         panels.forEach(panel => {
             panel.style.color = '#000000';
-			panel.style.backgroundColor = "#f4f4f4";
+            panel.style.backgroundColor = "#f4f4f4";
         });
-	}
+    }
     if (document.getElementById("card")) {
         document.getElementById("card").style.backgroundImage = form_bg;
         document.getElementById("card").style.backgroundColor = "#f4f4f4";
         document.getElementById("card").style.border = "1px solid #FFFFED";
     }
-	if (document.getElementsByClassName('wrapper')[0]) {
+    if (document.getElementsByClassName('wrapper')[0]) {
         document.getElementsByClassName('wrapper')[0].style.backgroundImage = form_bg;
     }
-	if (document.getElementById("header")) {
+    if (document.getElementById("header")) {
         document.getElementById("header").style.backgroundImage = form_bg;
     }
     if (document.getElementById("footer")) {
@@ -108,14 +114,14 @@ function lightStyle() {
         $(".link").css("color", "	#202020");
         $("li:nth-of-type(even)").css("background-color", "#d3d3d3");
         $("button").css("background-color", "transparent");
-        $("li").mouseenter(function() {
+        $("li").mouseenter(function () {
             $(this).css("box-shadow", "inset -0.4em 0 #8b9dc3")
-        }).mouseleave(function() {
+        }).mouseleave(function () {
             $(this).css("box-shadow", "none");
         });
-        $("li:nth-of-type(even)").mouseenter(function() {
+        $("li:nth-of-type(even)").mouseenter(function () {
             $(this).css("box-shadow", "inset -0.4em 0 #aaa")
-        }).mouseleave(function() {
+        }).mouseleave(function () {
             $(this).css("box-shadow", "none");
         });
     }
@@ -146,25 +152,25 @@ function lightStyle() {
         });
     }
 }
-        $(function () {
+$(function () {
 
-            $(".form-group .field-placeholder").on("click", function () {
-                $(this).closest(".form-group").find("input").focus();
-            });
-            $(".form-group input").on("change", function () {
-                var value = $.trim($(this).val());
-                if (value) {
-                    $(this).closest(".form-group").addClass("hasValue");
-                } else {
-                    $(this).closest(".form-group").removeClass("hasValue");
-                }
-            });
-			$(".form-group input").on("input", function () {
-                var value = $.trim($(this).val());
-                if (value) {
-                    $(this).closest(".form-group").addClass("hasValue");
-                } else {
-                    $(this).closest(".form-group").removeClass("hasValue");
-                }
-            });
-        });
+    $(".form-group .field-placeholder").on("click", function () {
+        $(this).closest(".form-group").find("input").focus();
+    });
+    $(".form-group input").on("change", function () {
+        var value = $.trim($(this).val());
+        if (value) {
+            $(this).closest(".form-group").addClass("hasValue");
+        } else {
+            $(this).closest(".form-group").removeClass("hasValue");
+        }
+    });
+    $(".form-group input").on("input", function () {
+        var value = $.trim($(this).val());
+        if (value) {
+            $(this).closest(".form-group").addClass("hasValue");
+        } else {
+            $(this).closest(".form-group").removeClass("hasValue");
+        }
+    });
+});
