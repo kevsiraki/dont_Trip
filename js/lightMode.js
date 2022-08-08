@@ -153,7 +153,6 @@ function lightStyle() {
     }
 }
 $(function () {
-
     $(".form-group .field-placeholder").on("click", function () {
         $(this).closest(".form-group").find("input").focus();
     });

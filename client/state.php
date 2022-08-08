@@ -1,4 +1,8 @@
-<?php require_once "../backend/state_backend.php"; ?>
+<?php 
+require_once '../backend/config.php';
+require_once '../backend/geolocation.php';
+require_once '../backend/middleware.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -14,7 +18,8 @@
 		<link href="../style/navbar.css" rel="stylesheet">
 		<link href="../style/footer.css" rel="stylesheet">
 		<script src="../js/nav.js"></script>
-		<script src="../js/lightMode.js"></script>	
+		<script src="../js/lightMode.js"></script>
+		<script src="../ajax/stateAJAX.js"></script>	
 	</head>
 	<body>
 		<header class="topnav" id="topnav">
@@ -35,37 +40,12 @@
 			<div id="sidebar" class = "rust">
 				<h1 id="underline">Destinations</h1>
 				<br>
-				<ul>
-					<?php
-					while($rows = mysqli_fetch_assoc($result)) {
-					?>
-						<li class="links" onclick="redirectTo('dt?destVal=<?php echo htmlspecialchars($rows["destination"]);?>');">
-							<a class="link"  href ="dt?destVal=<?php echo htmlspecialchars($rows["destination"]);?>"><?php echo htmlspecialchars($rows["destination"]);?></a>
-							<br>
-							<sub><span class="bubble" id="bubble"><?php echo $rows["destCnt"]>1?$rows["destCnt"]." searches":$rows["destCnt"]." search"; ?></span></sub>
-						</li>
-					<?php
-					}
-					?>
-				</ul>
+				<ul id = "destinations"></ul>
 			</div>
 			<div id="sidebar" name = "rust" class = "rust">
 				<h1 id="underline" class="darkable-text">Keywords</h1>
 				<br>
-				<ul>
-					<?php
-					while($rows2 = mysqli_fetch_assoc($result2)) {
-					?>
-						<li class="links" onclick="redirectTo('dt?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>');">
-							<a class="link" href ="dt?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>"> <?php echo htmlspecialchars($rows2["keyword"]);?></a>
-							<br>
-							<sub><span class="bubble" id="bubble"><?php echo $rows2["keyCnt"]>1?$rows2["keyCnt"]." searches":$rows2["keyCnt"]." search"; ?></span></sub>
-						</li>
-					<?php
-						
-					}
-					?>
-				</ul>
+				<ul id = "keywords"></ul>
 			</div>
 		</div>
 		<footer id="footer">

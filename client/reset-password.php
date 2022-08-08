@@ -1,4 +1,8 @@
-<?php require_once '../backend/reset-password_backend.php'; ?>
+<?php 
+require_once '../backend/config.php';
+require_once '../backend/middleware.php';
+require_once '../backend/php-csrf.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>

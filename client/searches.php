@@ -1,4 +1,8 @@
-<?php require_once "../backend/searches_backend.php"; ?>
+<?php 
+require_once '../backend/config.php';
+require_once '../backend/geolocation.php';
+require_once '../backend/middleware.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -14,7 +18,8 @@
 		<link href="../style/footer.css" rel="stylesheet">
 		<script src="../js/nav.js"></script>
 		<script src="../js/lightMode.js"></script>	
-		<script src="../ajax/searchesAJAX.js"></script>
+		<script src="../ajax/searchesDeleteAJAX.js"></script>
+		<script src="../ajax/searchesDisplayAJAX.js"></script>	
 	</head>
 	<body>
 		<header class="topnav" id="topnav">
@@ -35,41 +40,12 @@
 			<div id="sidebar" class = "rust">
 				<h1 id="underline">Destinations</h1>
 				<br>
-				<ul>
-					<?php
-					while($rows = mysqli_fetch_assoc($result)) {
-						$res = $toSplit = $rows["destination"];
-						$res .= nl2br("\n ");
-					?>
-						<li class="links" onclick="redirectTo('dt?destVal=<?php echo htmlspecialchars($rows["destination"]);?>');">					
-							<a class="link" href ="dt?destVal=<?php echo htmlspecialchars($rows["destination"]);?>"> <?php echo $res ; ?></a>
-							<sub><span class="bubble" id="bubble"><?php echo $rows["destCnt"]>1?$rows["destCnt"]." searches":$rows["destCnt"]." search"; ?></span></sub>
-							<button onclick ="no(event);" data-id= "<?php echo htmlspecialchars($rows["destination"]);?>" value="<?php echo htmlspecialchars($rows["destination"]);?>" type="button" class="deleteDest btn-close btn-sm" aria-label="Close" style="float:right;margin-top:9px"></button>
-						</li>
-					<?php	
-					}
-					?>
-				</ul>
+				<ul id = "destinations"></ul>
 			</div>
 			<div id="sidebar" name = "rust" class = "rust">
 				<h1 id="underline" class="darkable-text">Keywords</h1>
 				<br>
-				<ul>
-					<?php
-					while($rows2 = mysqli_fetch_assoc($result2)) {
-						$key = nl2br($rows2['keyword']);
-						$key .= nl2br("\n ");
-					?>
-						<li class="links" onclick="redirectTo('dt?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>');">
-							<a class="link" href ="dt?keyVal=<?php echo htmlspecialchars($rows2["keyword"]);?>"> <?php echo $key;?></a>
-							<sub><span class="bubble" id="bubble"><?php echo $rows2["keyCnt"]>1?$rows2["keyCnt"]." searches":$rows2["keyCnt"]." search"; ?></span></sub>
-							<button onclick ="no(event);" data-id="<?php echo htmlspecialchars($rows2["keyword"]);?>" value="<?php echo htmlspecialchars($rows2["keyword"]);?>" type="button" class="deleteKey btn-close btn-sm" aria-label="Close" style="float:right;margin-top:9px"></button>
-						</li>
-					<?php
-						
-					}
-					?>
-				</ul>
+				<ul id = "keywords"></ul>
 			</div>
 		</div>
 		<footer id="footer">

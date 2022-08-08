@@ -1,37 +1,41 @@
 <?php
-header("Content-Type: text/html");
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: GET');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 require_once "config.php";
 require_once "geolocation.php";
 require_once 'middleware.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") 
+$dest = array();
+$keys = array();
+
+$sql = "SELECT DISTINCT destination, COUNT(destination) AS destCnt FROM searches WHERE (destination LIKE BINARY ? OR destination LIKE BINARY ? ) AND destination IS NOT NULL GROUP BY destination ORDER BY destCnt DESC, destination ASC  LIMIT 100;";
+if ($stmt = mysqli_prepare($link, $sql))
 {
-	$sql = "SELECT DISTINCT destination, COUNT(destination) AS destCnt FROM searches WHERE (destination LIKE BINARY ? OR destination LIKE BINARY ? ) AND destination IS NOT NULL GROUP BY destination ORDER BY destCnt DESC LIMIT 100;";
-	if ($stmt = mysqli_prepare($link, $sql))
-	{
-		// Bind variables to the prepared statement as parameters
-		mysqli_stmt_bind_param($stmt, "ss", $param_state, $param_stateFull);
-		// Set parameters
-		$param_state = "%$state%";
-		$param_stateFull = "%$stateFull%";
-		// Attempt to execute the prepared statement
-		mysqli_stmt_execute($stmt);
-		$result = mysqli_stmt_get_result($stmt);
-		mysqli_stmt_close($stmt);
+	mysqli_stmt_bind_param($stmt, "ss", $param_state, $param_stateFull);
+	$param_state = "%$state%";
+	$param_stateFull = "%$stateFull%";
+	mysqli_stmt_execute($stmt);
+	$result = mysqli_stmt_get_result($stmt);
+	while($row = $result->fetch_assoc()) {
+		$dest[] = $row;
 	}
-	$sql = "SELECT DISTINCT keyword, COUNT(keyword) AS keyCnt FROM searches WHERE (destination LIKE BINARY ? OR destination LIKE BINARY ? ) AND keyword IS NOT NULL GROUP BY keyword ORDER BY keyCnt DESC LIMIT 100;";
-	if ($stmt = mysqli_prepare($link, $sql))
-	{
-		// Bind variables to the prepared statement as parameters
-		mysqli_stmt_bind_param($stmt, "ss", $param_state, $param_stateFull);
-		// Set parameters
-		$param_state = "%$state%";
-		$param_stateFull = "%$stateFull%";
-		// Attempt to execute the prepared statement
-		mysqli_stmt_execute($stmt);
-		$result2 = mysqli_stmt_get_result($stmt);
-		mysqli_stmt_close($stmt);
-	}
+	mysqli_stmt_close($stmt);
 }
+$sql = "SELECT DISTINCT keyword, COUNT(keyword) AS keyCnt FROM searches WHERE (destination LIKE BINARY ? OR destination LIKE BINARY ? ) AND keyword IS NOT NULL GROUP BY keyword ORDER BY keyCnt DESC, keyword ASC LIMIT 100;";
+if ($stmt = mysqli_prepare($link, $sql))
+{
+	mysqli_stmt_bind_param($stmt, "ss", $param_state, $param_stateFull);
+	$param_state = "%$state%";
+	$param_stateFull = "%$stateFull%";
+	mysqli_stmt_execute($stmt);
+	$result2 = mysqli_stmt_get_result($stmt);
+	while($row = $result2->fetch_assoc()) {
+		$keys[] = $row;
+	}
+	mysqli_stmt_close($stmt);
+}
+die(json_encode(array_merge($dest, $keys)));
 ?>

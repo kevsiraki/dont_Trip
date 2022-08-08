@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS all_login_attempts (
 );
 CREATE TABLE IF NOT EXISTS failed_login_attempts (
   id INT NOT NULL AUTO_INCREMENT,
-  ip VARBINARY(16) NOT NULL,
+  ip VARCHAR(255) NOT NULL,
   attempt_time BIGINT NOT NULL,
   username VARCHAR(255), 
   otp VARCHAR(255), 

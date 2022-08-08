@@ -1,92 +1,84 @@
 <?php
-header("Content-Type: text/html");
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
-require_once "config.php";
+require_once 'config.php';
 require_once 'middleware.php';
-include 'php-csrf.php';
+require_once 'rateLimiter.php';
 
 $password = $password_err = "";
 
-// Processing form data when form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST")
-{
+$username = $_SESSION["username"];
 
-    require_once 'rateLimiter.php';
-    $username = $_SESSION["username"];
-    // Check if password is empty
-    if (empty(trim($_POST["password"])))
+csrf();
+
+//Validate Password
+if (empty(trim($_POST["password"])))
+{
+    $password_err = "Please enter your password.";
+    die(json_encode(["message" => $password_err]));
+}
+else
+{
+    $password = trim($_POST["password"]);
+}
+if (empty($password_err))
+{
+    $sql = "SELECT username, password FROM users WHERE username = ?";
+    if ($stmt = mysqli_prepare($link, $sql))
     {
-        $password_err = "Please enter your password.";
-        die($password_err); //response
-    }
-    else
-    {
-        $password = trim($_POST["password"]);
-    }
-    // Validate credentials
-    if (empty($password_err))
-    {
-        // Prepare a select statement
-        $sql = "SELECT username, password FROM users WHERE username = ?";
-        if ($stmt = mysqli_prepare($link, $sql))
+        mysqli_stmt_bind_param($stmt, "s", $param_username);
+        $param_username = $username;
+        if (mysqli_stmt_execute($stmt))
         {
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
-            // Set parameters
-            $param_username = $username;
-            // Attempt to execute the prepared statement
-            if (mysqli_stmt_execute($stmt))
+            mysqli_stmt_store_result($stmt);
+            if (mysqli_stmt_num_rows($stmt) == 1)
             {
-                // Store result
-                mysqli_stmt_store_result($stmt);
-                // Check if username exists, if yes then verify password
-                if (mysqli_stmt_num_rows($stmt) == 1)
+                mysqli_stmt_bind_result($stmt, $username, $hashed_password);
+                if (mysqli_stmt_fetch($stmt))
                 {
-                    // Bind result variables
-                    mysqli_stmt_bind_result($stmt, $username, $hashed_password);
-                    if (mysqli_stmt_fetch($stmt))
+                    if (password_verify($password, $hashed_password))
                     {
-                        if (password_verify($password, $hashed_password))
+                        //Delete user's search history
+                        $sql = "DELETE FROM searches WHERE username = ? ;";
+                        if ($stmt = mysqli_prepare($link, $sql))
                         {
-                            // Password is correct and they are verified, so delete the account
-                            //Delete user's search history
-                            $sql = "DELETE FROM searches WHERE username = ? ;";
-                            if ($stmt = mysqli_prepare($link, $sql))
-                            {
-                                // Bind variables to the prepared statement as parameters
-                                mysqli_stmt_bind_param($stmt, "s", $param_username);
-                                // Set parameters
-                                $param_username = $username;
-                                // Attempt to execute the prepared statement
-                                mysqli_stmt_execute($stmt);
-                                mysqli_stmt_close($stmt);
-                            }
-                            //Delete user's account
-                            $sql = "DELETE FROM users WHERE username = ? ;";
-                            if ($stmt = mysqli_prepare($link, $sql))
-                            {
-                                // Bind variables to the prepared statement as parameters
-                                mysqli_stmt_bind_param($stmt, "s", $param_username);
-                                // Set parameters
-                                $param_username = $username;
-                                // Attempt to execute the prepared statement
-                                mysqli_stmt_execute($stmt);
-                                mysqli_stmt_close($stmt);
-                            }
-                            // Redirect user
-                            echo 1; //response
+                            mysqli_stmt_bind_param($stmt, "s", $param_username);
+                            $param_username = $username;
+                            mysqli_stmt_execute($stmt);
+                            mysqli_stmt_close($stmt);
                         }
-                        else
+                        //Delete user's password reset attempts
+                        $sql = "DELETE FROM password_reset_temp WHERE email in (SELECT email FROM users WHERE username = ? );";
+                        if ($stmt = mysqli_prepare($link, $sql))
                         {
-                            // Password is not valid, display a generic error message
-                            $password_err = "Incorrect Password.";
-                            die($password_err); //response
+                            mysqli_stmt_bind_param($stmt, "s", $param_username);
+                            $param_username = $username;
+                            mysqli_stmt_execute($stmt);
+                            mysqli_stmt_close($stmt);
                         }
+                        //Delete user's account
+                        $sql = "DELETE FROM users WHERE username = ? ;";
+                        if ($stmt = mysqli_prepare($link, $sql))
+                        {
+                            mysqli_stmt_bind_param($stmt, "s", $param_username);
+                            $param_username = $username;
+                            mysqli_stmt_execute($stmt);
+                            mysqli_stmt_close($stmt);
+                        }
+                        die(json_encode(["message" => 1]));
+                    }
+                    else
+                    {
+                        $password_err = "Incorrect Password.";
+                        die(json_encode(["message" => $password_err]));
                     }
                 }
             }
         }
     }
-    mysqli_close($link);
 }
+mysqli_close($link);
 ?>

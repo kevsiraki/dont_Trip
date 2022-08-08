@@ -1,4 +1,8 @@
-<?php require_once "../backend/fp_backend.php"; ?>
+<?php
+require_once '../backend/config.php';
+require_once '../backend/middleware.php';
+include '../backend/php-csrf.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>

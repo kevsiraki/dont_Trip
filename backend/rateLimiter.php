@@ -10,7 +10,7 @@ if (isset($_SESSION['LAST_CALL']))
     $curr = date("Y-m-d h:i:s.u");
     if (compareMilliseconds($last, $curr, 250))
     {
-        die("Wait...");
+        die(json_encode(["message" => "Wait..."]));
     }
 }
 $_SESSION['LAST_CALL'] = date('Y-m-d h:i:s.u');

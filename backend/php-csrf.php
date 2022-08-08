@@ -14,11 +14,4 @@ if (empty($_SESSION['key']))
 
 //create CSRF token
 $csrf = hash_hmac('sha256', $_ENV["recovery_key"],  $_SESSION['key']);
-if ($_SERVER["REQUEST_METHOD"] == "POST")
-{
-	if (empty($csrf)|| empty($_POST['csrf']) || !hash_equals($csrf, $_POST['csrf']))
-	{
-		die("Malformed request.");
-	}
-}
 ?>

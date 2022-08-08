@@ -1,4 +1,4 @@
-<?php require_once "../backend/verify_email_backend.php"; ?>
+<?php ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>

@@ -5,6 +5,9 @@ body, html {
 	font-family: arial ;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+
+overflow-x: hidden;
+
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 

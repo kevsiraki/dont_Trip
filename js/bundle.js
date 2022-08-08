@@ -238,8 +238,22 @@
                                         };
                                         directionsService.route(request, function(result, status) {
                                             if (status == "OK") {
-												fetch("https://donttrip.technologists.cloud/donttrip/client/dt?go=yes&destination=" + document.getElementById("myInput").value + "&keyword=" + document.getElementById("keywordIn").value);
-                                                directionsRenderer.setDirections(result);
+                                                fetch("https://donttrip.technologists.cloud/donttrip/backend/dt_backend", {
+													method: "post",
+													headers: {
+														'Accept': 'application/json',
+														"Content-Type": "application/json"
+													},
+													body: JSON.stringify({
+														destination: document.getElementById("myInput").value,
+														keyword: document.getElementById("keywordIn").value
+													})
+												})
+												.then((response) => response.json())
+												.then((message) => {
+													console.log(message)
+												})	
+												directionsRenderer.setDirections(result);
                                                 waypoints = polyline.decode(result.routes[0].overview_polyline);
                                                 directionsRenderer.setMap(map);
                                                 const PolygonCoords = PolygonPoints();

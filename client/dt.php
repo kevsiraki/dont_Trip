@@ -1,6 +1,11 @@
 <?php 
-	require_once "../backend/dt_backend.php"; 
-	require_once "redirect.php";
+	require_once '../backend/config.php';
+	require_once '../backend/helpers.php';
+	require_once '../backend/geolocation.php';
+	require_once '../backend/middleware.php';
+	require_once 'redirect.php';
+	$wilson = json_decode(get_web_page("https://owen-wilson-wow-api.herokuapp.com/wows/random?results=5"));
+	$audio = $wilson[rand(0, 4) ]->audio;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,7 +86,7 @@
 				<button id="more" class="btn btn-secondary btn-block">Load more results</button>
 			</div>	
 		</div>
-		<input type="hidden" id="api_key" value="<?php echo $gmaps_api_key?>">
+		<input type="hidden" id="api_key" value="<?php echo $_ENV['gmaps_api_key'] ?>">
 		<input type="hidden" id="countryCode" value="<?php echo $countryCode?>">
 		<input type="hidden" id="lat" value="<?php echo $lat?>">
 		<input type="hidden" id="lon" value="<?php echo $lon?>">

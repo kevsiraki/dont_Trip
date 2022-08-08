@@ -1,4 +1,8 @@
-<?php require_once "../backend/delete_confirmation_backend.php"; ?>
+<?php 
+require_once '../backend/config.php';
+require_once '../backend/middleware.php';
+require_once '../backend/php-csrf.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -22,7 +26,7 @@
 	<body class="d-flex flex-column justify-content-between">
 		<header class="header" id="header">
 			<a href="../login" class="logo">
-			<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
+				<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
 			</a>
 			<div class="header-right">
 				<a href="../login"><small>Login</small></a>

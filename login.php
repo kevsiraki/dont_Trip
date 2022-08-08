@@ -1,4 +1,8 @@
-<?php require_once "backend/login_backend.php"; ?>
+<?php 
+require_once 'backend/redirect_backend.php';
+require_once 'backend/middleware.php';
+include 'backend/php-csrf.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -50,7 +54,6 @@
 			<div id="invalid-login" class="center alert alert-danger"style="text-align:center; width: 90%; display:none; margin-bottom:30px !important;"> </div>
 			<div id = "successful">
 			<?php 
-			
 			if(isset($_GET["message"])&& !isset($_SESSION['message_shown']))
 			{
 				$msg_success = $_GET["message"];
@@ -81,11 +84,7 @@
 			<p>
 				<div  style = "display: flex;justify-content: center; width:100%; ">
 				<?php
-					
-					if($isAuth == "yes") 
-					{
-						echo "<a class=\"btn btn-link\" style=\"display: inline-block; color: white; background-color: #306998;\" href='".$client->createAuthUrl()."'><i class=\"fa-brands fa-google\">&nbsp;</i>Google</a>&nbsp;&nbsp;";
-					}
+					echo ($isAuth == "yes") ? "<a class=\"btn btn-link\" style=\"display: inline-block; color: white; background-color: #306998;\" href='".$client->createAuthUrl()."'><i class=\"fa-brands fa-google\">&nbsp;</i>Google</a>&nbsp;&nbsp;" : "";
 					echo "<a class=\"btn btn-link\" style=\"display: inline-block; color: white; background-color: #4267B2;\" href='client/facebook_bootstrap'><i class=\"fa fa-facebook\">&nbsp;</i>Facebook</a>&nbsp;&nbsp;";
 					echo "<a class=\"btn btn-link\" style=\"color: white; background-color: #738ADB;\" href='client/init-oauth.php'><i class=\"fa-brands fa-discord\">&nbsp;</i>Discord</a>";
 				?>
