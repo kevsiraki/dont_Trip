@@ -6,12 +6,12 @@ $(document).on('click', '#submit-email', function (e) {
         url: '../backend/fp_backend',
         type: 'post',
         dataType: 'json',
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		contentType: "application/json",
         timeout: 5000,
-        data: {
+        data: JSON.stringify({
             email: emailReset,
             csrf: csrf
-        },
+        }),
         success: function (result) {
             let button = document.getElementById("submit-email");
             let error = document.getElementById("invalid-email");

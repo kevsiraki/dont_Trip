@@ -9,7 +9,7 @@ require_once "middleware.php";
 
 $data = json_decode(file_get_contents("php://input"));
 
-if (!empty($data))
+if (isset($data) && !empty($data))
 {
     $what = $data->type;
     $exactly = $data->id;

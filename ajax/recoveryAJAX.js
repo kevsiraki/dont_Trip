@@ -9,11 +9,11 @@ $(document).on('click', '#recover-account', function (e) {
         dataType: 'json',
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         timeout: 5000,
-        data: {
+        data: JSON.stringify({
             username: username,
             password: password,
             csrf: csrf
-        },
+        }),
         success: function (result) {
             let button = document.getElementById("recover-account");
             let error = document.getElementById("invalid-recovery");

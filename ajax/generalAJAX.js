@@ -102,10 +102,11 @@ $(document).ready(function () {
                     url: '../backend/ajax_requests',
                     type: 'post',
                     dataType: "JSON",
+					contentType: "application/json",
                     timeout: 5000,
-                    data: {
+                    data: JSON.stringify({
                         username: username
-                    },
+                    }),
                     success: function (response) {
                         if (response.check) {
                             $('#uname_response').html('<small><span style="color: #ff8c00;">'+response.check+'</span></small>');
@@ -153,10 +154,11 @@ $(document).ready(function () {
                     url: '../backend/ajax_requests',
                     type: 'post',
                     dataType: "JSON",
+					contentType: "application/json",
                     timeout: 5000,
-                    data: {
+                    data: JSON.stringify({
                         email: email
-                    },
+                    }),
                     success: function (response) {
                         if (response.check) {
                             $('#ename_response').html('<small><span style="color: #ff8c00;">'+response.check+'</span></small>');
@@ -204,10 +206,11 @@ $(document).ready(function () {
                     url: '../backend/ajax_requests',
                     type: 'post',
                     dataType: "JSON",
+					contentType: "application/json",
                     timeout: 5000,
-                    data: {
+                    data: JSON.stringify({
                         email_reset: email_reset
-                    },
+                    }),
                     success: function (response) {
                         if (response.check) {
                             $('#ename_response').html('<small><span style="color: #ff8c00;">'+response.check+'</span></small>');

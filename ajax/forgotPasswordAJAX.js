@@ -10,15 +10,16 @@ $(document).on('click', '#submit-password', function (e) {
         url: '../backend/forgot-password_backend',
         type: 'post',
         dataType: "json",
+		contentType: "application/json",
         timeout: 5000,
-        data: {
+        data: JSON.stringify({
             new_password: new_password,
             confirm_password: confirm_password,
             tfa: tfa,
             email: email,
-            key: key,
+            keyTO: key,
             csrf: csrf
-        },
+        }),
         success: function (response) {
             let button = document.getElementById("submit-password");
             let error = document.getElementById("invalid-reset");

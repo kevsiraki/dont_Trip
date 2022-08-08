@@ -18,6 +18,8 @@ $response = array();
 define("encryption_method", $_ENV["recovery_encryption"]);
 define("key", $_ENV["recovery_key"]);
 
+$data = json_decode(file_get_contents("php://input"));
+
 if (isset($_SESSION['username']))
 {
     $sql = "SELECT * FROM users WHERE username = ? ;";
@@ -32,9 +34,9 @@ if (isset($_SESSION['username']))
     }
 }
 
-if (isset($_POST['two_factor']) && !empty($userResults))
+if (isset($data->two_factor) && !empty($userResults))
 {
-    if ($_POST['two_factor'] == "true" && ($userResults["tfaen"] == 0 || empty($userResults["tfaen"])))
+    if ($data->two_factor == 1 && ($userResults["tfaen"] == 0 || empty($userResults["tfaen"])))
     {
         $g = new \Google\Authenticator\GoogleAuthenticator();
         $secret = $g->generateSecret();
@@ -61,7 +63,7 @@ if (isset($_POST['two_factor']) && !empty($userResults))
 			"qr" => $url
 		);
     }
-    else if ($_POST['two_factor'] == "false" && $userResults["tfaen"] == 1)
+    else if ($data->two_factor == 0 && $userResults["tfaen"] == 1)
     {
 		$response = array("message" => "2FA Disabled.");
         $sql = "UPDATE users SET tfaen = 0 WHERE username = ? ;";
@@ -80,7 +82,8 @@ if (isset($_POST['two_factor']) && !empty($userResults))
             mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
         }
+		
     }
-    die(json_encode($response));
+	die(json_encode($response));
 }
 ?>

@@ -8,12 +8,12 @@ $(document).on('click', '#submit-password', function (e) {
         type: 'post',
         timeout: 5000,
         dataType: 'json',
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        data: {
+		contentType: "application/json",
+        data: JSON.stringify({
             new_password: new_password,
             confirm_password: confirm_password,
             csrf: csrf
-        },
+        }),
         success: function (result) {
             let button = document.getElementById("submit-password");
             let error = document.getElementById("invalid-reset");

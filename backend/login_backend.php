@@ -22,6 +22,8 @@ $second_limit = 20;
 date_default_timezone_set('America/Los_Angeles');
 $date = date("Y-m-d H:i:s");
 
+$data = json_decode(file_get_contents("php://input"));
+
 csrf();
 
 //First step of brute force prevention, lock user out consecutively for 10 seconds after 5 failed attempts;
@@ -63,10 +65,10 @@ if ($total_count >= $first_limit && $total_count < $second_limit)
     }
 }
 
-if (isset($_POST["username"]) && isset($_POST["password"]) && !empty((trim($_POST["username"]))) && !empty((trim($_POST["password"]))))
+if (isset($data->username) && isset($data->password) && !empty((trim($data->username))) && !empty((trim($data->password))))
 {
-    $usernameOrEmail = $username = trim($_POST["username"]);
-    $password = trim($_POST["password"]);
+    $usernameOrEmail = $username = trim($data->username);
+    $password = trim($data->password);
 }
 else
 {
@@ -79,8 +81,8 @@ $sql = "INSERT INTO all_login_attempts(username, password, attempt_date, ip) VAL
 if ($stmt = mysqli_prepare($link, $sql))
 {
     mysqli_stmt_bind_param($stmt, "ssss", $param_username, $param_password, $param_attempt_date, $param_ip);
-    $param_username = $_POST["username"];
-    $param_password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+    $param_username = $data->username;
+    $param_password = password_hash($data->password, PASSWORD_DEFAULT);
     $param_attempt_date = $date;
     $param_ip = $_SERVER['REMOTE_ADDR'];
     mysqli_stmt_execute($stmt);

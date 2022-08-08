@@ -12,13 +12,13 @@ $(document).on('click', '#log-in', function (e) {
         url: 'backend/login_backend',
         type: 'post',
         dataType: 'json',
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		contentType: "application/json",
         timeout: 5000,
-        data: {
+        data: JSON.stringify({
             username: username,
             password: password,
 			csrf: csrf
-        },
+        }),
         success: function (response) {
 			let result = JSON.stringify(response.message).replace(/['"]+/g, '');
             if (result.includes("ten")) {

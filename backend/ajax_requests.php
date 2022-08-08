@@ -26,9 +26,11 @@ $_SESSION['LAST_CALL'] = date('Y-m-d h:i:s.u');
 $username = $email = "";
 $response = array();
 
-if (isset($_POST['username']))
+$data = json_decode(file_get_contents("php://input"));
+
+if (isset($data->username))
 {
-    $username = trim($_POST['username']);
+    $username = trim($data->username);
     $sql = "SELECT COUNT(*) as cntUser FROM users WHERE username = ? ;";
     if ($stmt = mysqli_prepare($link, $sql))
     {
@@ -62,9 +64,9 @@ if (isset($_POST['username']))
     }
     die(json_encode($response));
 }
-if (isset($_POST['email']))
+if (isset($data->email))
 {
-    $email = trim($_POST['email']);
+    $email = trim($data->email);
     $sql = "SELECT COUNT(*) as cntEmail FROM users WHERE email = ? ;";
     if ($stmt = mysqli_prepare($link, $sql))
     {
@@ -90,9 +92,9 @@ if (isset($_POST['email']))
     }
 	die(json_encode($response));
 }
-if (isset($_POST['email_reset']))
+if (isset($data->email_reset))
 {
-    $email = trim($_POST['email_reset']);
+    $email = trim($data->email_reset );
     $sql = "SELECT COUNT(*) as cntEmail FROM users WHERE email = ? ;";
     if ($stmt = mysqli_prepare($link, $sql))
     {

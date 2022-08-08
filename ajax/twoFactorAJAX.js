@@ -7,14 +7,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 url: '../backend/settings_backend',
                 type: 'post',
 				dataType: 'JSON',
+				contentType: "application/json",
                 timeout: 5000,
-                data: {
+                data: JSON.stringify({
                     two_factor: two_factor
-                },
+                }),
                 success: function (response) {
+					console.log(response);
 					if(response.secret !== undefined)
 					{
-						$('#two_factor_response').html('2FA Secret: <b id="copyNew">'+response.secret+'</b>&nbsp;'+
+						$('#two_factor_response').html('2FA Secret: <b id="copyNew">'+response.secret+'</b>&nbsp;&nbsp;'+
 							'<button class = "btn btn-outline-info btn-sm" onclick="copySecret(copyNew);">📋</button><br><br>'+
 							'<p>1. Copy and paste the code above or scan the QR code below in your authenticator app of choice.</p>'+
 							'<p>2. Keep this secret somewhere safe in case you lose access to your authenticator app.</p>'+

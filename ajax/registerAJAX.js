@@ -11,15 +11,15 @@ $(document).on('click', '#sign-up', function (e) {
         url: '../backend/register_backend',
         type: 'post',
         dataType: 'json',
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		contentType: "application/json",
         timeout: 5000,
-        data: {
+        data: JSON.stringify({
             email: email,
             username: username,
             password: password,
             confirm_password: confirm_password,
             csrf: csrf
-        },
+        }),
         success: function (result) {
             if (result.message == 1) {
                 error.style.display = "none";

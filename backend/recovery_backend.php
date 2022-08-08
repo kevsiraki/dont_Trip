@@ -13,21 +13,21 @@ $password = $password_err = "";
 csrf();
 
 // Check if password is empty
-if (empty(trim($_POST["password"])))
+if (!isset($data->password) || empty(trim($data->password)))
 {
     $password_err = "Please enter your password.";
     die(json_encode(["message" => $password_err]));
 }
 else
 {
-    $password = trim($_POST["password"]);
+    $password = trim($data->password);
 }
 
 $sql = "SELECT * FROM failed_login_attempts WHERE username = ? ";
 if ($stmt = mysqli_prepare($link, $sql))
 {
     mysqli_stmt_bind_param($stmt, "s", $param_username);
-    $param_username = trim($_POST["username"]);
+    $param_username = trim($data->username);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     $userResults = mysqli_fetch_assoc($result);

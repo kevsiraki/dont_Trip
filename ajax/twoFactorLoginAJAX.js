@@ -6,12 +6,12 @@ $(document).on('click', '#verify', function (e) {
         url: '../backend/two_factor_auth_backend',
         type: 'post',
         dataType: 'json',
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		contentType: "application/json",
         timeout: 5000,
-        data: {
+        data: JSON.stringify({
             tfa: tfa,
             csrf: csrf
-        },
+        }),
         success: function (result) {
             let button = document.getElementById("verify");
             let error = document.getElementById("invalid-login");

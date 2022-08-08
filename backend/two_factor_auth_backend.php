@@ -16,6 +16,8 @@ require_once 'vendor/sonata-project/google-authenticator/src/GoogleQrUrl.php';
 define("encryption_method", $_ENV["recovery_encryption"]);
 define("key", $_ENV["recovery_key"]);
 
+$data = json_decode(file_get_contents("php://input"));
+
 csrf();
 
 //Retrieve 2FA user info
@@ -33,7 +35,7 @@ if ($stmt = mysqli_prepare($link, $sql))
 //Authenticate OTP input
 $g = new \Google\Authenticator\GoogleAuthenticator();
 $secret = decrypt($userResults["tfa"]);
-$code = trim($_POST["tfa"]);
+$code = trim($data->tfa);
 if ($g->checkCode($secret, $code))
 {
     $_SESSION["loggedin"] = true;

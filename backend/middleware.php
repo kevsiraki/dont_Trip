@@ -125,16 +125,22 @@ function killSessionUsername()
 }
 function csrf()
 {
-
     if (!isset($_SESSION["key"]))
     {
         die(json_encode(["message" => "Invalid API Access."]));
     }
-
     $csrf = hash_hmac('sha256', $_ENV["recovery_key"], $_SESSION['key']);
-    if ($_SERVER["REQUEST_METHOD"] == "POST")
+    if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "DELETE")
     {
-        if (empty($csrf) || empty($_POST['csrf']) || !hash_equals($csrf, $_POST['csrf']))
+		if(json_decode(file_get_contents("php://input"))!==null)
+		{
+			$client_csrf = json_decode(file_get_contents("php://input"))->csrf;
+		}
+		else
+		{
+			die(json_encode(["message" => "Invalid API Access."]));
+		}
+        if (empty($csrf) || empty($client_csrf) || !hash_equals($csrf, $client_csrf))
         {
             die(json_encode(["message" => "Token Expired, Refresh the Page."]));
         }

@@ -4,14 +4,14 @@ $(document).on('click', '#delete-account', function (e) {
     let csrf = $('#csrf').val();
     $.ajax({
         url: '../backend/delete_confirmation_backend',
-        type: 'post',
+        type: 'DELETE',
         dataType: 'json',
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		contentType: "application/json",
         timeout: 5000,
-        data: {
+        data: JSON.stringify({
             password: password,
             csrf: csrf
-        },
+        }),
         success: function (result) {
             let button = document.getElementById("delete-account");
             let error = document.getElementById("invalid-delete");

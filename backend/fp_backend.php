@@ -19,17 +19,19 @@ if (!isset($_SESSION))
 $username = $email = $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = $email_err = $username_err = "";
 
+$data = json_decode(file_get_contents("php://input"));
+
 csrf();
 
 //Validate email
-if (empty(trim($_POST["email"])))
+if (empty(trim($data->email)))
 {
     $email_err = "Please enter an e-mail.";
 	die(json_encode(["message" => $email_err]));
 }
 else
 {
-    $email = trim($_POST["email"]);
+    $email = trim($data->email);
     $sql = "SELECT * FROM users WHERE email = ? ;";
     if ($stmt = mysqli_prepare($link, $sql))
     {
@@ -47,7 +49,7 @@ else
     }
     else
     {
-        $email = trim($_POST["email"]);
+        $email = trim($data->email);
     }
 }
 $sql = "SELECT COUNT(*) as cntEmail FROM password_reset_temp WHERE email = ? ;";
@@ -114,7 +116,7 @@ if (empty($email_err))
         $mail->Port = $_ENV['port'];
         $mail->From = $_ENV['email'];
         $mail->FromName = "WebMaster";
-        $mail->addAddress($_POST["email"], $userResults["username"]);
+        $mail->addAddress($data->email, $userResults["username"]);
         $mail->Subject = "Reset your Password";
         $mail->IsHTML(true);
         date_default_timezone_set("America/Los_Angeles");
@@ -135,7 +137,7 @@ if (empty($email_err))
         $html = file_get_contents('../email_templates/forgot_password.html');
         $html = str_replace("{{USERNAME}}", $userResults["username"], $html);
         $html = str_replace("{{IMGICON}}", imageUrl() , $html);
-        $html = str_replace("{{LINK}}", "https://donttrip.technologists.cloud/donttrip/client/forgot-password.php?key=" . $_POST["email"] . "&token=" . $key . "", $html);
+        $html = str_replace("{{LINK}}", "https://donttrip.technologists.cloud/donttrip/client/forgot-password.php?key=" . $data->email . "&token=" . $key . "", $html);
         $html = str_replace("{{GREETING}}", $greeting, $html);
         $mail->Body = $html;
     }

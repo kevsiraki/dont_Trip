@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
         timeout: 5000,
         contentType: "application/json",
         dataType: "json",
-        async: false,
         success: function (result) {
             let i = 0;
             while (i < result.length && "destCnt" in result[i]) {
@@ -25,6 +24,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 li.appendChild(a);
                 li.appendChild(document.createElement("br"));
                 li.appendChild(sub);
+				li.addEventListener('click', function () {
+					redirectTo("dt?destVal=" + li.firstChild.innerHTML);
+				});
                 ul.appendChild(li);
                 i++;
             }
@@ -45,9 +47,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 li.appendChild(a);
                 li.appendChild(document.createElement("br"));
                 li.appendChild(sub);
+				li.addEventListener('click', function () {
+					redirectTo("dt?keyVal=" + li.firstChild.innerHTML);
+				});
                 ul.appendChild(li);
                 i++;
             }
+			const d = new Date();
+			if (localStorage.getItem("dark_mode") === "false" || (d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
+				lightStyle();
+			}
         },
         error: function (xhr, textStatus, errorThrown) {
             var text = 'Ajax Request Error: ' + 'XMLHTTPRequestObject status: (' + xhr.status + ', ' + xhr.statusText + '), ' +
@@ -55,18 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log('The AJAX request failed with the error: ' + text);
             console.log(xhr.responseText);
             console.log(xhr.getAllResponseHeaders());
-        }
-    });
-    const lis = document.querySelectorAll('.links');
-    lis.forEach(li => {
-        if (li.parentNode.id == "destinations") {
-            li.addEventListener('click', function () {
-                redirectTo("dt?destVal=" + li.firstChild.innerHTML);
-            });
-        } else if (li.parentNode.id == "keywords") {
-            li.addEventListener('click', function () {
-                redirectTo("dt?keyVal=" + li.firstChild.innerHTML);
-            });
         }
     });
 });

@@ -15,15 +15,17 @@ $username = $password = $confirm_password = $email = "";
 $username_err = $password_err = $confirm_password_err = $email_err = "";
 $row = 0;
 
+$data = json_decode(file_get_contents("php://input"));
+
 csrf();
 
 //Check all inputs are filled before any further checks
-if (!isset ($_POST["email"]) || !isset ($_POST["username"]) || !isset ($_POST["password"]) || !isset ($_POST["confirm_password"]) || empty(trim($_POST["email"])) || empty(trim($_POST["username"])) || empty(trim($_POST["password"])) || empty(trim($_POST["confirm_password"])))
+if (!isset ($data->email) || !isset ($data->username) || !isset ($data->password) || !isset ($data->confirm_password) || empty(trim($data->email)) || empty(trim($data->username)) || empty(trim($data->password)) || empty(trim($data->confirm_password)))
 {
     die(json_encode(["message" => "Please fill in all fields."]));
 }
 //Validate email exists and is not taken.
-if (empty(trim($_POST["email"])))
+if (empty(trim($data->email)))
 {
     $email_err = " ";
 }
@@ -33,7 +35,7 @@ else
     if ($stmt = mysqli_prepare($link, $sql))
     {
         mysqli_stmt_bind_param($stmt, "s", $param_email);
-        $param_email = trim($_POST["email"]);
+        $param_email = trim($data->email);
         if (mysqli_stmt_execute($stmt))
         {
             mysqli_stmt_store_result($stmt);
@@ -42,7 +44,7 @@ else
                 $email_err = "E-mail Unavailable.";
                 die(json_encode(["message" => $email_err]));
             }
-            else if (!valid_email(trim($_POST["email"])))
+            else if (!valid_email(trim($data->email)))
             {
                 $email_err = "Invalid E-Mail.";
                 die(json_encode(["message" => $email_err]));
@@ -50,7 +52,7 @@ else
             else
             {
                 $key = $_ENV["ip_quality_api_key"];
-                $email = $_POST["email"];
+                $email = $data->email;
                 $timeout = 1;
                 $fast = 'false';
                 $abuse_strictness = 0;
@@ -78,7 +80,7 @@ else
                     }
                     else
                     {
-                        $email = trim($_POST["email"]);
+                        $email = trim($data->email);
                         $token = hash("SHA512", $email);
                         $addKey = hash("SHA512", generatePassword(8));
                         $token = substr(str_shuffle($token . $addKey) , 0, 32);
@@ -86,7 +88,7 @@ else
                 }
                 else
                 {
-                    $email = trim($_POST["email"]);
+                    $email = trim($data->email);
                     $token = hash("SHA512", $email);
                     $addKey = hash("SHA512", generatePassword(8));
                     $token = substr(str_shuffle($token . $addKey) , 0, 32);
@@ -97,11 +99,11 @@ else
     }
 }
 // Validate username.
-if (empty(trim($_POST["username"])))
+if (empty(trim($data->username)))
 {
     $username_err = " ";
 }
-else if (!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"])) || count(array_count_values(str_split(trim($_POST["username"])))) == 1 || strlen(trim($_POST["username"])) < 8 || strlen(trim($_POST["username"])) > 25)
+else if (!preg_match('/^[a-zA-Z0-9_]+$/', trim($data->username)) || count(array_count_values(str_split(trim($data->username)))) == 1 || strlen(trim($data->username)) < 8 || strlen(trim($data->username)) > 25)
 {
     $username_err = "Invalid Username.";
     die(json_encode(["message" => $username_err]));
@@ -112,7 +114,7 @@ else
     if ($stmt = mysqli_prepare($link, $sql))
     {
         mysqli_stmt_bind_param($stmt, "s", $param_username);
-        $param_username = trim($_POST["username"]);
+        $param_username = trim($data->username);
         if (mysqli_stmt_execute($stmt))
         {
             mysqli_stmt_store_result($stmt);
@@ -123,39 +125,39 @@ else
             }
             else
             {
-                $username = trim($_POST["username"]);
+                $username = trim($data->username);
             }
         }
         mysqli_stmt_close($stmt);
     }
 }
 // Validate password
-if (empty(trim($_POST["password"])))
+if (empty(trim($data->password)))
 {
     $password_err = " ";
 }
-else if (!(preg_match('/[A-Za-z]/', trim($_POST["password"])) && preg_match('/[0-9]/', trim($_POST["password"])) && preg_match('/[A-Z]/', trim($_POST["password"])) && preg_match('/[a-z]/', trim($_POST["password"]))) || (strlen(trim($_POST["password"])) < 8 || strlen(trim($_POST["password"])) > 25))
+else if (!(preg_match('/[A-Za-z]/', trim($data->password)) && preg_match('/[0-9]/', trim($data->password)) && preg_match('/[A-Z]/', trim($data->password)) && preg_match('/[a-z]/', trim($data->password))) || (strlen(trim($data->password)) < 8 || strlen(trim($data->password)) > 25))
 {
     $password_err = "Weak Password.";
     die(json_encode(["message" => $password_err]));
 }
 else
 {
-    $password = trim($_POST["password"]);
+    $password = trim($data->password);
 }
 // Validate confirm password
-if (empty(trim($_POST["confirm_password"])))
+if (empty(trim($data->confirm_password)))
 {
     $confirm_password_err = " ";
 }
-else if (empty($password_err) && $password != trim($_POST["confirm_password"]))
+else if (empty($password_err) && $password != trim($data->confirm_password))
 {
     $confirm_password_err = "Passwords Do Not Match.";
     die(json_encode(["message" => $confirm_password_err]));
 }
 else
 {
-    $confirm_password = trim($_POST["confirm_password"]);
+    $confirm_password = trim($data->confirm_password);
 }
 // Check input errors before inserting in database
 if (empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($email_err))
@@ -220,7 +222,7 @@ if (empty($username_err) && empty($password_err) && empty($confirm_password_err)
             $html = file_get_contents('../email_templates/register.html');
             $html = str_replace("{{USERNAME}}", $username, $html);
             $html = str_replace("{{IMGICON}}", imageUrl() , $html);
-            $html = str_replace("{{LINK}}", "https://donttrip.technologists.cloud/donttrip/client/verify-email.php?key=" . $_POST["email"] . "&token=" . $token . "", $html);
+            $html = str_replace("{{LINK}}", "https://donttrip.technologists.cloud/donttrip/client/verify-email.php?key=" . $data->email . "&token=" . $token . "", $html);
             $html = str_replace("{{GREETING}}", $greeting, $html);
             $mail->Body = $html;
         }
