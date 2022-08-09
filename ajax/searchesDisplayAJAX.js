@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+$(document).ready(function () {
     $.ajax({
         url: '../backend/searches_backend',
         type: 'GET',
@@ -33,13 +33,40 @@ document.addEventListener("DOMContentLoaded", function () {
                 li.appendChild(a);
                 li.appendChild(document.createElement("br"));
                 li.appendChild(sub);
+                button.addEventListener('click', function () {
+                    no(event);
+                    let element = this;
+                    $.ajax({
+                        url: '../backend/delete_search',
+                        type: 'DELETE',
+                        timeout: 5000,
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify({
+                            "type": "destination",
+                            "id": li.firstChild.innerHTML
+                        }),
+                        success: function (result) {
+                            if (result.message == "Destination Deleted") {
+                                $(element).closest('li').css('background', 'gray');
+                                $(element).closest('li').fadeOut(800, function () {
+                                    $(this).remove();
+                                });
+                            }
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            var text = 'Ajax Request Error: ' + 'XMLHTTPRequestObject status: (' + xhr.status + ', ' + xhr.statusText + '), ' +
+                                'text status: (' + textStatus + '), error thrown: (' + errorThrown + ')';
+                            console.log('The AJAX request failed with the error: ' + text);
+                            console.log(xhr.responseText);
+                            console.log(xhr.getAllResponseHeaders());
+                        }
+                    });
+                });
+                li.addEventListener('click', function () {
+                    redirectTo("dt?destVal=" + li.firstChild.innerHTML);
+                });
                 li.appendChild(button);
-				button.addEventListener('click', function () {
-					no(event);
-				});
-				li.addEventListener('click', function () {
-					redirectTo("dt?destVal=" + li.firstChild.innerHTML);
-				});
                 ul.appendChild(li);
                 i++;
             }
@@ -69,21 +96,47 @@ document.addEventListener("DOMContentLoaded", function () {
                 li.appendChild(a);
                 li.appendChild(document.createElement("br"));
                 li.appendChild(sub);
-				li.appendChild(button);
-				button.addEventListener('click', function () {
-					no(event);
-				});
-				li.addEventListener('click', function () {
-					redirectTo("dt?keyVal=" + li.firstChild.innerHTML);
-				});
+                li.appendChild(button);
+                button.addEventListener('click', function () {
+                    no(event);
+                    let element = this;
+                    $.ajax({
+                        url: '../backend/delete_search',
+                        type: 'DELETE',
+                        timeout: 5000,
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify({
+                            "type": "keyword",
+                            "id": li.firstChild.innerHTML
+                        }),
+                        success: function (result) {
+                            if (result.message === "Keyword Deleted") {
+                                $(element).closest('li').css('background', 'gray');
+                                $(element).closest('li').fadeOut(800, function () {
+                                    $(this).remove();
+                                });
+                            }
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            var text = 'Ajax Request Error: ' + 'XMLHTTPRequestObject status: (' + xhr.status + ', ' + xhr.statusText + '), ' +
+                                'text status: (' + textStatus + '), error thrown: (' + errorThrown + ')';
+                            console.log('The AJAX request failed with the error: ' + text);
+                            console.log(xhr.responseText);
+                            console.log(xhr.getAllResponseHeaders());
+                        }
+                    });
+                });
+                li.addEventListener('click', function () {
+                    redirectTo("dt?keyVal=" + li.firstChild.innerHTML);
+                });
                 ul.appendChild(li);
-                
                 ++i;
             }
-			const d = new Date();
-			if (localStorage.getItem("dark_mode") === "false" || (d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
-				lightStyle();
-			}
+            const d = new Date();
+            if (localStorage.getItem("dark_mode") === "false" || (d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
+                lightStyle();
+            }
         },
         error: function (xhr, textStatus, errorThrown) {
             var text = 'Ajax Request Error: ' + 'XMLHTTPRequestObject status: (' + xhr.status + ', ' + xhr.statusText + '), ' +

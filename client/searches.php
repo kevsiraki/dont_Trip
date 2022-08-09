@@ -18,8 +18,7 @@ require_once '../backend/middleware.php';
 		<link href="../style/footer.css" rel="stylesheet">
 		<script src="../js/nav.js"></script>
 		<script src="../js/lightMode.js"></script>	
-		<script src="../ajax/searchesDeleteAJAX.js"></script>
-		<script src="../ajax/searchesDisplayAJAX.js"></script>	
+		<script src="../ajax/searchesDisplayAJAX.js"></script>
 	</head>
 	<body>
 		<header class="topnav" id="topnav">
