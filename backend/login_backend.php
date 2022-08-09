@@ -214,7 +214,7 @@ if (empty($username_err) && empty($password_err) && !$lock)
                                 mysqli_stmt_close($stmt);
                             }
                         }
-                        if ($total_count >= 6)
+                        if ($total_count >= $second_limit)
                         {
                             if ($ip_address == $check_email_sent['ip'])
                             {

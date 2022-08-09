@@ -10,6 +10,8 @@ require_once 'rateLimiter.php';
 
 $password = $password_err = "";
 
+$data = json_decode(file_get_contents("php://input"));
+
 csrf();
 
 // Check if password is empty

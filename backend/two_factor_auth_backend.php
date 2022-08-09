@@ -20,6 +20,11 @@ $data = json_decode(file_get_contents("php://input"));
 
 csrf();
 
+if(!isset($data->tfa))
+{
+    die(json_encode(["message" => "Please enter 2FA OTP."]));
+}
+
 //Retrieve 2FA user info
 $sql = "SELECT * FROM users WHERE username = ? ;";
 if ($stmt = mysqli_prepare($link, $sql))

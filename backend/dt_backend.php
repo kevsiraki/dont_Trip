@@ -11,7 +11,7 @@ require_once 'middleware.php';
 
 $data = json_decode(file_get_contents("php://input"));
 
-if (isset($data) && !empty($data->destination))
+if (isset($data) && isset($data->destination) && !empty($data->destination))
 {
 	$ip = getIpAddr();
     $sql = "INSERT INTO searches (username, destination, keyword, ip) VALUES (?, ?, ?, ?)";

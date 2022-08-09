@@ -27,7 +27,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 csrf();
 
-if (isset($data->email))
+if (isset($data->email) && !empty($data-email))
 {
 	$email = $data->email;
 }

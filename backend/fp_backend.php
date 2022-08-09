@@ -5,16 +5,11 @@ header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 require_once "config.php";
-require_once 'middleware.php';
 require_once 'helpers.php';
+require_once 'middleware.php';
 require_once 'rateLimiter.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
-if (!isset($_SESSION))
-{
-    session_start();
-}
 
 $username = $email = $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = $email_err = $username_err = "";
@@ -24,7 +19,7 @@ $data = json_decode(file_get_contents("php://input"));
 csrf();
 
 //Validate email
-if (empty(trim($data->email)))
+if (!isset($data->email) || empty(trim($data->email)))
 {
     $email_err = "Please enter an e-mail.";
 	die(json_encode(["message" => $email_err]));

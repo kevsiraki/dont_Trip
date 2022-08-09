@@ -5,7 +5,7 @@
 	require_once '../backend/middleware.php';
 	require_once 'redirect.php';
 	$wilson = json_decode(get_web_page("https://owen-wilson-wow-api.herokuapp.com/wows/random?results=5"));
-	$audio = $wilson[rand(0, 4) ]->audio;
+	$audio = $wilson[rand(0, 4)]->audio;
 ?>
 <!DOCTYPE html>
 <html lang="en">

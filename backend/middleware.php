@@ -25,6 +25,10 @@ else if ($uri === $base_client . 'settings' || $uri === $base_backend . 'setting
     checkAuthorized();
     checkExpiryUpdateSSID();
 }
+else if ($uri === $base_client . 'fp' || $uri === $base_backend . 'fp_backend')
+{
+    startSession();
+}
 else if ($uri === $base_client . 'searches' || $uri === $base_client . 'state' || $uri === $base_backend . 'state_backend' || $uri === $base_backend . 'searches_backend' || $uri === $base_backend . 'delete_search')
 {
     startSession();
@@ -130,9 +134,10 @@ function csrf()
         die(json_encode(["message" => "Invalid API Access."]));
     }
     $csrf = hash_hmac('sha256', $_ENV["recovery_key"], $_SESSION['key']);
+	$client_csrf = "";
     if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "DELETE")
     {
-		if(json_decode(file_get_contents("php://input"))!==null)
+		if(isset(json_decode(file_get_contents("php://input"))->csrf) && json_decode(file_get_contents("php://input"))!==null)
 		{
 			$client_csrf = json_decode(file_get_contents("php://input"))->csrf;
 		}
