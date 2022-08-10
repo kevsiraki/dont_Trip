@@ -60,6 +60,11 @@ else if ($uri === $base_client . 'delete_confirmation' || $uri === $base_backend
     checkAuthorized();
     checkExpiryUpdateSSID();
 }
+
+/**
+ * Check if session is expired and update the SESSID if it is not expired.
+ */
+
 function checkExpiryUpdateSSID()
 {
     if (isset($_SESSION['loginTime']) && $_SESSION['loginTime'] + $_ENV["expire"] < time())
@@ -81,6 +86,11 @@ function checkExpiryUpdateSSID()
         }
     }
 }
+
+/**
+ * Check if the user is authorized to access this route.
+ */
+
 function checkAuthorized()
 {
     if (isset($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
@@ -89,6 +99,11 @@ function checkAuthorized()
         die;
     }
 }
+
+/**
+ * Check if the user is authorized AND authenticated.
+ */
+
 function checkLoggedIn()
 {
     if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)
@@ -97,6 +112,11 @@ function checkLoggedIn()
         die;
     }
 }
+
+/**
+ * Check if the user account is locked.
+ */
+
 function checkLocked()
 {
     if (!isset($_SESSION["locked"]) || $_SESSION["locked"] !== true)
@@ -105,6 +125,11 @@ function checkLocked()
         die;
     }
 }
+
+/**
+ * Check if the user account is valid and has 2FA enabled before allowing them to enter their OTP.
+ */
+
 function checkPreLoginUsername()
 {
     if (empty($_SESSION["username"]))
@@ -113,6 +138,11 @@ function checkPreLoginUsername()
         die;
     }
 }
+
+/**
+ * Gracefully start a new session.
+ */
+
 function startSession()
 {
     if (!isset($_SESSION))
@@ -120,6 +150,11 @@ function startSession()
         session_start();
     }
 }
+
+/**
+ * Gracefully clear a session username in the case of cancelling a 2 factor login.
+ */
+
 function killSessionUsername()
 {
     if (isset($_SESSION["username"]))
@@ -127,11 +162,16 @@ function killSessionUsername()
         unset($_SESSION["username"]);
     }
 }
+
+/**
+ * Check if access to our API is authorized via HMAC/SHA256 CSRF tokens.
+ */
+
 function csrf()
 {
     if (!isset($_SESSION["key"]))
     {
-        die(json_encode(["message" => "Invalid API Access."]));
+        die(json_encode(["message" => "Invalid Token. Refresh the Page."]));
     }
     $csrf = hash_hmac('sha256', $_ENV["recovery_key"], $_SESSION['key']);
 	$client_csrf = "";
@@ -143,11 +183,11 @@ function csrf()
 		}
 		else
 		{
-			die(json_encode(["message" => "Invalid API Access."]));
+			die(json_encode(["message" => "Invalid Token. Refresh the Page"]));
 		}
         if (empty($csrf) || empty($client_csrf) || !hash_equals($csrf, $client_csrf))
         {
-            die(json_encode(["message" => "Token Expired, Refresh the Page."]));
+            die(json_encode(["message" => "Invalid Token. Refresh the Page."]));
         }
     }
 }

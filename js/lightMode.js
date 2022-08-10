@@ -1,6 +1,11 @@
 const d = new Date();
 if (localStorage.getItem("dark_mode") === "false" || (d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
     window.addEventListener("DOMContentLoaded", function () {
+		if(document.getElementById("toggle-dark"))
+		{
+			document.getElementById("toggle-dark").innerText = "🌙";
+		}
+		
         lightStyle();
         if (localStorage.getItem("dark_mode") === null && document.getElementById("reset-dark")) {
             document.getElementById("reset-dark").innerText = "✓Auto";
@@ -10,26 +15,35 @@ if (localStorage.getItem("dark_mode") === "false" || (d.getHours() >= 6 && d.get
 window.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("dark_mode") === null && document.getElementById("reset-dark")) {
         document.getElementById("reset-dark").innerText = "✓Auto";
-		document.getElementById("reset-dark").disabled = "true";
+		document.getElementById("reset-dark").disabled = true;
     }
 });
 function toggleDarkMode() {
+	document.getElementById("reset-dark").disabled = false;
+	document.getElementById("reset-dark").innerText = "Reset";
     if (localStorage.getItem("dark_mode") === "true" || ((d.getHours() < 6 || d.getHours() > 18) && localStorage.getItem("dark_mode") === null)) {
         localStorage.setItem("dark_mode", "false");
-        location.reload();
+		document.getElementById("toggle-dark").innerText = "🌙";
+		lightStyle();
     } else {
         localStorage.setItem("dark_mode", "true");
-		document.body.className = 'body fade-in'
-		setTimeout(setFadeOut, 5000);
-        location.reload();
+		document.getElementById("toggle-dark").innerText = "☀️";
+		darkStyle();
     }
-}
-function setFadeOut(){
-	document.body.className = 'body';
 }
 function resetDarkMode() {
     window.localStorage.removeItem('dark_mode');
-    location.reload();
+	    document.getElementById("reset-dark").innerText = "✓Auto";
+		document.getElementById("reset-dark").disabled = true;
+	if (d.getHours() >= 6 && d.getHours() <= 18) {
+		document.getElementById("toggle-dark").innerText = "🌙";
+		lightStyle();
+	}
+	else
+	{
+		document.getElementById("toggle-dark").innerText = "☀️";
+		darkStyle();
+	}
 }
 function redirectTo(s, event) {
     window.location.href = s;
@@ -145,10 +159,82 @@ function lightStyle() {
         links.forEach(link => {
             link.style.color = '#000000';
             link.style.fontWeight = '500';
+			link.style.backgroundColor = "#E8E8E8";
+        });
+		$(".navlink").mouseenter(function () {
+            $(this).css("background-color", "#d3d3d3")
+			$(this).css("color", "#000")
+        }).mouseleave(function () {
+            $(this).css("background-color", "#e8e8e8")
+			$(this).css("color", "#000")
+        });
+		$(".currentPage").mouseenter(function () {
+            $(this).css("background-color", "#d3d3d3")
+			$(this).css("color", "#000")
+        }).mouseleave(function () {
+            $(this).css("background-color", "#c6cfea")
+			$(this).css("color", "#000000");
         });
         const activePages = document.querySelectorAll('.currentPage');
         activePages.forEach(link => {
             link.style.backgroundColor = '#c6cfea';
+			$(this).css("color", "#000000");
+        });
+    }
+}
+function darkStyle() {
+    if (document.documentElement) {
+        document.documentElement.style.background = "#202945";
+        document.documentElement.style.backgroundColor = "#202945";
+        document.body.style.background = "#202945";
+        document.body.style.backgroundColor = "#202945";
+    }
+    if (document.getElementById("footer-link")) {
+        document.getElementById("footer-link").style.color = "#fff";
+    }
+    if (document.getElementsByClassName("darkable-text").length > 0) {
+        const darkables = document.querySelectorAll('.darkable-text');
+        darkables.forEach(darkable => {
+            darkable.style.color = '#fff';
+        });
+    }
+    if (document.getElementsByClassName('wrapper')[0]) {
+		document.getElementsByClassName('wrapper')[0].style.backgroundImage = "revert";
+        document.getElementsByClassName('wrapper')[0].style.backgroundColor = "#35363A";
+    }
+    if (document.getElementById("header")) {
+        document.getElementById("header").style.backgroundColor = "#35363A";
+    }
+    if (document.getElementById("footer")) {
+		document.getElementById("footer").style.backgroundImage = "revert";
+        document.getElementById("footer").style.backgroundColor = "#35363A";
+    }
+    if (document.getElementById("topnav")) {
+        document.getElementById("topnav").style.backgroundColor = "#35363A";
+        document.getElementById("burger").style.color = "#fff";
+        const links = document.querySelectorAll('.navlink');
+        links.forEach(link => {
+            link.style.color = '#fff';
+            link.style.fontWeight = '500';
+			link.style.backgroundColor = "#35363A";
+        });
+		$(".navlink").mouseenter(function () {
+            $(this).css("background-color", "#B7B7B7")
+			$(this).css("color", "#000")
+        }).mouseleave(function () {
+            $(this).css("background-color", "#35363A")
+			$(this).css("color", "#fff")
+        });
+		$(".currentPage").mouseenter(function () {
+            $(this).css("background-color", "#B7B7B7")
+			$(this).css("color", "#000")
+        }).mouseleave(function () {
+            $(this).css("background-color", "#505050")
+			$(this).css("color", "#fff")
+        });
+        const activePages = document.querySelectorAll('.currentPage');
+        activePages.forEach(link => {
+            link.style.backgroundColor = '#505050';
         });
     }
 }

@@ -297,10 +297,10 @@ input[type=text]:focus {
 	color: #ffffff;
 }
 #map,#body {
-				display: flex;
-				flex-direction: column;
-				min-height: 100vh;
-			} 
-			#container {
-				flex-grow:1 !important;
-			}
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+} 
+#container {
+	flex-grow:1 !important;
+}

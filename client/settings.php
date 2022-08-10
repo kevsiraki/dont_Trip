@@ -124,20 +124,15 @@ if (isset($_SESSION['username']))
 				<?php 
 				if(!empty($_SESSION['loggedin']) && $_SESSION['loggedin']===true) {
 				?>
-					<button style = "float:right;"class="btn btn-outline-info btn-sm" id="reset-dark" onclick="resetDarkMode();">Reset Theme</button>
+					<button style = "float:right;"class="btn btn-outline-info btn-sm" id="reset-dark" onclick="resetDarkMode();">Reset</button>
 					<button style = "float:right;margin-right:5px;"class="btn btn-secondary btn-sm" id="toggle-dark" onclick="toggleDarkMode();">&#127769;</button>
 				<?php } else { ?>
 					<div style="text-align:center;">
 						<button class="btn btn-secondary " id="toggle-dark" onclick="toggleDarkMode();">&#127769;</button>
 						<br><br>
-						<button class="btn btn-info " id="reset-dark" onclick="resetDarkMode();">Reset Theme</button>
+						<button class="btn btn-info " id="reset-dark" onclick="resetDarkMode();">Reset</button>
 					</div>
 				<?php } ?>
-				<script>
-					if(localStorage.getItem("dark_mode")==="true"||(((new Date).getHours() < 6 || (new Date).getHours() > 18) && localStorage.getItem("dark_mode") === null)) {
-						document.getElementById("toggle-dark").innerText = "☀️";
-					}
-				</script>
 				<?php if (isset($userResults) && !empty($_SESSION["loggedin"]) && $_SESSION['loggedin']===true) { ?>
 					<label class="switch" style="float:left;">
 						<input type="checkbox" name="accept" id="check" value="yes">

@@ -29,10 +29,8 @@ html,body {
 
 #user-pic {
 	border-radius: 50px;
-	
-
 	margin: auto;
-  display: block;
+	display: block;
 	width: 25%;
 }
 

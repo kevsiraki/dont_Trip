@@ -1,4 +1,9 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: text/html');
+header('Access-Control-Allow-Methods: GET');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
+
 require_once 'config.php';
 
 if (isset($_GET['key']) && isset($_GET['token']))
@@ -39,11 +44,11 @@ if (isset($_GET['key']) && isset($_GET['token']))
     }
     else
     {
-        $msg = "This email has not been registered with us.";
+        $msg = "Expired Link.";
     }
 }
 else
 {
-    $msg = "Invalid Token.";
+    $msg = "Expired Link.";
 }
 ?>
