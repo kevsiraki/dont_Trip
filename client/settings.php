@@ -78,9 +78,16 @@ if (isset($_SESSION['username']))
 				<div id="usernav-bg" style="width=90%;border-radius: 25px; background: rgba(211, 211, 211, 0.2);">
 					<?php 
 					$login_type_logo = '';
-					if(!empty($_SESSION['userData'])) { //Discord Profile Picture
+					if(!empty($_SESSION['userData'])) { //Discord/Steam Profile Picture pull
 						extract($_SESSION['userData']);
-						$avatar_url = "https://cdn.discordapp.com/avatars/$discord_id/$avatar.jpg";
+						if(isset($discord_id)) //Discord
+						{
+							$avatar_url = "https://cdn.discordapp.com/avatars/$discord_id/$avatar.jpg";
+						}
+						else //Steam
+						{
+							$avatar_url = $avatar;
+						}
 					?>
 						<br>
 						<img id="user-pic" src="<?php echo $avatar_url;?>" />
@@ -102,14 +109,22 @@ if (isset($_SESSION['username']))
 					<br>
 					<img id="user-pic" src="../icons/icon_pfp.png" style="background-color:#A9A9A9;" />
 					<?php 
-					} if(!empty($_SESSION['userData'])||!empty($_SESSION['googleAvatar'])||!empty($_SESSION['fbAvatar'])) {
+					} if(!empty($_SESSION['userData'])||!empty($_SESSION['username'])) {
 						preg_match_all('/\(([A-Za-z0-9 ]+?)\)/', $_SESSION["username"], $out); 
-						$logo = strtolower($out[1][0]);
-						$class = "fab fa-{$logo}";
+						if(!empty($out[1][0]) && isset($out)) 
+						{
+							$logo = strtolower($out[1][0]);
+							$class = "fab fa-{$logo}";
+						}
+						else
+						{
+							$class = "fa fa-user";
+						}
 						$login_type_logo = "<i class=\"".$class."\"></i>";
-					}?>
+					}
+					?>
 					<h4 id="usernav" class="darkable-text" style="padding: 20px;text-align:center;font-family: 'Courier New', monospace;">
-						<?php echo trim(preg_replace('/\[[^)]+\]/', '', preg_replace('/\([^)]+\)/',' '.$login_type_logo,$_SESSION['username']))); ?>
+						<?php echo $login_type_logo." ".trim(preg_replace('/\[[^)]+\]/', '', preg_replace('/\([^)]+\)/',' '.'',$_SESSION['username']))); ?>
 					</h4>
 				</div>
 			<?php } else { ?>

@@ -71,7 +71,7 @@ function checkExpiryUpdateSSID()
     {
         $_SESSION = array();
         session_destroy();
-        header('location: https://donttrip.technologists.cloud/donttrip/client/session_expired.php');
+        header('location: https://donttrip.org/donttrip/client/session_expired.php');
         die;
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET")

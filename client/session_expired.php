@@ -30,7 +30,7 @@
 				<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="150" height="40" /></img></h2>
 				<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 				<br>
-				<div class="info-bar">
+				<div class="info-bar darkable-text">
 					Session Expired Due To Inactivity.
 				</div>
 			</div>

@@ -5,7 +5,6 @@ if (localStorage.getItem("dark_mode") === "false" || (d.getHours() >= 6 && d.get
 		{
 			document.getElementById("toggle-dark").innerText = "🌙";
 		}
-		
         lightStyle();
         if (localStorage.getItem("dark_mode") === null && document.getElementById("reset-dark")) {
             document.getElementById("reset-dark").innerText = "✓Auto";
@@ -13,6 +12,12 @@ if (localStorage.getItem("dark_mode") === "false" || (d.getHours() >= 6 && d.get
     });
 }
 window.addEventListener("DOMContentLoaded", function () {
+	if (localStorage.getItem("dark_mode") === "true" || ((d.getHours() < 6 || d.getHours() > 18) && localStorage.getItem("dark_mode") === null)) {
+		if(document.getElementById("toggle-dark")) {
+			document.getElementById("toggle-dark").innerText = "☀️";
+		}
+		
+	}
     if (localStorage.getItem("dark_mode") === null && document.getElementById("reset-dark")) {
         document.getElementById("reset-dark").innerText = "✓Auto";
 		document.getElementById("reset-dark").disabled = true;
@@ -21,6 +26,7 @@ window.addEventListener("DOMContentLoaded", function () {
 function toggleDarkMode() {
 	document.getElementById("reset-dark").disabled = false;
 	document.getElementById("reset-dark").innerText = "Reset";
+	document.getElementById("toggle-dark").blur();
     if (localStorage.getItem("dark_mode") === "true" || ((d.getHours() < 6 || d.getHours() > 18) && localStorage.getItem("dark_mode") === null)) {
         localStorage.setItem("dark_mode", "false");
 		document.getElementById("toggle-dark").innerText = "🌙";
@@ -52,7 +58,7 @@ function no(event) {
     event.stopPropagation();
 }
 function lightStyle() {
-    const form_bg = "linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url(\"https://donttrip.technologists.cloud/donttrip/icons/form_bg.jpg\")";
+    const form_bg = "linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url(\"https://donttrip.org/donttrip/icons/form_bg.jpg\")";
     if (document.getElementsByClassName("form-control").length > 0 && !document.getElementById("log-in")) {
         $('link[href*="form_style.css"]').attr("disabled", "true");
         $('head').append('<link rel="stylesheet" href="../style/formLightInputs.css" type="text/css" />');
@@ -161,6 +167,11 @@ function lightStyle() {
             link.style.fontWeight = '500';
 			link.style.backgroundColor = "#E8E8E8";
         });
+		$(".active").mouseenter(function () {
+			$("#burger").css("color", "#000")
+        }).mouseleave(function () {
+			$("#burger").css("color", "#000")
+        });
 		$(".navlink").mouseenter(function () {
             $(this).css("background-color", "#d3d3d3")
 			$(this).css("color", "#000")
@@ -217,6 +228,11 @@ function darkStyle() {
             link.style.color = '#fff';
             link.style.fontWeight = '500';
 			link.style.backgroundColor = "#35363A";
+        });
+		$(".active").mouseenter(function () {
+			$("#burger").css("color", "#000")
+        }).mouseleave(function () {
+			$("#burger").css("color", "#fff")
         });
 		$(".navlink").mouseenter(function () {
             $(this).css("background-color", "#B7B7B7")

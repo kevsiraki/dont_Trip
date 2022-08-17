@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") //For GET/DELETE endpoints...
     $total_count = getFailedAttempts($link, $ip_address);
     if ($total_count >= 20 || (checkIP() && $total_count >= 5))
     {
-        header('Location: https://donttrip.technologists.cloud/donttrip/client/hecker'); //Agile sprint log greg russ page
+        header('Location: https://donttrip.org/donttrip/client/hecker'); //Agile sprint log greg russ page
 		die("404");
     }
     else if($ip_address==$_ENV['hater']) 

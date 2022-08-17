@@ -4,8 +4,10 @@ require_once '../backend/redirect_backend.php';
 if(!isset($_SESSION)) 
 { 
 	session_start(); 
-} 
+}
+
 $google_oauth = new Google_Service_Oauth2($client);
+
 if (isset($_GET['code'])&&isset($_GET['scope'])) {
 	$client->authenticate($_GET['code']);
 	$access_token = $client->getAccessToken();
@@ -22,6 +24,11 @@ if ($client->getAccessToken()) {
 	$google_account_info = $google_oauth->userinfo->get();
 	$email = $google_account_info->email;
 	$name = $google_account_info->name;
+	if(isset($_SESSION))
+{
+	session_destroy();
+	session_start();
+}
 	$_SESSION['loggedin'] = true;
 	$_SESSION['username'] = $name." (Google)[".$google_account_info->id."]";
 	$_SESSION['googleAvatar'] = $google_account_info->picture;

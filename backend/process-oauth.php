@@ -15,7 +15,7 @@ $payload = [
     'client_id'=>$_ENV["discord_client_id"],
     'client_secret'=>$_ENV["discord_client_secret"],
     'grant_type'=>'authorization_code',
-    'redirect_uri'=>'https://donttrip.technologists.cloud/donttrip/backend/process-oauth',
+    'redirect_uri'=>'https://donttrip.org/donttrip/backend/process-oauth',
     'scope'=>'identify%20guids'
 ];
 

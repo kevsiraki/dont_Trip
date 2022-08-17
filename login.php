@@ -80,30 +80,40 @@ include 'backend/php-csrf.php';
 			<br>
 			<button type="button" style = "margin-top:10px;" id="log-in" onclick="this.blur();" class="center btn btn-success">Login</button>
 			<br>
-			<p id="other" class="other">&nbsp;&nbsp;Other Providers&nbsp;&nbsp;</p>
+			<p id="other" class="other">&nbsp;&nbsp;Alternatives&nbsp;&nbsp;</p>
 			<p>
-				<div  style = "display: flex;justify-content: center; width:100%; ">
-				<?php
-					echo ($isAuth == "yes") ? "<a class=\"btn btn-link\" style=\"display: inline-block; color: white; background-color: #306998;\" href='".$client->createAuthUrl()."'><i class=\"fa-brands fa-google\">&nbsp;</i>Google</a>&nbsp;&nbsp;" : "";
-					echo "<a class=\"btn btn-link\" style=\"display: inline-block; color: white; background-color: #4267B2;\" href='client/facebook_bootstrap'><i class=\"fa fa-facebook\">&nbsp;</i>Facebook</a>&nbsp;&nbsp;";
-					echo "<a class=\"btn btn-link\" style=\"color: white; background-color: #738ADB;\" href='client/init-oauth.php'><i class=\"fa-brands fa-discord\">&nbsp;</i>Discord</a>";
-				?>
+				<div  style = "display: flex;justify-content: center; margin-top:15px; width:100%; ">
+					<?php
+					echo ($isAuth == "yes") ? "&nbsp;&nbsp;<a class=\"btn btn-link\" style=\"display: inline-block; color: white; background-color: #306998;\" href='".$client->createAuthUrl()."'><i class=\"fa-brands fa-google\">&nbsp;</i>Google</a>&nbsp;&nbsp;" : "";
+					//echo "<a class=\"btn btn-link\" style=\"display: inline-block; color: white; background-color: #4267B2;\" href='client/facebook_bootstrap'><i class=\"fa fa-facebook\">&nbsp;</i>Facebook</a>&nbsp;&nbsp;";
+					echo "<a class=\"btn btn-link\" style=\"display: inline-block; color: white; background-color: #4267B2;\" href='client/init-openId'><i class=\"fa fa-steam\">&nbsp;</i>Steam</a>&nbsp;&nbsp;";
+					echo "<a class=\"btn btn-link\" style=\"color: white; background-color: #738ADB;\" href='client/init-oauth.php'><i class=\"fa-brands fa-discord\">&nbsp;</i>Discord</a>&nbsp;&nbsp;";
+					?>
 				</div>
 			</p>
 			<p id="other" class="other">&nbsp;&nbsp;Or&nbsp;&nbsp;</p>
-			<?php
-			if(isset($_SESSION["loggedin"])&& $_SESSION["loggedin"]===true && (empty($_SESSION["authorized"])||$_SESSION["authorized"] !== false)) {
-			?>
-				<p><a href="client/dt" class="text-success">Continue current session?</a></p>
-			<?php
-			}
-			else {
-			?>
-				<p style="margin-top:5px;"><a href="client/dt" class="text-info">Continue as guest?</a></p>
-			<?php
-			}
-			?>
-			<span id="info" class="darkable-text">Need an account? <a href="client/register">Sign up here</a></span>
+			<p>
+				<?php
+				if(isset($_SESSION["loggedin"])&& $_SESSION["loggedin"]===true && (empty($_SESSION["authorized"])||$_SESSION["authorized"] !== false)) {
+					preg_match_all('/\(([A-Za-z0-9 ]+?)\)/', $_SESSION["username"], $out); 
+					if(!empty($out[1][0]) && isset($out)) 
+					{
+						$logo = strtolower($out[1][0]);
+						$class = "fab fa-{$logo}";
+					}
+					else
+					{
+						$class = "fa fa-user";
+					}
+					$login_type_logo = "<i class=\"".$class."\"></i>";
+					echo "<a class=\"btn btn-success center\" style=\" color: white; \" href='client/dt.php'>".$login_type_logo." ".trim(preg_replace('/\[[^)]+\]/', '', preg_replace('/\([^)]+\)/',' '.'', $_SESSION['username'])))."'s Session</a>";
+				}
+				else {
+					echo "<a class=\"btn btn-secondary center\" style=\" color: white; \" href='client/dt.php'><i class=\"fa fa-user\">&nbsp;</i>Guest</a>";
+				}
+				?>
+			</p>
+			<span id="info">Need an account? <a href="client/register">Sign up here</a></span>
 			<input type="hidden" id="csrf" name="csrf" value="<?php echo $csrf ?>">
 		</div>
               

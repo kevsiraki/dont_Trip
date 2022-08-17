@@ -238,7 +238,7 @@
                                         };
                                         directionsService.route(request, function(result, status) {
                                             if (status == "OK") {
-                                                fetch("https://donttrip.technologists.cloud/donttrip/backend/dt_backend", {
+                                                fetch("https://donttrip.org/donttrip/backend/dt_backend", {
 													method: "post",
 													headers: {
 														'Accept': 'application/json',
@@ -644,7 +644,7 @@
                                         }
                                         moreInfo.textContent = "More Info";
                                         moreInfo.style.textDecoration = "underline";
-                                        moreInfo.href = "https://donttrip.technologists.cloud/donttrip/client/place" +
+                                        moreInfo.href = "https://donttrip.org/donttrip/client/place" +
                                             "?rating=" +
                                             place.rating +
                                             "&name=" +

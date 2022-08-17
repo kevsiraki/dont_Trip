@@ -4,7 +4,7 @@
 
 <p>Written primarily in LEMP Stack (PHP 7.4/Nginx, MariaDB), Modern Vanilla Javascript, J-Query 3.6.0, and Bootstrap 4.5.2/Vanilla CSS3.</p>  
 
-<p><a href="https://donttrip.technologists.cloud/donttrip/"> Visit us</a> today at and let us know of any issues you may face!<p>
+<p><a href="https://donttrip.org/donttrip/"> Visit us</a> today at and let us know of any issues you may face!<p>
 
 <h3>Features:</h3>
 <ul>
@@ -32,7 +32,7 @@
 	<li>Alert users on brute force attempts with an email and a temporary code to reset their password.</li>
 	<li>Rate limiting/throttling on all front-end components and server requests, including email reset forms.</li>
 	<li>RESTful architecture used for backend (not fully, however, as Sessions are used a bit).</li>
-	<li>Google/Facebook/Discord login integration.</li>
+	<li>Google/Discord login integration.</li>
 	<li>Proxies/VPNs/TOR nodes as well as non-existent/fraudulent e-mail addresses filtered/prevented/redirected if suspicious activity is detected.</li>
 	<li>PHP-Dot-Env used to safely store API keys, database credentials, email server information, etc.</li>
 	<li>Legible code/file structure with seperation of API/Frontend/Requests/Stylesheets.</li>

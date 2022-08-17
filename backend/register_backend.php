@@ -222,7 +222,7 @@ if (empty($username_err) && empty($password_err) && empty($confirm_password_err)
             $html = file_get_contents('../email_templates/register.html');
             $html = str_replace("{{USERNAME}}", $username, $html);
             $html = str_replace("{{IMGICON}}", imageUrl() , $html);
-            $html = str_replace("{{LINK}}", "https://donttrip.technologists.cloud/donttrip/client/verify-email.php?key=" . $data->email . "&token=" . $token . "", $html);
+            $html = str_replace("{{LINK}}", "https://donttrip.org/donttrip/client/verify-email.php?key=" . $data->email . "&token=" . $token . "", $html);
             $html = str_replace("{{GREETING}}", $greeting, $html);
             $mail->Body = $html;
         }
