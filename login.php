@@ -106,14 +106,14 @@ include 'backend/php-csrf.php';
 						$class = "fa fa-user";
 					}
 					$login_type_logo = "<i class=\"".$class."\"></i>";
-					echo "<a class=\"btn btn-success center\" style=\" color: white; \" href='client/dt.php'>".$login_type_logo." ".trim(preg_replace('/\[[^)]+\]/', '', preg_replace('/\([^)]+\)/',' '.'', $_SESSION['username'])))."'s Session</a>";
+					echo "<a class=\"btn btn-link bg-success center\" style=\" color: white; \" href='client/dt.php'>".$login_type_logo." ".trim(preg_replace('/\[[^)]+\]/', '', preg_replace('/\([^)]+\)/',' '.'', $_SESSION['username'])))."'s Session</a>";
 				}
 				else {
-					echo "<a class=\"btn btn-secondary center\" style=\" color: white; \" href='client/dt.php'><i class=\"fa fa-user\">&nbsp;</i>Guest</a>";
+					echo "<a class=\"btn btn-link center\" style=\" background-color: gray; color: white; \" href='client/dt.php'><i class=\"fa fa-user\">&nbsp;</i>Continue as Guest</a>";
 				}
 				?>
 			</p>
-			<span id="info">Need an account? <a href="client/register">Sign up here</a></span>
+			<span id="info" class="darkable-text">Need an account? <a href="client/register">Sign up here</a></span>
 			<input type="hidden" id="csrf" name="csrf" value="<?php echo $csrf ?>">
 		</div>
               

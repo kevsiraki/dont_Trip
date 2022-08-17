@@ -29,7 +29,6 @@ if (isset($_SESSION['username']))
 		<title>Account Settings</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="https://kit.fontawesome.com/4b68e7bba8.js" crossorigin="anonymous"></script>
 		<link href="../icons/icon_header.png" rel="shortcut icon" type="image/x-icon">
 		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
@@ -76,6 +75,7 @@ if (isset($_SESSION['username']))
 			<div class="wrapper">
 			<?php if(!empty($_SESSION['loggedin']) && $_SESSION['loggedin']===true) { ?>
 				<div id="usernav-bg" style="width=90%;border-radius: 25px; background: rgba(211, 211, 211, 0.2);">
+					<br>
 					<?php 
 					$login_type_logo = '';
 					if(!empty($_SESSION['userData'])) { //Discord/Steam Profile Picture pull
@@ -89,25 +89,22 @@ if (isset($_SESSION['username']))
 							$avatar_url = $avatar;
 						}
 					?>
-						<br>
 						<img id="user-pic" src="<?php echo $avatar_url;?>" />
 					<?php 
 					}
 					else if(!empty($_SESSION['googleAvatar'])) { //Google Profile Picture
 					?>
-						<br>
 						<img id="user-pic" src="<?php echo $_SESSION['googleAvatar'];?>" />
 					<?php 
 					}
 					else if(!empty($_SESSION['fbAvatar'])) { //Facebook Profile Picture
 					?>
-						<br>
 						<img id="user-pic" src="<?php echo $_SESSION['fbAvatar']["url"];?>" />
 					<?php 
 					} else if(empty($_SESSION['userData'])&&empty($_SESSION['googleAvatar'])&&empty($_SESSION['fbAvatar'])) {
 					?>
-					<br>
-					<img id="user-pic" src="../icons/icon_pfp.png" style="background-color:#A9A9A9;" />
+
+						<img id="user-pic" src="../icons/icon_pfp.png" style="background-color:#A9A9A9;" />
 					<?php 
 					} if(!empty($_SESSION['userData'])||!empty($_SESSION['username'])) {
 						preg_match_all('/\(([A-Za-z0-9 ]+?)\)/', $_SESSION["username"], $out); 
@@ -124,7 +121,7 @@ if (isset($_SESSION['username']))
 					}
 					?>
 					<h4 id="usernav" class="darkable-text" style="padding: 20px;text-align:center;font-family: 'Courier New', monospace;">
-						<?php echo $login_type_logo." ".trim(preg_replace('/\[[^)]+\]/', '', preg_replace('/\([^)]+\)/',' '.'',$_SESSION['username']))); ?>
+						<?php echo $login_type_logo." ".strtok(substr($_SESSION['username'],0,16),'('); ?>
 					</h4>
 				</div>
 			<?php } else { ?>
