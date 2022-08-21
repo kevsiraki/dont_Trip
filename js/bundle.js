@@ -746,11 +746,10 @@
             function sortHelper() {
                 if (distanceSort) {
                     sortListByDistance();
-                    lightenSideBars();
                 } else if (nameSort) {
                     sortListAlphabetically();
-                    lightenSideBars();
                 }
+                lightenSideBars();
             }
             function lightenSideBars() {
                 if (localStorage.getItem("dark_mode") === "false"||(d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {

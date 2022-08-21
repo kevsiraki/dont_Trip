@@ -211,7 +211,7 @@ function darkStyle() {
     }
     if (document.getElementsByClassName('wrapper')[0]) {
 		document.getElementsByClassName('wrapper')[0].style.backgroundImage = "revert";
-        document.getElementsByClassName('wrapper')[0].style.backgroundColor = "#35363A";
+        document.getElementsByClassName('wrapper')[0].style.backgroundImage = "linear-gradient(to right, rgba(53, 54, 58, 0.96) 0 100%), url(\"https://donttrip.org/donttrip/icons/form_bg.jpg\")";
     }
     if (document.getElementById("header")) {
         document.getElementById("header").style.backgroundColor = "#35363A";

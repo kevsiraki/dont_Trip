@@ -69,7 +69,8 @@ input:-webkit-autofill {
     text-align: right;
 }
 .wrapper {
-	background-color: #35363A;/*#202945;*/
+	/*background-color: #35363A;#202945;*/
+	background-image: linear-gradient(to right, rgba(53, 54, 58, 0.96) 0 100%), url("https://donttrip.org/donttrip/icons/form_bg.jpg");
 	padding: 2%;
 	width: 25%;
 	min-width: 350px;

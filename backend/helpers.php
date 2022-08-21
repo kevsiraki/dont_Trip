@@ -194,7 +194,14 @@ function checkIP()
     if ($ip != $_ENV["myIP"] && $ip != $_ENV["myPhoneIP"])
     {
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
-        $user_language = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+        if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])&&!empty($_SERVER['HTTP_ACCEPT_LANGUAGE']))
+		{
+			$user_language = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+		}
+		else
+		{
+			$user_language = 'en-US';
+		}
         $strictness = 0;
         $allow_public_access_points = 'true';
         $lighter_penalties = 'true';
