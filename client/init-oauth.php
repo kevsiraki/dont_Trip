@@ -1,8 +1,10 @@
 <?php
 //Initialize Discord O-Auth API
 require_once "../backend/config.php";
-session_destroy();
+if(!empty($_SESSION)) {
+	session_destroy();
+}
 session_start();
-header("Location:". $_ENV["discord_url"]);
+header("Location: ". $_ENV["discord_url"]);
 die;
 ?>

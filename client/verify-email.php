@@ -30,9 +30,7 @@
 				<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="150" height="40" /></img></h2>
 				<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 				<br>
-				<div class="info-bar">
-					Email Verification
-				</div>
+				<div class="info-bar">Email Verification</div>
 			</div>
 			<div class="card-body">
 				<p id="info" class="darkable-text"> <?php echo $msg; ?> </p>
@@ -44,7 +42,7 @@
 			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
 			</a>
 			<div class="footer-right">
-				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
+				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github"></i>&nbsp;GitHub</a>
 			</div>
 		</footer>
 	</body>

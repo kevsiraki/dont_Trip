@@ -3,9 +3,8 @@ $uri = strtok($_SERVER['REQUEST_URI'], '?');
 $base_backend = '/donttrip/backend/';
 $base_client = '/donttrip/client/';
 
-if ($uri === '/donttrip/' || $uri === '/donttrip/login')
+if ($uri === '/donttrip/' || $uri === '/donttrip/login' || $uri === $base_client . 'fp' || $uri === $base_backend . 'fp_backend')
 {
-    killSessionUsername();
     startSession();
 }
 else if ($uri === $base_client . 'two_factor_auth' || $uri === $base_backend . 'two_factor_auth_backend')
@@ -19,17 +18,13 @@ else if ($uri === $base_client . 'register')
     startSession();
     checkExpiryUpdateSSID();
 }
-else if ($uri === $base_client . 'settings' || $uri === $base_backend . 'settings_backend')
+else if ($uri === $base_client . 'settings' || $uri === $base_backend . 'settings_backend' || $uri === $base_client . 'dt' || $uri === $base_backend . 'dt_backend')
 {
     startSession();
     checkAuthorized();
     checkExpiryUpdateSSID();
 }
-else if ($uri === $base_client . 'fp' || $uri === $base_backend . 'fp_backend')
-{
-    startSession();
-}
-else if ($uri === $base_client . 'searches' || $uri === $base_client . 'state' || $uri === $base_backend . 'state_backend' || $uri === $base_backend . 'searches_backend' || $uri === $base_backend . 'delete_search')
+else if ($uri === $base_client . 'searches' || $uri === $base_client . 'state' || $uri === $base_backend . 'state_backend' || $uri === $base_backend . 'searches_backend' || $uri === $base_backend . 'delete_search' || $uri === $base_client . 'delete_confirmation' || $uri === $base_backend . 'delete_confirmation_backend')
 {
     startSession();
     checkLoggedIn();
@@ -47,22 +42,10 @@ else if ($uri === $base_client . 'locked' || $uri === $base_backend . 'recovery_
     startSession();
     checkLocked();
 }
-else if ($uri === $base_client . 'dt' || $uri === $base_backend . 'dt_backend')
-{
-    startSession();
-    checkAuthorized();
-    checkExpiryUpdateSSID();
-}
-else if ($uri === $base_client . 'delete_confirmation' || $uri === $base_backend . 'delete_confirmation_backend')
-{
-    startSession();
-    checkLoggedIn();
-    checkAuthorized();
-    checkExpiryUpdateSSID();
-}
+
 
 /**
- * Check if session is expired and update the SESSID if it is not expired.
+ * Check if session is expired and update the SSID if it is not expired.
  */
 
 function checkExpiryUpdateSSID()
@@ -108,7 +91,7 @@ function checkLoggedIn()
 {
     if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)
     {
-        header("location: ../login.php");
+        header("location: ../client/session_expired");
         die;
     }
 }
@@ -152,18 +135,6 @@ function startSession()
 }
 
 /**
- * Gracefully clear a session username in the case of cancelling a 2 factor login.
- */
-
-function killSessionUsername()
-{
-    if (isset($_SESSION["username"]))
-    {
-        unset($_SESSION["username"]);
-    }
-}
-
-/**
  * Check if access to our API is authorized via HMAC/SHA256 CSRF tokens.
  */
 
@@ -171,7 +142,7 @@ function csrf()
 {
     if (!isset($_SESSION["key"]))
     {
-        die(json_encode(["message" => "Invalid Token. Refresh the Page."]));
+        die(json_encode(["message" => "Expired Session. Refreshing..."]));
     }
     $csrf = hash_hmac('sha256', $_ENV["recovery_key"], $_SESSION['key']);
 	$client_csrf = "";
@@ -183,11 +154,11 @@ function csrf()
 		}
 		else
 		{
-			die(json_encode(["message" => "Invalid Token. Refresh the Page"]));
+			die(json_encode(["message" => "Expired Session. Refreshing..."]));
 		}
         if (empty($csrf) || empty($client_csrf) || !hash_equals($csrf, $client_csrf))
         {
-            die(json_encode(["message" => "Invalid Token. Refresh the Page."]));
+            die(json_encode(["message" => "Expired Session. Refreshing..."]));
         }
     }
 }

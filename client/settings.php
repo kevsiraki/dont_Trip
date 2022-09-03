@@ -38,15 +38,9 @@ if (isset($_SESSION['username']))
 		<script src="../js/nav.js"></script>
 		<script src="../js/lightMode.js"></script>
 		<script src="../ajax/twoFactorAJAX.js"></script>
-        <style> 
-			#footer { 
-				position:fixed;
-				bottom: 0; 
-				width: 100%; 
-			} 
-		</style> 
+
 	</head>			
-	<body>
+	<body class="d-flex flex-column justify-content-between">
 		<?php if(!empty($_SESSION['loggedin'])&&$_SESSION['loggedin']===true) { ?>
 			<header class="topnav" id="topnav">
 				<a href="javascript:void(0);" class="active" onclick="myFunction()">
@@ -70,8 +64,6 @@ if (isset($_SESSION['username']))
 				</div>
 			</header>
 		<?php } ?>
-		<br>
-		<div class="center">
 			<div class="wrapper">
 			<?php if(!empty($_SESSION['loggedin']) && $_SESSION['loggedin']===true) { ?>
 				<div id="usernav-bg" style="width=90%;border-radius: 25px; background: rgba(211, 211, 211, 0.2);">
@@ -191,14 +183,12 @@ if (isset($_SESSION['username']))
 				<?php } ?>
 				<br>
 			</div>
-		</div> 
-		<br><br><br><br>
 		<footer id="footer">
 			<a href="../login" class="logo">
 				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
 			</a>
 			<div class="footer-right">
-				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
+				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github"></i>&nbsp;GitHub</a>
 			</div>
 		</footer>
 		<script src="../ajax/searchesDeleteAJAX.js"></script>

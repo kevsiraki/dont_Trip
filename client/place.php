@@ -4,8 +4,10 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<meta charset="UTF-8">
 		<!--<meta charset="UTF-8" http-equiv="refresh" content="300;url=../backend/logout"/> -->
 		<title><?php echo $_GET['name'] ?></title>
+		<meta content="initial-scale=1.0, user-scalable=no" name="viewport">
 		<link href="../icons/dt.ico" rel="shortcut icon" type="image/x-icon">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -15,24 +17,19 @@
 		<link rel="stylesheet" href="../style/place_info_style.css">
 		<link rel="stylesheet" href="../style/footer.css">
 		<script src="../js/lightMode.js"></script>
-		<style> 
-			#footer { 
-				position: fixed;
-				padding: 10px 10px 0px 10px; 
-				bottom: 0; 
-				width: 100%; 
-			} 
-		</style> 
 	</head>	
 	<body>
 		<div id="bg"></div>
 		<div id="panel1" class="panel">
-			<button class = "btn btn-link btn-lg fa fa-close" style="color:red; float:left;"onclick="window.top.close();"></button>
-			<?php if(isset($_GET['photo'])&&$_GET['photo']!=="undefined") { ?>
-				<img id="placeImg" src=<?php echo $_GET['photo']; ?>></img>
-			<?php } ?>
-			<div id="placeName"><?php echo htmlspecialchars($_GET['name']);?></div>
-			<div id="placeDist"><?php echo $_GET['dist'];?> miles away</div>
+			<button class = "btn btn-link btn-lg fa fa-close" style="color:orange; float:left;"onclick="window.top.close();"> Close</button>
+			<br>
+			<div id = "panel1wrapper">
+				<?php if(isset($_GET['photo'])&&$_GET['photo']!=="undefined") { ?>
+					<img id="placeImg" src=<?php echo $_GET['photo']; ?>></img>
+				<?php } ?>
+				<div id="placeName"><?php echo htmlspecialchars($_GET['name']);?></div>
+				<div id="placeDist"><?php echo $_GET['dist'];?> miles away</div>
+			</div>
 		</div>
 		<div id="panel2" class="panel">
 			<?php if($_GET['rating']!=="undefined") { ?>
@@ -70,23 +67,15 @@
 				<?php } ?>
 				<?php if(isset($_GET['week'])&&$_GET['week']!=="undefined") { ?>
 					<div id="placeHoursTitle">Hours</div>
-					<br>
+					
 					<div id="placeHoursBox">
 						<div class="placeHoursDayTitle">
-							<?php echo str_replace(',', "<br />", $_GET['week']);?>
+							<small><small><?php echo str_replace(',', "<br />", $_GET['week']);?></small></small>
 						</div>
 					</div>
 				<?php } ?>
 			</div>
 			<br><br>
 		<?php } ?>
-		<footer id="footer">
-			<a href="../login" class="logo">
-				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
-			</a>
-			<div class="footer-right">
-				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
-			</div>
-		</footer>
 	</body>
 </html>

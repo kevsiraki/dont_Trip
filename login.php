@@ -15,12 +15,12 @@ include 'backend/php-csrf.php';
 		<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 		<link href="icons/icon_header.png" rel="shortcut icon" type="image/x-icon">
 		<link rel="manifest" href="../site.webmanifest">
+		<script src="../app.js"></script>
 		<link rel="mask-icon" href="../safari-pinned-tab.svg" color="#5bbad5">
 		<meta name="msapplication-TileColor" content="#da532c">
-		<meta name="theme-color" content="#ffffff">
 		<meta name="description" content="An itinerary planner utilizing the Google Maps API to give you customized places along a route!">
 		<title>Don't Trip</title>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.3/css/bootstrap.min.css" integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.3/css/bootstrap.min.css" integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g==" crossorigin="anonymous" referrerpolicy="no-referrer" onerror="this.onerror=null;this.href='style/bootstrap.min.css';" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="https://kit.fontawesome.com/4b68e7bba8.js" crossorigin="anonymous" defer></script>
 		<link rel="stylesheet" href="style/form_style.css">
@@ -34,19 +34,11 @@ include 'backend/php-csrf.php';
 				window.location.reload();
 			}
 		</script>
-        <style> 
-			#footer { 
-				width: 100%;
-			} 
-			#space {
-				height: 90%;
-			}
-		</style> 
 	</head>
-	<body>
+	<body class="d-flex flex-column justify-content-between">
 		<header class="header" id="header">
 			<a href="." class="logo">
-				<img draggable="false" src="icons/icon_header.png" width="40" height="40" loading="lazy"></img>
+				<img draggable="false" src="icons/icon_header.png" alt="Don't Trip" width="40" height="40" loading="lazy"></img>
 			</a>
 			<div class="header-right">
 				<a href="." class="active"><small>Login</small></a>
@@ -54,7 +46,7 @@ include 'backend/php-csrf.php';
 			</div>
 		</header>
 		<div class="wrapper">
-			<h2><img draggable="false" src="icons/dont_Trip.png" class="center"  width="300" height="80" loading="lazy"></img></h2>
+			<h2><img draggable="false" src="icons/dont_Trip.png" alt="Don't Trip" class="center"  width="300" height="80" loading="lazy"></img></h2>
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
 			<div id="invalid-login" class="center alert alert-danger"style="text-align:center; width: 90%; display:none; margin-bottom:30px !important;"> </div>
@@ -73,15 +65,17 @@ include 'backend/php-csrf.php';
 			}
 			?>
 			</div>
-			<div class="form-group">
-				<input type="text" id="username" name="username"  class="center form-control" required>
-				<div class="field-placeholder"><span>Username or E-mail</span></div>
-			</div>
-			<div class="form-group" style="margin-top:20px;margin-bottom:1px !important;">
-				<input type="password" id="password" name="password" class="center form-control" required>
-				<div class="field-placeholder"><span>Password</span></div>
-				<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-			</div>
+			<form>
+				<div class="form-group">
+					<input type="text" id="username" name="username"  class="center form-control" required>
+					<div class="field-placeholder"><span>Username or E-mail</span></div>
+				</div>
+				<div class="form-group" style="margin-top:20px;margin-bottom:1px !important;">
+					<input type="password" id="password" name="password" class="center form-control" required>
+					<div class="field-placeholder"><span>Password</span></div>
+					<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+				</div>
+			</form>
 			<span><small><a href="client/fp" style = "float:right;margin-right:5%;">Forgot?</a></small></span>
 			<br>
 			<button type="button" style = "margin-top:10px;" id="log-in" onclick="this.blur();" class="center btn btn-success">Login</button>
@@ -90,10 +84,10 @@ include 'backend/php-csrf.php';
 			<p>
 				<div  style = "display: flex;justify-content: center; margin-top:15px; width:100%; ">
 					<?php
-					echo ($isAuth == "yes") ? "&nbsp;&nbsp;<a class=\"btn btn-link\" style=\"display: inline-block; color: white; background-color: #306998;\" href='".$client->createAuthUrl()."'><i class=\"fa-brands fa-google\">&nbsp;</i>Google</a>&nbsp;&nbsp;" : "";
+					echo ($isAuth == "yes") ? "&nbsp;&nbsp;<a class=\"btn btn-link\" style=\"display: inline-block; color: white; background-color: #306998;\" onclick='login(\"client/redirect_handler\")'><i class=\"fa-brands fa-google\">&nbsp;</i>Google</a>&nbsp;&nbsp;" : "";
 					//echo "<a class=\"btn btn-link\" style=\"display: inline-block; color: white; background-color: #4267B2;\" href='client/facebook_bootstrap'><i class=\"fa fa-facebook\">&nbsp;</i>Facebook</a>&nbsp;&nbsp;";
 					echo "<a class=\"btn btn-link\" style=\"display: inline-block; color: white; background-color: #4267B2;\" href='client/init-openId'><i class=\"fa fa-steam\">&nbsp;</i>Steam</a>&nbsp;&nbsp;";
-					echo "<a class=\"btn btn-link\" style=\"color: white; background-color: #738ADB;\" href='client/init-oauth.php'><i class=\"fa-brands fa-discord\">&nbsp;</i>Discord</a>&nbsp;&nbsp;";
+					echo "<a class=\"btn btn-link\" style=\"color: white; background-color: #738ADB;\"  onclick='login(\"client/init-oauth\")'><i class=\"fa-brands fa-discord\">&nbsp;</i>Discord</a>&nbsp;&nbsp;";
 					?>
 				</div>
 			</p>
@@ -112,26 +106,38 @@ include 'backend/php-csrf.php';
 						$class = "fa fa-user";
 					}
 					$login_type_logo = "<i class=\"".$class."\"></i>";
-					echo "<a class=\"btn btn-link bg-success center\" style=\" color: white; \" href='client/dt.php'>".$login_type_logo." ".trim(preg_replace('/\[[^)]+\]/', '', preg_replace('/\([^)]+\)/',' '.'', $_SESSION['username'])))."'s Session</a>";
+					echo "<a id = 'fuck' class=\"btn btn-link bg-success center\" style=\" color: white; \" href='client/dt'>".$login_type_logo." ".trim(preg_replace('/\[[^)]+\]/', '', preg_replace('/\([^)]+\)/',' '.'', $_SESSION['username'])))."'s Session</a>";
 				}
 				else {
-					echo "<a class=\"btn btn-link center\" style=\" background-color: gray; color: white; \" href='client/dt.php'><i class=\"fa fa-user\">&nbsp;</i>Continue as Guest</a>";
+					echo "<a id = 'fuck' class=\"btn btn-link center\" style=\" color: white; background-color: 	#4682B4;\" onclick='window.location.replace(\"client/dt\")'><i class=\"fa fa-user\">&nbsp;</i>Expedited Tripping</a>";
 				}
 				?>
 			</p>
 			<span id="info" class="darkable-text">Need an account? <a href="client/register">Sign up here</a></span>
 			<input type="hidden" id="csrf" name="csrf" value="<?php echo $csrf ?>">
-		</div>
-              
-		<div id="space"></div>
+		</div>	
 		<footer id="footer">
 			<a href="." class="logo">
-				<img draggable="false" src="icons/dont_Trip.png" width="150" height="40" loading="lazy"></img>
+				<img draggable="false" src="icons/dont_Trip.png" alt="Don't Trip" width="150" height="40" loading="lazy"></img>
 			</a>
 			<div class="footer-right">
-				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fab fa-github" >&nbsp;GitHub</i></a>
+				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fab fa-github" rel="noopener"></i>&nbsp;GitHub</a>
 			</div>
 		</footer>
+		<script>
+			function login(url){
+				popup = window.open (url,"mywindow", "width="+screen.width,"height=" + screen.height + ',resizable=yes,scrollbars=no,toolbar=no,menubar=no,location=no');
+				popup.moveTo(0,0);
+			}
+			window.addEventListener('message',  updateAuthInfo);
+			function  updateAuthInfo(e){
+				let button = document.getElementById('fuck');
+				fuck.style.backgroundColor = "green";
+				fuck.innerHTML = "<i class=\"fa fa-user\">&nbsp;</i> Continue as "+e.data;
+				fuck.click();
+				popup.close();
+			}
+		</script>
 		<script src="js/ayhPassword.js"></script>
 	</body>
 </html>

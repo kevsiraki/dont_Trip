@@ -12,7 +12,7 @@ if (isset($_GET['code'])&&isset($_GET['scope'])) {
 	$client->authenticate($_GET['code']);
 	$access_token = $client->getAccessToken();
 	$_SESSION['access_token'] = $client->getAccessToken();
-    header('Location: ' . filter_var($redirectUri,     FILTER_SANITIZE_URL)); 
+	header('Location: ' . filter_var($redirectUri, FILTER_SANITIZE_URL)); 
 }
 
 if (isset($_SESSION['access_token']) &&   $_SESSION['access_token']) {
@@ -25,10 +25,10 @@ if ($client->getAccessToken()) {
 	$email = $google_account_info->email;
 	$name = $google_account_info->name;
 	if(isset($_SESSION))
-{
-	session_destroy();
-	session_start();
-}
+	{
+		session_destroy();
+		session_start();
+	}
 	$_SESSION['loggedin'] = true;
 	$_SESSION['username'] = $name." (Google)[".$google_account_info->id."]";
 	$_SESSION['googleAvatar'] = $google_account_info->picture;

@@ -22,16 +22,8 @@ require_once '../backend/php-csrf.php';
 		<script src="../ajax/generalAJAX.js"></script>
 		<script src="../ajax/resetPasswordAJAX.js"></script>
 		<link rel="stylesheet" href="../style/meter_styles.css">
-		<style>
-			#footer { 
-				width: 100%;
-			} 
-			#space {
-				height: 90%;
-			}
-		</style>
 	</head>
-	<body>
+	<body class="d-flex flex-column justify-content-between">
 		<header class="header" id="header">
 			<a href="../login" class="logo">
 			<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
@@ -78,13 +70,12 @@ require_once '../backend/php-csrf.php';
 			</div>
 			<input type="hidden" id="csrf" name="csrf" value="<?php echo $csrf; ?>">
 		</div>
-		<div id="space"></div>
 		<footer id="footer">
 			<a href="../login" class="logo">
 			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
 			</a>
 			<div class="footer-right">
-				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
+				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github"></i>&nbsp;GitHub</a>
 			</div>
 		</footer>
 		<script src="../js/ayhPassword.js"></script>

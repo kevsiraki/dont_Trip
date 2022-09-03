@@ -56,7 +56,10 @@ $result = curl_exec($ch);
 
 $result = json_decode($result, true);
 
-session_start();
+if(!isset($_SESSION))
+{
+	session_start();
+}
 
 $_SESSION['logged_in'] = true;
 
@@ -73,7 +76,9 @@ $_SESSION["loggedin"] = true;
 $_SESSION['loginTime'] = time();
 session_regenerate_id(true);
 
-header("location: ../client/dt");
-
-die;
+echo('
+	<script>
+	window.opener.postMessage("'.$name.'", "https://donttrip.org/donttrip/login");
+    </script>
+	');
 ?>

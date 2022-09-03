@@ -48,6 +48,7 @@
             let offset = 40;
             let distanceSort = false;
             let nameSort = false;
+
             $('#panel').bind('DOMSubtreeModified', function() {
                 lightenSideBars();
             });
@@ -124,7 +125,6 @@
                     keywordIn.value = $_GET['keyVal'];
                 }
                 keyword.appendChild(keywordIn);
-				//keyword.appendChild(document.createElement("nbsp"));
                 keywordIn.addEventListener("keydown", function(event) {
                     if (event.keyCode == 8 && event.repeat) {
                         keywordIn.value = " ";

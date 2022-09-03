@@ -30,9 +30,7 @@
 				<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="150" height="40" /></img></h2>
 				<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 				<br>
-				<div class="info-bar darkable-text">
-					Session Expired Due To Inactivity.
-				</div>
+				<div class="info-bar darkable-text">Session Expired Due To Inactivity.</div>
 			</div>
 			<div class="card-body">
 				<a href="../backend/logout" class="btn-primary btn-sm " style="margin: auto;">Return to Login</a>
@@ -43,7 +41,7 @@
 			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
 			</a>
 			<div class="footer-right">
-				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
+				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github"></i>&nbsp;GitHub</a>
 			</div>
 		</footer>
 	</body>

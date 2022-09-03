@@ -28,12 +28,16 @@ require_once '../backend/php-csrf.php';
 			<a href="../login" class="logo">
 			<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
 			</a>
+			<div class="header-right">
+				<a href="../login"><small>Login</small></a>
+				<a href="register"><small>Sign Up</small></a>
+			</div>
 		</header>
 		<div class="wrapper" >
 			<h2><img draggable="false" src="../icons/dont_Trip.png" class="center"  width="300" height="80" /></img></h2>
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
-			<div class = "info-bar darkable-text" id="info-bar">Account locked due to compromised credentials.<br>Please enter the OTP sent to your email to login and reset your password.</div>
+			<div class = "info-bar darkable-text" id="info-bar">Account locked due to compromised credentials.<br>Please enter the OTP sent to your email.</div>
 			<div class="center alert alert-danger" id="invalid-recovery" style="text-align:center;width: 90%;display:none;"></div>
 			<input style="display:none">
 			<input type="password" style="display:none" autocomplete="new-password"/>
@@ -48,8 +52,11 @@ require_once '../backend/php-csrf.php';
 		<input type="hidden" id="username" name="username" value="<?php echo $_SESSION["username"]?>">
 		<footer id="footer">
 			<a href="../login" class="logo">
-			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
+				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
 			</a>
+			<div class="footer-right">
+				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github"></i>&nbsp;GitHub</a>
+			</div>
 		</footer>
 	</body>
 </html>

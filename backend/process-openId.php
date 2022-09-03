@@ -69,6 +69,6 @@ $_SESSION["loggedin"] = true;
 $_SESSION['loginTime'] = time();
 session_regenerate_id(true);
 
-$redirect_url = "../client/dt.php";
+$redirect_url = "../client/dt";
 header("Location: $redirect_url"); 
 exit();

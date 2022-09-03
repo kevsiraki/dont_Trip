@@ -12,7 +12,7 @@ $(document).on('click', '#log-in', function (e) {
         url: 'backend/login_backend',
         type: 'post',
         dataType: 'json',
-		contentType: "application/json",
+		contentType: 'application/json',
         timeout: 5000,
         data: JSON.stringify({
             username: username,
@@ -51,6 +51,13 @@ $(document).on('click', '#log-in', function (e) {
                     $('#invalid-login').on('click', function (e) {
                         error.style.display = "none";
                     });
+					if (result.includes("Refreshing...")) { 
+						async function refresh() {
+							await sleep(3000);
+							window.location.reload();
+						}
+						refresh();
+					}
                 } else {
                     error.style.display = "none";
                 }
@@ -89,3 +96,7 @@ $(function () {
 $(document).on('click', '#successful', function (e) {
     document.getElementById("successful").style.display = "none";
 });
+
+function sleep(ms) { //outdated vanilla JS function
+  return new Promise(resolve => setTimeout(resolve, ms));
+}

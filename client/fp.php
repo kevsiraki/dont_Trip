@@ -55,7 +55,7 @@ include '../backend/php-csrf.php';
 		<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
 		</a>
 		<div class="footer-right">
-			<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
+			<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github"></i>&nbsp;GitHub</a>
 		</div>
 	</footer>
 </html>

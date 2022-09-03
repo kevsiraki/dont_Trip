@@ -22,22 +22,36 @@
 		<link href="../style/autofill.css" rel="stylesheet">
         <link href="../style/navbar.css" rel="stylesheet">
         <link href="../style/footer.css" rel="stylesheet">
-		<script src="../js/nav.js"></script>
+		<script src="../js/nav.js" defer></script>
 		<script src="../js/lightMode.js"></script>
 		<style>
-			#map,#body {
+			#map {
 				display: flex;
 				flex-direction: column;
 				min-height: 100vh;
+				min-height: 100%;
 			} 
 			#container {
 				flex-grow:1 !important;
 			}
 		</style>
+		<?php
+		if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)
+		{	
+			echo('
+				<script>
+					if(window.opener)
+					{
+						window.opener.postMessage("'.strtok($_SESSION["username"],'(').'", "https://donttrip.org/donttrip/login");
+					}
+				</script>
+			');
+		}
+		?>
 	</head>
 	<body>
 		<?php
-		if(isset($_SESSION["loggedin"])&& $_SESSION["loggedin"]===true) {
+		if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"]===true) {
 		?>
 			<header class="topnav" id="topnav">
 				<a href="javascript:void(0);" class="active" onclick="myFunction()">
@@ -90,15 +104,15 @@
 		<input type="hidden" id="countryCode" value="<?php echo $countryCode?>">
 		<input type="hidden" id="lat" value="<?php echo $lat?>">
 		<input type="hidden" id="lon" value="<?php echo $lon?>">
-		<script src="../js/bundle.js"></script>
-		<script src="../js/mobile_dragbar.js"></script>
-		<script src="../js/keywords.js"></script>
+		<script src="../js/bundle.js" async defer></script>
+		<script src="../js/mobile_dragbar.js" async defer></script>
+		<script src="../js/keywords.js" async defer></script>
         <footer id="footer">
 			<a href="../login" class="logo">
 				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
 			</a>
 			<div class="footer-right">
-				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github" >&nbsp;GitHub</i></a>
+				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github"></i>&nbsp;GitHub</a>
 			</div>
 		</footer>
 	</body>

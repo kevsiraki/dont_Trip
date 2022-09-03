@@ -1,3 +1,24 @@
+html, body {
+  height: 100% !important;
+}
+body {
+  display: flex !important;
+  flex-direction: column !important;
+
+  
+}
+.content {
+  flex: 1 0 auto !important;
+  
+}
+#header, #footer, header {
+  flex-shrink: 0 !important;
+  width: 100% !important; 
+}
+
+#space {
+	height: 0% !important;
+}
 html,body {
 	height: 100%;
 	margin: 0;
@@ -43,7 +64,7 @@ html,body {
 	padding: 2%;
 	width: 25%;
 	min-width:350px;
-	margin: 0 auto;
+	margin: 5% auto;
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
 	box-shadow: 0 0 5px #ccc;
