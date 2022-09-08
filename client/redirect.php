@@ -3,7 +3,8 @@ require_once '../backend/redirect_backend.php';
 
 if(!isset($_SESSION)) 
 { 
-	session_start(); 
+	$sessionConfig = (new \ByJG\Session\SessionConfig('donttrip.org'))->withSecret($_ENV["recovery_key"])->replaceSessionHandler();
+    $handler = new \ByJG\Session\JwtSession($sessionConfig);
 }
 
 $google_oauth = new Google_Service_Oauth2($client);
@@ -27,12 +28,12 @@ if ($client->getAccessToken()) {
 	if(isset($_SESSION))
 	{
 		session_destroy();
-		session_start();
+		$sessionConfig = (new \ByJG\Session\SessionConfig('donttrip.org'))->withSecret($_ENV["recovery_key"])->replaceSessionHandler();
+		$handler = new \ByJG\Session\JwtSession($sessionConfig);
 	}
 	$_SESSION['loggedin'] = true;
 	$_SESSION['username'] = $name." (Google)[".$google_account_info->id."]";
 	$_SESSION['googleAvatar'] = $google_account_info->picture;
 	$_SESSION['loginTime'] = time();
-	session_regenerate_id(true);
 }
 ?>

@@ -4,7 +4,8 @@ require_once "../backend/config.php";
 if(!empty($_SESSION)) {
 	session_destroy();
 }
-session_start();
+$sessionConfig = (new \ByJG\Session\SessionConfig('donttrip.org'))->withSecret($_ENV["recovery_key"])->replaceSessionHandler();
+$handler = new \ByJG\Session\JwtSession($sessionConfig);
 header("Location: ". $_ENV["discord_url"]);
 die;
 ?>

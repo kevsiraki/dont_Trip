@@ -31,7 +31,7 @@
 	<li>Session regeneration and expiry system to prevent session hijacking/fixation</li>
 	<li>Alert users on brute force attempts with an email and a temporary code to reset their password.</li>
 	<li>Rate limiting/throttling on all front-end components and server requests, including email reset forms.</li>
-	<li>RESTful architecture used for backend (not fully, however, as Sessions are used a bit).</li>
+	<li>RESTful architecture used for backend (traditional sessions converted to JWT).</li>
 	<li>Google/Steam/(Meta)/Discord login integration.</li>
 	<li>Proxies/VPNs/TOR nodes as well as non-existent/fraudulent e-mail addresses filtered/prevented/redirected if suspicious activity is detected.</li>
 	<li>PHP-Dot-Env used to safely store API keys, database credentials, email server information, etc.</li>

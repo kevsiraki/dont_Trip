@@ -45,7 +45,6 @@ if ($g->checkCode($secret, $code))
 {
     $_SESSION["loggedin"] = true;
     die(json_encode(["message" => 1]));
-    session_regenerate_id(true);
 }
 else if (!($g->checkCode($secret, $code)))
 {

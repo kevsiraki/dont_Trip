@@ -17,31 +17,35 @@ define('DB_NAME', $_ENV['db_name']);
 $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 $ip_address = getIpAddr();
 
-if ($link === false) 
+if ($link === false)
 {
     die("ERROR: Could not connect. " . mysqli_connect_error());
 }
 //Check if visitor is banned for bruteforcing, or if it is a recurring bruteforcer on a proxy...
 if ($_SERVER["REQUEST_METHOD"] != "POST") //For GET/DELETE endpoints...
+
 {
     //Check if banned for bruteforcing
     $total_count = getFailedAttempts($link, $ip_address);
     if ($total_count >= 20 || (checkIP() && $total_count >= 5))
     {
         header('Location: https://donttrip.org/donttrip/client/hecker'); //Agile sprint log greg russ page
-		die("404");
+        die("404");
     }
-    else if($ip_address==$_ENV['hater']) 
+    else if ($ip_address == $_ENV['hater'])
     {
-        header('Location: '.$_ENV['hater_url']); //Scrum greg makrussian page margin: 0.08 abv xD
+        header('Location: ' . $_ENV['hater_url']); //Scrum greg makrussian page margin: 0.08 abv xD
+        
     }
 }
-else if ($_SERVER["REQUEST_METHOD"] == "POST")  //On POST attempts
+else if ($_SERVER["REQUEST_METHOD"] == "POST") //On POST attempts
+
 {
     $total_count = getFailedAttempts($link, $ip_address);
     if (checkIP() && $total_count >= 5)
     {
-		die("404"); //Agile sprint log greg russ page
+        die("404"); //Agile sprint log greg russ page
+        
     }
 }
 ?>

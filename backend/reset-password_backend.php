@@ -86,7 +86,6 @@ if (empty($new_password_err) && empty($confirm_password_err))
                 mysqli_stmt_execute($innerStmt);
                 mysqli_stmt_close($innerStmt);
             }
-            session_regenerate_id(true);
             session_destroy();
             die(json_encode(["message" => 1]));
         }

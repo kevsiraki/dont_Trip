@@ -48,26 +48,33 @@ require_once '../backend/helpers.php';
 			}
 		</style>
 		<script>
-			document.addEventListener("DOMContentLoaded", function(){
-				init();
+			document.addEventListener("DOMContentLoaded", function() {
+				getState();
 			});
-			function update(action, alertClass) {
+			window.setInterval(function() {
+				getState();
+			}, 30000);
+			function setState(action, alertClass) {
 				fetch('https://donttrip.org/donttrip/backend/arduino_backend?&action='+action)
 				.then((response)=>response.json())
 				.then(led => {
 					$('#status').html(led.LED_UPDATE); 
 					$('#status').attr('class', alertClass); 
 					$('#status').show(); 
-					$('#states').html('<span style="color:red">Red LED: '+led.Red+'</span> <br><span style="color:blue">Blue LED: '+led.Blue + '</span><span style="color:#CA4C31"><br>Orange LED: '+led.Orange+'</span>'); 
-					$('#states').show(); 
+					if(led.Red) {
+						$('#states').html('<span style="color:red">Red LED: '+led.Red+'</span> <br><span style="color:blue">Blue LED: '+led.Blue + '</span><span style="color:#CA4C31"><br>Orange LED: '+led.Orange+'</span>'); 
+						$('#states').show(); 
+					}
 				});
 			}
-			function init() {
+			function getState() {
 				fetch('https://donttrip.org/donttrip/backend/arduino_backend?action=state')
 				.then((response)=>response.json())
 				.then(led => {
-					$('#states').html('<span style="color:red">Red LED: '+led.Red+'</span> <br><span style="color:blue">Blue LED: '+led.Blue + '</span><span style="color:#CA4C31"><br>Orange LED: '+led.Orange+'</span>'); 
-					$('#states').show(); 
+					if(led.Red) {
+						$('#states').html('<span style="color:red">Red LED: '+led.Red+'</span> <br><span style="color:blue">Blue LED: '+led.Blue + '</span><span style="color:#CA4C31"><br>Orange LED: '+led.Orange+'</span>'); 
+						$('#states').show(); 
+					}
 				});
 			}
 		</script>
@@ -88,12 +95,12 @@ require_once '../backend/helpers.php';
 			<div id="status" class="center alert"></div>
 			<div id="states" class="center alert alert-dark"></div>
 			<br>
-			<a class="btn btn-danger" onclick="update('RH','center alert alert-danger');">Red On</a>&nbsp;&nbsp;
-			<a class="btn btn-secondary" onclick="update('RL','center alert alert-danger');" >Red Off</a>&nbsp;&nbsp;<br><br>
-			<a class="btn btn-primary" onclick="update('BH','center alert alert-primary');" >Blue On</a>&nbsp;&nbsp;
-			<a class="btn btn-secondary" onclick="update('BL','center alert alert-primary');" >Blue Off</a>&nbsp;&nbsp;<br><br>
-			<a class="btn btn-warning" onclick="update('OH','center alert alert-warning');" >Orange On</a>&nbsp;&nbsp;
-			<a class="btn btn-secondary" onclick="update('OL','center alert alert-warning');" >Orange Off</a>&nbsp;&nbsp;<br><br>
+			<a class="btn btn-danger" onclick="setState('RH','center alert alert-danger');">Red On</a>&nbsp;&nbsp;
+			<a class="btn btn-secondary" onclick="setState('RL','center alert alert-danger');" >Red Off</a>&nbsp;&nbsp;<br><br>
+			<a class="btn btn-primary" onclick="setState('BH','center alert alert-primary');" >Blue On</a>&nbsp;&nbsp;
+			<a class="btn btn-secondary" onclick="setState('BL','center alert alert-primary');" >Blue Off</a>&nbsp;&nbsp;<br><br>
+			<a class="btn btn-warning" onclick="setState('OH','center alert alert-warning');" >Orange On</a>&nbsp;&nbsp;
+			<a class="btn btn-secondary" onclick="setState('OL','center alert alert-warning');" >Orange Off</a>&nbsp;&nbsp;<br><br>
 		</div>
 		<footer id="footer">
 			<a href="../login" class="logo">

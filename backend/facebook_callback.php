@@ -1,6 +1,7 @@
 <?php
 //Callback Functions for Facebook API Requests
-session_start();
+$sessionConfig = (new \ByJG\Session\SessionConfig('donttrip.org'))->withSecret($_ENV["recovery_key"])->replaceSessionHandler();
+$handler = new \ByJG\Session\JwtSession($sessionConfig);
 
 require_once "config.php";
 
@@ -58,7 +59,6 @@ $_SESSION["username"] = $me->getProperty('name') . " (Facebook)[" . $me->getProp
 $_SESSION["loggedin"] = true;
 $_SESSION["fbAvatar"] = $me->getProperty('picture');
 $_SESSION['loginTime'] = time();
-session_regenerate_id(true);
 
 header("location: ../client/dt");
 ?>

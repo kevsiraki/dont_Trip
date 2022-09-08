@@ -57,7 +57,7 @@ if ($total_count >= $first_limit && $total_count < $second_limit)
     {
         $lock = true;
         $password_err = "Try again in ten seconds.";
-		die(json_encode(["message" => $password_err]));
+        die(json_encode(["message" => $password_err]));
     }
     else
     {
@@ -73,8 +73,8 @@ if (isset($data->username) && isset($data->password) && !empty((trim($data->user
 else
 {
     $password_err = "Please fill in all fields.";
-	die(json_encode(["message" => $password_err]));
-    
+    die(json_encode(["message" => $password_err]));
+
 }
 //Safely stores ALL login attempts (hash attempted passwords, too).
 $sql = "INSERT INTO all_login_attempts(username, password, attempt_date, ip) VALUES ( ?, ?, ?, ? );";
@@ -146,11 +146,13 @@ if (empty($username_err) && empty($password_err) && !$lock)
                                 if (isset($_SESSION))
                                 {
                                     session_destroy();
-                                    session_start();
+                                    $sessionConfig = (new \ByJG\Session\SessionConfig('donttrip.org'))->withSecret($_ENV["recovery_key"])->replaceSessionHandler();
+                                    $handler = new \ByJG\Session\JwtSession($sessionConfig);
                                 }
                                 else if (!isset($_SESSION))
                                 {
-                                    session_start();
+                                    $sessionConfig = (new \ByJG\Session\SessionConfig('donttrip.org'))->withSecret($_ENV["recovery_key"])->replaceSessionHandler();
+                                    $handler = new \ByJG\Session\JwtSession($sessionConfig);
                                 }
                                 $sql = "UPDATE users SET last_login = ? WHERE username = ? ;";
                                 if ($stmt = mysqli_prepare($link, $sql))
@@ -161,7 +163,6 @@ if (empty($username_err) && empty($password_err) && !$lock)
                                     mysqli_stmt_execute($stmt);
                                     mysqli_stmt_close($stmt);
                                 }
-                                session_regenerate_id(true);
                                 $_SESSION["loggedin"] = true;
                                 $_SESSION["username"] = $username;
                                 $_SESSION['loginTime'] = time();
@@ -173,13 +174,14 @@ if (empty($username_err) && empty($password_err) && !$lock)
                                 if (isset($_SESSION))
                                 {
                                     session_destroy();
-                                    session_start();
+                                    $sessionConfig = (new \ByJG\Session\SessionConfig('donttrip.org'))->withSecret($_ENV["recovery_key"])->replaceSessionHandler();
+                                    $handler = new \ByJG\Session\JwtSession($sessionConfig);
                                 }
                                 else if (!isset($_SESSION))
                                 {
-                                    session_start();
+                                    $sessionConfig = (new \ByJG\Session\SessionConfig('donttrip.org'))->withSecret($_ENV["recovery_key"])->replaceSessionHandler();
+                                    $handler = new \ByJG\Session\JwtSession($sessionConfig);
                                 }
-                                session_regenerate_id(true);
                                 $_SESSION["loggedin"] = false;
                                 $_SESSION["username"] = $username;
                                 $_SESSION['loginTime'] = time();
@@ -190,7 +192,7 @@ if (empty($username_err) && empty($password_err) && !$lock)
                         else
                         {
                             $login_err = "Please Verify Your E-Mail.";
-							die(json_encode(["message" => $login_err]));
+                            die(json_encode(["message" => $login_err]));
                         }
                     }
                     else
@@ -218,21 +220,21 @@ if (empty($username_err) && empty($password_err) && !$lock)
                         {
                             if ($ip_address == $check_email_sent['ip'])
                             {
-                                echo(json_encode(["message" => "hecker"]));
+                                echo (json_encode(["message" => "hecker"]));
                             }
                             else
                             {
                                 if (!isset($_SESSION))
                                 {
-                                    session_start();
+                                    $sessionConfig = (new \ByJG\Session\SessionConfig('donttrip.org'))->withSecret($_ENV["recovery_key"])->replaceSessionHandler();
+                                    $handler = new \ByJG\Session\JwtSession($sessionConfig);
                                 }
                                 $_SESSION["locked"] = true;
                                 $_SESSION["username"] = $username;
                                 $_SESSION["authorized"] = false;
                                 $password_err = "Error 404";
-                                session_regenerate_id(true);
-								echo(json_encode(["message" => $password_err]));
-                                
+                                echo (json_encode(["message" => $password_err]));
+
                             }
                             if (empty($check_email_sent['otp']))
                             {
@@ -299,11 +301,11 @@ if (empty($username_err) && empty($password_err) && !$lock)
                                 }
                                 catch(phpmailerException $e)
                                 {
-									die(json_encode(["message" => $e->errorMessage()]));
+                                    die(json_encode(["message" => $e->errorMessage() ]));
                                 }
                                 if ($mail->Send())
                                 {
-                                    die; 
+                                    die;
                                 }
                             }
                         }

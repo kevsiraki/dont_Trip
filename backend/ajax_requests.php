@@ -9,7 +9,8 @@ require_once 'helpers.php';
 
 if (!isset($_SESSION))
 {
-    session_start();
+    $sessionConfig = (new \ByJG\Session\SessionConfig('donttrip.org'))->withSecret($_ENV["recovery_key"])->replaceSessionHandler();
+    $handler = new \ByJG\Session\JwtSession($sessionConfig);
 }
 //throttle live checking
 if (isset($_SESSION['LAST_CALL']))
@@ -40,26 +41,36 @@ if (isset($data->username))
         $result = mysqli_stmt_get_result($stmt);
         mysqli_stmt_close($stmt);
     }
-	$response = array("success" => "Available");
+    $response = array(
+        "success" => "Available"
+    );
     if (mysqli_num_rows($result))
     {
         $row = mysqli_fetch_array($result);
         $count = $row['cntUser'];
         if (!preg_match('/^[a-zA-Z0-9_]+$/', $username))
         {
-			$response = array("error" => "Can only contain letters, numbers, and underscores");
+            $response = array(
+                "error" => "Can only contain letters, numbers, and underscores"
+            );
         }
-		else if (strlen($username) < 8 || strlen($username) > 25)
+        else if (strlen($username) < 8 || strlen($username) > 25)
         {
-			$response = array("error" => "Must contain least 8 characters and not exceed 25");
+            $response = array(
+                "error" => "Must contain least 8 characters and not exceed 25"
+            );
         }
         else if (count(array_count_values(str_split($username))) == 1)
         {
-			$response = array("error" => "Cannot contain all the same character");
+            $response = array(
+                "error" => "Cannot contain all the same character"
+            );
         }
         else if ($count > 0)
         {
-            $response = array("error" => "Not Available");
+            $response = array(
+                "error" => "Not Available"
+            );
         }
     }
     die(json_encode($response));
@@ -76,25 +87,31 @@ if (isset($data->email))
         $result = mysqli_stmt_get_result($stmt);
         mysqli_stmt_close($stmt);
     }
-    $response = array("success" => "Available");
+    $response = array(
+        "success" => "Available"
+    );
     if (mysqli_num_rows($result))
     {
         $row = mysqli_fetch_array($result);
         $count = $row['cntEmail'];
         if (!valid_email($email))
         {
-			$response = array("error" => "E-mail Address Invalid");
+            $response = array(
+                "error" => "E-mail Address Invalid"
+            );
         }
         else if ($count > 0)
         {
-			$response = array("error" => "Not Available");
+            $response = array(
+                "error" => "Not Available"
+            );
         }
     }
-	die(json_encode($response));
+    die(json_encode($response));
 }
 if (isset($data->email_reset))
 {
-    $email = trim($data->email_reset );
+    $email = trim($data->email_reset);
     $sql = "SELECT COUNT(*) as cntEmail FROM users WHERE email = ? ;";
     if ($stmt = mysqli_prepare($link, $sql))
     {
@@ -104,18 +121,24 @@ if (isset($data->email_reset))
         $result = mysqli_stmt_get_result($stmt);
         mysqli_stmt_close($stmt);
     }
-    $response = array("error" => "Not Found");
+    $response = array(
+        "error" => "Not Found"
+    );
     if (mysqli_num_rows($result))
     {
         $row = mysqli_fetch_array($result);
         $count = $row['cntEmail'];
         if (!valid_email($email))
         {
-			$response = array("error" => "E-mail Address Invalid");
+            $response = array(
+                "error" => "E-mail Address Invalid"
+            );
         }
         else if ($count > 0)
         {
-            $response = array("success" => "Found");
+            $response = array(
+                "success" => "Found"
+            );
         }
     }
     $sql = "SELECT COUNT(*) as cntEmail FROM password_reset_temp WHERE email = ? ;";
@@ -133,9 +156,11 @@ if (isset($data->email_reset))
         $count = $row['cntEmail'];
         if ($count >= 5)
         {
-			$response = array("error" => "Too Many Requests");
+            $response = array(
+                "error" => "Too Many Requests"
+            );
         }
     }
-	die(json_encode($response));
+    die(json_encode($response));
 }
 ?>

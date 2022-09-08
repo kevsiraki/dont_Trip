@@ -46,7 +46,7 @@ include 'backend/php-csrf.php';
 			</div>
 		</header>
 		<div class="wrapper">
-			<h2><img draggable="false" src="icons/dont_Trip.png" alt="Don't Trip" class="center"  width="300" height="80" loading="lazy"></img></h2>
+			<h2><img draggable="false" src="icons/dont_Trip.png" class="center"  width="300" height="80" alt="Don't Trip" loading="lazy"></img></h2>
 			<a href="https://github.com/kevsiraki/dont_Trip"><sub><i><small style ="float: right !important;">The better way to travel</small></i></sub></a>
 			<br>
 			<div id="invalid-login" class="center alert alert-danger"style="text-align:center; width: 90%; display:none; margin-bottom:30px !important;"> </div>
@@ -121,7 +121,7 @@ include 'backend/php-csrf.php';
 				<img draggable="false" src="icons/dont_Trip.png" alt="Don't Trip" width="150" height="40" loading="lazy"></img>
 			</a>
 			<div class="footer-right">
-				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fab fa-github" rel="noopener"></i>&nbsp;GitHub</a>
+				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link" rel="noopener"><i class="fab fa-github"></i>&nbsp;GitHub</a>
 			</div>
 		</footer>
 		<script>
@@ -134,7 +134,7 @@ include 'backend/php-csrf.php';
 				let button = document.getElementById('fuck');
 				fuck.style.backgroundColor = "green";
 				fuck.innerHTML = "<i class=\"fa fa-user\">&nbsp;</i> Continue as "+e.data;
-				fuck.click();
+				window.location.replace("https://donttrip.org/donttrip/client/dt");
 				popup.close();
 			}
 		</script>

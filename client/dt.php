@@ -12,16 +12,26 @@
 	<head>
 		<meta charset="utf-8">
 		<meta content="initial-scale=1.0, user-scalable=no" name="viewport">
-		<title>Don't Trip</title>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-title" content="Don't Trip">
+		<link rel="apple-touch-icon"  sizes="256x256" href="../icons/icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
 		<link href="../icons/icon_header.png" rel="shortcut icon" type="image/x-icon">
-		<link rel="apple-touch-icon"  sizes="512x512" href="../icons/icon.png">
+		<link rel="manifest" href="../../site.webmanifest">
+		<script src="../../app.js"></script>
+		<link rel="mask-icon" href="../../safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="description" content="An itinerary planner utilizing the Google Maps API to give you customized places along a route!">
+		<title>Don't Trip</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.3/css/bootstrap.min.css" integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g==" crossorigin="anonymous" referrerpolicy="no-referrer" onerror="this.onerror=null;this.href='../style/bootstrap.min.css';" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://kit.fontawesome.com/4b68e7bba8.js" crossorigin="anonymous" defer></script>
+		<link href="../icons/icon_header.png" rel="shortcut icon" type="image/x-icon">
 		<link href="../style/style.css" rel="stylesheet">
-		<link href="../style/autofill.css" rel="stylesheet">
-        <link href="../style/navbar.css" rel="stylesheet">
-        <link href="../style/footer.css" rel="stylesheet">
+        <link rel="preload" href="../style/autofill.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="preload" href="../style/navbar.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+		<link rel="preload" href="../style/footer.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 		<script src="../js/nav.js" defer></script>
 		<script src="../js/lightMode.js"></script>
 		<style>
@@ -109,10 +119,10 @@
 		<script src="../js/keywords.js" async defer></script>
         <footer id="footer">
 			<a href="../login" class="logo">
-				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
+				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40" alt="Don't Trip" loading="lazy"></img>
 			</a>
 			<div class="footer-right">
-				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github"></i>&nbsp;GitHub</a>
+				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link" rel="noopener"><i class="fa fa-github"></i>&nbsp;GitHub</a>
 			</div>
 		</footer>
 	</body>

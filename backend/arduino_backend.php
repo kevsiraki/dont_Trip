@@ -13,7 +13,7 @@ if(isset($_GET['action']) && !empty($_GET['action']))
 		echo(json_encode($response));
 	}
 	else {
-		die(json_encode(['error'=>'Arduino timed out.']));
+		die(json_encode(['LED_UPDATE'=>'Arduino is currently sleeping.']));
 	}
 }
 ?>

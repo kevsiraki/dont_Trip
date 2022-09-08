@@ -1,4 +1,5 @@
 <?php
+require_once "config.php";
 $uri = strtok($_SERVER['REQUEST_URI'], '?');
 $base_backend = '/donttrip/backend/';
 $base_client = '/donttrip/client/';
@@ -11,31 +12,31 @@ else if ($uri === $base_client . 'two_factor_auth' || $uri === $base_backend . '
 {
     startSession();
     checkPreLoginUsername();
-    checkExpiryUpdateSSID();
+    checkExpiry();
 }
 else if ($uri === $base_client . 'register')
 {
     startSession();
-    checkExpiryUpdateSSID();
+    checkExpiry();
 }
 else if ($uri === $base_client . 'settings' || $uri === $base_backend . 'settings_backend' || $uri === $base_client . 'dt' || $uri === $base_backend . 'dt_backend')
 {
     startSession();
     checkAuthorized();
-    checkExpiryUpdateSSID();
+    checkExpiry();
 }
 else if ($uri === $base_client . 'searches' || $uri === $base_client . 'state' || $uri === $base_backend . 'state_backend' || $uri === $base_backend . 'searches_backend' || $uri === $base_backend . 'delete_search' || $uri === $base_client . 'delete_confirmation' || $uri === $base_backend . 'delete_confirmation_backend')
 {
     startSession();
     checkLoggedIn();
     checkAuthorized();
-    checkExpiryUpdateSSID();
+    checkExpiry();
 }
 else if ($uri === $base_client . 'reset-password' || $uri === $base_backend . 'reset-password_backend')
 {
     startSession();
     checkLoggedIn();
-    checkExpiryUpdateSSID();
+    checkExpiry();
 }
 else if ($uri === $base_client . 'locked' || $uri === $base_backend . 'recovery_backend')
 {
@@ -43,30 +44,18 @@ else if ($uri === $base_client . 'locked' || $uri === $base_backend . 'recovery_
     checkLocked();
 }
 
-
 /**
  * Check if session is expired and update the SSID if it is not expired.
  */
 
-function checkExpiryUpdateSSID()
+function checkExpiry()
 {
     if (isset($_SESSION['loginTime']) && $_SESSION['loginTime'] + $_ENV["expire"] < time())
     {
         $_SESSION = array();
         session_destroy();
-        header('location: https://donttrip.org/donttrip/client/session_expired.php');
+        header('location: https://donttrip.org/donttrip/client/session_expired');
         die;
-    }
-    if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET")
-    {
-        if (isset($_SESSION['loginTime']))
-        {
-            if ($_SESSION['loginTime'] + ($_ENV["expire"] / 3) < time())
-            {
-                session_regenerate_id(true);
-            }
-            $_SESSION['loginTime'] = time();
-        }
     }
 }
 
@@ -130,7 +119,8 @@ function startSession()
 {
     if (!isset($_SESSION))
     {
-        session_start();
+        $sessionConfig = (new \ByJG\Session\SessionConfig('donttrip.org'))->withSecret($_ENV["recovery_key"])->replaceSessionHandler();
+        $handler = new \ByJG\Session\JwtSession($sessionConfig);
     }
 }
 
@@ -145,17 +135,17 @@ function csrf()
         die(json_encode(["message" => "Expired Session. Refreshing..."]));
     }
     $csrf = hash_hmac('sha256', $_ENV["recovery_key"], $_SESSION['key']);
-	$client_csrf = "";
+    $client_csrf = "";
     if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "DELETE")
     {
-		if(isset(json_decode(file_get_contents("php://input"))->csrf) && json_decode(file_get_contents("php://input"))!==null)
-		{
-			$client_csrf = json_decode(file_get_contents("php://input"))->csrf;
-		}
-		else
-		{
-			die(json_encode(["message" => "Expired Session. Refreshing..."]));
-		}
+        if (isset(json_decode(file_get_contents("php://input"))->csrf) && json_decode(file_get_contents("php://input")) !== null)
+        {
+            $client_csrf = json_decode(file_get_contents("php://input"))->csrf;
+        }
+        else
+        {
+            die(json_encode(["message" => "Expired Session. Refreshing..."]));
+        }
         if (empty($csrf) || empty($client_csrf) || !hash_equals($csrf, $client_csrf))
         {
             die(json_encode(["message" => "Expired Session. Refreshing..."]));

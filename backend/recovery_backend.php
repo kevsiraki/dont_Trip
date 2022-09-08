@@ -57,18 +57,19 @@ if (empty($password_err))
                     {
                         if (!isset($_SESSION))
                         {
-                            session_start();
+                            $sessionConfig = (new \ByJG\Session\SessionConfig('donttrip.org'))->withSecret($_ENV["recovery_key"])->replaceSessionHandler();
+                            $handler = new \ByJG\Session\JwtSession($sessionConfig);
                         }
                         else if (isset($_SESSION))
                         {
                             session_destroy();
-                            session_start();
+                            $sessionConfig = (new \ByJG\Session\SessionConfig('donttrip.org'))->withSecret($_ENV["recovery_key"])->replaceSessionHandler();
+                            $handler = new \ByJG\Session\JwtSession($sessionConfig);
                         }
                         $_SESSION["loggedin"] = true;
                         $_SESSION["authorized"] = false;
                         $_SESSION["username"] = $username;
                         $_SESSION['loginTime'] = time();
-                        session_regenerate_id(true);
                         die(json_encode(["message" => 1]));
                     }
                     else
