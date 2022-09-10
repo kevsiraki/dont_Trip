@@ -40,7 +40,7 @@ require_once '../backend/php-csrf.php';
 			</a>
 			<div class="header-right">
 				<a href="../login"><small>Login</small></a>
-				<a href="register"><small>Sign Up</small></a>
+				<a href="register" class="active"><small>Sign Up</small></a>
 			</div>
 		</header>
 		<div class="wrapper">
