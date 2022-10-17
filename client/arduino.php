@@ -46,6 +46,9 @@ require_once '../backend/helpers.php';
 			.wrapper {
 				text-align: center;
 			}
+			.active-logo {
+				box-shadow: 0px 5px rgba(136, 136, 136, 0.5);
+			}
 		</style>
 		<script>
 			document.addEventListener("DOMContentLoaded", function() {
@@ -82,11 +85,13 @@ require_once '../backend/helpers.php';
 	<body class="d-flex flex-column justify-content-between">
 		<header class="header" id="header">
 			<a href="../login" class="logo">
-			<img draggable="false" src="../icons/icon_header.png" width="40" height="40"></img>
+				<img draggable="false" src="../icons/icon_header.png" alt="Don't Trip" width="40" height="40" loading="lazy"></img>
+			</a>
+			<a href="javascript:void(0);" class="logo active-logo">
+				<img draggable="false" src="../icons/arduino-logo.png" width="50" height="40"></img>
 			</a>
 			<div class="header-right">
-				<a href="../login"><small>Login</small></a>
-				<a href="register"><small>Sign Up</small></a>
+				<a href="../login"><small>Go On A Trip</small></a>
 			</div>
 		</header>
 		<div class="wrapper">
@@ -104,7 +109,8 @@ require_once '../backend/helpers.php';
 		</div>
 		<footer id="footer">
 			<a href="../login" class="logo">
-			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
+				<small class="darkable-text"><sub>Sponsored by</sub></small>
+				<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>
 			</a>
 			<div class="footer-right">
 				<a href="https://github.com/kevsiraki/dont_Trip" target="_blank" id="footer-link"><i class="fa fa-github"></i>&nbsp;GitHub</a>

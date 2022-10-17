@@ -106,7 +106,7 @@ if (isset($_SESSION['username']))
 					} else if(empty($_SESSION['userData'])&&empty($_SESSION['googleAvatar'])&&empty($_SESSION['fbAvatar'])) {
 					?>
 
-						<img id="user-pic" alt="Don't Trip Avatar" src="../icons/icon_pfp.png" style="background-color:#A9A9A9;" />
+						<img id="user-pic" alt="Don't Trip Avatar" src="../icons/icon.png" style="background-color:#A9A9A9;" />
 					<?php 
 					} if(!empty($_SESSION['userData'])||!empty($_SESSION['username'])) {
 						preg_match_all('/\(([A-Za-z0-9 ]+?)\)/', $_SESSION["username"], $out); 

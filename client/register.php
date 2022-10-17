@@ -38,9 +38,12 @@ require_once '../backend/php-csrf.php';
 			<a href="../login" class="logo">
 				<img draggable="false" src="../icons/icon_header.png" width="40" height="40" alt="Don't Trip" loading="lazy"></img>
 			</a>
+			<a href="arduino" class="logo">
+				<img draggable="false" src="../icons/arduino-logo.png" width="50" height="40" loading="lazy"></img>
+			</a>
 			<div class="header-right">
 				<a href="../login"><small>Login</small></a>
-				<a href="register" class="active"><small>Sign Up</small></a>
+				<a href="javascript:void(0);" class="active"><small>Sign Up</small></a>
 			</div>
 		</header>
 		<div class="wrapper">

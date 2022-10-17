@@ -34,14 +34,22 @@ include 'backend/php-csrf.php';
 				window.location.reload();
 			}
 		</script>
+		<style>
+			.active-logo {
+				box-shadow: 0px 5px rgba(136, 136, 136, 0.5);
+			}
+		</style>
 	</head>
 	<body class="d-flex flex-column justify-content-between">
 		<header class="header" id="header">
-			<a href="." class="logo">
+			<a href="javascript:void(0);" class="logo active-logo">
 				<img draggable="false" src="icons/icon_header.png" alt="Don't Trip" width="40" height="40" loading="lazy"></img>
 			</a>
+			<a href="client/arduino" class="logo">
+				<img draggable="false" src="icons/arduino-logo.png" width="50" height="40" loading="lazy"></img>
+			</a>
 			<div class="header-right">
-				<a href="." class="active"><small>Login</small></a>
+				<a href="javascript:void(0);" class="active"><small>Login</small></a>
 				<a href="client/register"><small>Sign Up</small></a>
 			</div>
 		</header>
@@ -117,7 +125,7 @@ include 'backend/php-csrf.php';
 			<input type="hidden" id="csrf" name="csrf" value="<?php echo $csrf ?>">
 		</div>	
 		<footer id="footer">
-			<a href="." class="logo">
+			<a href="javascript:void(0);" class="logo">
 				<img draggable="false" src="icons/dont_Trip.png" alt="Don't Trip" width="150" height="40" loading="lazy"></img>
 			</a>
 			<div class="footer-right">
