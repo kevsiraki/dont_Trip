@@ -1,8 +1,4 @@
 .env
-composer.json
-composer.lock
 vendor/
-phpmail/
-funny/
 arduino.php
 arduino_backend.php
