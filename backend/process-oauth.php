@@ -10,7 +10,7 @@ if (!isset($_GET['code']))
 
 $discord_code = $_GET['code'];
 
-$payload = ['code' => $discord_code, 'client_id' => $_ENV["discord_client_id"], 'client_secret' => $_ENV["discord_client_secret"], 'grant_type' => 'authorization_code', 'redirect_uri' => 'https://donttrip.org/donttrip/backend/process-oauth', 'scope' => 'identify%20guids'];
+$payload = ['code' => $discord_code, 'client_id' => $_ENV["discord_client_id"], 'client_secret' => $_ENV["discord_client_secret"], 'grant_type' => 'authorization_code', 'redirect_uri' => 'https://www.donttrip.org/donttrip/backend/process-oauth', 'scope' => 'identify%20guids'];
 
 $payload_string = http_build_query($payload);
 $discord_token_url = "https://discordapp.com/api/oauth2/token";
@@ -70,7 +70,7 @@ $_SESSION['loginTime'] = time();
 
 echo ('
 	<script>
-	window.opener.postMessage("' . $name . '", "https://donttrip.org/donttrip/login");
+	window.opener.postMessage("' . $name . '", "https://www.donttrip.org/donttrip/login");
     </script>
 	');
 ?>

@@ -33,10 +33,10 @@ $(document).on('click', '#log-in', function (e) {
                 }, 10000);
             } else if (result.includes("hecker")) {
                 button.style.display = "none";
-                window.location.href = "https://donttrip.org/donttrip/client/hecker";
+                window.location.href = "https://www.donttrip.org/donttrip/client/hecker";
             } else if (result.includes("404")) {
                 button.style.display = "none";
-                window.location.href = "https://donttrip.org/donttrip/client/locked";
+                window.location.href = "https://www.donttrip.org/donttrip/client/locked";
             } else if (result == 1) {
                 error.style.display = "none";
                 window.location.href = "client/dt";

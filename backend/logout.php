@@ -13,6 +13,6 @@ $_SESSION = array();
 // Destroy the session.
 session_destroy();
 // Redirect to login page
-header("location: https://donttrip.org/donttrip/");
+header("location: https://www.donttrip.org/donttrip/");
 die;
 ?>

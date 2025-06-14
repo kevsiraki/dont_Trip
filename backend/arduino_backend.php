@@ -8,7 +8,7 @@ require_once "config.php";
 require_once 'helpers.php';
 if(isset($_GET['action']) && !empty($_GET['action']))
 {
-	$response = json_decode(get_web_page("http://".$_ENV["myIP"]."/".$_GET['action'].'?ip='.getIpAddr()));
+	$response = json_decode(get_web_page("http://"."192.168.1.132:81"."/".$_GET['action'].'?ip='.getIpAddr()));
 	if(!empty($response)) {
 		echo(json_encode($response));
 	}

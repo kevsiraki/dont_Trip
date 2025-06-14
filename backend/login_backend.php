@@ -182,6 +182,15 @@ if (empty($username_err) && empty($password_err) && !$lock)
                                     $sessionConfig = (new \ByJG\Session\SessionConfig('donttrip.org'))->withSecret($_ENV["recovery_key"])->replaceSessionHandler();
                                     $handler = new \ByJG\Session\JwtSession($sessionConfig);
                                 }
+								$sql = "UPDATE users SET last_login = ? WHERE username = ? ;";
+                                if ($stmt = mysqli_prepare($link, $sql))
+                                {
+                                    mysqli_stmt_bind_param($stmt, "ss", $param_date, $param_username);
+                                    $param_date = $date;
+                                    $param_username = $username;
+                                    mysqli_stmt_execute($stmt);
+                                    mysqli_stmt_close($stmt);
+                                }
                                 $_SESSION["loggedin"] = false;
                                 $_SESSION["username"] = $username;
                                 $_SESSION['loginTime'] = time();

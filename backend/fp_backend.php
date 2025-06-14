@@ -132,7 +132,7 @@ if (empty($email_err))
         $html = file_get_contents('../email_templates/forgot_password.html');
         $html = str_replace("{{USERNAME}}", $userResults["username"], $html);
         $html = str_replace("{{IMGICON}}", imageUrl() , $html);
-        $html = str_replace("{{LINK}}", "https://donttrip.org/donttrip/client/forgot-password.php?key=" . $data->email . "&token=" . $key . "", $html);
+        $html = str_replace("{{LINK}}", "https://www.donttrip.org/donttrip/client/forgot-password.php?key=" . $data->email . "&token=" . $key . "", $html);
         $html = str_replace("{{GREETING}}", $greeting, $html);
         $mail->Body = $html;
     }

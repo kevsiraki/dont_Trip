@@ -20,64 +20,20 @@ require_once '../backend/helpers.php';
 		<link rel="stylesheet" href="../style/form_base_style.css">
 		<link rel="stylesheet" href="../style/header.css">
 		<link rel="stylesheet" href="../style/footer.css">
+		<link rel="stylesheet" href="../style/arduino_style.css">
 		<link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
 		<script src="../js/lightMode.js"></script>
+		<script src="../js/arduino.js"></script>
 		<style>
-			h2 {
-				font-family: 'Comfortaa';font-size: 35px;
-			}
-			#status {
-				display: none;
-				text-align: center;
-				width: 90%;
-			}
-			.btn {
-				width: 40%;
-			}
-			.alert-dark {
-				display: none;
-				text-align: center;
-				width: 60%;
-				border-radius: 25px;
-				border-color: rgba(45, 48, 51, 0.3);
-				background: rgba(45, 48, 51, 0.3);
-				background-color: rgba(45, 48, 51, 0.3);
-			}
-			.wrapper {
-				text-align: center;
-			}
-		</style>
-		<script>
-			document.addEventListener("DOMContentLoaded", function() {
-				getState();
-			});
-			window.setInterval(function() {
-				getState();
-			}, 30000);
-			function setState(action, alertClass) {
-				fetch('https://donttrip.org/donttrip/backend/arduino_backend?&action='+action)
-				.then((response)=>response.json())
-				.then(led => {
-					$('#status').html(led.LED_UPDATE); 
-					$('#status').attr('class', alertClass); 
-					$('#status').show(); 
-					if(led.Red) {
-						$('#states').html('<span style="color:red">Red LED: '+led.Red+'</span> <br><span style="color:blue">Blue LED: '+led.Blue + '</span><span style="color:#CA4C31"><br>Orange LED: '+led.Orange+'</span>'); 
-						$('#states').show(); 
-					}
-				});
-			}
-			function getState() {
-				fetch('https://donttrip.org/donttrip/backend/arduino_backend?action=state')
-				.then((response)=>response.json())
-				.then(led => {
-					if(led.Red) {
-						$('#states').html('<span style="color:red">Red LED: '+led.Red+'</span> <br><span style="color:blue">Blue LED: '+led.Blue + '</span><span style="color:#CA4C31"><br>Orange LED: '+led.Orange+'</span>'); 
-						$('#states').show(); 
-					}
-				});
-			}
-		</script>
+			iframe {
+        	    width:100%;
+        	    height:40vh;
+        	    overflow:hidden;
+        	    margin:0px;
+        	    padding:0px;
+        	    border:none;
+        	}
+    	</style>
 	</head>
 	<body class="d-flex flex-column justify-content-between">
 		<header class="header" id="header">
@@ -89,19 +45,24 @@ require_once '../backend/helpers.php';
 				<a href="register"><small>Sign Up</small></a>
 			</div>
 		</header>
+		
 		<div class="wrapper">
-			<h2 id="info-two" class="darkable-text">LED Controls</h2>
+			<h2 id="info-two" class="darkable-text">Control LEDs</h2>
 			<br>
 			<div id="status" class="center alert"></div>
 			<div id="states" class="center alert alert-dark"></div>
 			<br>
 			<a class="btn btn-danger" onclick="setState('RH','center alert alert-danger');">Red On</a>&nbsp;&nbsp;
-			<a class="btn btn-secondary" onclick="setState('RL','center alert alert-danger');" >Red Off</a>&nbsp;&nbsp;<br><br>
+			<a class="btn btn-secondary" onclick="setState('RL','center alert alert-secondary');" >Red Off</a>&nbsp;&nbsp;<br><br>
 			<a class="btn btn-primary" onclick="setState('BH','center alert alert-primary');" >Blue On</a>&nbsp;&nbsp;
-			<a class="btn btn-secondary" onclick="setState('BL','center alert alert-primary');" >Blue Off</a>&nbsp;&nbsp;<br><br>
+			<a class="btn btn-secondary" onclick="setState('BL','center alert alert-secondary');" >Blue Off</a>&nbsp;&nbsp;<br><br>
 			<a class="btn btn-warning" onclick="setState('OH','center alert alert-warning');" >Orange On</a>&nbsp;&nbsp;
-			<a class="btn btn-secondary" onclick="setState('OL','center alert alert-warning');" >Orange Off</a>&nbsp;&nbsp;<br><br>
+			<a class="btn btn-secondary" onclick="setState('OL','center alert alert-secondary');" >Orange Off</a>&nbsp;&nbsp;<br><br>
+			<a class="btn  cbutton" onclick="setState('CH','center cbutton alert ');" >Tree On</a>&nbsp;&nbsp;
+			<a class="btn btn-secondary cobutton" onclick="setState('CL','center coalert alert alert-secondary');" >Tree Off</a>&nbsp;&nbsp;<br><br>
+			<!--iframe src="https://donttrip.org/live/?action=stream"  scrolling="no"></iframe-->
 		</div>
+		<br>
 		<footer id="footer">
 			<a href="../login" class="logo">
 			<img draggable="false" src="../icons/dont_Trip.png" width="150" height="40"></img>

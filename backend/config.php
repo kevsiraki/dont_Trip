@@ -26,9 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") //For GET/DELETE endpoints...
 {
     //Check if banned for bruteforcing
     $total_count = getFailedAttempts($link, $ip_address);
-    if ($total_count >= 20 || (checkIP() && $total_count >= 5))
+    if ($total_count >= 20 || (checkIP() && $total_count >= 19))
     {
-        header('Location: https://donttrip.org/donttrip/client/hecker'); //Agile sprint log greg russ page
+        header('Location: https://www.donttrip.org/donttrip/client/hecker'); //Agile sprint log greg russ page
         die("404");
     }
 }
@@ -36,7 +36,7 @@ else if ($_SERVER["REQUEST_METHOD"] == "POST") //On POST attempts
 
 {
     $total_count = getFailedAttempts($link, $ip_address);
-    if (checkIP() && $total_count >= 5)
+    if ($total_count >= 20 ||(checkIP() && $total_count >= 19))
     {
         die("404"); //Agile sprint log greg russ page
     }

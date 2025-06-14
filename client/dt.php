@@ -4,8 +4,8 @@
 	require_once '../backend/geolocation.php';
 	require_once '../backend/middleware.php';
 	require_once 'redirect.php';
-	$wilson = json_decode(get_web_page("https://owen-wilson-wow-api.herokuapp.com/wows/random?results=5"));
-	$audio = $wilson[rand(0, 4)]->audio;
+	//$wilson = json_decode(get_web_page("https://owen-wilson-wow-api.herokuapp.com/wows/random?results=5"));
+	$audio = null;//$wilson[rand(0, 4)]->audio;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +52,7 @@
 				<script>
 					if(window.opener)
 					{
-						window.opener.postMessage("'.strtok($_SESSION["username"],'(').'", "https://donttrip.org/donttrip/login");
+						window.opener.postMessage("'.strtok($_SESSION["username"],'(').'", "https://www.donttrip.org/donttrip/login");
 					}
 				</script>
 			');
@@ -97,7 +97,7 @@
 				<h5 id="darkable" class = "darakble-text"><span id="total"></span></h5>
 				<button class = "btn btn-link btn-sm" id="clear" style="margin-right: auto; margin-left: 0;display:none;">Clear Previous Routes</button>
 				<div id="panel"></div>
-				<audio id="audio" src=<?php echo $audio; ?> autostart="0" autostart="false" preload ="none" ></audio>
+				<audio id="audio" src=""<?//php echo $audio; ?> autostart="0" autostart="false" preload ="none" ></audio>
 			</div>
 			<div id="sidebar" name = "rust" class = "rust" style="display:none;">
 				<h5 id="darkable" class = "darakble-text" name="sort">Sort places by:</h5>

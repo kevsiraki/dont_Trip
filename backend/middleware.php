@@ -54,7 +54,7 @@ function checkExpiry()
     {
         $_SESSION = array();
         session_destroy();
-        header('location: https://donttrip.org/donttrip/client/session_expired');
+        header('location: https://www.donttrip.org/donttrip/client/session_expired');
         die;
     }
 }

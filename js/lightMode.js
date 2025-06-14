@@ -58,7 +58,7 @@ function no(event) {
     event.stopPropagation();
 }
 function lightStyle() {
-    const form_bg = "linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url(\"https://donttrip.org/donttrip/icons/form_bg.jpg\")";
+    const form_bg = "linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url(\"https://www.donttrip.org/donttrip/icons/form_bg.jpg\")";
     if (document.getElementsByClassName("form-control").length > 0 && !document.getElementById("log-in")) {
         $('link[href*="form_style.css"]').attr("disabled", "true");
         $('head').append('<link rel="stylesheet" href="../style/formLightInputs.css" type="text/css" />');
@@ -211,7 +211,7 @@ function darkStyle() {
     }
     if (document.getElementsByClassName('wrapper')[0]) {
 		document.getElementsByClassName('wrapper')[0].style.backgroundImage = "revert";
-        document.getElementsByClassName('wrapper')[0].style.backgroundImage = "linear-gradient(to right, rgba(53, 54, 58, 0.96) 0 100%), url(\"https://donttrip.org/donttrip/icons/form_bg.jpg\")";
+        document.getElementsByClassName('wrapper')[0].style.backgroundImage = "linear-gradient(to right, rgba(53, 54, 58, 0.96) 0 100%), url(\"https://www.donttrip.org/donttrip/icons/form_bg.jpg\")";
     }
     if (document.getElementById("header")) {
         document.getElementById("header").style.backgroundColor = "#35363A";

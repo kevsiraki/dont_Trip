@@ -22,7 +22,7 @@ csrf();
 //Check all inputs are filled before any further checks
 if (!isset ($data->email) || !isset ($data->username) || !isset ($data->password) || !isset ($data->confirm_password) || empty(trim($data->email)) || empty(trim($data->username)) || empty(trim($data->password)) || empty(trim($data->confirm_password)))
 {
-    die(json_encode(["message" => "Please fill in all fields."]));
+    die(json_encode(["message" => "Fill in all fields."]));
 }
 //Validate email exists and is not taken.
 if (empty(trim($data->email)))
@@ -222,7 +222,7 @@ if (empty($username_err) && empty($password_err) && empty($confirm_password_err)
             $html = file_get_contents('../email_templates/register.html');
             $html = str_replace("{{USERNAME}}", $username, $html);
             $html = str_replace("{{IMGICON}}", imageUrl() , $html);
-            $html = str_replace("{{LINK}}", "https://donttrip.org/donttrip/client/verify-email.php?key=" . $data->email . "&token=" . $token . "", $html);
+            $html = str_replace("{{LINK}}", "https://www.donttrip.org/donttrip/client/verify-email.php?key=" . $data->email . "&token=" . $token . "", $html);
             $html = str_replace("{{GREETING}}", $greeting, $html);
             $mail->Body = $html;
         }
