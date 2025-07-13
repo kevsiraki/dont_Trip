@@ -20,4 +20,3 @@ if (!isset($_GET['code']))
 {
     $isAuth = "yes";
 }
-?>

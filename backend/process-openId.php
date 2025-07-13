@@ -40,6 +40,9 @@ else
     exit();
 }
 
+unset($_SESSION['userData']);
+unset($_SESSION['googleAvatar']);
+
 $steam_api_key = $_ENV["steam_api_key"];
 
 $response = file_get_contents('https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' . $steam_api_key . '&steamids=' . $steamID64);

@@ -22,6 +22,7 @@ else if ($uri === $base_client . 'register')
 else if ($uri === $base_client . 'settings' || $uri === $base_backend . 'settings_backend' || $uri === $base_client . 'dt' || $uri === $base_backend . 'dt_backend')
 {
     startSession();
+    checkLoggedIn();
     checkAuthorized();
     checkExpiry();
 }
@@ -65,6 +66,7 @@ function checkExpiry()
 
 function checkAuthorized()
 {
+    
     if (isset($_SESSION["authorized"]) && $_SESSION["authorized"] === false)
     {
         header("location: ../backend/logout.php");
@@ -74,16 +76,23 @@ function checkAuthorized()
 
 /**
  * Check if the user is authorized AND authenticated.
- */
+*/
+
+//Worked on 7/13/2025 to allow Google OAuth handshake whilst blocking the route unless logged in.
 
 function checkLoggedIn()
 {
-    if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)
+    if (isset($_GET['code'])&&isset($_GET['scope'])) {
+        return;
+    }
+
+    if ((!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)&&(!isset($_SESSION['access_token'])))
     {
         header("location: ../client/session_expired");
         die;
     }
 }
+
 
 /**
  * Check if the user account is locked.
