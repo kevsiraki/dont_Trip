@@ -163,6 +163,7 @@ if (empty($username_err) && empty($password_err) && !$lock)
                                     mysqli_stmt_execute($stmt);
                                     mysqli_stmt_close($stmt);
                                 }
+                                unset($_SESSION['userid']);
                                 unset($_SESSION['userData']);
                                 unset($_SESSION['googleAvatar']);
                                 $_SESSION["loggedin"] = true;

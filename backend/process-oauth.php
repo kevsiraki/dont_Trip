@@ -57,25 +57,20 @@ if (!isset($_SESSION))
     $sessionConfig = (new \ByJG\Session\SessionConfig('donttrip.org'))->withSecret($_ENV["recovery_key"])->replaceSessionHandler();
     $handler = new \ByJG\Session\JwtSession($sessionConfig);
 }
+
+unset($_SESSION['userid']);
 unset($_SESSION['userData']);
 unset($_SESSION['googleAvatar']);
+
 $_SESSION['logged_in'] = true;
 $_SESSION['userData'] = ['name' => $result['username'], 'discord_id' => $result['id'], 'avatar' => $result['avatar']];
 
 extract($_SESSION['userData']);
 
 $_SESSION["username"] = $name . " (Discord)[" . $discord_id . "]";
+$_SESSION['userid'] = "(Discord)[" . $discord_id . "]";
 $_SESSION["loggedin"] = true;
 $_SESSION['loginTime'] = time();
 
 $redirect_url = "../client/dt";
 header("Location: $redirect_url");
-
-/*
-echo ('
-	<script>
-	window.opener.postMessage("' . $name . '", "https://www.donttrip.org/donttrip/login");
-    </script>
-	');
-?>
-*/

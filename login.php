@@ -106,7 +106,6 @@ include 'backend/php-csrf.php';
 			<?php
 			if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && (empty($_SESSION["authorized"]) || $_SESSION["authorized"] !== false)) {
 				echo "<br>";
-				//echo "<p id=\"other\" class=\"other\">&nbsp;&nbsp;Or&nbsp;&nbsp;</p>";
 				preg_match_all('/\(([A-Za-z0-9 ]+?)\)/', $_SESSION["username"], $out);
 				if (!empty($out[1][0]) && isset($out)) {
 					$logo = strtolower($out[1][0]);
@@ -116,8 +115,6 @@ include 'backend/php-csrf.php';
 				}
 				$login_type_logo = "<i class=\"" . $class . "\"></i>";
 				echo "<a id = 'fuck' class=\"btn btn-link bg-success center\" style=\" color: white; \" href='client/dt'>" . $login_type_logo . " " . trim(preg_replace('/\[[^)]+\]/', '', preg_replace('/\([^)]+\)/', ' ' . '', $_SESSION['username']))) . "'s Session</a>";
-			} else {
-				//echo "<a id = 'fuck' class=\"btn btn-link center\" style=\" color: white; background-color: #4682B4;\" onclick='window.location.replace(\"client/dt\")'><i class=\"fa fa-user\">&nbsp;</i>Expedited Tripping</a>";
 			}
 			?>
 		</div>
@@ -135,23 +132,6 @@ include 'backend/php-csrf.php';
 					class="fab fa-github"></i>&nbsp;GitHub</a>
 		</div>
 	</footer>
-	<script>
-		/*
-		function login(url) {
-			popup = window.open(url, "mywindow", "width=" + screen.width, "height=" + screen.height + ',resizable=yes,scrollbars=no,toolbar=no,menubar=no,location=no');
-			popup.moveTo(0, 0);
-		}
-		
-		window.addEventListener('message', updateAuthInfo);
-		function updateAuthInfo(e) {
-			let button = document.getElementById('fuck');
-			fuck.style.backgroundColor = "green";
-			fuck.innerHTML = "<i class=\"fa fa-user\">&nbsp;</i> Continue as " + e.data;
-			window.location.replace("https://donttrip.org/donttrip/client/dt");
-			popup.close();
-		}
-		*/
-	</script>
 	<script src="js/ayhPassword.js"></script>
 </body>
 </html>

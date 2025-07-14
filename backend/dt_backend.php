@@ -18,15 +18,20 @@ if (isset($data) && isset($data->destination) && !empty($data->destination))
     if ($stmt = mysqli_prepare($link, $sql))
     {
         mysqli_stmt_bind_param($stmt, "ssss", $param_username, $param_destination, $param_keyword, $param_ip);
-        if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)
+        if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && !isset($_SESSION["userid"]))
         {
             $param_username = $_SESSION["username"];
         }
-        else
+        else if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && isset($_SESSION["userid"]))
         {
+            $param_username = $_SESSION["userid"];
+        }
+        else {
             $param_username = "Guest";
         }
+
         $param_destination = trim($data->destination);
+        
         if (!empty($data->keyword))
         {
             $param_keyword = trim($data->keyword);

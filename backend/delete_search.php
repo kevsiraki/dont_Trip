@@ -17,11 +17,11 @@ if (isset($data->id) && isset($data->type) && !empty($data))
     /* Deletes 1 destination search from the user's history by id. */
     if ($what == "destination")
     {
-        $sql = "UPDATE searches SET destination = null WHERE destination = ? ;";
+        $sql = "UPDATE searches SET destination = null WHERE id = ? ;";
         if ($stmt = mysqli_prepare($link, $sql))
         {
-            mysqli_stmt_bind_param($stmt, "s", $param_destination);
-            $param_destination = $exactly;
+            mysqli_stmt_bind_param($stmt, "i", $param_id);
+            $param_id = $exactly;
             mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
         }
@@ -29,11 +29,11 @@ if (isset($data->id) && isset($data->type) && !empty($data))
     } /* Deletes 1 destination keyword from the user's history by id. */
     elseif ($what == "keyword")
     {
-        $sql = "UPDATE searches SET keyword = null WHERE keyword = ? ;";
+        $sql = "UPDATE searches SET keyword = null WHERE id = ? ;";
         if ($stmt = mysqli_prepare($link, $sql))
         {
-            mysqli_stmt_bind_param($stmt, "s", $param_keyword);
-            $param_keyword = $exactly;
+            mysqli_stmt_bind_param($stmt, "i", $param_id);
+            $param_id = $exactly;
             mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
         }
@@ -45,7 +45,14 @@ if (isset($data->id) && isset($data->type) && !empty($data))
         if ($stmt = mysqli_prepare($link, $sql))
         {
             mysqli_stmt_bind_param($stmt, "s", $param_username);
-            $param_username = $_SESSION["username"];
+            if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && !isset($_SESSION["userid"]))
+            {
+                $param_username = $_SESSION["username"];
+            }
+            else if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && isset($_SESSION["userid"]))
+            {
+                $param_username = $_SESSION["userid"];
+            }
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);
             $searches = mysqli_fetch_assoc($result);
@@ -57,7 +64,14 @@ if (isset($data->id) && isset($data->type) && !empty($data))
             if ($stmt = mysqli_prepare($link, $sql))
             {
                 mysqli_stmt_bind_param($stmt, "s", $param_username);
-                $param_username = $_SESSION["username"];
+                if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && !isset($_SESSION["userid"]))
+                {
+                    $param_username = $_SESSION["username"];
+                }
+                else if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && isset($_SESSION["userid"]))
+                {
+                    $param_username = $_SESSION["userid"];
+                }
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
             }

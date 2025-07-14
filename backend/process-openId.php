@@ -40,6 +40,7 @@ else
     exit();
 }
 
+unset($_SESSION['userid']);
 unset($_SESSION['userData']);
 unset($_SESSION['googleAvatar']);
 
@@ -56,6 +57,7 @@ $_SESSION['userData'] = ['steam_id' => $userData['steamid'], 'name' => $userData
 extract($_SESSION['userData']);
 
 $_SESSION["username"] = $name . " (Steam)[" . $steam_id . "]";
+$_SESSION['userid'] = "(Steam)[" . $steam_id . "]";
 $_SESSION["loggedin"] = true;
 $_SESSION['loginTime'] = time();
 

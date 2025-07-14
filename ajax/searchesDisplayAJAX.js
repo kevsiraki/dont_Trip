@@ -20,7 +20,7 @@ $(document).ready(function () {
                 button.classList.add("btn-close");
                 button.classList.add("btn-sm");
                 button.ariaLabel = "Close";
-                button.setAttribute('data-id', result[i].destination);
+                button.setAttribute('data-id', result[i].id);
                 button.setAttribute('value', result[i].destination);
                 li.classList.add("links");
                 a.classList.add("link");
@@ -44,7 +44,7 @@ $(document).ready(function () {
                         dataType: "json",
                         data: JSON.stringify({
                             "type": "destination",
-                            "id": li.firstChild.innerHTML
+                            "id": this.getAttribute('data-id')
                         }),
                         success: function (result) {
                             if (result.message == "Destination Deleted") {
@@ -83,7 +83,7 @@ $(document).ready(function () {
                 button.classList.add("btn-close");
                 button.classList.add("btn-sm");
                 button.ariaLabel = "Close";
-                button.setAttribute('data-id', result[i].keyword);
+                button.setAttribute('data-id', result[i].id);
                 button.setAttribute('value', result[i].keyword);
                 li.classList.add("links");
                 a.classList.add("link");
@@ -108,7 +108,7 @@ $(document).ready(function () {
                         dataType: "json",
                         data: JSON.stringify({
                             "type": "keyword",
-                            "id": li.firstChild.innerHTML
+                            "id": this.getAttribute('data-id')
                         }),
                         success: function (result) {
                             if (result.message === "Keyword Deleted") {
