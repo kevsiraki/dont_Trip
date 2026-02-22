@@ -56,11 +56,21 @@ $_SESSION['userData'] = ['steam_id' => $userData['steamid'], 'name' => $userData
 
 extract($_SESSION['userData']);
 
+echo $steam_id;
+
 $_SESSION["username"] = $name . " (Steam)[" . $steam_id . "]";
 $_SESSION['userid'] = "(Steam)[" . $steam_id . "]";
 $_SESSION["loggedin"] = true;
 $_SESSION['loginTime'] = time();
 
-$redirect_url = "../client/dt";
+//2/22/2026 - A bit of resilience if the Steam API call fails.
+
+$redirect_url = !empty($steam_id)
+    ? "../client/dt"
+    : "../client/hecker";
+
+//$redirect_url = "../client/dt";
+
 header("Location: $redirect_url");
+
 exit();

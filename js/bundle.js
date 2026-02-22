@@ -343,6 +343,28 @@
                                         });
                                     }
                                 });
+                            },
+                            error => {  //KS 12/7/2025 - Assist/help with errors on newer Safari versions.
+                                //More graceful error handling in general.
+                                const ua = navigator.userAgent;
+                                const isIOS = /iPhone|iPad|iPod/i.test(ua);
+                                const isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+
+                                // KS 12/7/2025 - If Safari/iOS AND error looks like a permission denial
+                                if (isIOS && isSafari && error.code === 1) {
+                                    alert(
+                                        "Location access failed.\n\n" +
+                                        "It *might* be because Safari is blocking this site from using your location.\n\n" +
+                                        "If this keeps happening, try:\n" +
+                                        "• Tap the 'AA' icon in the Safari address bar\n" +
+                                        "• Choose 'Website Settings'\n" +
+                                        "• Set 'Location' to 'Allow'\n\n" +
+                                        "Error: " + error.message
+                                    );
+                                } else {
+                                    alert("Geo error: " + error.message);
+                                }
+                                console.log(error);
                             });
                 }
             });
