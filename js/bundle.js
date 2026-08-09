@@ -723,6 +723,12 @@
                                     directionsService.route(request, function (result, status) {
                                         if (status == "OK") {
                                             directionsRenderer.setDirections(result);
+
+                                            // 2026-08-09: Reapply light-mode styles after Google rebuilds the directions panel when "Add to Route" is clicked.
+                                            setTimeout(function () {
+                                                lightStyle();
+                                                lightenSideBars();
+                                            }, 25);
                                         }
                                     });
                                 });
