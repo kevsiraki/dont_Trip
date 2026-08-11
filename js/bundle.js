@@ -725,10 +725,12 @@
                                             directionsRenderer.setDirections(result);
 
                                             // 2026-08-09: Reapply light-mode styles after Google rebuilds the directions panel when "Add to Route" is clicked.
-                                            setTimeout(function () {
-                                                lightStyle();
-                                                lightenSideBars();
-                                            }, 25);
+                                            if (localStorage.getItem("dark_mode") === "false" || (d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
+                                                setTimeout(function () {
+                                                        lightStyle();
+                                                        lightenSideBars();
+                                                }, 25);
+                                            }
                                         }
                                     });
                                 });

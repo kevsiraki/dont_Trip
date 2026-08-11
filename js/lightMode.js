@@ -1,4 +1,5 @@
 const d = new Date();
+
 if (localStorage.getItem("dark_mode") === "false" || (d.getHours() >= 6 && d.getHours() <= 18 && localStorage.getItem("dark_mode") === null)) {
     window.addEventListener("DOMContentLoaded", function () {
         if (document.getElementById("toggle-dark")) {
@@ -10,6 +11,7 @@ if (localStorage.getItem("dark_mode") === "false" || (d.getHours() >= 6 && d.get
         }
     });
 }
+
 window.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("dark_mode") === "true" || ((d.getHours() < 6 || d.getHours() > 18) && localStorage.getItem("dark_mode") === null)) {
         if (document.getElementById("toggle-dark")) {
@@ -22,6 +24,7 @@ window.addEventListener("DOMContentLoaded", function () {
         document.getElementById("reset-dark").disabled = true;
     }
 });
+
 function toggleDarkMode() {
     document.getElementById("reset-dark").disabled = false;
     document.getElementById("reset-dark").innerText = "Reset";
@@ -36,6 +39,7 @@ function toggleDarkMode() {
         darkStyle();
     }
 }
+
 function resetDarkMode() {
     window.localStorage.removeItem('dark_mode');
     document.getElementById("reset-dark").innerText = "✓Auto";
@@ -49,12 +53,15 @@ function resetDarkMode() {
         darkStyle();
     }
 }
+
 function redirectTo(s, event) {
     window.location.href = s;
 }
+
 function no(event) {
     event.stopPropagation();
 }
+
 function lightStyle() {
     const form_bg = "linear-gradient(to right, rgba(255,255,255, 0.9) 0 100%), url(\"https://www.donttrip.org/donttrip/icons/form_bg.jpg\")";
     if (document.getElementsByClassName("form-control").length > 0 && !document.getElementById("log-in")) {
@@ -191,6 +198,7 @@ function lightStyle() {
         });
     }
 }
+
 function darkStyle() {
     if (document.documentElement) {
         document.documentElement.style.background = "#202945";
@@ -252,6 +260,7 @@ function darkStyle() {
         });
     }
 }
+
 $(function () {
     $(".form-group .field-placeholder").on("click", function () {
         $(this).closest(".form-group").find("input").focus();

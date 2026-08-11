@@ -2,8 +2,7 @@
 //Discord O-Auth API requests
 require_once "config.php";
 
-if (!isset($_GET['code']))
-{
+if (!isset($_GET['code'])) {
     header("location: ../login");
     exit();
 }
@@ -25,8 +24,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 
 $result = curl_exec($ch);
 
-if (!$result)
-{
+if (!$result) {
     die(curl_error($ch));
 }
 
@@ -52,8 +50,7 @@ $result = curl_exec($ch);
 
 $result = json_decode($result, true);
 
-if (!isset($_SESSION))
-{
+if (!isset($_SESSION)) {
     $sessionConfig = (new \ByJG\Session\SessionConfig('donttrip.org'))->withSecret($_ENV["recovery_key"])->replaceSessionHandler();
     $handler = new \ByJG\Session\JwtSession($sessionConfig);
 }
@@ -71,6 +68,21 @@ $_SESSION["username"] = $name . " (Discord)[" . $discord_id . "]";
 $_SESSION['userid'] = "(Discord)[" . $discord_id . "]";
 $_SESSION["loggedin"] = true;
 $_SESSION['loginTime'] = time();
+
+// Source - https://stackoverflow.com/a/2138534
+// Posted by miku, modified by community. See post 'Timeline' for change history
+// Retrieved 2026-08-10, License - CC BY-SA 4.0
+
+// Modified by yours truly :)
+
+$ch = curl_init($_ENV["discord_webhook_url"]);
+// return the response instead of sending it to stdout:
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+// set the POST data, corresponding method and headers:
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['content' => $name . ' (Discord ID: ' . $discord_id . ') has logged in to Don\'t Trip !']));
+// send the request and get the response
+$server_output = curl_exec($ch);
 
 $redirect_url = "../client/dt";
 header("Location: $redirect_url");
